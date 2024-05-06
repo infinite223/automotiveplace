@@ -1,0 +1,104 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model Post {
+  id        String  @id @default(cuid())
+  title     String
+  content   String?
+  published Boolean @default(false)
+  authorId  String?
+
+  author User? @relation(fields: [authorId], references: [id])
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String?  @unique
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+
+  posts        Post[]
+  garage       Garage?
+  carItemLikes CarItemLikes[]
+  projectLikes ProjectLikes[]
+
+  @@map(name: "users")
+}
+
+model Garage {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  authorId    String   @unique
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @updatedAt @map(name: "updated_at")
+
+  projects Project[]
+  author   User      @relation(fields: [authorId], references: [id])
+}
+
+model Project {
+  id String @id @default(cuid())
+
+  createdAt     DateTime @default(now()) @map(name: "created_at")
+  updatedAt     DateTime @updatedAt @map(name: "updated_at")
+  carMake       String
+  carModel      String
+  isVerified    Boolean
+  isVisible     Boolean
+  imagesUrl     String // folder localisation by id 
+  imagesCount   Int
+  likesCount    Int
+  carItemsCount Int
+  forSell       Boolean
+  stagesCount   Int
+  garageId      String
+
+  userId   String
+  carItems CarItem[]
+  likes    ProjectLikes[]
+
+  garage Garage? @relation(fields: [garageId], references: [id])
+}
+
+model CarItem {
+  id String @id @default(cuid())
+
+  createdAt DateTime       @default(now()) @map(name: "created_at")
+  updatedAt DateTime       @updatedAt @map(name: "updated_at")
+  forSell   Boolean
+  isVisible Boolean
+  inUse     Boolean
+  likes     CarItemLikes[]
+
+  projectId String
+  project   Project? @relation(fields: [projectId], references: [id])
+}
+
+model ProjectLikes {
+  id        String @id @default(cuid())
+  projectId String
+  authorId  String
+
+  author  User     @relation(fields: [authorId], references: [id])
+  project Project? @relation(fields: [projectId], references: [id])
+}
+
+model CarItemLikes {
+  id        String @id @default(cuid())
+  carItemId String
+  authorId  String
+
+  author  User     @relation(fields: [authorId], references: [id])
+  carItem CarItem? @relation(fields: [carItemId], references: [id])
+}
