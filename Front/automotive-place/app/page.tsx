@@ -1,7 +1,7 @@
-import Image from "next/image";
 import prisma from "@/lib/prisma";
-import DeletePostButton from "./components/post/DeletePostButton";
-import {Post} from "./components/post";
+import {CarItem} from "./components/carItem";
+import {TCarItem} from "./utils/types";
+import Link from "next/link";
 
 async function getPost() {
   const posts = await prisma.post.findMany();
@@ -9,14 +9,47 @@ async function getPost() {
   console.log(posts);
 }
 
+const carItemData: TCarItem = {
+  id: "1",
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  description: "Lorem ipsum...",
+  forSell: false,
+  inUse: false,
+  isVisible: true,
+  itemType: "Turbo",
+  name: "Turbo K04",
+  projectId: "",
+};
+
 export default async function Home() {
   const posts = await getPost();
-  console.log(posts);
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>AMP</h1>
 
-      <Post postData={{id: "432da12rfqe12"}} />
+  return (
+    <main className="flex text-zinc-900 min-h-screen flex-col items-center justify-between p-24">
+      <div className="flex flex-col items-center">
+        <h2 className="font-bold text-[25px]">AMP</h2>
+        <h3 className="text-rose-700 font-extrabold text-[20px]">
+          AutoMotive place
+        </h3>
+      </div>
+
+      <Link href={"/garage"}>
+        <div className="border-blue-400 p-2 rounded-sm border">
+          Go to garage
+        </div>
+      </Link>
+
+      <div className="flex flex-col">
+        <h2 className="text-zinc-900 font-bold text-[15px]">Podzespoły:</h2>
+        <div className="flex flex-wrap gap-1.5">
+          <CarItem data={carItemData} />
+          <CarItem data={carItemData} />
+          <CarItem data={carItemData} />
+          <CarItem data={carItemData} />
+          <CarItem data={carItemData} />
+        </div>
+      </div>
     </main>
   );
 }

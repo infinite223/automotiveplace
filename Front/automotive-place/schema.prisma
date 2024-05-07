@@ -74,12 +74,14 @@ model Project {
 model CarItem {
   id String @id @default(cuid())
 
-  createdAt DateTime       @default(now()) @map(name: "created_at")
-  updatedAt DateTime       @updatedAt @map(name: "updated_at")
-  forSell   Boolean
-  isVisible Boolean
-  inUse     Boolean
-  likes     CarItemLikes[]
+  createdAt   DateTime       @default(now()) @map(name: "created_at")
+  updatedAt   DateTime       @updatedAt @map(name: "updated_at")
+  forSell     Boolean
+  isVisible   Boolean
+  inUse       Boolean
+  name        String
+  description String
+  likes       CarItemLikes[]
 
   projectId String
   project   Project? @relation(fields: [projectId], references: [id])

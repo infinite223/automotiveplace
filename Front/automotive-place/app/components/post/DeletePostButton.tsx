@@ -7,6 +7,7 @@ interface DeletePostButtonProps {
 }
 
 const DeletePostButton: FC<DeletePostButtonProps> = ({postId}) => {
+  
   async function handleClick(postId: string) {
     try {
       await fetch(`/api/post/${postId}`, {method: "DELETE"});
