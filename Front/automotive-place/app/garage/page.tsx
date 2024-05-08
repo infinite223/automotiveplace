@@ -25,8 +25,9 @@ export default function Garage() {
         <Table
           wrapItemTailwindStyles="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 max-w-sm"
           titleSize={20}
-          items={carItemsData.map((data) => (
+          items={carItemsData.map((data, id) => (
             <CarItem
+              key={id}
               data={data}
               addCarItemTailwindStyles="m-1"
               isLoading={isLoading}
