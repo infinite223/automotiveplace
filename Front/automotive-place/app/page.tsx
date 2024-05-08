@@ -2,25 +2,14 @@ import prisma from "@/lib/prisma";
 import {CarItem} from "./components/carItem";
 import {TCarItem} from "./utils/types";
 import Link from "next/link";
+import {Table} from "./components/table";
+import {carItems} from "./utils/data/carItem";
 
 async function getPost() {
   const posts = await prisma.post.findMany();
 
   console.log(posts);
 }
-
-const carItemData: TCarItem = {
-  id: "1",
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  description: "Lorem ipsum...",
-  forSell: false,
-  inUse: false,
-  isVisible: true,
-  itemType: "Turbo",
-  name: "Turbo K04",
-  projectId: "",
-};
 
 export default async function Home() {
   const posts = await getPost();
@@ -40,16 +29,7 @@ export default async function Home() {
         </div>
       </Link>
 
-      <div className="flex flex-col">
-        <h2 className="text-zinc-900 font-bold text-[15px]">Podzespoły:</h2>
-        <div className="flex flex-wrap gap-1.5">
-          <CarItem data={carItemData} />
-          <CarItem data={carItemData} />
-          <CarItem data={carItemData} />
-          <CarItem data={carItemData} />
-          <CarItem data={carItemData} />
-        </div>
-      </div>
+      <div className="flex flex-col"></div>
     </main>
   );
 }

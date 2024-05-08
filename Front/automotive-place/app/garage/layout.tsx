@@ -4,8 +4,9 @@ import {Inter} from "next/font/google";
 const inter = Inter({subsets: ["latin"]});
 
 export const metadata: Metadata = {
-  title: "Garage",
-  description: "Community application about automotive ",
+  title: "Garaż",
+  description:
+    "Miejsce gdzie użytkownik może trzymać swoje podzespoły samochodowe, projekty aut",
 };
 
 export default function Layout({
@@ -14,7 +15,7 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pl">
       <body className={inter.className}>{children}</body>
     </html>
   );

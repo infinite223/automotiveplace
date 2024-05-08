@@ -5,9 +5,13 @@ import React, {FC, useEffect, useState} from "react";
 
 interface IconFromItemTypeProps {
   itemType: ItemTypes;
+  isLoading: boolean;
 }
 
-export const IconFromItemType: FC<IconFromItemTypeProps> = ({itemType}) => {
+export const IconFromItemType: FC<IconFromItemTypeProps> = ({
+  itemType,
+  isLoading,
+}) => {
   const [iconUrl, setIconUrl] = useState("");
 
   useEffect(() => {
@@ -19,10 +23,18 @@ export const IconFromItemType: FC<IconFromItemTypeProps> = ({itemType}) => {
   }, []);
 
   return (
-    <img
-      className="w-10 h-10 rounded-sm"
-      alt="car item tyoe image"
-      src={iconUrl}
-    />
+    <div className={`${isLoading && "bg-zinc-100 w-7 h-7 rounded-full"}`}>
+      {!isLoading && (
+        <>
+          <img
+            className={`${
+              isLoading && "bg-zinc-100 rounded-md"
+            } w-10 h-10 rounded-sm`}
+            alt="car item tyoe image"
+            src={iconUrl}
+          />
+        </>
+      )}
+    </div>
   );
 };

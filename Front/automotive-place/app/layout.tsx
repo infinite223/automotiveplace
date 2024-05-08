@@ -6,7 +6,7 @@ const inter = Inter({subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "Automotive place",
-  description: "Community application about automotive ",
+  description: "Aplikacja społecznościowa dla miłośników motoryzacji ",
 };
 
 export default function RootLayout({
