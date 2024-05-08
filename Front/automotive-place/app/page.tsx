@@ -1,9 +1,6 @@
 import prisma from "@/lib/prisma";
-import {CarItem} from "./components/carItem";
-import {TCarItem} from "./utils/types";
 import Link from "next/link";
-import {Table} from "./components/table";
-import {carItems} from "./utils/data/carItem";
+import {projectsData} from "./utils/data/project";
 
 async function getPost() {
   const posts = await prisma.post.findMany();
@@ -13,6 +10,7 @@ async function getPost() {
 
 export default async function Home() {
   const posts = await getPost();
+  console.log(projectsData);
 
   return (
     <main className="flex text-zinc-900 min-h-screen flex-col items-center justify-between p-24">

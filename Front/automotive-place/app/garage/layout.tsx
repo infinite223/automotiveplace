@@ -14,9 +14,5 @@ export default function Layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="pl">
-      <body className={inter.className}>{children}</body>
-    </html>
-  );
+  return <div>{children}</div>;
 }

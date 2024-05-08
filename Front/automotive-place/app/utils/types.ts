@@ -6,7 +6,25 @@ type TUser = {
 }
 
 type TProject = {
+    id: string,
+    createdAt: Date,
+    updatedAt: Date,      
+    forSell:   boolean,
+    isVisible: boolean,
+    
+    carMake: string,
+    model: string,
+    isVerified: boolean,
+    imagesCount: number,
+    likesCount: number,
+    carItemsCount: number,
+    stagesCount: number,
+    garageId: string,
+    userId: string,
 
+    images?: string[]
+    // likes: ....[]
+    // garage: Garage
 }
 
 type TCarItem = {

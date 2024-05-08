@@ -25,7 +25,7 @@ export const FooterCarItem: FC<FooterCarItemProps> = ({
         <p className={`text-[11px]`}>
           {authorName && <div>dodany przez: {authorName}</div>}
 
-          <div className="text-zinc-500">{createdAt.toDateString()}</div>
+          <span className="text-zinc-500">{createdAt.toDateString()}</span>
         </p>
       )}
     </main>

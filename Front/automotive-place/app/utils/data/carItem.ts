@@ -13,7 +13,6 @@ const carItems: TCarItem[] = [
         name: "Turbo K04",
         projectId: "",
     },
-    // Dodaj tutaj kolejne obiekty, aby uzyskać łącznie 10
     {
         id: "2",
         createdAt: new Date(),
@@ -26,10 +25,8 @@ const carItems: TCarItem[] = [
         name: "V8",
         projectId: "",
     },
-    // ...itd.
 ];
 
-// Dodaj łącznie 10 obiektów
 for (let i = 0; i < 8; i++) {
     carItems.push({
         id: (i + 3).toString(),
