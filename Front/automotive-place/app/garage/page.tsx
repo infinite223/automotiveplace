@@ -27,6 +27,7 @@ export default function Garage() {
           titleSize={20}
           items={carItemsData.map((data, id) => (
             <CarItem
+              lineClamp={2}
               key={id}
               data={data}
               addCarItemTailwindStyles="m-1"

@@ -14,7 +14,7 @@ interface CarItemProps {
 
 export const CarItem: FC<CarItemProps> = ({
   data,
-  lineClamp = 2,
+  lineClamp = 3,
   addCarItemTailwindStyles,
   isLoading,
 }) => {
@@ -30,7 +30,7 @@ export const CarItem: FC<CarItemProps> = ({
         isLoading={isLoading}
       />
       <div
-        className={`line-clamp-[${lineClamp}] leading-4 text-sm ${
+        className={`${"line-clamp-" + lineClamp} leading-4 text-sm ${
           isLoading && "w-full bg-zinc-100 rounded-md h-[50px]"
         }`}
       >
