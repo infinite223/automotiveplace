@@ -34,6 +34,7 @@ type TCarItem = {
     forSell:   boolean,
     isVisible: boolean,
     inUse:     boolean,
+    likesCount: number,
     name:      string,
     description: string,
     itemType:  ItemTypes,

@@ -7,10 +7,11 @@ const carItemData: TCarItem = {
     description: "Lorem ipsum...",
     forSell: false,
     inUse: false,
+    likesCount: 4,
     isVisible: true,
     itemType: "Turbo",
     name: "Turbo K04",
     projectId: "",
-  };
+};
 
 export { carItemData }  

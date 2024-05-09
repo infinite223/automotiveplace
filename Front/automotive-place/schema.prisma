@@ -79,6 +79,7 @@ model CarItem {
   forSell     Boolean
   isVisible   Boolean
   inUse       Boolean
+  likesCount  Int
   name        String
   description String
   likes       CarItemLikes[]
