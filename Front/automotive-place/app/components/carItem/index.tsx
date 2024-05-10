@@ -1,6 +1,6 @@
 "use client";
 
-import {TCarItem} from "@/app/utils/types";
+import {TCarItem, TTableView} from "@/app/utils/types";
 import React, {FC} from "react";
 import {HeaderCarItem} from "./HeaderCarItem";
 import {AMPFooterItem} from "../shared/AMPFooterItem";
@@ -10,7 +10,7 @@ interface CarItemProps {
   lineClamp?: 1 | 2 | 3 | 4;
   addCarItemTailwindStyles?: string;
   isLoading: boolean;
-  tableView: "elements" | "rows";
+  tableView: TTableView;
 }
 
 export const CarItem: FC<CarItemProps> = ({
@@ -26,21 +26,28 @@ export const CarItem: FC<CarItemProps> = ({
     4: "line-clamp-4",
   };
 
+  const handleClickLike = () => {
+    alert(`Like ${data.id}`);
+  };
+
   return (
     <main
       className={`${
         isLoading && "animate-pulse "
-      } flex rounded-md flex-col p-2 gap-1.5 shadow-md ${addCarItemTailwindStyles} ${
-        tableView === "rows" && "w-full"
+      } flex rounded-md p-2 gap-1.5 shadow-md ${addCarItemTailwindStyles} ${
+        tableView === "rows" ? "w-full grid grid-cols-4" : "flex-col"
       }`}
     >
       <HeaderCarItem
         itemType={data.itemType}
         name={data.name}
         isLoading={isLoading}
+        tableView={tableView}
       />
       <div
-        className={`${lineClampsVariants[lineClamp]} leading-4 text-sm ${
+        className={`${lineClampsVariants[lineClamp]} ${
+          tableView === "rows" && "col-span-2"
+        } leading-4 text-sm ${
           isLoading && "w-full bg-zinc-100 rounded-md h-[50px]"
         }`}
       >
@@ -61,6 +68,8 @@ export const CarItem: FC<CarItemProps> = ({
         forSell={data.forSell}
         inUse={data.inUse}
         likesCount={data.likesCount}
+        handleClickLike={handleClickLike}
+        tableView={tableView}
       />
     </main>
   );

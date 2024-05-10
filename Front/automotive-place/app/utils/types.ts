@@ -2,7 +2,7 @@ type TUser = {
     id: string,
     name: string,
     description: string,
-    email?: string
+    email?: string,
 }
 
 type TProject = {
@@ -49,6 +49,8 @@ type TCarItemLikes = {
 
 }
 
-type ItemTypes = "Turbo" | "Exhoust" | "Kompressor" | "Brakes" 
+type ItemTypes = "Turbo" | "Exhoust" | "Kompressor" | "Brakes" | "Audio"
 
-export type { TCarItem, TCarItemLikes, TProject, ItemTypes }
+type TTableView = "elements" | "rows"
+
+export type { TCarItem, TCarItemLikes, TProject, ItemTypes, TTableView }

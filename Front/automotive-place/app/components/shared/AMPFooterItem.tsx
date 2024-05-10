@@ -1,6 +1,6 @@
 "use client";
 
-import {TCarItemLikes} from "@/app/utils/types";
+import {TCarItemLikes, TTableView} from "@/app/utils/types";
 import React, {FC, useOptimistic} from "react";
 import {FaHeart} from "react-icons/fa";
 import {MdOutlineAttachMoney, MdOutlineMoneyOff} from "react-icons/md";
@@ -15,6 +15,7 @@ interface AMPFooterItemProps {
   likes?: TCarItemLikes;
   forSell?: boolean;
   inUse?: boolean;
+  tableView: TTableView;
   handleClickLike?: () => void;
 }
 
@@ -25,12 +26,15 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
   likesCount,
   forSell,
   handleClickLike,
+  tableView,
 }) => {
   return (
     <main
       className={`${
         isLoading && "animate-pulse"
-      } flex text-zinc-600 gap-2 items-center justify-between`}
+      } flex text-zinc-600 gap-2 items-center ${
+        tableView === "rows" ? "flex-row-reverse" : "justify-between"
+      } `}
     >
       <div
         className={`flex items-center gap-1 ${

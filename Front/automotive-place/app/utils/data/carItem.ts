@@ -23,13 +23,13 @@ const carItems: TCarItem[] = [
         inUse: false,
         likesCount: 1,
         isVisible: true,
-        itemType: "Turbo",
-        name: "V8",
+        itemType: "Audio",
+        name: "JBL s1024",
         projectId: "",
     },
 ];
 
-for (let i = 0; i < 8; i++) {
+for (let i = 0; i < 1; i++) {
     carItems.push({
         id: (i + 3).toString(),
         createdAt: new Date(),

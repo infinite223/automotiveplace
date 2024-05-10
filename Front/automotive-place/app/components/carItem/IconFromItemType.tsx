@@ -19,6 +19,10 @@ export const IconFromItemType: FC<IconFromItemTypeProps> = ({
       setIconUrl(
         "https://cdn1.iconfinder.com/data/icons/car-parts-glyph-1/64/Turbo-1024.png"
       );
+    } else if (itemType === "Audio") {
+      setIconUrl(
+        "https://cdn2.iconfinder.com/data/icons/squircle-ui/32/Sound-1024.png"
+      );
     }
   }, []);
 
@@ -29,7 +33,7 @@ export const IconFromItemType: FC<IconFromItemTypeProps> = ({
           <img
             className={`${
               isLoading && "bg-zinc-100 rounded-md"
-            } w-10 h-10 rounded-sm`}
+            } w-8 h-8 rounded-sm`}
             alt="car item tyoe image"
             src={iconUrl}
           />

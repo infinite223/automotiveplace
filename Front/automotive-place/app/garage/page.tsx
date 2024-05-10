@@ -3,16 +3,17 @@
 import {useEffect, useState} from "react";
 import {carItems} from "../utils/data/carItem";
 import {CarItem} from "../components/carItem";
-import {TCarItem} from "../utils/types";
+import {TCarItem, TTableView} from "../utils/types";
 import {AMPTable} from "../components/shared/AMPTable";
 import {FaListUl} from "react-icons/fa6";
-import {BsGrid3X2GapFill} from "react-icons/bs";
-import {BsGrid} from "react-icons/bs";
+import {FiGrid} from "react-icons/fi";
+import {BiSolidCarGarage} from "react-icons/bi";
 
 export default function Garage() {
   const [isLoading, setIsLoading] = useState(true);
   const [carItemsData, setCarItemsData] = useState<TCarItem[]>(carItems);
-  const [tableView, setTableView] = useState<"elements" | "rows">("elements");
+  const [tableView, setTableView] = useState<TTableView>("elements");
+
   useEffect(() => {
     setTimeout(() => {
       setCarItemsData(carItems);
@@ -22,9 +23,12 @@ export default function Garage() {
 
   return (
     <main className="flex min-h-screen text-zinc-900 flex-col items-center gap-2 p-24">
-      <h1 className="font-extrabold text-[25px]">Garage</h1>
+      <div className="flex items-center gap-3 w-full">
+        <BiSolidCarGarage size={26} />
+        <h1 className="font-extrabold text-[25px]">Garage</h1>
+      </div>
 
-      <div className="flex">
+      <div className="flex w-full">
         <AMPTable
           wrapItemTailwindStyles={`w-full ${
             tableView === "elements" &&
@@ -35,14 +39,15 @@ export default function Garage() {
           headerOptions={[
             <div
               className="cursor-pointer"
+              key="1"
               onClick={() =>
                 setTableView(tableView === "elements" ? "rows" : "elements")
               }
             >
               {tableView === "rows" ? (
-                <BsGrid size={20} />
+                <FiGrid size={19} />
               ) : (
-                <FaListUl size={20} />
+                <FaListUl size={18} />
               )}
             </div>,
           ]}

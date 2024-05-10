@@ -1,6 +1,6 @@
 "use client";
 
-import {ItemTypes} from "@/app/utils/types";
+import {ItemTypes, TTableView} from "@/app/utils/types";
 import React, {FC} from "react";
 import {IconFromItemType} from "./IconFromItemType";
 
@@ -8,12 +8,14 @@ interface HeaderCarItemProps {
   itemType: ItemTypes;
   name: string;
   isLoading: boolean;
+  tableView: TTableView;
 }
 
 export const HeaderCarItem: FC<HeaderCarItemProps> = ({
   itemType,
   name,
   isLoading,
+  tableView,
 }) => {
   return (
     <main
