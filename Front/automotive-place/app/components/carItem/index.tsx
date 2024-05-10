@@ -10,6 +10,7 @@ interface CarItemProps {
   lineClamp?: 1 | 2 | 3 | 4;
   addCarItemTailwindStyles?: string;
   isLoading: boolean;
+  tableView: "elements" | "rows";
 }
 
 export const CarItem: FC<CarItemProps> = ({
@@ -17,6 +18,7 @@ export const CarItem: FC<CarItemProps> = ({
   lineClamp = 3,
   addCarItemTailwindStyles,
   isLoading,
+  tableView,
 }) => {
   const lineClampsVariants: Record<number, string> = {
     2: "line-clamp-2",
@@ -28,7 +30,9 @@ export const CarItem: FC<CarItemProps> = ({
     <main
       className={`${
         isLoading && "animate-pulse "
-      } flex rounded-md flex-col p-2 gap-1.5 shadow-md ${addCarItemTailwindStyles}`}
+      } flex rounded-md flex-col p-2 gap-1.5 shadow-md ${addCarItemTailwindStyles} ${
+        tableView === "rows" && "w-full"
+      }`}
     >
       <HeaderCarItem
         itemType={data.itemType}
