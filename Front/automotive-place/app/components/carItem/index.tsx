@@ -3,7 +3,7 @@
 import {TCarItem} from "@/app/utils/types";
 import React, {FC} from "react";
 import {HeaderCarItem} from "./HeaderCarItem";
-import {FooterCarItem} from "./FooterCarItem";
+import {AMPFooterItem} from "../shared/AMPFooterItem";
 
 interface CarItemProps {
   data: TCarItem;
@@ -49,7 +49,7 @@ export const CarItem: FC<CarItemProps> = ({
           </span>
         )}
       </div>
-      <FooterCarItem
+      <AMPFooterItem
         isLoading={isLoading}
         authorName={data.author?.name}
         createdAt={data.createdAt}
