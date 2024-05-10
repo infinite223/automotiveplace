@@ -77,11 +77,11 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
       >
         {!isLoading && (
           <div className={`text-[10px] leading-3`}>
-            {authorName && (
+            {!authorName && (
               <div>
                 Autor:{" "}
                 <span className="text-blue-600 font-semibold cursor-pointer">
-                  {authorName}
+                  Dawid {authorName}
                 </span>
               </div>
             )}

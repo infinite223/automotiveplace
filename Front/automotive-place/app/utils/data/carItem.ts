@@ -29,7 +29,7 @@ const carItems: TCarItem[] = [
     },
 ];
 
-for (let i = 0; i < 1; i++) {
+for (let i = 0; i < 10; i++) {
     carItems.push({
         id: (i + 3).toString(),
         createdAt: new Date(),

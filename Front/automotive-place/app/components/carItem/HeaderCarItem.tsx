@@ -27,7 +27,7 @@ export const HeaderCarItem: FC<HeaderCarItemProps> = ({
         {!isLoading && (
           <>
             <h3 className="font-bold">{name}</h3>
-            <p className="text-sm">{itemType}</p>
+            <p className="text-[10px] mt-[-5px]">{itemType}</p>
           </>
         )}
       </div>

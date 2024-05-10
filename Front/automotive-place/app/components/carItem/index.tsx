@@ -47,7 +47,7 @@ export const CarItem: FC<CarItemProps> = ({
       <div
         className={`${lineClampsVariants[lineClamp]} ${
           tableView === "rows" && "col-span-2"
-        } leading-4 text-sm ${
+        } leading-4 text-[12px] ${
           isLoading && "w-full bg-zinc-100 rounded-md h-[50px]"
         }`}
       >
