@@ -1,32 +1,41 @@
 "use client";
 
 import {TCarItemLikes, TTableView} from "@/app/utils/types";
-import React, {FC, useOptimistic} from "react";
+import React, {FC} from "react";
 import {FaHeart} from "react-icons/fa";
 import {MdOutlineAttachMoney, MdOutlineMoneyOff} from "react-icons/md";
 import "react-tooltip/dist/react-tooltip.css";
 import {Tooltip} from "react-tooltip";
 
 interface AMPFooterItemProps {
-  authorName?: string;
-  createdAt: Date;
   isLoading: boolean;
-  likesCount: number;
-  likes?: TCarItemLikes;
-  forSell?: boolean;
-  inUse?: boolean;
   tableView: TTableView;
   handleClickLike?: () => void;
+
+  data: {
+    authorName?: string;
+    createdAt: Date;
+    likes?: TCarItemLikes;
+    forSell?: boolean;
+    inUse?: boolean;
+    likesCount: number;
+    isLikedByAuthUser?: boolean;
+  };
 }
 
 export const AMPFooterItem: FC<AMPFooterItemProps> = ({
-  authorName,
-  createdAt,
   isLoading,
-  likesCount,
-  forSell,
   handleClickLike,
   tableView,
+  data: {
+    createdAt,
+    likesCount,
+    authorName,
+    forSell,
+    inUse,
+    isLikedByAuthUser = false,
+    likes,
+  },
 }) => {
   return (
     <main
@@ -48,7 +57,13 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
             }`}
             onClick={handleClickLike}
           >
-            <FaHeart size={17} />
+            <FaHeart
+              size={17}
+              color={isLikedByAuthUser ? "#df1515" : "gray"}
+              className={`cursor-pointer transition-colors duration-300 ease-in-out ${
+                isLikedByAuthUser ? "transform scale-95" : ""
+              }`}
+            />
             <span className="text-zinc-600 text-sm">{likesCount}</span>
           </div>
         )}

@@ -1,6 +1,6 @@
 "use client";
 
-import {ItemTypes, TCarItem} from "@/app/utils/types";
+import {ItemTypes} from "@/app/utils/types";
 import React, {FC, useEffect, useState} from "react";
 
 interface IconFromItemTypeProps {

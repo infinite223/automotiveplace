@@ -49,7 +49,6 @@ export const HeaderCarItem: FC<HeaderCarItemProps> = ({
           )}
         </div>
       </div>
-      ,
     </main>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import {TCarItem, TTableView} from "@/app/utils/types";
-import React, {FC} from "react";
+import React, {FC, useState} from "react";
 import {HeaderCarItem} from "./HeaderCarItem";
 import {AMPFooterItem} from "../shared/AMPFooterItem";
 
@@ -20,6 +20,7 @@ export const CarItem: FC<CarItemProps> = ({
   isLoading,
   tableView,
 }) => {
+  const [localData, setLocalData] = useState(data);
   const lineClampsVariants: Record<number, string> = {
     2: "line-clamp-2",
     3: "line-clamp-3",
@@ -27,7 +28,22 @@ export const CarItem: FC<CarItemProps> = ({
   };
 
   const handleClickLike = () => {
-    alert(`Like ${data.id}`);
+    // send req to API
+    // update state
+
+    if (localData.isLikedByAuthUser) {
+      setLocalData({
+        ...localData,
+        likesCount: localData.likesCount - 1,
+        isLikedByAuthUser: false,
+      });
+    } else {
+      setLocalData({
+        ...localData,
+        likesCount: localData.likesCount + 1,
+        isLikedByAuthUser: true,
+      });
+    }
   };
 
   return (
@@ -39,8 +55,8 @@ export const CarItem: FC<CarItemProps> = ({
       }`}
     >
       <HeaderCarItem
-        itemType={data.itemType}
-        name={data.name}
+        itemType={localData.itemType}
+        name={localData.name}
         isLoading={isLoading}
         tableView={tableView}
       />
@@ -62,13 +78,8 @@ export const CarItem: FC<CarItemProps> = ({
       </div>
       <AMPFooterItem
         isLoading={isLoading}
-        authorName={data.author?.name}
-        createdAt={data.createdAt}
-        likes={data.likes}
-        forSell={data.forSell}
-        inUse={data.inUse}
-        likesCount={data.likesCount}
         handleClickLike={handleClickLike}
+        data={localData}
         tableView={tableView}
       />
     </main>

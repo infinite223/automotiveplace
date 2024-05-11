@@ -21,7 +21,7 @@ type TProject = {
     stagesCount: number,
     garageId: string,
     userId: string,
-
+    isLikedByAuthUser?: boolean,
     images?: string[]
     // likes: ....[]
     // garage: Garage
@@ -37,6 +37,7 @@ type TCarItem = {
     likesCount: number,
     name:      string,
     description: string,
+    isLikedByAuthUser?: boolean,
     itemType:  ItemTypes,
     likes?:    TCarItemLikes[]
   
