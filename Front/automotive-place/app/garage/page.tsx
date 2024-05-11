@@ -22,7 +22,7 @@ export default function Garage() {
   }, []);
 
   return (
-    <main className="flex min-h-screen text-zinc-900 flex-col items-center gap-2 p-24">
+    <main className="flex min-h-screen text-zinc-900 flex-col items-center gap-2 p-2">
       <div className="flex items-center gap-3 w-full">
         <BiSolidCarGarage size={26} />
         <h1 className="font-extrabold text-[25px]">Garage</h1>
