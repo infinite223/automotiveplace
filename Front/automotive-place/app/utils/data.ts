@@ -11,6 +11,7 @@ const carItemData: TCarItem = {
     isVisible: true,
     itemType: "Turbo",
     name: "Turbo K04",
+    authorId: "1",
     projectId: "",
 };
 

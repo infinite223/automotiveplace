@@ -19,4 +19,9 @@
   @apply text-zinc-700 dark:text-zinc-300;
 }
 
+.loading-text-custom {
+  @apply text-zinc-300 dark:text-zinc-800;
+}
+
+
 

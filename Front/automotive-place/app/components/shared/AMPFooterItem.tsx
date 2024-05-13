@@ -11,6 +11,7 @@ interface AMPFooterItemProps {
   isLoading: boolean;
   tableView: TTableView;
   handleClickLike?: () => void;
+  isMyElement?: boolean;
 
   data: {
     authorName?: string;
@@ -27,6 +28,7 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
   isLoading,
   handleClickLike,
   tableView,
+  isMyElement,
   data: {
     createdAt,
     likesCount,
@@ -47,7 +49,8 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
     >
       <div
         className={`flex items-center gap-1 ${
-          isLoading && "w-[70px] bg-zinc-100 rounded-md h-[20px]"
+          isLoading &&
+          "w-[70px] bg-zinc-100 bg-custom-secend rounded-md h-[20px]"
         }`}
       >
         {!isLoading && (
@@ -56,6 +59,7 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
               handleClickLike && "cursor-pointer"
             }`}
             onClick={handleClickLike}
+            aria-disabled={!false}
           >
             <FaHeart
               size={17}

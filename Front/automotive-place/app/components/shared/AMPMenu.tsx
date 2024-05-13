@@ -3,7 +3,9 @@ import {BsThreeDotsVertical} from "react-icons/bs";
 
 export type TMenuItem = {
   name: string;
-  handleClick: () => void;
+  handleClick?: () => void;
+  icon?: JSX.Element;
+  isDisable?: boolean;
 };
 
 interface IAMPMenuProps {
@@ -25,8 +27,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({items, isLoading}) => {
 
       <div
         className={`${
-          isLoading &&
-          "bg-custom-primary text-custom-primary w-7 h-7 rounded-md"
+          isLoading && "bg-custom-secend text-custom-primary w-7 h-7 rounded-md"
         }`}
       >
         {!isLoading && (

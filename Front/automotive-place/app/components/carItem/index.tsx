@@ -20,6 +20,8 @@ export const CarItem: FC<CarItemProps> = ({
   isLoading,
   tableView,
 }) => {
+  const isMyCarElement = data.authorId === "1";
+
   const [localData, setLocalData] = useState(data);
   const lineClampsVariants: Record<number, string> = {
     2: "line-clamp-2",
@@ -30,19 +32,20 @@ export const CarItem: FC<CarItemProps> = ({
   const handleClickLike = () => {
     // send req to API
     // update state
-
-    if (localData.isLikedByAuthUser) {
-      setLocalData({
-        ...localData,
-        likesCount: localData.likesCount - 1,
-        isLikedByAuthUser: false,
-      });
-    } else {
-      setLocalData({
-        ...localData,
-        likesCount: localData.likesCount + 1,
-        isLikedByAuthUser: true,
-      });
+    if (!isMyCarElement) {
+      if (localData.isLikedByAuthUser) {
+        setLocalData({
+          ...localData,
+          likesCount: localData.likesCount - 1,
+          isLikedByAuthUser: false,
+        });
+      } else {
+        setLocalData({
+          ...localData,
+          likesCount: localData.likesCount + 1,
+          isLikedByAuthUser: true,
+        });
+      }
     }
   };
 
@@ -50,12 +53,14 @@ export const CarItem: FC<CarItemProps> = ({
     <main
       className={`${
         isLoading && "animate-pulse "
-      } flex rounded-md p-2 gap-1.5 shadow-md shadow-zinc-200 dark:shadow-zinc-900 ${addCarItemTailwindStyles} ${
+      } flex select-none rounded-md p-2 gap-1.5 shadow-md shadow-zinc-200 dark:shadow-zinc-900 ${addCarItemTailwindStyles} ${
         tableView === "rows" ? "w-full grid grid-cols-4" : "flex-col"
       }`}
     >
       <HeaderCarItem
         itemType={localData.itemType}
+        id={data.id}
+        isMyCarElement={isMyCarElement}
         name={localData.name}
         isLoading={isLoading}
         tableView={tableView}
@@ -64,13 +69,13 @@ export const CarItem: FC<CarItemProps> = ({
         className={`${lineClampsVariants[lineClamp]} ${
           tableView === "rows" && "col-span-2"
         } leading-4 text-[12px] ${
-          isLoading && "w-full bg-custom-primary rounded-md h-[50px]"
+          isLoading && "w-full bg-custom-secend rounded-md h-[50px]"
         }`}
       >
         {!isLoading ? (
           data.description
         ) : (
-          <span className="bg-custom-primary">
+          <span className="loading-text-custom">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
             feugiat iaculis elementum.
           </span>
@@ -81,6 +86,7 @@ export const CarItem: FC<CarItemProps> = ({
         handleClickLike={handleClickLike}
         data={localData}
         tableView={tableView}
+        isMyElement={isMyCarElement}
       />
     </main>
   );

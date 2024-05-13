@@ -22,7 +22,8 @@ type TProject = {
     garageId: string,
     userId: string,
     isLikedByAuthUser?: boolean,
-    images?: string[]
+    images?: string[],
+    authorId:    string,
     // likes: ....[]
     // garage: Garage
 }
@@ -40,7 +41,7 @@ type TCarItem = {
     isLikedByAuthUser?: boolean,
     itemType:  ItemTypes,
     likes?:    TCarItemLikes[]
-  
+    authorId:    string,
     projectId: string,
     project?:   TProject,
     author?:    TUser
@@ -49,8 +50,29 @@ type TCarItem = {
 type TCarItemLikes = {
 
 }
+type ItemTypes = "Turbo" | "Exhaust" | "Kompressor" | "Brakes" | "Audio" | "Clutch" | "Suspension" | "Engine Tune-up" | "Transmission" | "Wheels" | "Tires" | "Fuel Injectors" | "Cooling System" | "Battery" | "Alternator" | "Starter Motor" | "Steering System" | "Lights" | "Body Kit";
 
-type ItemTypes = "Turbo" | "Exhoust" | "Kompressor" | "Brakes" | "Audio"
+// Tłumaczenia:
+// Turbo: Turbo
+// Exhaust: Układ wydechowy
+// Kompressor: Sprężarka (lub Kompresor)
+// Brakes: Hamulce
+// Audio: System audio
+// Clutch: Sprzęgło
+// Suspension: Zawieszenie
+// Engine Tune-up: Regulacja silnika
+// Transmission: Skrzynia biegów
+// Wheels: Koła
+// Tires: Opony
+// Fuel Injectors: Wtryskiwacze paliwa
+// Cooling System: Układ chłodzenia
+// Battery: Bateria
+// Alternator: Alternator
+// Starter Motor: Rozrusznik
+// Steering System: Układ kierowniczy
+// Lights: Oświetlenie
+// Body Kit: Zestaw karoserii
+
 
 type TTableView = "elements" | "rows"
 
