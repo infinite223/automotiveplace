@@ -51,8 +51,13 @@ type TCarItem = {
 type TCarItemLikes = {
 
 }
+
 type ItemTypes = "Turbo" | "Exhaust" | "Kompressor" | "Brakes" | "Audio" | "Clutch" | "Suspension" | "Engine Tune-up" | "Transmission" | "Wheels" | "Tires" | "Fuel Injectors" | "Cooling System" | "Battery" | "Alternator" | "Starter Motor" | "Steering System" | "Lights" | "Body Kit";
 
+type TSearchOptions = {
+    query: string,
+    type: "local" | "database"
+}
 // Tłumaczenia:
 // Turbo: Turbo
 // Exhaust: Układ wydechowy
@@ -77,4 +82,4 @@ type ItemTypes = "Turbo" | "Exhaust" | "Kompressor" | "Brakes" | "Audio" | "Clut
 
 type TTableView = "elements" | "rows"
 
-export type { TCarItem, TCarItemLikes, TProject, ItemTypes, TTableView }
+export type { TCarItem, TCarItemLikes, TProject, ItemTypes, TTableView, TSearchOptions }

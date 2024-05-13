@@ -4,6 +4,7 @@ import {ItemTypes, TTableView} from "@/app/utils/types";
 import React, {FC, useEffect, useState} from "react";
 import {IconFromItemType} from "./IconFromItemType";
 import {AMPMenu, TMenuItem} from "../shared/AMPMenu";
+import {BiEdit} from "react-icons/bi";
 
 interface IHeaderCarItemProps {
   itemType: ItemTypes;
@@ -30,6 +31,7 @@ const getOptionsMenu = (isMy: boolean, id: string) => {
   const additionalOption = {
     name: "Edytuj",
     handleClick: () => alert("navigate to edit"),
+    icon: <BiEdit size={17} />,
   };
 
   if (isMy) options.push(additionalOption);
