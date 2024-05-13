@@ -24,6 +24,7 @@ type TProject = {
     isLikedByAuthUser?: boolean,
     images?: string[],
     authorId:    string,
+    author?:    TUser
     // likes: ....[]
     // garage: Garage
 }

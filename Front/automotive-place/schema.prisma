@@ -29,6 +29,8 @@ model User {
 
   posts        Post[]
   garage       Garage?
+  projects     Project[]
+  carItems     CarItem[]
   carItemLikes CarItemLikes[]
   projectLikes ProjectLikes[]
 
@@ -67,7 +69,9 @@ model Project {
   userId   String
   carItems CarItem[]
   likes    ProjectLikes[]
+  authorId String
 
+  author User    @relation(fields: [authorId], references: [id])
   garage Garage? @relation(fields: [garageId], references: [id])
 }
 
@@ -83,7 +87,9 @@ model CarItem {
   name        String
   description String
   likes       CarItemLikes[]
+  authorId    String
 
+  author    User     @relation(fields: [authorId], references: [id])
   projectId String
   project   Project? @relation(fields: [projectId], references: [id])
 }

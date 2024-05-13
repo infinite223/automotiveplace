@@ -13,7 +13,7 @@ const carItems: TCarItem[] = [
         isVisible: true,
         itemType: "Turbo",
         name: "Turbo K04",
-        isLikedByAuthUser: true,
+        isLikedByAuthUser: false,
         projectId: "",
     },
     {
