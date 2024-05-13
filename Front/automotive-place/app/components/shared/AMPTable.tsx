@@ -18,7 +18,7 @@ export const AMPTable: FC<AMPTableProps> = ({
   tableView,
 }) => {
   return (
-    <main className="flex flex-col gap-1 w-full p-1 shadow-md rounded-md">
+    <main className="flex flex-col gap-1 w-full p-1 pb-2 shadow-md shadow-zinc-200 dark:shadow-zinc-900 rounded-md">
       <div className="flex items-center justify-between w-full">
         <h3 className="font-semibold text-lg">{title}</h3>
 

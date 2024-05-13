@@ -52,7 +52,7 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
       >
         {!isLoading && (
           <div
-            className={`flex rounded-md bg-zinc-200 h-min gap-1 pl-1 pr-1 pt-0.5 pb-0.5 items-center ${
+            className={`flex rounded-md bg-custom-secend h-min gap-1 pl-1 pr-1 pt-0.5 pb-0.5 items-center ${
               handleClickLike && "cursor-pointer"
             }`}
             onClick={handleClickLike}
@@ -64,7 +64,7 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
                 isLikedByAuthUser ? "transform scale-95" : ""
               }`}
             />
-            <span className="text-zinc-600 text-sm">{likesCount}</span>
+            <span className="text-custom-secend text-sm">{likesCount}</span>
           </div>
         )}
 
@@ -88,10 +88,12 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
         <Tooltip id="forsell-option-item-1" style={{fontSize: "11px"}} />
       </div>
       <div
-        className={`${isLoading && "w-[55px] bg-zinc-100 rounded-md h-[20px]"}`}
+        className={`${
+          isLoading && "w-[55px] text_primary rounded-md h-[20px]"
+        }`}
       >
         {!isLoading && (
-          <div className={`text-[10px] leading-3`}>
+          <div className={`text-[10px] leading-3 text-custom-secend`}>
             {!authorName && (
               <div>
                 Autor:{" "}
@@ -101,7 +103,7 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
               </div>
             )}
 
-            <span className="text-zinc-500">{createdAt.toDateString()}</span>
+            <span className="text_secend">{createdAt.toDateString()}</span>
           </div>
         )}
       </div>

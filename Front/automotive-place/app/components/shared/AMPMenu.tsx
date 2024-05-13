@@ -15,8 +15,20 @@ export const AMPMenu: FC<IAMPMenuProps> = ({items, isLoading}) => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <main>
-      <div className={`${isLoading && "bg-zinc-100 w-7 h-7 rounded-md"}`}>
+    <main className="relative">
+      {showMenu && (
+        <div
+          className="absolute w-[300px] top-[-100px] left-[-60px] h-[300px]"
+          onClick={() => setShowMenu(!showMenu)}
+        />
+      )}
+
+      <div
+        className={`${
+          isLoading &&
+          "bg-custom-primary text-custom-primary w-7 h-7 rounded-md"
+        }`}
+      >
         {!isLoading && (
           <>
             <BsThreeDotsVertical
@@ -32,7 +44,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({items, isLoading}) => {
           role="menu"
           data-popover="menu"
           data-popover-placement="bottom"
-          className="absolute text-[11px] z-10 min-w-[180px] overflow-auto rounded-md border border-blue-gray-50 bg-white p-1 font-sans font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none"
+          className="absolute text-[11px] z-10 min-w-[180px] overflow-auto rounded-md border border-zinc-200 dark:border-zinc-800 bg-custom-secend  p-1 font-sans font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none"
         >
           {items.map(({name, handleClick}, i) => (
             <li

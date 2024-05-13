@@ -21,7 +21,7 @@ export const HeaderCarItem: FC<HeaderCarItemProps> = ({
 }) => {
   return (
     <main
-      className={`flex text-zinc-900 gap-2 items-center ${
+      className={`flex text-custom-primary gap-2 items-center ${
         isLoading && "animate-pulse"
       }`}
     >
@@ -40,7 +40,9 @@ export const HeaderCarItem: FC<HeaderCarItemProps> = ({
       />
       <div className="flex gap-2">
         <IconFromItemType itemType={itemType} isLoading={isLoading} />
-        <div className={`${isLoading && "bg-zinc-100 rounded-md w-[70px]"}`}>
+        <div
+          className={`${isLoading && "bg-custom-primary rounded-md w-[70px]"}`}
+        >
           {!isLoading && (
             <>
               <h3 className="font-bold">{name}</h3>

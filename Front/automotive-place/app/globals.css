@@ -1,27 +1,22 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.bg-custom-primary {
+  @apply bg-zinc-100 dark:bg-zinc-950;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.bg-custom-secend {
+  @apply bg-zinc-300 dark:bg-zinc-800;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
+.text-custom-primary {
+  @apply text-black dark:text-white;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.text-custom-secend {
+  @apply text-zinc-700 dark:text-zinc-300;
 }
+
+

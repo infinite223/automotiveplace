@@ -50,7 +50,7 @@ export const CarItem: FC<CarItemProps> = ({
     <main
       className={`${
         isLoading && "animate-pulse "
-      } flex rounded-md p-2 gap-1.5 shadow-md ${addCarItemTailwindStyles} ${
+      } flex rounded-md p-2 gap-1.5 shadow-md shadow-zinc-200 dark:shadow-zinc-900 ${addCarItemTailwindStyles} ${
         tableView === "rows" ? "w-full grid grid-cols-4" : "flex-col"
       }`}
     >
@@ -64,13 +64,13 @@ export const CarItem: FC<CarItemProps> = ({
         className={`${lineClampsVariants[lineClamp]} ${
           tableView === "rows" && "col-span-2"
         } leading-4 text-[12px] ${
-          isLoading && "w-full bg-zinc-100 rounded-md h-[50px]"
+          isLoading && "w-full bg-custom-primary rounded-md h-[50px]"
         }`}
       >
         {!isLoading ? (
           data.description
         ) : (
-          <span className="text-zinc-100">
+          <span className="bg-custom-primary">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
             feugiat iaculis elementum.
           </span>
