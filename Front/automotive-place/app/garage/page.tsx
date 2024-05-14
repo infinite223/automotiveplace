@@ -25,11 +25,14 @@ export default function Garage() {
           ...prevCarItemsData,
           ...carItems,
         ]);
-        setIsLoading(false);
-      }, 100);
+      }, 1000);
 
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(timer);
+      };
     }
+
+    setIsLoading(false);
   }, [isVisible]);
 
   const onSearch = (value: string) => {

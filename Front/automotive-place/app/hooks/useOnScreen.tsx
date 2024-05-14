@@ -5,16 +5,25 @@ export default function useOnScreen(ref: RefObject<HTMLElement>) {
 
   const observer: any = useMemo(
     () =>
-      new IntersectionObserver(([entry]) =>
-        setIntersecting(entry.isIntersecting)
-      ),
+      ref.current
+        ? new IntersectionObserver(([entry]) =>
+            setIntersecting(entry.isIntersecting)
+          )
+        : null,
     [ref]
   );
 
   useEffect(() => {
-    observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+    if (observer && ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, [observer]);
 
   return isIntersecting;
 }
