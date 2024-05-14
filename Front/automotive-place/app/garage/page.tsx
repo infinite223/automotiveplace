@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {carItems} from "../utils/data/carItem";
 import {CarItem} from "../components/carItem";
 import {TCarItem, TTableView} from "../utils/types";
@@ -8,18 +8,33 @@ import {AMPTable} from "../components/shared/AMPTable";
 import {FaListUl} from "react-icons/fa6";
 import {FiGrid} from "react-icons/fi";
 import {BiSolidCarGarage} from "react-icons/bi";
+import useOnScreen from "../hooks/useOnScreen";
 
 export default function Garage() {
   const [isLoading, setIsLoading] = useState(true);
   const [carItemsData, setCarItemsData] = useState<TCarItem[]>(carItems);
   const [tableView, setTableView] = useState<TTableView>("elements");
+  const ref = useRef<HTMLDivElement>(null);
+  const isVisible = useOnScreen(ref);
 
   useEffect(() => {
-    setTimeout(() => {
-      setCarItemsData(carItems);
-      setIsLoading(false);
-    }, 2000);
-  }, []);
+    if (isVisible) {
+      setIsLoading(true);
+      const timer = setTimeout(() => {
+        setCarItemsData((prevCarItemsData) => [
+          ...prevCarItemsData,
+          ...carItems,
+        ]);
+        setIsLoading(false);
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible]);
+
+  const onSearch = (value: string) => {
+    console.log("value", value);
+  };
 
   return (
     <main className="flex min-h-screen bg-custom-primary text-custom-primary flex-col items-center gap-2 p-2">
@@ -30,6 +45,8 @@ export default function Garage() {
 
       <div className="flex w-full">
         <AMPTable
+          onSearch={onSearch}
+          isLoading={isLoading}
           searchOptions={{query: "", type: "local"}}
           wrapItemTailwindStyles={`w-full ${
             tableView === "elements" &&
@@ -37,9 +54,10 @@ export default function Garage() {
           }`}
           titleSize={20}
           tableView={tableView}
+          footerRef={ref}
           headerOptions={[
             <div
-              className="cursor-pointer"
+              className="cursor-pointer visible max-sm:hidden"
               key="1"
               onClick={() =>
                 setTableView(tableView === "elements" ? "rows" : "elements")
