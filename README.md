@@ -4,7 +4,7 @@ Aplikacja będąca lepszą wersją <a href="https://carsdesigns.netlify.app/">ca
 które sprawią że aplkacja będzie bardzo użyteczna dla osób które interesują się motoryzacją.
 
 Projekt zostanie znacznie bardziej doprawcowany od poprzednika, stworzony w nowocześniejszej i ciekawszej technologi, 
-dodatkowo będzie posiadał własny backend, architektóra aplikacji  będzie znacznie bardziej przemyślana.
+dodatkowo będzie posiadał własny backend, a architektóra aplikacji będzie znacznie bardziej przemyślana.
 
 Wstępne wybrane technologie
 
@@ -13,7 +13,8 @@ Frontend:
 - Typescript
 - Tailwind
 - clark
+- react icons
+- eslint
   
 Backend:
-- Node.js
 - Prisma
