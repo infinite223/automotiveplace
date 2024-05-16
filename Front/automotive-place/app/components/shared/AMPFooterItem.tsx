@@ -59,7 +59,6 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
               handleClickLike && "cursor-pointer"
             }`}
             onClick={handleClickLike}
-            aria-disabled={!false}
           >
             <FaHeart
               size={17}

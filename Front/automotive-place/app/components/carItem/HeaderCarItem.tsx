@@ -15,26 +15,30 @@ interface IHeaderCarItemProps {
   id: string;
 }
 
-const getOptionsMenu = (isMy: boolean, id: string) => {
-  console.log("elo");
-  let options: TMenuItem[] = [
-    {
-      name: "Napisz do twórcy",
-      handleClick: () => alert("navigate to chat"),
-    },
-    {
-      name: "Zgłoś element",
-      handleClick: () => alert("navigate to report"),
-    },
-  ];
+const options: TMenuItem[] = [
+  {
+    name: "Napisz do twórcy",
+    handleClick: () => alert("navigate to chat"),
+  },
+  {
+    name: "Zgłoś element",
+    handleClick: () => alert("navigate to report"),
+  },
+];
 
+const getOptionsMenu = (isMy: boolean, id: string) => {
+  let customOptions: TMenuItem[] = []
   const additionalOption = {
     name: "Edytuj",
     handleClick: () => alert("navigate to edit"),
     icon: <BiEdit size={17} />,
   };
 
-  if (isMy) options.push(additionalOption);
+  if (isMy) {
+    customOptions = [options[1], additionalOption]
+  } else {
+    customOptions = options
+  }
 
   return options;
 };

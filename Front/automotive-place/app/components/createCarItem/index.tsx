@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {AMPInput} from "./../shared/AMPInput";
-import {validCarElement} from "./validation";
+import {validCarElement} from "./Validation";
 
 interface IInputValue {
   value: string | number;

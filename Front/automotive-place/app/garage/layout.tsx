@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     "Miejsce gdzie użytkownik może trzymać swoje podzespoły samochodowe, projekty aut",
 };
-
+  
 export default function Layout({
   children,
 }: Readonly<{
