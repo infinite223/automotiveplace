@@ -11,6 +11,10 @@
   @apply bg-zinc-300 dark:bg-zinc-800;
 }
 
+.bg-custom-3 {
+  @apply bg-zinc-200 dark:bg-zinc-800;
+}
+
 .text-custom-primary {
   @apply text-black dark:text-white;
 }
@@ -23,5 +27,8 @@
   @apply text-zinc-300 dark:text-zinc-800;
 }
 
+.custom-blur {
+  backdrop-filter: blur(2px);
+}
 
 

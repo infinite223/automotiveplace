@@ -9,6 +9,9 @@ import {FaListUl} from "react-icons/fa6";
 import {FiGrid} from "react-icons/fi";
 import {BiSolidCarGarage} from "react-icons/bi";
 import useOnScreen from "../hooks/useOnScreen";
+import AMPModal from "../components/shared/AMPModal";
+import {AMPInput} from "../components/shared/AMPInput";
+import {CreateCarItemView} from "../components/createCarItem";
 
 export default function Garage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -16,6 +19,10 @@ export default function Garage() {
   const [tableView, setTableView] = useState<TTableView>("elements");
   const ref = useRef<HTMLDivElement>(null);
   const isVisible = useOnScreen(ref);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     if (isVisible) {
@@ -41,9 +48,19 @@ export default function Garage() {
 
   return (
     <main className="flex min-h-screen bg-custom-primary text-custom-primary flex-col items-center gap-2 p-2">
-      <div className="flex items-center gap-3 w-full">
-        <BiSolidCarGarage size={26} />
-        <h1 className="font-extrabold text-[25px]">Garage</h1>
+      <div className="flex items-center w-full justify-between">
+        <div className="flex items-center gap-3">
+          <BiSolidCarGarage size={26} />
+          <h1 className="font-extrabold text-[25px]">Garage</h1>
+        </div>
+
+        <button onClick={openModal}>Create car item </button>
+
+        {isModalOpen && (
+          <AMPModal onClose={closeModal}>
+            <CreateCarItemView />
+          </AMPModal>
+        )}
       </div>
 
       <div className="flex w-full">
