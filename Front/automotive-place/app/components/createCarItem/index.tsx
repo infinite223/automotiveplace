@@ -1,6 +1,10 @@
 import React, {useState} from "react";
 import {AMPInput} from "./../shared/AMPInput";
 import {validCarElement} from "./Validation";
+import {AMPTextarea} from "../shared/AMPTextarea";
+import Link from "next/link";
+import {GrHelpBook} from "react-icons/gr";
+import {AMPHelpFooter} from "../shared/AMPHelpFooter";
 
 interface IInputValue {
   value: string | number;
@@ -36,11 +40,11 @@ export const CreateCarItemView = () => {
 
   return (
     <main
-      className="flex items-center justify-center text-custom-primary text-sm rounded-md w-[300px]"
+      className="flex items-center justify-center text-custom-primary text-sm rounded-md w-[330px]"
       onClick={(e) => e.stopPropagation()}
     >
       <form
-        className="rounded-md p-5 pt-10 pb-10 flex flex-col w-11/12 max-w-lg group"
+        className="rounded-md p-2 flex flex-col w-11/12 max-w-lg group"
         noValidate
         action={onSubmit}
       >
@@ -54,7 +58,7 @@ export const CreateCarItemView = () => {
           inputStyles={{fontSize: 12}}
           errorText={nameElement.errorText}
         />
-        <AMPInput
+        <AMPTextarea
           name="Opis elementu"
           setValue={(text) =>
             setDescription({value: text, errorText: validValue(text)})
@@ -69,6 +73,8 @@ export const CreateCarItemView = () => {
         >
           Dodaj element
         </button>
+
+        <AMPHelpFooter footerText="Czym jest element?" />
       </form>
     </main>
   );
