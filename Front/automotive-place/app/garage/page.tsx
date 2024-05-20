@@ -1,7 +1,7 @@
 "use client";
 
 import {useEffect, useRef, useState} from "react";
-import {carItems} from "../utils/data/carItem";
+import {carItems as initialCarItems} from "../utils/data/carItem";
 import {CarItem} from "../components/carItem";
 import {TCarItem, TTableView} from "../utils/types";
 import {AMPTable} from "../components/shared/AMPTable";
@@ -10,12 +10,12 @@ import {FiGrid} from "react-icons/fi";
 import {BiSolidCarGarage} from "react-icons/bi";
 import useOnScreen from "../hooks/useOnScreen";
 import AMPModal from "../components/shared/AMPModal";
-import {AMPInput} from "../components/shared/AMPInput";
 import {CreateCarItemView} from "../components/createCarItem";
 
 export default function Garage() {
   const [isLoading, setIsLoading] = useState(true);
-  const [carItemsData, setCarItemsData] = useState<TCarItem[]>(carItems);
+  const [carItemsData, setCarItemsData] = useState<TCarItem[]>([]);
+  const [loadingItems, setLoadingItems] = useState<TCarItem[]>([]);
   const [tableView, setTableView] = useState<TTableView>("elements");
   const ref = useRef<HTMLDivElement>(null);
   const isVisible = useOnScreen(ref);
@@ -24,23 +24,46 @@ export default function Garage() {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const loadMoreItems = () => {
+    setLoadingItems(initialCarItems);
+    setIsLoading(true);
+
+    const timer = setTimeout(() => {
+      setCarItemsData((prevCarItemsData) => [
+        ...prevCarItemsData,
+        ...initialCarItems,
+      ]);
+
+      setLoadingItems([]);
+      setIsLoading(false);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  };
+
+  useEffect(() => {
+    if (carItemsData.length === 0) {
+      loadMoreItems();
+    }
+  }, []);
+
   useEffect(() => {
     if (isVisible) {
-      setIsLoading(true);
-      const timer = setTimeout(() => {
-        setCarItemsData((prevCarItemsData) => [
-          ...prevCarItemsData,
-          ...carItems,
-        ]);
-      }, 1000);
-
-      return () => {
-        clearTimeout(timer);
-      };
+      loadMoreItems();
     }
-
-    setIsLoading(false);
   }, [isVisible]);
+
+  useEffect(() => {
+    const checkIfScreenIsFilled = () => {
+      if (document.documentElement.scrollHeight <= window.innerHeight) {
+        loadMoreItems();
+      }
+    };
+
+    checkIfScreenIsFilled();
+  }, [carItemsData]);
 
   const onSearch = (value: string) => {
     console.log("value", value);
@@ -101,7 +124,17 @@ export default function Garage() {
               data={data}
               tableView={tableView}
               addCarItemTailwindStyles="m-1"
-              isLoading={isLoading}
+              isLoading={false}
+            />
+          ))}
+          loadingItems={loadingItems.map((data, id) => (
+            <CarItem
+              lineClamp={2}
+              key={id}
+              data={data}
+              tableView={tableView}
+              addCarItemTailwindStyles="m-1"
+              isLoading={true}
             />
           ))}
           title="Podzespoły projektu"

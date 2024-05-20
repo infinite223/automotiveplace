@@ -14,6 +14,7 @@ interface AMPTableProps {
   isLoading: boolean;
   onSearch?: (value: string) => void;
   footerRef?: RefObject<HTMLDivElement>;
+  loadingItems?: JSX.Element[];
 }
 
 export const AMPTable: FC<AMPTableProps> = ({
@@ -27,6 +28,7 @@ export const AMPTable: FC<AMPTableProps> = ({
   isLoading,
   onSearch,
   footerRef,
+  loadingItems,
 }) => {
   return (
     <main className="flex flex-col gap-1 w-full p-1 pb-2 shadow-md shadow-zinc-200 dark:shadow-zinc-900 rounded-md">
@@ -57,8 +59,13 @@ export const AMPTable: FC<AMPTableProps> = ({
           </div>
         ))}
 
-        {footerRef && <div ref={footerRef}></div>}
+        {loadingItems?.map((item, index) => (
+          <div key={index} className={`${wrapItemTailwindStyles}`}>
+            {item}
+          </div>
+        ))}
       </div>
+      {footerRef && <div ref={footerRef}></div>}
     </main>
   );
 };
