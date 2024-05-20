@@ -57,7 +57,11 @@ export default function Garage() {
         <button onClick={openModal}>Create car item </button>
 
         {isModalOpen && (
-          <AMPModal onClose={closeModal}>
+          <AMPModal
+            onClose={closeModal}
+            withHeader={true}
+            title="Dodawanie elementu"
+          >
             <CreateCarItemView />
           </AMPModal>
         )}

@@ -43,9 +43,20 @@ type TCarItem = {
     itemType:  ItemTypes,
     likes?:    TCarItemLikes[]
     authorId:    string,
-    projectId: string,
+    projectId?: string,
     project?:   TProject,
     author?:    TUser
+}
+
+type TCarItemCreate = {
+    forSell:   boolean,
+    isVisible: boolean,
+    inUse:     boolean,
+    name:      string,
+    description: string,
+    itemType:  ItemTypes,
+    authorId:    string,
+    projectId?: string,
 }
 
 type TCarItemLikes = {
@@ -83,3 +94,4 @@ type TSearchOptions = {
 type TTableView = "elements" | "rows"
 
 export type { TCarItem, TCarItemLikes, TProject, ItemTypes, TTableView, TSearchOptions }
+export type { TCarItemCreate }

@@ -31,4 +31,10 @@
   backdrop-filter: blur(2px);
 }
 
+.bg-baseColor {
+  @apply bg-teal-600
+}
 
+.text-baseColor {
+  @apply text-teal-600
+}

@@ -5,6 +5,8 @@ import {AMPTextarea} from "../shared/AMPTextarea";
 import Link from "next/link";
 import {GrHelpBook} from "react-icons/gr";
 import {AMPHelpFooter} from "../shared/AMPHelpFooter";
+import {ItemTypes, TCarItem, TCarItemCreate} from "@/app/utils/types";
+import {CarItem} from "@prisma/client";
 
 interface IInputValue {
   value: string | number;
@@ -16,13 +18,28 @@ export const CreateCarItemView = () => {
     value: "",
     errorText: null,
   });
+  const [forSell, setForSell] = useState(false);
+  const [inUse, setInUse] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [itemType, setItemType] = useState<ItemTypes>("Brakes");
   const [description, setDescription] = useState<IInputValue>({
     value: "",
     errorText: null,
   });
 
   const onSubmit = () => {
-    if (!validCarElement()) {
+    const newElement: TCarItemCreate = {
+      authorId: "",
+      description: description.value.toString(),
+      name: nameElement.value.toString(),
+      forSell,
+      inUse,
+      itemType,
+      isVisible,
+      projectId: "",
+    };
+
+    if (!validCarElement(newElement)) {
     }
   };
 
