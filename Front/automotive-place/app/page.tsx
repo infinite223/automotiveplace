@@ -1,17 +1,11 @@
-import prisma from "@/lib/prisma";
 import Link from "next/link";
-import {projectsData} from "./utils/data/project";
-
-async function getPost() {
-  const posts = await prisma.post.findMany();
-
-  console.log(posts);
-}
+import {getGenerateStartData} from "./services/data";
+import {AMPButton} from "./components/shared/AMPButton";
+const tryGetGenerateStartData = () => {
+  getGenerateStartData();
+};
 
 export default async function Home() {
-  const posts = await getPost();
-  console.log(projectsData);
-
   return (
     <main className="flex text-zinc-900 min-h-screen flex-col items-center justify-between p-24">
       <div className="flex flex-col items-center">
@@ -26,6 +20,8 @@ export default async function Home() {
           Go to garage
         </div>
       </Link>
+
+      <AMPButton name="Generate data" />
 
       <div className="flex flex-col"></div>
     </main>

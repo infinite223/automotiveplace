@@ -106,7 +106,9 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
               </div>
             )}
 
-            <span className="text_secend">{createdAt.toDateString()}</span>
+            <span className="text_secend">
+              {new Date(createdAt).toString()}
+            </span>
           </div>
         )}
       </div>

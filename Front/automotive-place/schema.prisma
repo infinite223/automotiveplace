@@ -86,6 +86,7 @@ model CarItem {
   likesCount  Int
   name        String
   description String
+  itemType    String
   likes       CarItemLikes[]
   authorId    String
 

@@ -11,11 +11,13 @@ import {BiSolidCarGarage} from "react-icons/bi";
 import useOnScreen from "../hooks/useOnScreen";
 import AMPModal from "../components/shared/AMPModal";
 import {CreateCarItemView} from "../components/createCarItem";
+import {getAllCarItems} from "../services/carItem";
 
 export default function Garage() {
   const [isLoading, setIsLoading] = useState(true);
   const [carItemsData, setCarItemsData] = useState<TCarItem[]>([]);
   const [loadingItems, setLoadingItems] = useState<TCarItem[]>([]);
+  const [hasMore, setHasMore] = useState<null | boolean>(null);
   const [tableView, setTableView] = useState<TTableView>("elements");
   const ref = useRef<HTMLDivElement>(null);
   const isVisible = useOnScreen(ref);
@@ -24,40 +26,47 @@ export default function Garage() {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const loadMoreItems = () => {
+  const loadMoreItems = async () => {
     setLoadingItems(initialCarItems);
     setIsLoading(true);
 
-    const timer = setTimeout(() => {
+    const carItems: any = await getAllCarItems();
+    console.log(carItems.hasMore);
+    setHasMore(carItems.hasMore);
+
+    if (carItemsData.length == 0) {
+      setCarItemsData(carItems.data);
+    } else {
       setCarItemsData((prevCarItemsData) => [
         ...prevCarItemsData,
-        ...initialCarItems,
+        ...carItems.data,
       ]);
+    }
 
-      setLoadingItems([]);
-      setIsLoading(false);
-    }, 1000);
-
-    return () => {
-      clearTimeout(timer);
-    };
+    setLoadingItems([]);
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    if (carItemsData.length === 0) {
+    if (carItemsData.length === 0 && hasMore === null) {
       loadMoreItems();
     }
-  }, []);
+  }, [carItemsData]);
 
   useEffect(() => {
-    if (isVisible) {
+    if (isVisible && hasMore === true) {
       loadMoreItems();
     }
   }, [isVisible]);
 
   useEffect(() => {
     const checkIfScreenIsFilled = () => {
-      if (document.documentElement.scrollHeight <= window.innerHeight) {
+      if (
+        document.documentElement.scrollHeight <= window.innerHeight &&
+        hasMore === true
+      ) {
+        console.log("tutaj 2", hasMore);
+
         loadMoreItems();
       }
     };

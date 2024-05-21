@@ -7,6 +7,7 @@ import {GrHelpBook} from "react-icons/gr";
 import {AMPHelpFooter} from "../shared/AMPHelpFooter";
 import {ItemTypes, TCarItem, TCarItemCreate} from "@/app/utils/types";
 import {CarItem} from "@prisma/client";
+import {createCarItem} from "@/app/services/carItem";
 
 interface IInputValue {
   value: string | number;
@@ -38,6 +39,21 @@ export const CreateCarItemView = () => {
       isVisible,
       projectId: "",
     };
+
+    const newElement_2: TCarItemCreate = {
+      authorId: "",
+      description: description.value.toString(),
+      name: nameElement.value.toString(),
+      forSell: false,
+      inUse: false,
+      itemType: "Audio",
+      isVisible: false,
+      projectId: "22",
+    };
+
+    const result = createCarItem(newElement_2);
+
+    console.log(result);
 
     if (!validCarElement(newElement)) {
     }
