@@ -63,7 +63,33 @@ type TCarItemLikes = {
 
 }
 
-type ItemTypes = "Turbo" | "Exhaust" | "Kompressor" | "Brakes" | "Audio" | "Clutch" | "Suspension" | "Engine Tune-up" | "Transmission" | "Wheels" | "Tires" | "Fuel Injectors" | "Cooling System" | "Battery" | "Alternator" | "Starter Motor" | "Steering System" | "Lights" | "Body Kit";
+// type ItemTypes = "Turbo" | "Exhaust" | "Kompressor" | "Brakes" | "Audio" | "Clutch" | "Suspension" | "Engine Tune-up" | "Transmission" | "Wheels" | "Tires" | "Fuel Injectors" | "Cooling System" | "Battery" | "Alternator" | "Starter Motor" | "Steering System" | "Lights" | "Body Kit";
+
+enum ItemTypes {
+    Turbo = "Turbo",
+    Exhaust = "Exhaust",
+    Kompressor = "Kompressor",
+    Brakes = "Brakes",
+    Audio = "Audio",
+    Clutch = "Clutch",
+    Suspension = "Suspension",
+    EngineTuneUp = "Engine Tune-up",
+    Transmission = "Transmission",
+    Wheels = "Wheels",
+    Tires = "Tires",
+    FuelInjectors = "Fuel Injectors",
+    CoolingSystem = "Cooling System",
+    Battery = "Battery",
+    Alternator = "Alternator",
+    StarterMotor = "Starter Motor",
+    SteeringSystem = "Steering System",
+    Lights = "Lights",
+    BodyKit = "Body Kit"
+}
+
+export function isValidItemType(type: any): type is ItemTypes {
+    return Object.values(ItemTypes).includes(type);
+}
 
 type TSearchOptions = {
     query: string,
@@ -92,6 +118,13 @@ type TSearchOptions = {
 
 
 type TTableView = "elements" | "rows"
+type TValidResult = {
+    error: string,
+    valid: boolean
+}
 
-export type { TCarItem, TCarItemLikes, TProject, ItemTypes, TTableView, TSearchOptions }
+export type { TCarItem, TCarItemLikes, TProject, TTableView, TSearchOptions }
 export type { TCarItemCreate }
+export type {TValidResult}
+
+export { ItemTypes }

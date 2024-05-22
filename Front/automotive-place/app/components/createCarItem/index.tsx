@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {AMPInput} from "./../shared/AMPInput";
-import {validCarElement} from "./Validation";
+import {validCarElement, validCarNameValue} from "./Validation";
 import {AMPTextarea} from "../shared/AMPTextarea";
 import Link from "next/link";
 import {GrHelpBook} from "react-icons/gr";
@@ -22,7 +22,7 @@ export const CreateCarItemView = () => {
   const [forSell, setForSell] = useState(false);
   const [inUse, setInUse] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [itemType, setItemType] = useState<ItemTypes>("Brakes");
+  const [itemType, setItemType] = useState<ItemTypes>(ItemTypes.Brakes);
   const [description, setDescription] = useState<IInputValue>({
     value: "",
     errorText: null,
@@ -46,29 +46,19 @@ export const CreateCarItemView = () => {
       name: nameElement.value.toString(),
       forSell: false,
       inUse: false,
-      itemType: "Audio",
+      itemType: ItemTypes.Audio,
       isVisible: false,
       projectId: "22",
     };
 
-    const result = createCarItem(newElement_2);
+    const {error, valid} = validCarElement(newElement);
 
-    console.log(result);
-
-    if (!validCarElement(newElement)) {
+    if (valid) {
+      const result = createCarItem(newElement_2);
+      console.log(result);
+    } else {
+      throw new Error(error);
     }
-  };
-
-  const validValue = (value: string | number) => {
-    if (typeof value === "number") {
-      return "Nazwa elementu nie może być liczbą";
-    }
-
-    if (value.length < 3) {
-      return "Nazwa elementu musi być dłuższa";
-    }
-
-    return null;
   };
 
   return (
@@ -84,7 +74,10 @@ export const CreateCarItemView = () => {
         <AMPInput
           name="Nazwa elementu"
           setValue={(text) =>
-            setNameElement({value: text, errorText: validValue(text)})
+            setNameElement({
+              value: text,
+              errorText: validCarNameValue(text).error,
+            })
           }
           value={nameElement.value}
           placeholder="Np. Turbina K03s"
@@ -93,9 +86,7 @@ export const CreateCarItemView = () => {
         />
         <AMPTextarea
           name="Opis elementu"
-          setValue={(text) =>
-            setDescription({value: text, errorText: validValue(text)})
-          }
+          setValue={(text) => setDescription({value: text, errorText: ""})}
           value={description.value}
           placeholder="Np. Seryjna turbina, bez modyfikacji, orginalnie była w audi A3 8p "
           inputStyles={{fontSize: 12}}
