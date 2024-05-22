@@ -134,6 +134,7 @@ export default function Garage() {
               tableView={tableView}
               addCarItemTailwindStyles="m-1"
               isLoading={false}
+              showFullView={false}
             />
           ))}
           loadingItems={loadingItems.map((data, id) => (

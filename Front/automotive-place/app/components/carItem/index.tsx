@@ -11,6 +11,7 @@ interface CarItemProps {
   addCarItemTailwindStyles?: string;
   isLoading: boolean;
   tableView: TTableView;
+  showFullView?: boolean;
 }
 
 export const CarItem: FC<CarItemProps> = ({
@@ -19,6 +20,7 @@ export const CarItem: FC<CarItemProps> = ({
   addCarItemTailwindStyles,
   isLoading,
   tableView,
+  showFullView = true,
 }) => {
   const isMyCarElement = data.authorId === "1";
 
@@ -53,7 +55,7 @@ export const CarItem: FC<CarItemProps> = ({
     <main
       className={`${
         isLoading && "animate-pulse "
-      } flex select-none rounded-md p-2 gap-1.5 shadow-md shadow-zinc-200 dark:shadow-zinc-900 ${addCarItemTailwindStyles} ${
+      } flex select-none rounded-md p-2 gap-1.5 border border-zinc-200 dark:border-zinc-900 ${addCarItemTailwindStyles} ${
         tableView === "rows" ? "w-full grid grid-cols-4" : "flex-col"
       }`}
     >
@@ -65,29 +67,33 @@ export const CarItem: FC<CarItemProps> = ({
         isLoading={isLoading}
         tableView={tableView}
       />
-      <div
-        className={`${lineClampsVariants[lineClamp]} ${
-          tableView === "rows" && "col-span-2"
-        } leading-4 text-[12px] ${
-          isLoading && "w-full bg-custom-secend rounded-md h-[50px]"
-        }`}
-      >
-        {!isLoading ? (
-          data.description
-        ) : (
-          <span className="loading-text-custom">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-            feugiat iaculis elementum.
-          </span>
-        )}
-      </div>
-      <AMPFooterItem
-        isLoading={isLoading}
-        handleClickLike={handleClickLike}
-        data={localData}
-        tableView={tableView}
-        isMyElement={isMyCarElement}
-      />
+      {showFullView && (
+        <>
+          <div
+            className={`${lineClampsVariants[lineClamp]} ${
+              tableView === "rows" && "col-span-2"
+            } leading-4 text-[12px] ${
+              isLoading && "w-full bg-custom-secend rounded-md h-[50px]"
+            }`}
+          >
+            {!isLoading ? (
+              data.description
+            ) : (
+              <span className="loading-text-custom">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+                feugiat iaculis elementum.
+              </span>
+            )}
+          </div>
+          <AMPFooterItem
+            isLoading={isLoading}
+            handleClickLike={handleClickLike}
+            data={localData}
+            tableView={tableView}
+            isMyElement={isMyCarElement}
+          />
+        </>
+      )}
     </main>
   );
 };

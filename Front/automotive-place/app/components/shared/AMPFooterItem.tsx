@@ -6,6 +6,7 @@ import {FaHeart} from "react-icons/fa";
 import {MdOutlineAttachMoney, MdOutlineMoneyOff} from "react-icons/md";
 import "react-tooltip/dist/react-tooltip.css";
 import {Tooltip} from "react-tooltip";
+import moment from "moment";
 
 interface AMPFooterItemProps {
   isLoading: boolean;
@@ -55,7 +56,7 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
       >
         {!isLoading && (
           <div
-            className={`flex rounded-md bg-custom-secend h-min gap-1 pl-1 pr-1 pt-0.5 pb-0.5 items-center ${
+            className={`flex rounded-md bg-custom-primary h-min gap-1.5 pl-1 pr-1 pt-0.5 pb-0.5 items-center ${
               handleClickLike && "cursor-pointer"
             }`}
             onClick={handleClickLike}
@@ -107,7 +108,7 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
             )}
 
             <span className="text_secend">
-              {new Date(createdAt).toString()}
+              {moment(createdAt, "YYYYMMDD").fromNow()}
             </span>
           </div>
         )}

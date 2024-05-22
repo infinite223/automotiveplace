@@ -31,7 +31,7 @@ export const AMPTable: FC<AMPTableProps> = ({
   loadingItems,
 }) => {
   return (
-    <main className="flex flex-col gap-1 w-full p-1 pb-2 shadow-md shadow-zinc-200 dark:shadow-zinc-900 rounded-md">
+    <main className="flex flex-col gap-1 w-full p-1 pb-2 border border-zinc-200 dark:border-zinc-900 rounded-md">
       <div className="flex flex-col gap-1 items-start w-full pr-2 pl-2">
         <div className="flex items-center justify-between w-full">
           <h3 className="font-semibold text-lg">{title}</h3>

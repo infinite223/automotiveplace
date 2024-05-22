@@ -5,6 +5,7 @@ import React, {FC, useEffect, useState} from "react";
 import {IconFromItemType} from "./IconFromItemType";
 import {AMPMenu, TMenuItem} from "../shared/AMPMenu";
 import {BiEdit} from "react-icons/bi";
+import {removeCarItem} from "@/app/services/carItem";
 
 interface IHeaderCarItemProps {
   itemType: ItemTypes;
@@ -15,7 +16,7 @@ interface IHeaderCarItemProps {
   id: string;
 }
 
-const options: TMenuItem[] = [
+const _options: TMenuItem[] = [
   {
     name: "Napisz do twórcy",
     handleClick: () => alert("navigate to chat"),
@@ -27,20 +28,25 @@ const options: TMenuItem[] = [
 ];
 
 const getOptionsMenu = (isMy: boolean, id: string) => {
-  let customOptions: TMenuItem[] = []
+  let customOptions: TMenuItem[] = [];
   const additionalOption = {
     name: "Edytuj",
     handleClick: () => alert("navigate to edit"),
     icon: <BiEdit size={17} />,
   };
 
+  const additionalOption_2 = {
+    name: "Usuń element",
+    handleClick: () => removeCarItem(id),
+  };
+
   if (isMy) {
-    customOptions = [options[1], additionalOption]
+    customOptions = [_options[1], additionalOption];
   } else {
-    customOptions = options
+    customOptions = [..._options, additionalOption_2];
   }
 
-  return options;
+  return customOptions;
 };
 
 export const HeaderCarItem: FC<IHeaderCarItemProps> = ({
