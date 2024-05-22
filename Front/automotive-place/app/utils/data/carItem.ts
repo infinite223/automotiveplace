@@ -1,4 +1,4 @@
-import { TCarItem } from "../types";
+import { ItemTypes, TCarItem } from "../types";
 
 const carItems: TCarItem[] = [
     {
@@ -11,7 +11,7 @@ const carItems: TCarItem[] = [
         likesCount: 2,
         authorId: "1",
         isVisible: true,
-        itemType: "Turbo",
+        itemType: ItemTypes.Turbo,
         name: "Turbo K04",
         isLikedByAuthUser: false,
         projectId: "",
@@ -26,7 +26,7 @@ const carItems: TCarItem[] = [
         authorId: "2",
         likesCount: 1,
         isVisible: true,
-        itemType: "Audio",
+        itemType: ItemTypes.Audio,
         name: "JBL s1024",
         projectId: "",
     },
@@ -43,7 +43,7 @@ for (let i = 0; i < 10; i++) {
         authorId: (i + 3).toString(),
         inUse: i % 3 === 0,
         isVisible: true,
-        itemType: "Turbo",
+        itemType: ItemTypes.Turbo,
         name: "Item " + (i + 1),
         projectId: "",
     });

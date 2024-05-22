@@ -1,4 +1,4 @@
-import { TCarItem } from "./types";
+import { ItemTypes, TCarItem } from "./types";
 
 const carItemData: TCarItem = {
     id: "1",
@@ -9,7 +9,7 @@ const carItemData: TCarItem = {
     inUse: false,
     likesCount: 4,
     isVisible: true,
-    itemType: "Turbo",
+    itemType: ItemTypes.Turbo,
     name: "Turbo K04",
     authorId: "1",
     projectId: "",

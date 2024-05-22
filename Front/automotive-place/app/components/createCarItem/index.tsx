@@ -63,11 +63,12 @@ export const CreateCarItemView = () => {
 
   return (
     <main
-      className="flex items-center justify-center text-custom-primary text-sm rounded-md w-[330px]"
+      className="flex justify-center text-custom-primary text-sm rounded-md"
       onClick={(e) => e.stopPropagation()}
     >
+      <div className="w-[150px] h-[11/12] p-3 mr-0 rounded-sm border-r border-zinc-700"></div>
       <form
-        className="rounded-md p-2 flex flex-col w-11/12 max-w-lg group"
+        className="rounded-md p-2 pr-4 pl-4 flex flex-col max-w-lg group w-[300px]"
         noValidate
         action={onSubmit}
       >
