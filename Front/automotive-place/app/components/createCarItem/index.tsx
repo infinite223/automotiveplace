@@ -8,6 +8,7 @@ import {AMPHelpFooter} from "../shared/AMPHelpFooter";
 import {ItemTypes, TCarItem, TCarItemCreate} from "@/app/utils/types";
 import {CarItem} from "@prisma/client";
 import {createCarItem} from "@/app/services/carItem";
+import {AMPSelect} from "../shared/AMPSelect";
 
 interface IInputValue {
   value: string | number;
@@ -19,6 +20,7 @@ export const CreateCarItemView = () => {
     value: "",
     errorText: null,
   });
+  const [selectedValue, setSelectedValue] = React.useState<string | number>("");
   const [forSell, setForSell] = useState(false);
   const [inUse, setInUse] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -60,13 +62,27 @@ export const CreateCarItemView = () => {
       throw new Error(error);
     }
   };
-
+  const options = [
+    {label: "Choose a country", value: ""},
+    {label: "United States", value: "US"},
+    {label: "Canada", value: "CA"},
+    {label: "France", value: "FR"},
+    {label: "Germany", value: "DE"},
+  ];
   return (
     <main
       className="flex justify-center text-custom-primary text-sm rounded-md"
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="w-[150px] h-[11/12] p-3 mr-0 rounded-sm border-r border-zinc-700"></div>
+      <div className="w-[200px] h-[11/12] p-3 mr-0 rounded-sm border-r border-zinc-700 ml-2">
+        <div>
+          <AMPSelect
+            value={selectedValue}
+            setValue={setSelectedValue}
+            options={options}
+          />
+        </div>
+      </div>
       <form
         className="rounded-md p-2 pr-4 pl-4 flex flex-col max-w-lg group w-[300px]"
         noValidate
