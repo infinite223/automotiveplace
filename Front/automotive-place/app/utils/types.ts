@@ -84,7 +84,31 @@ enum ItemTypes {
     StarterMotor = "Starter Motor",
     SteeringSystem = "Steering System",
     Lights = "Lights",
-    BodyKit = "Body Kit"
+    BodyKit = "Body Kit",
+    Other = "Other"
+}
+
+enum ItemTypesPL {
+    Turbo = "Turbo",
+    Exhaust = "Wydech",
+    Kompressor = "Kompresor",
+    Brakes = "Hamulce",
+    Audio = "Audio",
+    Clutch = "Sprzęgło",
+    Suspension = "Zawieszenie",
+    EngineTuneUp = "Strojenie silnika",
+    Transmission = "Skrzynia biegów",
+    Wheels = "Koła",
+    Tires = "Opony",
+    FuelInjectors = "Wtryskiwacze paliwa",
+    CoolingSystem = "Układ chłodzenia",
+    Battery = "Akumulator",
+    Alternator = "Alternator",
+    StarterMotor = "Rozrusznik",
+    SteeringSystem = "Układ kierowniczy",
+    Lights = "Światła",
+    BodyKit = "Body Kit",
+    Other = "Inny"
 }
 
 export function isValidItemType(type: any): type is ItemTypes {
@@ -127,4 +151,10 @@ export type { TCarItem, TCarItemLikes, TProject, TTableView, TSearchOptions }
 export type { TCarItemCreate }
 export type {TValidResult}
 
-export { ItemTypes }
+const itemTypesArray = Object.values(ItemTypesPL).map(value => ({
+    label: value,
+    value: value
+}));
+
+export { ItemTypes, itemTypesArray, ItemTypesPL }
+

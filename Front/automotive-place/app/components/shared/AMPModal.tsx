@@ -12,11 +12,17 @@ const AMPModal = ({onClose, children, withHeader, title}: IModalProps) => {
   return (
     <div
       onClick={onClose}
-      className="fixed top-0 left-0 w-full z-20 h-full flex justify-center items-center bg-teal-950/25 bg-opacity-50 custom-blur"
+      className="fixed cursor-pointer top-0 left-0 w-full z-20 h-full flex justify-center items-center bg-teal-950/25 bg-opacity-50 custom-blur"
     >
-      <div className="bg-custom-primary shadow-zinc-200 dark:shadow-zinc-800 shadow-sm rounded-md p-0 z-30">
-        {withHeader && <AMPModalHeader title={title} onClose={onClose} />}
-        {children}
+      <div
+        className="pr-40 pl-40 pt-20 pb-2 cursor-default"
+        id="onClose_helper"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="bg-custom-primary shadow-zinc-200 dark:shadow-zinc-800 shadow-sm rounded-md p-0 z-30">
+          {withHeader && <AMPModalHeader title={title} onClose={onClose} />}
+          {children}
+        </div>
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
 "use client";
 
-import {ItemTypes} from "@/app/utils/types";
+import {ItemTypes, ItemTypesPL} from "@/app/utils/types";
 import React, {FC, useEffect, useState} from "react";
 
 interface IconFromItemTypeProps {
-  itemType: ItemTypes;
+  itemType: ItemTypes | ItemTypesPL;
   isLoading: boolean;
 }
 
@@ -24,7 +24,7 @@ export const IconFromItemType: FC<IconFromItemTypeProps> = ({
         "https://cdn2.iconfinder.com/data/icons/squircle-ui/32/Sound-1024.png"
       );
     }
-  }, []);
+  }, [itemType]);
 
   return (
     <div className={`${isLoading && "bg-custom-secend w-7 h-7 rounded-full"}`}>

@@ -5,10 +5,17 @@ import {AMPTextarea} from "../shared/AMPTextarea";
 import Link from "next/link";
 import {GrHelpBook} from "react-icons/gr";
 import {AMPHelpFooter} from "../shared/AMPHelpFooter";
-import {ItemTypes, TCarItem, TCarItemCreate} from "@/app/utils/types";
+import {
+  ItemTypes,
+  ItemTypesPL,
+  TCarItem,
+  TCarItemCreate,
+  itemTypesArray,
+} from "@/app/utils/types";
 import {CarItem} from "@prisma/client";
 import {createCarItem} from "@/app/services/carItem";
 import {AMPSelect} from "../shared/AMPSelect";
+import {IconFromItemType} from "../carItem/IconFromItemType";
 
 interface IInputValue {
   value: string | number;
@@ -20,7 +27,9 @@ export const CreateCarItemView = () => {
     value: "",
     errorText: null,
   });
-  const [selectedValue, setSelectedValue] = React.useState<string | number>("");
+  const [carItemType, setCarItemType] = useState<ItemTypes | ItemTypesPL>(
+    ItemTypesPL.Turbo
+  );
   const [forSell, setForSell] = useState(false);
   const [inUse, setInUse] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -62,24 +71,27 @@ export const CreateCarItemView = () => {
       throw new Error(error);
     }
   };
-  const options = [
-    {label: "Choose a country", value: ""},
-    {label: "United States", value: "US"},
-    {label: "Canada", value: "CA"},
-    {label: "France", value: "FR"},
-    {label: "Germany", value: "DE"},
-  ];
+
+  const handleCarItemVallue = (value: string | number) => {
+    const _carItemType: any = value;
+    setCarItemType(_carItemType);
+  };
+
   return (
     <main
       className="flex justify-center text-custom-primary text-sm rounded-md"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="w-[200px] h-[11/12] p-3 mr-0 rounded-sm border-r border-zinc-700 ml-2">
-        <div>
+        <div className="flex items-center">
           <AMPSelect
-            value={selectedValue}
-            setValue={setSelectedValue}
-            options={options}
+            value={carItemType}
+            setValue={(value) => handleCarItemVallue(value)}
+            options={itemTypesArray}
+            title="Rodzaj elementu:"
+            leftIcon={
+              <IconFromItemType itemType={carItemType} isLoading={false} />
+            }
           />
         </div>
       </div>
