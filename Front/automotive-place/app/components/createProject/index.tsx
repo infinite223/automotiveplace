@@ -1,29 +1,25 @@
 import React, { useState } from "react";
 import { AMPInput } from "./../shared/AMPInput";
-import { validCarElement, validCarNameValue } from "./Validation";
+import { validCarNameValue, validProject } from "./Validation";
 import { AMPTextarea } from "../shared/AMPTextarea";
-import Link from "next/link";
-import { GrHelpBook } from "react-icons/gr";
-import { AMPHelpFooter } from "../shared/AMPHelpFooter";
 import {
   ItemTypes,
   ItemTypesPL,
-  TCarItem,
-  TCarItemCreate,
+  TProjectCreate,
   itemTypesArray,
 } from "@/app/utils/types";
-import { CarItem } from "@prisma/client";
-import { createCarItem } from "@/app/services/carItem";
 import { AMPSelect } from "../shared/AMPSelect";
 import { IconFromItemType } from "../carItem/IconFromItemType";
 import { AMPSwitch } from "../shared/AMPSwitch";
+import { createProject } from "@/app/services/project";
+import { AMPHelpFooter } from "../shared/AMPHelpFooter";
 
 interface IInputValue {
   value: string | number;
   errorText: string | null;
 }
 
-export const CreateCarItemView = () => {
+export const CreateProjectView = () => {
   const [nameElement, setNameElement] = useState<IInputValue>({
     value: "",
     errorText: null,
@@ -33,6 +29,9 @@ export const CreateCarItemView = () => {
   );
   const [forSell, setForSell] = useState(false);
   const [inUse, setInUse] = useState(false);
+  const [model, setModel] = useState("");
+  const [carMake, setCarMake] = useState("");
+
   const [isVisible, setIsVisible] = useState(false);
   const [itemType, setItemType] = useState<ItemTypes>(ItemTypes.Brakes);
   const [description, setDescription] = useState<IInputValue>({
@@ -41,32 +40,22 @@ export const CreateCarItemView = () => {
   });
 
   const onSubmit = () => {
-    const newElement: TCarItemCreate = {
+    const newProject: TProjectCreate = {
       authorId: "",
       description: description.value.toString(),
       name: nameElement.value.toString(),
       forSell,
       inUse,
-      itemType,
+      carMake,
+      model,
       isVisible,
       projectId: "",
     };
 
-    const newElement_2: TCarItemCreate = {
-      authorId: "",
-      description: description.value.toString(),
-      name: nameElement.value.toString(),
-      forSell: false,
-      inUse: false,
-      itemType: ItemTypes.Audio,
-      isVisible: false,
-      projectId: "22",
-    };
-
-    const { error, valid } = validCarElement(newElement);
+    const { error, valid } = validProject(newProject);
 
     if (valid) {
-      const result = createCarItem(newElement_2);
+      const result = createProject(newProject);
       console.log(result);
     } else {
       throw new Error(error);
@@ -83,22 +72,8 @@ export const CreateCarItemView = () => {
       className="flex justify-center text-custom-primary text-sm rounded-md"
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="w-[220px] h-[11/12] p-3 pr-4 rounded-sm border-r border-zinc-700 ml-2">
-        <div className="flex items-center">
-          <AMPSelect
-            value={carItemType}
-            setValue={(value) => handleCarItemVallue(value)}
-            options={itemTypesArray}
-            title="Rodzaj elementu:"
-            leftIcon={
-              <IconFromItemType itemType={carItemType} isLoading={false} />
-            }
-          />
-        </div>
-        <div className="flex flex-col gap-2 mt-3 ">
-          <h3 className="text-sm mb-1 text-teal-500 font-bold">
-            Dodatkowe opcje:
-          </h3>
+      <div className="w-[200px] h-[11/12] p-3 mr-0 rounded-sm border-r border-zinc-700 ml-2">
+        <div className="flex flex-col gap-2 mt-3">
           <AMPSwitch
             name="Element w użyciu?"
             setValue={setInUse}
@@ -111,7 +86,7 @@ export const CreateCarItemView = () => {
           />
 
           <p className="text-custom-secend leading-3 text-[11px] mt-2">
-            Po utworzeniu elementu można go edytować.
+            Po utworzeniu projektu można go edytować.
           </p>
         </div>
       </div>
@@ -144,10 +119,10 @@ export const CreateCarItemView = () => {
           type="submit"
           className="mt-4 bg-teal-800 py-2 rounded-md text-white group-invalid:pointer-events-none group-invalid:opacity-50"
         >
-          Dodaj element
+          Dodaj projekt
         </button>
 
-        <AMPHelpFooter footerText="Czym jest element?" />
+        <AMPHelpFooter footerText="Czym jest projekt?" />
       </form>
     </main>
   );
