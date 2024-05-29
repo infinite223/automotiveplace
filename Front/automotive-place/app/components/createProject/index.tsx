@@ -2,17 +2,11 @@ import React, { useState } from "react";
 import { AMPInput } from "./../shared/AMPInput";
 import { validCarNameValue, validProject } from "./Validation";
 import { AMPTextarea } from "../shared/AMPTextarea";
-import {
-  ItemTypes,
-  ItemTypesPL,
-  TProjectCreate,
-  itemTypesArray,
-} from "@/app/utils/types";
-import { AMPSelect } from "../shared/AMPSelect";
-import { IconFromItemType } from "../carItem/IconFromItemType";
 import { AMPSwitch } from "../shared/AMPSwitch";
 import { createProject } from "@/app/services/project";
 import { AMPHelpFooter } from "../shared/AMPHelpFooter";
+import { ItemTypes, ItemTypesPL } from "@/app/utils/types/carItem";
+import { TProjectCreate } from "@/app/utils/types/project";
 
 interface IInputValue {
   value: string | number;

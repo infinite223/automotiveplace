@@ -2,21 +2,17 @@ import React, { useState } from "react";
 import { AMPInput } from "./../shared/AMPInput";
 import { validCarElement, validCarNameValue } from "./Validation";
 import { AMPTextarea } from "../shared/AMPTextarea";
-import Link from "next/link";
-import { GrHelpBook } from "react-icons/gr";
 import { AMPHelpFooter } from "../shared/AMPHelpFooter";
-import {
-  ItemTypes,
-  ItemTypesPL,
-  TCarItem,
-  TCarItemCreate,
-  itemTypesArray,
-} from "@/app/utils/types";
-import { CarItem } from "@prisma/client";
 import { createCarItem } from "@/app/services/carItem";
 import { AMPSelect } from "../shared/AMPSelect";
 import { IconFromItemType } from "../carItem/IconFromItemType";
 import { AMPSwitch } from "../shared/AMPSwitch";
+import {
+  ItemTypes,
+  ItemTypesPL,
+  TCarItemCreate,
+  itemTypesArray,
+} from "@/app/utils/types/carItem";
 
 interface IInputValue {
   value: string | number;

@@ -1,9 +1,5 @@
-import {
-  TCarItemCreate,
-  TProjectCreate,
-  TValidResult,
-  isValidItemType,
-} from "@/app/utils/types";
+import { TValidResult } from "@/app/utils/types";
+import { TProjectCreate } from "@/app/utils/types/project";
 
 export const validProject = (newElement: TProjectCreate) => {
   let valid: TValidResult = { error: "", valid: true };

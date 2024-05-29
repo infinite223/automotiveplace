@@ -1,4 +1,4 @@
-import { TProjectCreate } from "../utils/types";
+import { TProjectCreate } from "../utils/types/project";
 
 export const createProject = async (carItem: TProjectCreate) => {
   const response = await fetch(`/api/project/add-project`, {
