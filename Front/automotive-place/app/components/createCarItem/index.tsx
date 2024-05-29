@@ -1,10 +1,10 @@
-import React, {useState} from "react";
-import {AMPInput} from "./../shared/AMPInput";
-import {validCarElement, validCarNameValue} from "./Validation";
-import {AMPTextarea} from "../shared/AMPTextarea";
+import React, { useState } from "react";
+import { AMPInput } from "./../shared/AMPInput";
+import { validCarElement, validCarNameValue } from "./Validation";
+import { AMPTextarea } from "../shared/AMPTextarea";
 import Link from "next/link";
-import {GrHelpBook} from "react-icons/gr";
-import {AMPHelpFooter} from "../shared/AMPHelpFooter";
+import { GrHelpBook } from "react-icons/gr";
+import { AMPHelpFooter } from "../shared/AMPHelpFooter";
 import {
   ItemTypes,
   ItemTypesPL,
@@ -12,10 +12,11 @@ import {
   TCarItemCreate,
   itemTypesArray,
 } from "@/app/utils/types";
-import {CarItem} from "@prisma/client";
-import {createCarItem} from "@/app/services/carItem";
-import {AMPSelect} from "../shared/AMPSelect";
-import {IconFromItemType} from "../carItem/IconFromItemType";
+import { CarItem } from "@prisma/client";
+import { createCarItem } from "@/app/services/carItem";
+import { AMPSelect } from "../shared/AMPSelect";
+import { IconFromItemType } from "../carItem/IconFromItemType";
+import { AMPSwitch } from "../shared/AMPSwitch";
 
 interface IInputValue {
   value: string | number;
@@ -62,7 +63,7 @@ export const CreateCarItemView = () => {
       projectId: "22",
     };
 
-    const {error, valid} = validCarElement(newElement);
+    const { error, valid } = validCarElement(newElement);
 
     if (valid) {
       const result = createCarItem(newElement_2);
@@ -94,6 +95,22 @@ export const CreateCarItemView = () => {
             }
           />
         </div>
+        <div className="flex flex-col gap-2 mt-3">
+          <AMPSwitch
+            name="Element w użyciu?"
+            setValue={setInUse}
+            value={inUse}
+          />
+          <AMPSwitch
+            name="Element na sprzedaż?"
+            setValue={setForSell}
+            value={forSell}
+          />
+
+          <p className="text-custom-secend leading-3 text-[11px] mt-2">
+            Po utworzeniu elementu można go edytować.
+          </p>
+        </div>
       </div>
       <form
         className="rounded-md p-2 pr-4 pl-4 flex flex-col max-w-lg group w-[300px]"
@@ -110,15 +127,15 @@ export const CreateCarItemView = () => {
           }
           value={nameElement.value}
           placeholder="Np. Turbina K03s"
-          inputStyles={{fontSize: 12}}
+          inputStyles={{ fontSize: 12 }}
           errorText={nameElement.errorText}
         />
         <AMPTextarea
           name="Opis elementu"
-          setValue={(text) => setDescription({value: text, errorText: ""})}
+          setValue={(text) => setDescription({ value: text, errorText: "" })}
           value={description.value}
           placeholder="Np. Seryjna turbina, bez modyfikacji, orginalnie była w audi A3 8p "
-          inputStyles={{fontSize: 12}}
+          inputStyles={{ fontSize: 12, height: "150px" }}
         />
         <button
           type="submit"
