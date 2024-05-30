@@ -35,5 +35,21 @@ type TValidResult = {
   valid: boolean;
 };
 
-export type { TCarItemLikes, TTableView, TSearchOptions };
+type TLog = {
+  status: ErrorStatus | "Success" | "Information";
+  message?: string;
+  title: string;
+  date: Date;
+};
+
+enum ErrorStatus {
+  Low = 0,
+  Medium = 1,
+  High = 2,
+  Critical = 3,
+}
+
+export type { TCarItemLikes, TTableView, TSearchOptions, TLog };
 export type { TValidResult };
+
+export { ErrorStatus };
