@@ -1,3 +1,4 @@
+import { ICreateNotification } from "../components/logger/Notification";
 import { TCarItemCreate } from "../utils/types/carItem";
 
 export const getAllCarItems = async (limit = 10) => {
@@ -9,27 +10,42 @@ export const getAllCarItems = async (limit = 10) => {
   return result;
 };
 
-export const removeCarItem = async (id: string) => {
+interface IRemoveCarItemResponse {
+  result: any;
+  notification: ICreateNotification | null;
+}
+
+export const removeCarItem = async (
+  id: string
+): Promise<IRemoveCarItemResponse> => {
   const response = await fetch(`/api/carItem/delete-carItem?id=${id}`, {
     method: "DELETE",
   });
-  if (!response.ok) {
-    throw new Error("Failed to remove car items");
-  }
-  const result = await response.json();
+
+  const result: IRemoveCarItemResponse = await response.json();
+  console.log(result);
   return result;
 };
 
-export const createCarItem = async (carItem: TCarItemCreate) => {
+interface ICreateCarItemResponse {
+  carItem: any;
+  notification: ICreateNotification | null;
+}
+
+export const createCarItem = async (
+  carItem: TCarItemCreate
+): Promise<ICreateCarItemResponse> => {
   const response = await fetch(`/api/carItem/add-carItem`, {
     method: "POST",
     body: JSON.stringify(carItem),
     headers: { "Content-Type": "application/json" },
   });
+
   if (!response.ok) {
     throw new Error("Failed to add car items");
   }
 
-  const result = await response.json();
+  const result: ICreateCarItemResponse = await response.json();
+
   return result;
 };

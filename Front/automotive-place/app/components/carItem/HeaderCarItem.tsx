@@ -1,11 +1,14 @@
 "use client";
 
-import {ItemTypes, TTableView} from "@/app/utils/types";
-import React, {FC, useEffect, useState} from "react";
-import {IconFromItemType} from "./IconFromItemType";
-import {AMPMenu, TMenuItem} from "../shared/AMPMenu";
-import {BiEdit} from "react-icons/bi";
-import {removeCarItem} from "@/app/services/carItem";
+import { TTableView } from "@/app/utils/types";
+import React, { FC, useEffect, useState } from "react";
+import { IconFromItemType } from "./IconFromItemType";
+import { AMPMenu, TMenuItem } from "../shared/AMPMenu";
+import { BiEdit } from "react-icons/bi";
+import { removeCarItem } from "@/app/services/carItem";
+import { ItemTypes } from "@/app/utils/types/carItem";
+import { useDispatch } from "react-redux";
+import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 
 interface IHeaderCarItemProps {
   itemType: ItemTypes;
@@ -16,39 +19,6 @@ interface IHeaderCarItemProps {
   id: string;
 }
 
-const _options: TMenuItem[] = [
-  {
-    name: "Napisz do twórcy",
-    handleClick: () => alert("navigate to chat"),
-  },
-  {
-    name: "Zgłoś element",
-    handleClick: () => alert("navigate to report"),
-  },
-];
-
-const getOptionsMenu = (isMy: boolean, id: string) => {
-  let customOptions: TMenuItem[] = [];
-  const additionalOption = {
-    name: "Edytuj",
-    handleClick: () => alert("navigate to edit"),
-    icon: <BiEdit size={17} />,
-  };
-
-  const additionalOption_2 = {
-    name: "Usuń element",
-    handleClick: () => removeCarItem(id),
-  };
-
-  if (isMy) {
-    customOptions = [_options[1], additionalOption];
-  } else {
-    customOptions = [..._options, additionalOption_2];
-  }
-
-  return customOptions;
-};
-
 export const HeaderCarItem: FC<IHeaderCarItemProps> = ({
   itemType,
   name,
@@ -57,13 +27,7 @@ export const HeaderCarItem: FC<IHeaderCarItemProps> = ({
   isMyCarElement = false,
   id,
 }) => {
-  const [options, setOptions] = useState<TMenuItem[]>([]);
-
-  useEffect(() => {
-    if (!isLoading) {
-      setOptions(getOptionsMenu(isMyCarElement, id));
-    }
-  }, [isLoading]);
+  const dispatch = useDispatch();
 
   return (
     <main
@@ -71,7 +35,31 @@ export const HeaderCarItem: FC<IHeaderCarItemProps> = ({
         isLoading && "animate-pulse"
       }`}
     >
-      <AMPMenu isLoading={isLoading} items={options} />
+      <AMPMenu
+        isLoading={isLoading}
+        items={[
+          {
+            isDisable: isMyCarElement,
+            name: "Napisz do twórcy",
+            handleClick: () => alert("navigate to chat"),
+          },
+          {
+            name: "Zgłoś element",
+            handleClick: () => alert("navigate to report"),
+          },
+          {
+            isDisable: !isMyCarElement,
+            name: "Usuń element",
+            handleClick: async () => {
+              const result = await removeCarItem(id);
+
+              if (result.notification) {
+                dispatch(addNotification(JSON.stringify(result.notification)));
+              }
+            },
+          },
+        ]}
+      />
       <div className="flex gap-2">
         <IconFromItemType itemType={itemType} isLoading={isLoading} />
         <div

@@ -11,6 +11,7 @@
   "dependencies": {
     "@prisma/client": "^5.13.0",
     "@reduxjs/toolkit": "^2.2.5",
+    "framer-motion": "^11.2.9",
     "intersection-observer": "^0.12.2",
     "moment": "^2.30.1",
     "next": "14.2.3",

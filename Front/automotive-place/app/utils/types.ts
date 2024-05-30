@@ -1,3 +1,5 @@
+import { ICreateNotification } from "../components/logger/Notification";
+
 type TCarItemLikes = {};
 
 // type ItemTypes = "Turbo" | "Exhaust" | "Kompressor" | "Brakes" | "Audio" | "Clutch" | "Suspension" | "Engine Tune-up" | "Transmission" | "Wheels" | "Tires" | "Fuel Injectors" | "Cooling System" | "Battery" | "Alternator" | "Starter Motor" | "Steering System" | "Lights" | "Body Kit";
@@ -33,6 +35,7 @@ type TTableView = "elements" | "rows";
 type TValidResult = {
   error: string;
   valid: boolean;
+  notification?: ICreateNotification | null;
 };
 
 type TLog = {

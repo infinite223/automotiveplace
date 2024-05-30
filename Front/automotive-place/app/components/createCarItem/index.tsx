@@ -12,7 +12,10 @@ import {
   ItemTypesPL,
   TCarItemCreate,
   itemTypesArray,
+  translateCarItemTypesToEnglish,
 } from "@/app/utils/types/carItem";
+import { useDispatch } from "react-redux";
+import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 
 interface IInputValue {
   value: string | number;
@@ -20,52 +23,50 @@ interface IInputValue {
 }
 
 export const CreateCarItemView = () => {
+  const dispatch = useDispatch();
+
   const [nameElement, setNameElement] = useState<IInputValue>({
     value: "",
     errorText: null,
   });
-  const [carItemType, setCarItemType] = useState<ItemTypes | ItemTypesPL>(
+  const [carItemType, setCarItemType] = useState<ItemTypesPL>(
     ItemTypesPL.Turbo
   );
   const [forSell, setForSell] = useState(false);
   const [inUse, setInUse] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [itemType, setItemType] = useState<ItemTypes>(ItemTypes.Brakes);
+  // const [itemType, setItemType] = useState<ItemTypes>(ItemTypes.Brakes);
   const [description, setDescription] = useState<IInputValue>({
     value: "",
     errorText: null,
   });
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const newElement: TCarItemCreate = {
-      authorId: "",
+      authorId: "1",
       description: description.value.toString(),
       name: nameElement.value.toString(),
       forSell,
       inUse,
-      itemType,
+      itemType: translateCarItemTypesToEnglish(carItemType),
       isVisible,
       projectId: "",
     };
 
-    const newElement_2: TCarItemCreate = {
-      authorId: "",
-      description: description.value.toString(),
-      name: nameElement.value.toString(),
-      forSell: false,
-      inUse: false,
-      itemType: ItemTypes.Audio,
-      isVisible: false,
-      projectId: "22",
-    };
-
-    const { error, valid } = validCarElement(newElement);
+    const { valid, notification } = validCarElement(newElement);
 
     if (valid) {
-      const result = createCarItem(newElement_2);
-      console.log(result);
+      const result = await createCarItem(newElement);
+
+      if (result) {
+        if (result.notification) {
+          dispatch(addNotification(JSON.stringify(result.notification)));
+        }
+      }
     } else {
-      throw new Error(error);
+      if (notification) {
+        dispatch(addNotification(JSON.stringify(notification)));
+      }
     }
   };
 
@@ -79,7 +80,7 @@ export const CreateCarItemView = () => {
       className="flex justify-center text-custom-primary text-sm rounded-md"
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="w-[220px] h-[11/12] p-3 pr-4 rounded-sm border-r border-zinc-700 ml-2">
+      <div className="w-[250px] h-[11/12] p-3 pr-4 rounded-sm border-r border-zinc-700 ml-2">
         <div className="flex items-center">
           <AMPSelect
             value={carItemType}
@@ -100,11 +101,20 @@ export const CreateCarItemView = () => {
             setValue={setInUse}
             value={inUse}
           />
+          <hr className="border-zinc-100 dark:border-zinc-800 w-full" />
           <AMPSwitch
             name="Element na sprzedaż?"
             setValue={setForSell}
             value={forSell}
           />
+          <hr className="border-zinc-100 dark:border-zinc-800 w-full" />
+          <AMPSwitch
+            name="Element ma być widoczny dla wszystkich?"
+            setValue={setIsVisible}
+            additionalTailwindCss="w-[55px]"
+            value={isVisible}
+          />
+          <hr className="border-zinc-100 dark:border-zinc-800 w-full" />
 
           <p className="text-custom-secend leading-3 text-[11px] mt-2">
             Po utworzeniu elementu można go edytować.

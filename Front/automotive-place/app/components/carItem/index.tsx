@@ -1,9 +1,10 @@
 "use client";
 
-import {TCarItem, TTableView} from "@/app/utils/types";
-import React, {FC, useState} from "react";
-import {HeaderCarItem} from "./HeaderCarItem";
-import {AMPFooterItem} from "../shared/AMPFooterItem";
+import { TTableView } from "@/app/utils/types";
+import React, { FC, useState } from "react";
+import { HeaderCarItem } from "./HeaderCarItem";
+import { AMPFooterItem } from "../shared/AMPFooterItem";
+import { TCarItem } from "@/app/utils/types/carItem";
 
 interface CarItemProps {
   data: TCarItem;
@@ -22,7 +23,7 @@ export const CarItem: FC<CarItemProps> = ({
   tableView,
   showFullView = true,
 }) => {
-  const isMyCarElement = data.authorId === "1";
+  const isMyCarElement = true; //data.authorId === "1";
 
   const [localData, setLocalData] = useState(data);
   const lineClampsVariants: Record<number, string> = {

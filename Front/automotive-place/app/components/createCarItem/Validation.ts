@@ -1,22 +1,39 @@
-import { TValidResult } from "@/app/utils/types";
+import { ErrorStatus, TValidResult } from "@/app/utils/types";
 import { TCarItemCreate, isValidItemType } from "@/app/utils/types/carItem";
 
 export const validCarElement = (newElement: TCarItemCreate) => {
-  let valid: TValidResult = { error: "", valid: true };
+  let validResult: TValidResult = {
+    error: "",
+    valid: true,
+    notification: null,
+  };
 
-  valid = validCarNameValue(newElement.name);
+  validResult = validCarNameValue(newElement.name);
 
   if (!newElement.authorId && newElement.authorId.length < 2) {
     //maybe valid authorId?
 
-    valid.error += "Brak poprawnych danych o autorze. ";
+    validResult.error += "Brak poprawnych danych o autorze. ";
   }
 
   if (!isValidItemType(newElement.itemType)) {
-    valid.error += "Niepoprawny typ elementu. ";
+    validResult.error += "Niepoprawny typ elementu. ";
   }
 
-  return valid;
+  if (validResult.error.length > 0) {
+    validResult.valid = false;
+    validResult.notification = {
+      log: {
+        date: new Date(),
+        status: ErrorStatus.Low,
+        title: "Błąd weryfikacji danych elementu",
+        message: validResult.error,
+      },
+      timer: 3000,
+    };
+  }
+
+  return validResult;
 };
 
 export const validCarNameValue = (value: string | number) => {
@@ -29,7 +46,7 @@ export const validCarNameValue = (value: string | number) => {
   }
 
   if (valid.error.length > 0) {
-    valid.valid;
+    valid.valid = false;
   }
 
   return valid;

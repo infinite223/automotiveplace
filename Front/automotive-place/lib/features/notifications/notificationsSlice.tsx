@@ -1,25 +1,21 @@
 import { INotification } from "@/app/components/logger/Notification";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: INotification[] = [
-  {
-    id: 1,
-    log: {
-      date: new Date(),
-      status: "Success",
-      title: "Udało się dodać element",
-      message: "Element został pomyślnie dodany do Twojego garażu",
-    },
-    timer: 2000,
-  },
-];
+const initialState: INotification[] = [];
 
 export const notificationsSlice = createSlice({
   name: "notifications",
   initialState,
   reducers: {
     addNotification: (state, action) => {
-      return [...state, action.payload];
+      const lastIdNotification = state.findLast((_n) => _n.id);
+      console.log(lastIdNotification);
+
+      const newNotification = {
+        ...JSON.parse(action.payload),
+        id: lastIdNotification ? lastIdNotification : 1,
+      };
+      return [...state, newNotification];
     },
     removeNotification: (state, action) => {
       const notificationId = action.payload;
