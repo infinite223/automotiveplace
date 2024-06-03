@@ -23,7 +23,7 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearch = useDebounce(searchValue, 1000);
   const [isFocused, setIsFocused] = useState(false);
-  const [searchType, setSearchType] = useState("Wszystko");
+  const [searchType, setSearchType] = useState(searchTypes[0].value);
 
   //   useEffect(() => {
   //     if (debouncedSearch) {
@@ -79,13 +79,13 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
           <div className="flex items-center w-full justify-between">
             {/* <h3 className="text-[15px] font-bold w-[200px]">Wyszukaj...</h3> */}
             <div className="flex w-full gap-3 items-center justify-end">
-              {searchOptions.map((option, i) => (
+              {searchTypes.map((type, i) => (
                 <div
                   key={i}
-                  onClick={() => setSearchType(option.name)}
-                  className={`${searchType === option.name ? "text-teal-500" : "text-zinc-500"} text-[14px]  p-1 pr-2 pl-2 hover:text-teal-500 cursor-pointer`}
+                  onClick={() => setSearchType(type.name)}
+                  className={`${searchType === type.value ? "text-teal-500" : "text-zinc-500"} text-[14px]  p-1 pr-2 pl-2 hover:text-teal-500 cursor-pointer`}
                 >
-                  {option.name}
+                  {type.name}
                 </div>
               ))}
             </div>
@@ -96,12 +96,12 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
   );
 };
 
-const searchOptions = [
-  { name: "Wszystko" },
-  { name: "Projekt" },
-  { name: "Wydarzenie" },
-  { name: "Problem" },
-  { name: "Element" },
-  { name: "Firma" },
-  { name: "Grupa" },
+const searchTypes = [
+  { name: "Wszystko", value: "All" },
+  { name: "Projekt", value: "Project" },
+  { name: "Wydarzenie", value: "Event" },
+  { name: "Problem", value: "Problem" },
+  { name: "Element", value: "Element" },
+  { name: "Firma", value: "Company" },
+  { name: "Grupa", value: "Group" },
 ];

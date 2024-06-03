@@ -1,7 +1,7 @@
 "use client";
 
-import {ItemTypes, ItemTypesPL} from "@/app/utils/types";
-import React, {FC, useEffect, useState} from "react";
+import { ItemTypes, ItemTypesPL } from "@/app/utils/types/carItem";
+import React, { FC, useEffect, useState } from "react";
 
 interface IconFromItemTypeProps {
   itemType: ItemTypes | ItemTypesPL;
