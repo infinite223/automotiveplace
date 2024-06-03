@@ -111,7 +111,7 @@ export const CreateCarItemView = () => {
           <AMPSwitch
             name="Element ma być widoczny dla wszystkich?"
             setValue={setIsVisible}
-            additionalTailwindCss="w-[55px]"
+            additionalTailwindCss="w-[48px]"
             value={isVisible}
           />
           <hr className="border-zinc-100 dark:border-zinc-800 w-full" />

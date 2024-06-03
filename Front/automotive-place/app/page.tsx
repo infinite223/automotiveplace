@@ -1,6 +1,6 @@
 import Link from "next/link";
-import {getGenerateStartData} from "./services/data";
-import {AMPButton} from "./components/shared/AMPButton";
+import { getGenerateStartData } from "./services/data";
+import { AMPButton } from "./components/shared/AMPButton";
 const tryGetGenerateStartData = () => {
   getGenerateStartData();
 };
@@ -19,6 +19,10 @@ export default async function Home() {
         <div className="border-blue-400 p-2 rounded-sm border">
           Go to garage
         </div>
+      </Link>
+
+      <Link href={"/home"}>
+        <div className="border-blue-400 p-2 rounded-sm border">Go to home</div>
       </Link>
 
       <AMPButton name="Generate data" />
