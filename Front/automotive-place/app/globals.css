@@ -1,7 +1,6 @@
-
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 .bg-custom-primary {
   @apply bg-zinc-100 dark:bg-zinc-950;
@@ -32,17 +31,35 @@
 }
 
 .bg-baseColor {
-  @apply bg-teal-600
+  @apply bg-teal-600;
 }
 
 .text-baseColor {
-  @apply text-teal-600
+  @apply text-teal-600;
 }
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    transition: background-color 5000s ease-in-out 0s;
-    -webkit-text-fill-color: #fff !important;
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: #fff !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-400 dark:bg-zinc-600;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-zinc-500 dark:bg-zinc-500;
 }

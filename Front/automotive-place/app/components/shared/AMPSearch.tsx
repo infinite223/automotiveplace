@@ -1,5 +1,5 @@
 import useDebounce from "@/app/hooks/useDebounce";
-import React, {FC, useEffect, useState} from "react";
+import React, { FC, useEffect, useState } from "react";
 
 interface AMPSearchProps {
   onSearch: (value: string) => void;
