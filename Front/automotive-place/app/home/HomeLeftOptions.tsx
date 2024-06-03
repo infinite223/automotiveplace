@@ -9,8 +9,8 @@ import { FiSettings } from "react-icons/fi";
 
 export const HomeLeftOptions = () => {
   return (
-    <div className="flex h-full border-zinc-900 overflow-y-auto scroll-smoot">
-      <div className="flex flex-col gap-1 h-full justify-around">
+    <div className="flex border-zinc-900 h-full overflow-y-auto scroll-smoot flex-col justify-between">
+      <div className="flex flex-col gap-1 justify-around h-full">
         <div className="flex flex-col">
           <OptionItem
             icon={<LuSearch size={25} />}
@@ -37,7 +37,7 @@ export const HomeLeftOptions = () => {
             onClick={() => {}}
           />
         </div>
-        <div className="flex flex-col items-end">
+        <div className="flex flex-col">
           <OptionItem
             icon={<FiSettings size={25} />}
             tooltip="Wejdź do ustawień"

@@ -24,7 +24,7 @@ export const HomeHeader = () => {
 
       <div className="text-md flex items-center gap-2">
         Marcin
-        <IoPersonCircle size={25} />
+        <IoPersonCircle size={29} />
       </div>
     </div>
   );
