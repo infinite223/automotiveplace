@@ -38,6 +38,7 @@ export default function Map() {
         controller
         layers={[layer]}
       />
+      
     </main>
   );
 }

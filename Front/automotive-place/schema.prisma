@@ -33,6 +33,7 @@ model User {
   carItems     CarItem[]
   carItemLikes CarItemLikes[]
   projectLikes ProjectLikes[]
+  stages      Stage[]
 
   @@map(name: "users")
 }
@@ -68,11 +69,38 @@ model Project {
 
   userId   String
   carItems CarItem[]
+  stages Stage[]
   likes    ProjectLikes[]
   authorId String
 
   author User    @relation(fields: [authorId], references: [id])
   garage Garage? @relation(fields: [garageId], references: [id])
+}
+
+model Stage {
+  id String @id @default(cuid())
+
+  name          String
+  description   String?
+  stageNumber   Int
+  createdAt     DateTime @default(now()) @map(name: "created_at")
+  updatedAt     DateTime @updatedAt @map(name: "updated_at")
+  hp            Int
+  nm            Int
+  acc_0_100     Decimal?
+  acc_100_200   Decimal?
+  acc_50_150    Decimal?
+
+  sl_150_50   Decimal? // droga hamowania w metrach
+  sl_100_0   Decimal?
+  projectId  String
+  createdById String?
+
+  carItems CarItem[]
+  project Project? @relation(fields: [projectId], references: [id])
+  createdBy User? @relation(fields: [createdById], references: [id])
+
+  // author User    @relation(fields: [authorId], references: [id]) //company?
 }
 
 model CarItem {
@@ -89,10 +117,12 @@ model CarItem {
   itemType    String
   likes       CarItemLikes[]
   authorId    String
-
+  stageId     String?
   author    User     @relation(fields: [authorId], references: [id])
   projectId String
   project   Project? @relation(fields: [projectId], references: [id])
+  stage     Stage? @relation(fields: [stageId], references: [id])
+
 }
 
 model ProjectLikes {
