@@ -6,6 +6,9 @@ import { AMPInput } from "../components/shared/AMPInput";
 import { LuSearch } from "react-icons/lu";
 import useKeyboardShortcut from "../hooks/useKeydown";
 import { HomeSearchBarFilterView } from "./HomeSearchBarFilterView";
+import { GoChevronDown } from "react-icons/go";
+import { FALSE } from "sass";
+import { KeyObject } from "crypto";
 
 interface HomeSearchBarProps {
   onSearch: (value: string) => void;
@@ -24,22 +27,30 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearch = useDebounce(searchValue, 1000);
   const [isFocused, setIsFocused] = useState(false);
-
+  const [showFilterOptions, setShowFilterOptions] = useState(false);
   const [searchTypeOption, setSearchTypeOption] = useState<TSearchTypesOptions>(
     searchTypesOptions[1]
   );
 
-  //   useEffect(() => {
-  //     if (debouncedSearch) {
-  //       onSearch(searchValue);
-  //     }
-  //   }, [debouncedSearch]);
+  // const a = useKeyboardShortcut(
+  //   () => {
+  //     setIsFocused(true);
+  //     inputRef.current?.focus();
+  //   },
+  //   { code: "KeyF", ctrlKey: true }
+  // );
+
+  // useEffect(() => {
+  //   if (debouncedSearch) {
+  //     onSearch(searchValue);
+  //   }
+  // }, [debouncedSearch]);
 
   const inputRef = useRef<any>(null);
 
   useEffect(() => {
     const handleKeydown = (event: any) => {
-      if (event.keyCode === 114 || (event.ctrlKey && event.keyCode === 70)) {
+      if (event.ctrlKey && event.keyCode === 70) {
         event.preventDefault();
         setIsFocused(true);
         inputRef.current?.focus();
@@ -60,7 +71,6 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
           setIsFocused(true);
           inputRef.current?.focus();
         }}
-        // onBlur={() => setShowOptions(false)}
         tabIndex={0}
         className={`w-full bg-custom-primary rounded-sm border flex items-center gap-4 border-zinc-800 pl-3 pr-3 p-3 ${
           isFocused ? "ring-1 ring-zinc-500" : ""
@@ -81,34 +91,44 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
         >
           {searchTypeOption.name}
         </div>
+      </div>
+      {isFocused && (
+        <div
+          className={`flex rounded-md items-start justify-start p-2 pr-3 pl-3 absolute top-[70px] self-center bg-zinc-900 z-30`}
+        >
+          <div className="flex items-center w-full justify-between">
+            <div className="flex w-full gap-3 items-center justify-end">
+              {searchTypesOptions.map((type, i) => (
+                <div
+                  key={i}
+                  onClick={() => setSearchTypeOption(type)}
+                  className={`${searchTypeOption.value === type.value ? "text-teal-500" : "text-zinc-500"} text-[14px]  p-1 pr-2 pl-2 hover:text-teal-500 cursor-pointer`}
+                >
+                  {type.name}
+                </div>
+              ))}
 
-        {isFocused && (
-          <div
-            className={`flex rounded-md items-start justify-start p-2 pr-3 pl-3 absolute top-[70px] self-center bg-zinc-900 z-30`}
-          >
-            <div className="flex items-center w-full justify-between">
-              <div className="flex w-full gap-3 items-center justify-end">
-                {searchTypesOptions.map((type, i) => (
-                  <div
-                    key={i}
-                    onClick={() => setSearchTypeOption(type)}
-                    className={`${searchTypeOption.value === type.value ? "text-teal-500" : "text-zinc-500"} text-[14px]  p-1 pr-2 pl-2 hover:text-teal-500 cursor-pointer`}
-                  >
-                    {type.name}
-                  </div>
-                ))}
-              </div>
+              <GoChevronDown
+                size={22}
+                className="hover:opacity-40 cursor-pointer"
+                onClick={() => setShowFilterOptions(!showFilterOptions)}
+              />
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
-      {isFocused && <HomeSearchBarFilterView type={searchTypeOption.value} />}
+      {showFilterOptions && (
+        <HomeSearchBarFilterView type={searchTypeOption.value} />
+      )}
 
       {isFocused && (
         <div
           className="fixed w-full h-full bg-transparent blur-lg left-0 top-0"
-          onClick={() => setIsFocused(false)}
+          onClick={() => {
+            setIsFocused(false);
+            setShowFilterOptions(false);
+          }}
         ></div>
       )}
     </main>
