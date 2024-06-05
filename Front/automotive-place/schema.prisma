@@ -17,6 +17,10 @@ model Post {
   published Boolean @default(false)
   authorId  String?
 
+  projectId String?
+  carItemId String?
+  spotId String?
+
   author User? @relation(fields: [authorId], references: [id])
 }
 
@@ -26,7 +30,7 @@ model User {
   email     String?  @unique
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @updatedAt @map(name: "updated_at")
-
+  // type? company itp
   posts        Post[]
   garage       Garage?
   projects     Project[]
@@ -46,6 +50,7 @@ model Garage {
   createdAt   DateTime @default(now()) @map(name: "created_at")
   updatedAt   DateTime @updatedAt @map(name: "updated_at")
 
+  carItems    CarItem[]
   projects Project[]
   author   User      @relation(fields: [authorId], references: [id])
 }
@@ -59,15 +64,26 @@ model Project {
   carModel      String
   isVerified    Boolean
   isVisible     Boolean
-  imagesUrl     String // folder localisation by id 
+  imagesUrl     String // folder localisation by id  
   imagesCount   Int
   likesCount    Int
   carItemsCount Int
   forSell       Boolean
   stagesCount   Int
   garageId      String
+  projectPrice  Decimal?
 
-  userId   String
+  engineName      String
+  engineStockHp        Int
+  engineStockNm    Int
+  engineDescription String?
+  engineWasSwapped   Boolean?
+
+  transmissionName String
+  transmissionGears Int
+  transmissionDescription String?
+  transmissionWasSwapped Boolean?
+
   carItems CarItem[]
   stages Stage[]
   likes    ProjectLikes[]
@@ -78,7 +94,7 @@ model Project {
 }
 
 model Stage {
-  id String @id @default(cuid())
+  id String     @id @default(cuid())
 
   name          String
   description   String?
@@ -91,15 +107,16 @@ model Stage {
   acc_100_200   Decimal?
   acc_50_150    Decimal?
 
-  sl_150_50   Decimal? // droga hamowania w metrach
-  sl_100_0   Decimal?
-  projectId  String
-  createdById String?
+  sl_150_50     Decimal? // droga hamowania w metrach
+  sl_100_0      Decimal?
+  projectId     String
+  createdById   String?
+  stagePrice    Decimal?
+  chartImageUrl String?    
 
   carItems CarItem[]
   project Project? @relation(fields: [projectId], references: [id])
   createdBy User? @relation(fields: [createdById], references: [id])
-
   // author User    @relation(fields: [authorId], references: [id]) //company?
 }
 
@@ -115,14 +132,19 @@ model CarItem {
   name        String
   description String
   itemType    String
+  carItemPrice  Decimal?
   likes       CarItemLikes[]
-  authorId    String
-  stageId     String?
-  author    User     @relation(fields: [authorId], references: [id])
-  projectId String
-  project   Project? @relation(fields: [projectId], references: [id])
-  stage     Stage? @relation(fields: [stageId], references: [id])
 
+  projectId   String
+  authorId    String
+  garageId    String?
+  stageId     String?
+
+  author    User     @relation(fields: [authorId], references: [id])
+  project   Project? @relation(fields: [projectId], references: [id])
+  garage   Garage? @relation(fields: [garageId], references: [id])
+
+  stage     Stage? @relation(fields: [stageId], references: [id])
 }
 
 model ProjectLikes {

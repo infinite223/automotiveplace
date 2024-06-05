@@ -1,3 +1,5 @@
+import { TCarItem, TCarItemCreate } from "./carItem";
+import { TStageCreate, TStage } from "./stage";
 import { TUser } from "./user";
 
 type TProject = {
@@ -20,8 +22,19 @@ type TProject = {
   images?: string[];
   authorId: string;
   author?: TUser;
-  // likes: ....[]
-  // garage: Garage
+
+  engineName: string;
+  engineStockHp: number;
+  engineStockNm: number;
+  engineDescription?: string;
+  engineWasSwapped?: boolean;
+
+  transmissionName: string;
+  transmissionGears: number;
+  transmissionDescription?: string;
+  transmissionWasSwapped?: boolean;
+  carItems?: TCarItem[];
+  stages?: TStage[];
 };
 
 type TProjectCreate = {
@@ -34,6 +47,23 @@ type TProjectCreate = {
   projectId?: string;
   carMake: string;
   model: string;
+  stagesCount: number;
+
+  garageId: string;
+  projectPrice: number;
+
+  stages?: TStageCreate[];
+  carItems?: TCarItemCreate[];
+
+  engineName: string;
+  engineStockHp: number;
+  engineStockNm: number;
+  engineDescription?: string;
+
+  transmissionName: string;
+  transmissionGears: number;
+  transmissionDescription?: string;
+  transmissionWasSwapped?: boolean;
 };
 
 export type { TProject, TProjectCreate };
