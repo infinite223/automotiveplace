@@ -1,4 +1,5 @@
-import React, { CSSProperties, FC } from "react";
+import { TValidResult } from "@/app/utils/types";
+import React, { CSSProperties, FC, useEffect, useState } from "react";
 
 interface IAMPInput<TValue> {
   value: TValue;
@@ -9,14 +10,13 @@ interface IAMPInput<TValue> {
   id?: string;
   placeholder?: string;
   required?: boolean;
-  errorText?: string | null;
   additionalTailwindCss?: string;
   inputStyles?: CSSProperties;
   marginBotton?: string;
+  validFunction?: (value: string | number) => TValidResult;
 }
 
 export const AMPInput: FC<IAMPInput<string | number>> = ({
-  errorText,
   setValue,
   value,
   type = "text",
@@ -28,7 +28,18 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
   additionalTailwindCss,
   inputStyles,
   marginBotton = "mb-5",
+  validFunction = () => {
+    return { error: "", valid: true };
+  },
 }) => {
+  const [localErrorText, setLocalErrorText] = useState("");
+
+  // useEffect(() => {
+  //   if (validFunction) {
+  //     setLocalErrorText(validFunction(value).error);
+  //   }
+  // }, [value]);
+
   return (
     <label htmlFor={htmlFor} className={`${marginBotton}`}>
       <span>{name}</span>
@@ -36,7 +47,10 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
         type={type}
         name={name}
         value={value}
-        onChange={(text) => setValue(text.target.value)}
+        onChange={(text) => {
+          setValue(text.target.value);
+          setLocalErrorText(validFunction(text.target.value).error);
+        }}
         id={id}
         style={inputStyles}
         className={`${additionalTailwindCss} w-full bg-custom-primary rounded border-b outline-none border-gray-300 text-custom-secend text-sm focus:ring-teal-500 focus:border-teal-500 block dark:border-zinc-800 dark:placeholder-gray-500 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-800bg-inherit p-3 shadow mt-2 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer`}
@@ -44,9 +58,9 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
         required={required}
         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
       />
-      {errorText && (
-        <span className="mt-2 text-[11px] text-red-600 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-          {errorText}
+      {localErrorText && (
+        <span className="mt-2 text-[11px] text-red-400 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+          {localErrorText}
         </span>
       )}
     </label>

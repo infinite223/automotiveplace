@@ -1,5 +1,6 @@
 import { TCarItem, TCarItemCreate } from "./carItem";
 import { TStageCreate, TStage } from "./stage";
+import { TTag } from "./tag";
 import { TUser } from "./user";
 
 type TProject = {
@@ -34,7 +35,8 @@ type TProject = {
   transmissionDescription?: string;
   transmissionWasSwapped?: boolean;
   carItems?: TCarItem[];
-  stages?: TStage[];
+  stages?: TStage[]; // stage 0 to stock performance
+  tags?: TTag[];
 };
 
 type TProjectCreate = {
@@ -64,6 +66,7 @@ type TProjectCreate = {
   transmissionGears: number;
   transmissionDescription?: string;
   transmissionWasSwapped?: boolean;
+  tags?: TTag[];
 };
 
 export type { TProject, TProjectCreate };

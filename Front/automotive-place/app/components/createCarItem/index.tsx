@@ -16,6 +16,9 @@ import {
 } from "@/app/utils/types/carItem";
 import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
+import { carItemCreateData } from "@/app/utils/data";
+import { AMPTagsView } from "../shared/AMPTagsView";
+import { TTagCreate } from "@/app/utils/types/tag";
 
 interface IInputValue {
   value: string | number;
@@ -24,39 +27,20 @@ interface IInputValue {
 
 export const CreateCarItemView = () => {
   const dispatch = useDispatch();
-
-  const [nameElement, setNameElement] = useState<IInputValue>({
-    value: "",
-    errorText: null,
-  });
-  const [carItemType, setCarItemType] = useState<ItemTypesPL>(
-    ItemTypesPL.Turbo
-  );
-  const [forSell, setForSell] = useState(false);
-  const [inUse, setInUse] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  // const [itemType, setItemType] = useState<ItemTypes>(ItemTypes.Brakes);
-  const [description, setDescription] = useState<IInputValue>({
-    value: "",
-    errorText: null,
-  });
+  const [carItem, setCarItem] = useState<TCarItemCreate>(carItemCreateData);
+  const [tags, settags] = useState<TTagCreate[]>([
+    {
+      authorId: "",
+      localId: "",
+      name: "BMW",
+    },
+  ]);
 
   const onSubmit = async () => {
-    const newElement: TCarItemCreate = {
-      authorId: "1",
-      description: description.value.toString(),
-      name: nameElement.value.toString(),
-      forSell,
-      inUse,
-      itemType: translateCarItemTypesToEnglish(carItemType),
-      isVisible,
-      projectId: "",
-    };
-
-    const { valid, notification } = validCarElement(newElement);
+    const { valid, notification } = validCarElement(carItem);
 
     if (valid) {
-      const result = await createCarItem(newElement);
+      const result = await createCarItem(carItem);
 
       if (result) {
         if (result.notification) {
@@ -72,7 +56,7 @@ export const CreateCarItemView = () => {
 
   const handleCarItemVallue = (value: string | number) => {
     const _carItemType: any = value;
-    setCarItemType(_carItemType);
+    setCarItem({ ...carItem, itemType: _carItemType });
   };
 
   return (
@@ -83,37 +67,39 @@ export const CreateCarItemView = () => {
       <div className="w-[250px] h-[11/12] p-3 pr-4 rounded-sm border-r border-zinc-700 ml-2">
         <div className="flex items-center">
           <AMPSelect
-            value={carItemType}
+            value={carItem.itemType}
             setValue={(value) => handleCarItemVallue(value)}
             options={itemTypesArray}
             title="Rodzaj elementu:"
             leftIcon={
-              <IconFromItemType itemType={carItemType} isLoading={false} />
+              <IconFromItemType itemType={carItem.itemType} isLoading={false} />
             }
           />
         </div>
         <div className="flex flex-col gap-2 mt-3 ">
-          <h3 className="text-sm mb-1 text-teal-500 font-bold">
-            Dodatkowe opcje:
-          </h3>
+          <h3 className="text-sm mb-1 font-bold">Dodatkowe opcje:</h3>
           <AMPSwitch
             name="Element w użyciu?"
-            setValue={setInUse}
-            value={inUse}
+            setValue={(value) => setCarItem({ ...carItem, inUse: value })}
+            value={carItem.inUse}
           />
           <hr className="border-zinc-100 dark:border-zinc-800 w-full" />
           <AMPSwitch
             name="Element na sprzedaż?"
-            setValue={setForSell}
-            value={forSell}
+            setValue={(value) => setCarItem({ ...carItem, forSell: value })}
+            value={carItem.forSell}
           />
           <hr className="border-zinc-100 dark:border-zinc-800 w-full" />
           <AMPSwitch
             name="Element ma być widoczny dla wszystkich?"
-            setValue={setIsVisible}
             additionalTailwindCss="w-[48px]"
-            value={isVisible}
+            setValue={(value) => setCarItem({ ...carItem, isVisible: value })}
+            value={carItem.isVisible}
           />
+          <hr className="border-zinc-100 dark:border-zinc-800 w-full" />
+          <h3 className="text-sm mb-1 font-bold">Tagi:</h3>
+
+          <AMPTagsView tags={tags} />
           <hr className="border-zinc-100 dark:border-zinc-800 w-full" />
 
           <p className="text-custom-secend leading-3 text-[11px] mt-2">
@@ -128,21 +114,20 @@ export const CreateCarItemView = () => {
       >
         <AMPInput
           name="Nazwa elementu"
-          setValue={(text) =>
-            setNameElement({
-              value: text,
-              errorText: validCarNameValue(text).error,
-            })
+          setValue={(value) =>
+            setCarItem({ ...carItem, name: value.toString() })
           }
-          value={nameElement.value}
+          value={carItem.name}
           placeholder="Np. Turbina K03s"
           inputStyles={{ fontSize: 12 }}
-          errorText={nameElement.errorText}
+          validFunction={validCarNameValue}
         />
         <AMPTextarea
           name="Opis elementu"
-          setValue={(text) => setDescription({ value: text, errorText: "" })}
-          value={description.value}
+          setValue={(value) =>
+            setCarItem({ ...carItem, description: value.toString() })
+          }
+          value={carItem.description}
           placeholder="Np. Seryjna turbina, bez modyfikacji, orginalnie była w audi A3 8p "
           inputStyles={{ fontSize: 12, height: "150px" }}
         />

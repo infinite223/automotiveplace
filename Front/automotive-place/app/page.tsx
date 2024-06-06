@@ -35,7 +35,7 @@ export default async function Home() {
       <AMPButton
         name="Generate data"
         onClick={getGenerateStartData}
-        disabled={true}
+        // disabled={true}
       />
 
       <div className="flex flex-col"></div>

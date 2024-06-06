@@ -13,6 +13,20 @@ interface IInputValue {
   errorText: string | null;
 }
 
+export type TEngineData = {
+  engineName: string;
+  engineStockHp: number;
+  engineStockNm: number;
+  engineDescription?: string;
+};
+
+export type TTransmissionData = {
+  transmissionGears: number;
+  transmissionName: string;
+  transmissionWasSwapped: boolean;
+  transmissionDescription?: string;
+};
+
 export const CreateProjectView = () => {
   const [nameElement, setNameElement] = useState<IInputValue>({
     value: "",
@@ -33,6 +47,19 @@ export const CreateProjectView = () => {
     errorText: null,
   });
 
+  const [engine, setEngine] = useState<TEngineData>({
+    engineName: "",
+    engineStockHp: 0,
+    engineStockNm: 0,
+    engineDescription: "",
+  });
+  const [transmission, setTransmission] = useState<TTransmissionData>({
+    transmissionName: "",
+    transmissionDescription: "",
+    transmissionGears: 0,
+    transmissionWasSwapped: false,
+  });
+
   const onSubmit = () => {
     const newProject: TProjectCreate = {
       authorId: "",
@@ -43,7 +70,18 @@ export const CreateProjectView = () => {
       carMake,
       model,
       isVisible,
-      projectId: "",
+      engineName: engine.engineName,
+      engineStockHp: engine.engineStockHp,
+      engineStockNm: engine.engineStockNm,
+      engineDescription: engine.engineDescription,
+      transmissionGears: transmission.transmissionGears,
+      transmissionDescription: transmission.transmissionDescription,
+      transmissionName: transmission.transmissionName,
+      transmissionWasSwapped: transmission.transmissionWasSwapped,
+
+      garageId: "",
+      projectPrice: 0,
+      stagesCount: 1,
     };
 
     const { error, valid } = validProject(newProject);
@@ -100,7 +138,6 @@ export const CreateProjectView = () => {
           value={nameElement.value}
           placeholder="Np. Turbina K03s"
           inputStyles={{ fontSize: 12 }}
-          errorText={nameElement.errorText}
         />
         <AMPTextarea
           name="Opis elementu"
