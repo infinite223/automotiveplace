@@ -4,11 +4,11 @@ import { validCarElement } from "./../../../components/createCarItem/Validation"
 import { TCarItemCreate } from "@/app/utils/types/carItem";
 import { ICreateNotification } from "@/app/components/logger/Notification";
 import { ErrorStatus } from "@/app/utils/types";
+import { Prisma } from "@prisma/client";
 
 export async function POST(request: NextRequest) {
   const authUser = false;
   const carItem: TCarItemCreate = await request.json();
-  let newCarItem = null;
   let notification: ICreateNotification | null = {
     log: {
       date: new Date(),
@@ -17,10 +17,10 @@ export async function POST(request: NextRequest) {
     },
     timer: 3000,
   };
+  let newCarItem = null;
 
   const author = await prisma.user.findFirst();
   const project = await prisma.project.findFirst();
-  console.log(author?.id && project?.id);
 
   const validElement = validCarElement(carItem);
 
@@ -32,27 +32,47 @@ export async function POST(request: NextRequest) {
   }
 
   if (author?.id && project?.id) {
-    newCarItem = await prisma.carItem.create({
-      data: {
-        ...carItem,
-        authorId: author?.id,
-        projectId: project?.id,
-        likesCount: 0,
-      },
-    });
-
-    if (newCarItem) {
-      notification = {
-        log: {
-          date: new Date(),
-          status: "Success",
-          title: "Udało się dodać elementu",
-          message: validElement.error,
-        },
-        timer: 3000,
-      };
-    }
+    newCarItem = createCarItem(carItem, author.id);
   }
 
   return NextResponse.json({ carItem: newCarItem, notification });
+}
+
+async function createCarItem(
+  carItem: TCarItemCreate,
+  authorId: string,
+  projectId?: string
+) {
+  const { tags, ...restCarItemData } = carItem;
+
+  const tagData: Prisma.TagUncheckedCreateWithoutCarItemInput[] =
+    tags?.map((tag) => ({
+      id: tag?.localId,
+      name: tag.name,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      authorId: tag.authorId,
+      projectId: tag.projectId || "",
+      carItemId: tag.carItemId || "",
+    })) || [];
+
+  let newCarItem;
+  try {
+    newCarItem = await prisma.carItem.create({
+      data: {
+        ...restCarItemData,
+        authorId,
+        projectId: projectId || "",
+        likesCount: 0,
+        tags: {
+          create: tagData,
+        },
+      },
+    });
+  } catch (error) {
+    console.error("Error creating car item:", error);
+    throw error;
+  }
+
+  return newCarItem;
 }

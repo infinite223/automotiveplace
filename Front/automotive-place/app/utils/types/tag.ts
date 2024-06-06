@@ -10,11 +10,9 @@ type TTag = {
 };
 
 type TTagCreate = {
-  id: string;
+  localId: string;
   name: string;
 
-  createdAt: Date;
-  updatedAt: Date;
   authorId: string;
   projectId?: string;
   carItemId?: string;

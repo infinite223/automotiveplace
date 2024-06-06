@@ -1,3 +1,5 @@
+"use client";
+
 import React, { FC, useState } from "react";
 import { TTagCreate } from "@/app/utils/types/tag";
 import { v4 as uuidv4 } from "uuid";

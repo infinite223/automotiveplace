@@ -1,6 +1,6 @@
 import { TCarItemLikes } from "../types";
 import { TProject } from "./project";
-import { TTag } from "./tag";
+import { TTag, TTagCreate } from "./tag";
 import { TUser } from "./user";
 
 type TCarItem = {
@@ -32,7 +32,7 @@ type TCarItemCreate = {
   itemType: ItemTypes;
   authorId: string;
   projectId?: string;
-  tags?: TTag[];
+  tags?: TTagCreate[];
 };
 
 enum ItemTypes {
