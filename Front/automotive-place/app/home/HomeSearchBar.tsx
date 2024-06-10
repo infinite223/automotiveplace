@@ -72,9 +72,9 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
           inputRef.current?.focus();
         }}
         tabIndex={0}
-        className={`w-full bg-custom-primary rounded-sm border flex items-center gap-4 border-zinc-800 pl-3 pr-3 p-3 ${
-          isFocused ? "ring-1 ring-zinc-500" : ""
-        } hover:ring-1 hover:ring-zinc-500 focus:ring-1 focus:ring-zinc-500`}
+        className={`w-full bg-custom-primary rounded-sm border flex items-center gap-4 border-zinc-300 dark:border-zinc-800 pl-3 pr-3 p-3 ${
+          isFocused ? "border-zinc-500" : ""
+        } hover:border-zinc-400 focus:border-zinc-500`}
       >
         <LuSearch
           size={20}
@@ -94,7 +94,7 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
       </div>
       {isFocused && (
         <div
-          className={`flex rounded-md items-start justify-start p-2 pr-3 pl-3 absolute top-[70px] self-center bg-zinc-900 z-30`}
+          className={`flex rounded-md items-start justify-start p-2 pr-3 pl-3 absolute top-[70px] self-center bg-zinc-200 dark:bg-zinc-900 z-30`}
         >
           <div className="flex items-center w-full justify-between">
             <div className="flex w-full gap-3 items-center justify-end">

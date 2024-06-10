@@ -42,41 +42,41 @@ export const priceValidation = (
 export const performanceValidation = (data: TPerformanceType) => {
   let validResult: TValidResult = { error: "", valid: true };
 
-  if (data.hp > 3000 && data.hp < 5) {
+  if (data.hp > 3000 || data.hp < 5) {
     validResult.error += " Moc pojazdu nie jest poprawna";
   }
 
-  if (data.nm > 4000 && data.nm < 5) {
+  if (data.nm > 4000 || data.nm < 5) {
     validResult.error += " Moment obrotowy pojazdu nie jest poprawny";
   }
 
-  if (data.acc_0_100 && data.acc_0_100 > 100 && data.acc_0_100 < 0.5) {
+  if (data.acc_0_100 && (data.acc_0_100 > 100 || data.acc_0_100 < 0.5)) {
     validResult.error +=
       " Przyśpieszenie od 0 do 100 pojazdu nie jest poprawne";
   }
 
-  if (data.acc_100_200 && data.acc_100_200 > 100 && data.acc_100_200 < 2) {
+  if (data.acc_100_200 && (data.acc_100_200 > 100 || data.acc_100_200 < 2)) {
     validResult.error +=
       " Przyśpieszenie od 0 do 100 pojazdu nie jest poprawne";
   }
 
-  if (data.acc_50_150 && data.acc_50_150 > 100 && data.acc_50_150 < 1) {
+  if (data.acc_50_150 && (data.acc_50_150 > 100 || data.acc_50_150 < 1)) {
     validResult.error +=
       " Przyśpieszenie od 0 do 100 pojazdu nie jest poprawne";
   }
 
-  if (data.sl_100_0 && data.sl_100_0 > 300 && data.sl_100_0 < 10) {
+  if (data.sl_100_0 && (data.sl_100_0 > 300 || data.sl_100_0 < 10)) {
     validResult.error +=
       " Droga hamowania od 100 do 0 pojazdu nie jest poprawne";
   }
 
-  if (data.sl_150_50 && data.sl_150_50 > 300 && data.sl_150_50 < 10) {
+  if (data.sl_150_50 && (data.sl_150_50 > 300 || data.sl_150_50 < 10)) {
     validResult.error +=
       " Droga hamowania od 150 do 50 pojazdu nie jest poprawne";
   }
 
   if (validResult.error.length > 0) {
-    validResult.valid = true;
+    validResult.valid = false;
   }
 
   return validResult;

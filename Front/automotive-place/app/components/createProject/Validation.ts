@@ -24,7 +24,7 @@ export const validProject = (newElement: TProjectCreate) => {
     valid: currentValid.valid ? validResult.valid : false,
   };
 
-  currentValid = validStagesValue(newElement.stagesCount, newElement.stages);
+  currentValid = validStages(newElement.stagesCount, newElement.stages);
   validResult = {
     ...currentValid,
     error: validResult.error + " " + currentValid.error,
@@ -72,7 +72,7 @@ export const validCarMakeValue = (value: string | number) => {
   return validResult;
 };
 
-export const validStagesValue = (
+export const validStages = (
   count: number,
   stages: TStageCreate[] | undefined
 ) => {
@@ -101,7 +101,10 @@ export const validStagesValue = (
       validResult.error += currentValid.error;
       validResult.valid = currentValid.valid ? validResult.valid : true;
     }
+
+    // maybe valid all carItems
   });
+
   if (validResult.error.length > 0) {
     validResult.valid;
   }

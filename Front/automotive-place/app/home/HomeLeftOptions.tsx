@@ -58,7 +58,7 @@ const OptionItem: FC<{
 }> = ({ icon, name, tooltip, onClick }) => {
   return (
     <div
-      className="p-2 pr-1 pl-1 hover:text-teal-500 cursor-pointer flex items-center justify-center flex-col gap-1"
+      className="p-2 pr-1 pl-1 hover:text-zinc-500 cursor-pointer flex items-center justify-center flex-col gap-1"
       data-tooltip-id="option-item"
       data-tooltip-content={tooltip}
     >
