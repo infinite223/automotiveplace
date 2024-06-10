@@ -52,7 +52,23 @@ enum ErrorStatus {
   Critical = 3,
 }
 
-export type { TCarItemLikes, TTableView, TSearchOptions, TLog };
+type TPerformanceType = {
+  hp: number;
+  nm: number;
+  acc_0_100?: number;
+  acc_100_200?: number;
+  acc_50_150?: number;
+  sl_100_0?: number;
+  sl_150_50?: number;
+};
+
+export type {
+  TCarItemLikes,
+  TTableView,
+  TSearchOptions,
+  TLog,
+  TPerformanceType,
+};
 export type { TValidResult };
 
 export { ErrorStatus };

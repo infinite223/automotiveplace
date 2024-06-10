@@ -18,6 +18,7 @@ export type TEngineData = {
   engineStockHp: number;
   engineStockNm: number;
   engineDescription?: string;
+  engineCapacity: number;
 };
 
 export type TTransmissionData = {
@@ -52,6 +53,7 @@ export const CreateProjectView = () => {
     engineStockHp: 0,
     engineStockNm: 0,
     engineDescription: "",
+    engineCapacity: 2,
   });
   const [transmission, setTransmission] = useState<TTransmissionData>({
     transmissionName: "",
@@ -74,6 +76,7 @@ export const CreateProjectView = () => {
       engineStockHp: engine.engineStockHp,
       engineStockNm: engine.engineStockNm,
       engineDescription: engine.engineDescription,
+      engineCapacity: engine.engineCapacity,
       transmissionGears: transmission.transmissionGears,
       transmissionDescription: transmission.transmissionDescription,
       transmissionName: transmission.transmissionName,

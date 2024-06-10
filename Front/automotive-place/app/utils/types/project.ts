@@ -29,6 +29,7 @@ type TProject = {
   engineStockNm: number;
   engineDescription?: string;
   engineWasSwapped?: boolean;
+  engineCapacity: number;
 
   transmissionName: string;
   transmissionGears: number;
@@ -61,6 +62,7 @@ type TProjectCreate = {
   engineStockHp: number;
   engineStockNm: number;
   engineDescription?: string;
+  engineCapacity: number;
 
   transmissionName: string;
   transmissionGears: number;

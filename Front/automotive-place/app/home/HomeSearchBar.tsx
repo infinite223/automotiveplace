@@ -87,9 +87,9 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
           className="outline-none border-gray-300 w-full bg-custom-primary text-custom-secend text-[13px] focus:ring-teal-500 focus:border-teal-500 block dark:border-zinc-800 dark:placeholder-gray-500 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-800 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer bg-inherit"
         />
         <div
-          className={`text-teal-500 text-[12px]  p-1 pr-2 pl-2 hover:text-teal-500 cursor-pointer`}
+          className={`text-custom-secend text-[11px]  p-1 pr-2 pl-2 cursor-pointer`}
         >
-          {searchTypeOption.name}
+          {searchTypeOption.name.toUpperCase()}
         </div>
       </div>
       {isFocused && (
