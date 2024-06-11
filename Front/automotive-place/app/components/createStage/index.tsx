@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { AMPInput } from "./../shared/AMPInput";
 import { AMPTextarea } from "../shared/AMPTextarea";
-import { AMPSwitch } from "../shared/AMPSwitch";
 import { AMPHelpFooter } from "../shared/AMPHelpFooter";
 import { TStageCreate } from "@/app/utils/types/stage";
 import { validStages } from "../createProject/Validation";
