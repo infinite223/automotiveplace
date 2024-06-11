@@ -2,13 +2,10 @@
 
 import useDebounce from "@/app/hooks/useDebounce";
 import React, { FC, useEffect, useRef, useState } from "react";
-import { AMPInput } from "../components/shared/AMPInput";
 import { LuSearch } from "react-icons/lu";
-import useKeyboardShortcut from "../hooks/useKeydown";
 import { HomeSearchBarFilterView } from "./HomeSearchBarFilterView";
 import { GoChevronDown } from "react-icons/go";
-import { FALSE } from "sass";
-import { KeyObject } from "crypto";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface HomeSearchBarProps {
   onSearch: (value: string) => void;
@@ -92,35 +89,43 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
           {searchTypeOption.name.toUpperCase()}
         </div>
       </div>
-      {isFocused && (
-        <div
-          className={`flex rounded-md items-start justify-start p-2 pr-3 pl-3 absolute top-[70px] self-center bg-zinc-200 dark:bg-zinc-900 z-30`}
-        >
-          <div className="flex items-center w-full justify-between">
-            <div className="flex w-full gap-3 items-center justify-end">
-              {searchTypesOptions.map((type, i) => (
-                <div
-                  key={i}
-                  onClick={() => setSearchTypeOption(type)}
-                  className={`${searchTypeOption.value === type.value ? "text-teal-500" : "text-zinc-500"} text-[14px]  p-1 pr-2 pl-2 hover:text-teal-500 cursor-pointer`}
-                >
-                  {type.name}
-                </div>
-              ))}
+      <AnimatePresence>
+        {isFocused && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            key="searchBarMain"
+            className={`flex rounded-md items-start justify-start p-2 pr-3 pl-3 absolute top-[70px] self-center bg-zinc-200 dark:bg-zinc-900 z-30`}
+          >
+            <div className="flex items-center w-full justify-between">
+              <div className="flex w-full gap-3 items-center justify-end">
+                {searchTypesOptions.map((type, i) => (
+                  <div
+                    key={i}
+                    onClick={() => setSearchTypeOption(type)}
+                    className={`${searchTypeOption.value === type.value ? "text-teal-500" : "text-zinc-500"} text-[14px]  p-1 pr-2 pl-2 hover:text-teal-500 cursor-pointer`}
+                  >
+                    {type.name}
+                  </div>
+                ))}
 
-              <GoChevronDown
-                size={22}
-                className="hover:opacity-40 cursor-pointer"
-                onClick={() => setShowFilterOptions(!showFilterOptions)}
-              />
+                <GoChevronDown
+                  size={22}
+                  className="hover:opacity-40 cursor-pointer"
+                  onClick={() => setShowFilterOptions(!showFilterOptions)}
+                />
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {showFilterOptions && (
-        <HomeSearchBarFilterView type={searchTypeOption.value} />
-      )}
+      <HomeSearchBarFilterView
+        type={searchTypeOption.value}
+        showFilterOptions={showFilterOptions}
+      />
 
       {isFocused && (
         <div
