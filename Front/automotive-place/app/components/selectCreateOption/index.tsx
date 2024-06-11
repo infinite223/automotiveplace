@@ -4,6 +4,7 @@ import { FaCarRear } from "react-icons/fa6";
 import { FaLocationArrow } from "react-icons/fa";
 import { PiQuestionMarkFill } from "react-icons/pi";
 import { motion, AnimatePresence } from "framer-motion";
+import { BsPostcard } from "react-icons/bs";
 
 interface ISelectCreateOption {
   //   postData: TPost;
@@ -34,6 +35,11 @@ export const SelectCreateOption: FC = () => {
         onClick={() => {}}
         icon={<PiQuestionMarkFill size={iconSize} />}
       />
+      <OptionItem
+        name="Dodaj post"
+        onClick={() => {}}
+        icon={<BsPostcard size={iconSize} />}
+      />
     </div>
   );
 };
@@ -62,7 +68,7 @@ const OptionItem = ({
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.1 }}
           key="icon"
           className="flex items-center justify-center"
         >
@@ -76,7 +82,7 @@ const OptionItem = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, y: [30, 0] }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, delay: 0.2 }}
+            transition={{ duration: 0.1, delay: 0 }}
             key="text"
             className="flex items-center justify-center"
           >
