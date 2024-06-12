@@ -69,15 +69,11 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
           inputRef.current?.focus();
         }}
         tabIndex={0}
-        className={`w-full bg-custom-primary rounded-sm border flex items-center gap-4 border-zinc-300 dark:border-zinc-800 pl-3 pr-3 p-3 ${
+        className={`w-full bg-custom-primary rounded-sm border flex items-center gap-4 border-zinc-300 dark:border-zinc-800 pl-4 pr-3 p-3 ${
           isFocused ? "border-zinc-500" : ""
         } hover:border-zinc-400 focus:border-zinc-500`}
       >
-        <LuSearch
-          size={20}
-          className="text-custom-secend text-red-300"
-          color="gray"
-        />
+        <LuSearch size={24} className="text-custom-secend text-red-300" />
         <input
           ref={inputRef}
           placeholder="Szukaj projektów, wydarzeń, firm, problemów"

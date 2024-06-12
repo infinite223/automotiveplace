@@ -23,6 +23,30 @@ type TCarItem = {
   tags?: TTag[];
 };
 
+function isTCarItem(data: any): data is TCarItem {
+  return (
+    typeof data === "object" &&
+    data !== null &&
+    typeof data.id === "string" &&
+    data.createdAt instanceof Date &&
+    data.updatedAt instanceof Date &&
+    typeof data.forSell === "boolean" &&
+    typeof data.isVisible === "boolean" &&
+    typeof data.inUse === "boolean" &&
+    typeof data.likesCount === "number" &&
+    typeof data.name === "string" &&
+    typeof data.description === "string" &&
+    (typeof data.isLikedByAuthUser === "boolean" ||
+      data.isLikedByAuthUser === undefined) &&
+    typeof data.itemType === "string" && // assuming ItemTypes is a string union
+    (Array.isArray(data.likes) || data.likes === undefined) &&
+    typeof data.authorId === "string" &&
+    (typeof data.projectId === "string" || data.projectId === undefined) &&
+    (typeof data.author === "object" || data.author === undefined) &&
+    (Array.isArray(data.tags) || data.tags === undefined)
+  );
+}
+
 type TCarItemCreate = {
   forSell: boolean;
   isVisible: boolean;
@@ -123,6 +147,6 @@ const itemTypesArray = Object.values(ItemTypesPL).map((value) => ({
   value: value,
 }));
 
-export { ItemTypesPL, ItemTypes, itemTypesArray };
+export { ItemTypesPL, ItemTypes, itemTypesArray, isTCarItem };
 
 export type { TCarItem, TCarItemCreate };
