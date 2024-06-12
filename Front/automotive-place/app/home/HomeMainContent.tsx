@@ -1,27 +1,49 @@
 "use client";
 
 import React from "react";
+import { contentData } from "../utils/data/contentData";
+import { TContentData, TContentTypes } from "../utils/types";
+import { TProject, isTProject } from "../utils/types/project";
 
 export const HomeMainContent = () => {
+  const content = contentData;
   return (
-    <div className="flex w-[1000px] items-center h-full max-h-screen overflow-y-auto flex-col scroll-smooth">
+    <div className="flex w-[1000px] mr-7 items-center h-full max-h-screen overflow-y-auto flex-col scroll-smooth">
       <div className="flex flex-col text-[12px] w-[600px]">
-        <Content name="Post" />
-        <Content name="Wydarzenie" />
-        <Content name="Problem" />
-        <Content name="Problem" />
-        <Content name="Projekt" />
-        <Content name="Projekt" />
-        <Content name="Post" />
+        {contentData.map((content) => (
+          <div className="flex w-full h-[400px] border-zinc-900 border-b-[1px] border-t-2 items-center justify-center">
+            <ContentSelect content={content} />
+          </div>
+        ))}
       </div>
     </div>
   );
 };
 
-const Content = ({ name }: { name: string }) => {
+const ContentSelect = ({
+  content: { data, type },
+}: {
+  content: TContentData;
+}) => {
+  console.log(isTProject(data), "tutaj");
+  switch (type) {
+    case "Project":
+      if (isTProject(data)) return <ProjectMiniView data={data} />;
+      else return null;
+    default:
+      return null;
+  }
+};
+
+const ProjectMiniView = ({ data }: { data: TProject }) => {
   return (
-    <div className="flex w-full h-[400px] border-zinc-900 border-b-[1px] border-t-2 items-center justify-center">
-      <h2 className="opacity-40">{name}</h2>
+    <div className="flex">
+      <nav>
+        <h2>
+          {data.carMake} " " {data.model}
+        </h2>
+      </nav>
+      <p>{data.engineStockHp}</p>
     </div>
   );
 };

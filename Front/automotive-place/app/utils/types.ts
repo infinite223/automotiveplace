@@ -1,4 +1,6 @@
 import { ICreateNotification } from "../components/logger/Notification";
+import { TCarItem } from "./types/carItem";
+import { TProject } from "./types/project";
 
 type TCarItemLikes = {};
 
@@ -61,7 +63,18 @@ type TPerformanceType = {
   sl_100_0?: number;
   sl_150_50?: number;
 };
+type TContentTypes =
+  | "CarItem"
+  | "Project"
+  | "Spot"
+  | "Problem"
+  | "Post"
+  | "Company";
 
+type TContentData = {
+  type: TContentTypes;
+  data: TCarItem | TProject;
+};
 export type {
   TCarItemLikes,
   TTableView,
@@ -69,6 +82,6 @@ export type {
   TLog,
   TPerformanceType,
 };
-export type { TValidResult };
+export type { TValidResult, TContentData, TContentTypes };
 
 export { ErrorStatus };

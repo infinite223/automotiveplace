@@ -1,10 +1,9 @@
 import React, { FC, useState } from "react";
-import { SiElement } from "react-icons/si";
 import { FaCarRear } from "react-icons/fa6";
-import { FaLocationArrow } from "react-icons/fa";
+import { FaCalendarDay, FaLocationArrow } from "react-icons/fa";
 import { PiQuestionMarkFill } from "react-icons/pi";
 import { motion, AnimatePresence } from "framer-motion";
-import { BsPostcard } from "react-icons/bs";
+import { BsPostcardFill } from "react-icons/bs";
 
 interface ISelectCreateOption {
   //   postData: TPost;
@@ -26,9 +25,9 @@ export const SelectCreateOption: FC = () => {
         icon={<FaLocationArrow size={iconSize} />}
       />
       <OptionItem
-        name="Dodaj podzespół"
+        name="Dodaj wydarzenie"
         onClick={() => {}}
-        icon={<SiElement size={iconSize} />}
+        icon={<FaCalendarDay size={iconSize} />}
       />
       <OptionItem
         name="Dodaj problem"
@@ -38,7 +37,7 @@ export const SelectCreateOption: FC = () => {
       <OptionItem
         name="Dodaj post"
         onClick={() => {}}
-        icon={<BsPostcard size={iconSize} />}
+        icon={<BsPostcardFill size={iconSize} />}
       />
     </div>
   );

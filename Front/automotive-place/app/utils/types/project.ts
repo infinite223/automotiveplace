@@ -12,6 +12,7 @@ type TProject = {
 
   carMake: string;
   model: string;
+  description?: string;
   isVerified: boolean;
   imagesCount: number;
   likesCount: number;
@@ -40,12 +41,56 @@ type TProject = {
   tags?: TTag[];
 };
 
+function isTProject(data: any): data is TProject {
+  return (
+    typeof data === "object" &&
+    data !== null &&
+    typeof data.id === "string" &&
+    data.createdAt instanceof Date &&
+    data.updatedAt instanceof Date &&
+    typeof data.forSell === "boolean" &&
+    typeof data.isVisible === "boolean" &&
+    typeof data.carMake === "string" &&
+    typeof data.model === "string" &&
+    typeof data.description === "string" &&
+    typeof data.isVerified === "boolean" &&
+    typeof data.imagesCount === "number" &&
+    typeof data.likesCount === "number" &&
+    typeof data.carItemsCount === "number" &&
+    typeof data.stagesCount === "number" &&
+    typeof data.garageId === "string" &&
+    typeof data.userId === "string" &&
+    (typeof data.isLikedByAuthUser === "boolean" ||
+      data.isLikedByAuthUser === undefined) &&
+    (Array.isArray(data.images) || data.images === undefined) &&
+    typeof data.authorId === "string" &&
+    (typeof data.author === "object" || data.author === undefined) &&
+    typeof data.engineName === "string" &&
+    typeof data.engineStockHp === "number" &&
+    typeof data.engineStockNm === "number" &&
+    (typeof data.engineDescription === "string" ||
+      data.engineDescription === undefined) &&
+    (typeof data.engineWasSwapped === "boolean" ||
+      data.engineWasSwapped === undefined) &&
+    typeof data.engineCapacity === "number" &&
+    typeof data.transmissionName === "string" &&
+    typeof data.transmissionGears === "number" &&
+    (typeof data.transmissionDescription === "string" ||
+      data.transmissionDescription === undefined) &&
+    (typeof data.transmissionWasSwapped === "boolean" ||
+      data.transmissionWasSwapped === undefined) &&
+    (Array.isArray(data.carItems) || data.carItems === undefined) &&
+    (Array.isArray(data.stages) || data.stages === undefined) &&
+    (Array.isArray(data.tags) || data.tags === undefined)
+  );
+}
+
 type TProjectCreate = {
   forSell: boolean;
   isVisible: boolean;
   inUse: boolean;
   name: string;
-  description: string;
+  description?: string;
   authorId: string;
   projectId?: string;
   carMake: string;
@@ -72,3 +117,4 @@ type TProjectCreate = {
 };
 
 export type { TProject, TProjectCreate };
+export { isTProject };

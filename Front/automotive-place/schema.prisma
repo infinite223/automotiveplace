@@ -61,6 +61,7 @@ model Project {
   updatedAt     DateTime @updatedAt @map(name: "updated_at")
   carMake       String
   carModel      String
+  description   String?
   isVerified    Boolean
   isVisible     Boolean
   imagesUrl     String // folder localisation by id  
