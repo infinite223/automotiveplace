@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { contentData } from "../../utils/data/contentData";
 import { TContentData } from "../../utils/types";
 import { isTProject } from "../../utils/types/project";
 import { ProjectMiniView } from "./ProjectMiniView";
@@ -14,12 +13,19 @@ import { SpotMiniView } from "./SpotMiniView";
 import { CarItemMiniView } from "./CarItemMiniView";
 import { isTCarItem } from "@/app/utils/types/carItem";
 
-export const HomeMainContent = () => {
+export const HomeMainContent = ({
+  contentData,
+}: {
+  contentData: TContentData[];
+}) => {
   return (
     <div className="flex w-[1000px] mr-7 items-center h-full max-h-screen overflow-y-auto flex-col scroll-smooth">
       <div className="flex flex-col text-[12px] w-[600px]">
         {contentData.map((content) => (
-          <div className="flex w-full h-[400px] border-zinc-900 border-b-[1px] border-t-2 items-center justify-center">
+          <div
+            key={content.data.id}
+            className="flex w-full h-[400px] border-zinc-900 border-b-[1px] border-t-2 items-center justify-center"
+          >
             <ContentSelect content={content} />
           </div>
         ))}
@@ -28,32 +34,22 @@ export const HomeMainContent = () => {
   );
 };
 
-const ContentSelect = ({
+export const ContentSelect = ({
   content: { data, type },
 }: {
   content: TContentData;
 }) => {
   switch (type) {
     case "Project":
-      if (isTProject(data)) return <ProjectMiniView data={data} />;
-      else return null;
-
+      return isTProject(data) ? <ProjectMiniView data={data} /> : null;
     case "Problem":
-      if (isTProblem(data)) return <ProblemMiniView data={data} />;
-      else return null;
-
+      return isTProblem(data) ? <ProblemMiniView data={data} /> : null;
     case "Post":
-      if (isTPost(data)) return <PostMiniView data={data} />;
-      else return null;
-
+      return isTPost(data) ? <PostMiniView data={data} /> : null;
     case "Spot":
-      if (isTSpot(data)) return <SpotMiniView data={data} />;
-      else return null;
-
+      return isTSpot(data) ? <SpotMiniView data={data} /> : null;
     case "CarItem":
-      if (isTCarItem(data)) return <CarItemMiniView data={data} />;
-      else return null;
-
+      return isTCarItem(data) ? <CarItemMiniView data={data} /> : null;
     default:
       return null;
   }

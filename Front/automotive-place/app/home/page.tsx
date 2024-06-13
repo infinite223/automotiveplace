@@ -6,6 +6,7 @@ import { HomeLeftOptions } from "./HomeLeftOptions";
 import { HomeMainContent } from "./HomeMainContent";
 import AMPModal from "../components/shared/AMPModal";
 import { SelectCreateOption } from "../components/selectCreateOption";
+import { contentData } from "../utils/data/contentData";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,7 +20,7 @@ export default function Home() {
 
       <div className="flex justify-between w-full h-full">
         <HomeLeftOptions openModal={openModal} closeModal={closeModal} />
-        <HomeMainContent />
+        <HomeMainContent contentData={contentData} />
         <div></div>
       </div>
 
