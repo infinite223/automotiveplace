@@ -6,6 +6,11 @@ import { LuSearch } from "react-icons/lu";
 import { HomeSearchBarFilterView } from "./HomeSearchBarFilterView";
 import { GoChevronDown } from "react-icons/go";
 import { motion, AnimatePresence } from "framer-motion";
+import useKeyboardShortcut from "../hooks/useKeydown";
+
+const shortcutConfig = {
+  code: "ctrl+f",
+};
 
 interface HomeSearchBarProps {
   onSearch: (value: string) => void;
@@ -29,37 +34,14 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
     searchTypesOptions[1]
   );
 
-  // const a = useKeyboardShortcut(
-  //   () => {
-  //     setIsFocused(true);
-  //     inputRef.current?.focus();
-  //   },
-  //   { code: "KeyF", ctrlKey: true }
-  // );
+  const handleShortcutAction = (e: KeyboardEvent) => {
+    setIsFocused(true);
+    inputRef.current?.focus();
+  };
 
-  // useEffect(() => {
-  //   if (debouncedSearch) {
-  //     onSearch(searchValue);
-  //   }
-  // }, [debouncedSearch]);
+  useKeyboardShortcut(handleShortcutAction, shortcutConfig);
 
   const inputRef = useRef<any>(null);
-
-  useEffect(() => {
-    const handleKeydown = (event: any) => {
-      if (event.ctrlKey && event.keyCode === 70) {
-        event.preventDefault();
-        setIsFocused(true);
-        inputRef.current?.focus();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeydown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeydown);
-    };
-  }, []);
 
   return (
     <main className={`flex w-full flex-col relative`}>

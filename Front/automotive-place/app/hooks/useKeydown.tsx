@@ -1,9 +1,8 @@
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
+import Mousetrap from "mousetrap";
 
-type OptionalConfig = Pick<KeyboardEvent, "altKey" | "ctrlKey" | "shiftKey">;
-
-interface ShortcutConfig extends Partial<OptionalConfig> {
-  code: KeyboardEvent["code"];
+interface ShortcutConfig {
+  code: string;
   shortcutTarget?: HTMLElement;
 }
 
@@ -13,23 +12,20 @@ export default function useKeyboardShortcut(
   shortcutAction: ShortcutAction,
   config: ShortcutConfig
 ) {
-  const targetElement = config.shortcutTarget || document;
-
-  const eventHandler: any = useCallback(
-    (e: KeyboardEvent) => {
-      const { code, ctrlKey, altKey, shiftKey } = e;
-      if (config.code !== code) return;
-      if (config.ctrlKey && !ctrlKey) return;
-      if (config.shiftKey && !shiftKey) return;
-      if (config.altKey && !altKey) return;
-
-      shortcutAction(e);
-    },
-    [shortcutAction, config]
-  );
-
   useEffect(() => {
-    targetElement.addEventListener("keydown", eventHandler);
-    return () => targetElement.removeEventListener("keydown", eventHandler);
-  }, [targetElement, eventHandler]);
+    const targetElement = config.shortcutTarget || document;
+
+    const keyCombo = config.code;
+
+    const handler = (e: KeyboardEvent) => {
+      e.preventDefault();
+      shortcutAction(e);
+    };
+
+    Mousetrap.bind(keyCombo, handler, "keydown");
+
+    return () => {
+      Mousetrap.unbind(keyCombo);
+    };
+  }, [shortcutAction, config]);
 }
