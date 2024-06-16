@@ -24,7 +24,7 @@ export const HomeSearchBarFilterView: FC<IHomeSearchBarFilterView> = ({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
           key="searchBarFilterOption"
-          className="flex rounded-md items-start w-[300px] sm:w-[640px] lg:w-[1024px] md:w-[768px] xl:w-[1280px] max-h-screen justify-start p-2 pr-3 pl-3 absolute top-[125px] self-center bg-zinc-200 dark:bg-zinc-900 z-30"
+          className="flex rounded-md items-start w-[300px] sm:w-[640px] lg:w-[1024px] md:w-[768px] xl:w-[1280px-100px] max-h-screen justify-start p-2 pr-3 pl-3 absolute top-[125px] self-center bg-zinc-200 dark:bg-zinc-900 z-30"
         >
           <div className="flex items-center w-full justify-between">
             <div className="flex w-full gap-3 items-center justify-end">

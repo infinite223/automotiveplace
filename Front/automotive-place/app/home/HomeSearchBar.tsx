@@ -1,15 +1,17 @@
-"use client";
-
 import useDebounce from "@/app/hooks/useDebounce";
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useRef, useState } from "react";
 import { LuSearch } from "react-icons/lu";
 import { HomeSearchBarFilterView } from "./HomeSearchBarFilterView";
-import { GoChevronDown } from "react-icons/go";
+import { GoChevronDown, GoChevronUp } from "react-icons/go";
 import { motion, AnimatePresence } from "framer-motion";
 import useKeyboardShortcut from "../hooks/useKeydown";
 
-const shortcutConfig = {
+const shortcutConfigStart = {
   code: "ctrl+f",
+};
+
+const shortcutConfigEnd = {
+  code: "esc",
 };
 
 interface HomeSearchBarProps {
@@ -34,12 +36,18 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
     searchTypesOptions[1]
   );
 
-  const handleShortcutAction = (e: KeyboardEvent) => {
+  const handleShortcutStartAction = (e: KeyboardEvent) => {
     setIsFocused(true);
     inputRef.current?.focus();
   };
 
-  useKeyboardShortcut(handleShortcutAction, shortcutConfig);
+  const handleShortcutEndAction = (e: KeyboardEvent) => {
+    setIsFocused(false);
+    setShowFilterOptions(false);
+  };
+
+  useKeyboardShortcut(handleShortcutStartAction, shortcutConfigStart);
+  useKeyboardShortcut(handleShortcutEndAction, shortcutConfigEnd);
 
   const inputRef = useRef<any>(null);
 
@@ -48,16 +56,20 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
       <div
         onClick={() => {
           setIsFocused(true);
-          inputRef.current?.focus();
+          // inputRef.current?.focus();
         }}
+        onFocus={() => setIsFocused(true)}
+        // onBlur={() => setIsFocused(false)}
         tabIndex={0}
-        className={`w-full bg-custom-primary rounded-sm border flex items-center gap-4 border-zinc-300 dark:border-zinc-800 pl-4 pr-3 p-3 ${
-          isFocused ? "border-zinc-500" : ""
-        } hover:border-zinc-400 focus:border-zinc-500`}
+        className={`w-full z-10 bg-custom-primary rounded-full border flex items-center gap-4 pl-5 pr-4 p-3 ${
+          isFocused ? "border-zinc-500" : "border-zinc-300 dark:border-zinc-800"
+        } hover:border-zinc-400 focus-within:border-zinc-500`}
       >
         <LuSearch size={24} className="text-custom-secend text-red-300" />
         <input
-          ref={inputRef}
+          // ref={inputRef}
+          onFocus={() => setIsFocused(true)}
+          // onBlur={() => setIsFocused(false)}
           placeholder="Szukaj projektów, wydarzeń, firm, problemów"
           className="outline-none border-gray-300 w-full bg-custom-primary text-custom-secend text-[13px] focus:ring-teal-500 focus:border-teal-500 block dark:border-zinc-800 dark:placeholder-gray-500 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-800 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer bg-inherit"
         />
@@ -83,17 +95,29 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
                   <div
                     key={i}
                     onClick={() => setSearchTypeOption(type)}
-                    className={`${searchTypeOption.value === type.value ? "text-teal-500" : "text-zinc-500"} text-[14px]  p-1 pr-2 pl-2 hover:text-teal-500 cursor-pointer`}
+                    className={`${
+                      searchTypeOption.value === type.value
+                        ? "text-teal-500"
+                        : "text-zinc-500"
+                    } text-[14px]  p-1 pr-2 pl-2 hover:text-teal-500 cursor-pointer`}
                   >
                     {type.name}
                   </div>
                 ))}
 
-                <GoChevronDown
-                  size={22}
-                  className="hover:opacity-40 cursor-pointer"
-                  onClick={() => setShowFilterOptions(!showFilterOptions)}
-                />
+                {showFilterOptions ? (
+                  <GoChevronUp
+                    size={22}
+                    className="hover:opacity-40 cursor-pointer"
+                    onClick={() => setShowFilterOptions(false)}
+                  />
+                ) : (
+                  <GoChevronDown
+                    size={22}
+                    className="hover:opacity-40 cursor-pointer"
+                    onClick={() => setShowFilterOptions(true)}
+                  />
+                )}
               </div>
             </div>
           </motion.div>
@@ -107,7 +131,7 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
 
       {isFocused && (
         <div
-          className="fixed w-full h-full bg-transparent blur-lg left-0 top-0"
+          className="fixed w-full h-full bg-transparent blur-lg left-0 top-0 z-0"
           onClick={() => {
             setIsFocused(false);
             setShowFilterOptions(false);
