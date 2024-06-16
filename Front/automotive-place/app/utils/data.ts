@@ -1,4 +1,5 @@
 import { ItemTypes, TCarItem, TCarItemCreate } from "./types/carItem";
+import { TProblem, TProblemCreate } from "./types/problem";
 import { TStageCreate } from "./types/stage";
 
 const carItemData: TCarItem = {
@@ -27,6 +28,12 @@ const carItemCreateData: TCarItemCreate = {
   projectId: "",
 };
 
+const problemData: TProblemCreate = {
+  description: "",
+  isVisible: true,
+  title: "",
+};
+
 const stageCreateData: TStageCreate = {
   name: "",
   description: "",
@@ -42,4 +49,4 @@ const stageCreateData: TStageCreate = {
   acc_100_200: 0,
 };
 
-export { carItemData, carItemCreateData, stageCreateData };
+export { carItemData, carItemCreateData, stageCreateData, problemData };

@@ -13,7 +13,7 @@ const iconSize = 22;
 
 export const SelectCreateOption: FC = () => {
   return (
-    <div className="flex items-center gap-1 min-w-20 min-h-10 mb-[65%]">
+    <div className="flex items-center gap-1 min-w-20 min-h-10 mb-[50%]">
       <OptionItem
         name="Dodaj projekt"
         onClick={() => {}}

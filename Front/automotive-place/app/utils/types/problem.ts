@@ -7,6 +7,12 @@ type TProblem = {
   isVisible: boolean;
 };
 
+type TProblemCreate = {
+  title: string;
+  description: string;
+  isVisible: boolean;
+};
+
 function isTProblem(data: any): data is TProblem {
   return (
     typeof data === "object" &&
@@ -21,4 +27,4 @@ function isTProblem(data: any): data is TProblem {
 }
 
 export { isTProblem };
-export type { TProblem };
+export type { TProblem, TProblemCreate };

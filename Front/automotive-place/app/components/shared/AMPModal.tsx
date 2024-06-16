@@ -37,7 +37,7 @@ const AMPModal = ({
           transition={{ duration: 0.3 }}
         >
           <motion.div
-            className="pr-40 pl-40 pt-20 pb-2 cursor-default"
+            className="cursor-default"
             id="onClose_helper"
             onClick={(e) => e.stopPropagation()}
             initial={{ scale: 0.8, opacity: 0 }}
