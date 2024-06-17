@@ -1,5 +1,6 @@
 import { ItemTypes, TCarItem, TCarItemCreate } from "./types/carItem";
 import { TProblem, TProblemCreate } from "./types/problem";
+import { TSpotCreate } from "./types/spot";
 import { TStageCreate } from "./types/stage";
 
 const carItemData: TCarItem = {
@@ -24,11 +25,17 @@ const carItemCreateData: TCarItemCreate = {
   isVisible: true,
   itemType: ItemTypes.Turbo,
   name: "",
-  authorId: "",
+  authorId: "1qw2",
   projectId: "",
 };
 
 const problemData: TProblemCreate = {
+  description: "",
+  isVisible: true,
+  title: "",
+};
+
+const spotData: TSpotCreate = {
   description: "",
   isVisible: true,
   title: "",
@@ -49,4 +56,10 @@ const stageCreateData: TStageCreate = {
   acc_100_200: 0,
 };
 
-export { carItemData, carItemCreateData, stageCreateData, problemData };
+export {
+  carItemData,
+  carItemCreateData,
+  stageCreateData,
+  problemData,
+  spotData,
+};

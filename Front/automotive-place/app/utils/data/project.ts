@@ -1,4 +1,7 @@
+import { TPost } from "../types/post";
+import { TProblem } from "../types/problem";
 import { TProject } from "../types/project";
+import { TSpot } from "../types/spot";
 
 // Funkcja generująca losową liczbę całkowitą z zakresu [min, max]
 function getRandomInt(min: number, max: number) {
@@ -19,6 +22,57 @@ function generateRandomDate(start: Date, end: Date) {
   return new Date(
     start.getTime() + Math.random() * (end.getTime() - start.getTime())
   );
+}
+
+export function generateRandomProblems(count: number) {
+  const problems = [];
+  for (let i = 0; i < count; i++) {
+    const _problem: TProblem = {
+      id: generateRandomString(10),
+      createdAt: generateRandomDate(new Date(2020, 0, 1), new Date()),
+      updatedAt: generateRandomDate(new Date(2020, 0, 1), new Date()),
+      isVisible: Math.random() < 0.5,
+      description: "",
+      title: "Random post",
+    };
+
+    problems.push(_problem);
+  }
+  return problems;
+}
+
+export function generateRandomSpots(count: number) {
+  const spots = [];
+  for (let i = 0; i < count; i++) {
+    const _spot: TSpot = {
+      id: generateRandomString(10),
+      createdAt: generateRandomDate(new Date(2020, 0, 1), new Date()),
+      updatedAt: generateRandomDate(new Date(2020, 0, 1), new Date()),
+      isVisible: Math.random() < 0.5,
+      description: "",
+      title: "Random post",
+    };
+
+    spots.push(_spot);
+  }
+  return spots;
+}
+
+export function generateRandomPosts(count: number) {
+  const posts = [];
+  for (let i = 0; i < count; i++) {
+    const _posts: TPost = {
+      id: generateRandomString(10),
+      createdAt: generateRandomDate(new Date(2020, 0, 1), new Date()),
+      updatedAt: generateRandomDate(new Date(2020, 0, 1), new Date()),
+      isVisible: Math.random() < 0.5,
+      description: "",
+      title: "Random post",
+    };
+
+    posts.push(_posts);
+  }
+  return posts;
 }
 
 export function generateRandomProjects(count: number) {

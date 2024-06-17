@@ -9,6 +9,7 @@ import { Prisma } from "@prisma/client";
 export async function POST(request: NextRequest) {
   const authUser = false;
   const carItem: TCarItemCreate = await request.json();
+  console.log("carItem: ", carItem);
   let notification: ICreateNotification | null = {
     log: {
       date: new Date(),
@@ -23,8 +24,11 @@ export async function POST(request: NextRequest) {
   const project = await prisma.project.findFirst();
 
   const validElement = validCarElement(carItem);
+  const findInValidResult = validElement.validResults.find(
+    (result) => result.valid == false
+  );
 
-  if (authUser && !validElement.valid) {
+  if (findInValidResult) {
     return NextResponse.json({
       carItem: newCarItem,
       notification: validElement.notification,
@@ -32,7 +36,15 @@ export async function POST(request: NextRequest) {
   }
 
   if (author?.id && project?.id) {
-    newCarItem = createCarItem(carItem, author.id);
+    newCarItem = await createCarItem(carItem, author.id, project?.id);
+
+    if (newCarItem) {
+      notification.log = {
+        status: "Success",
+        date: new Date(),
+        title: "Element został dodany pomyślnie",
+      };
+    }
   }
 
   return NextResponse.json({ carItem: newCarItem, notification });

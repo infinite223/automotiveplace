@@ -7,28 +7,54 @@ import {
 describe("priceValidation", () => {
   test("should return error for price greater than 200000 for CarItem", () => {
     const result = priceValidation(250000, "CarItem");
-    expect(result.valid).toBe(false);
-    expect(result.error).toContain("Czy na pewno podałeś dobrą cene elemento?");
+    expect(result).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          error: " Błąd walidacji ceny, sporóbuj ponownie",
+          valid: false,
+        }),
+        expect.objectContaining({
+          error: " Czy na pewno podałeś dobrą cene elemento?",
+          valid: true,
+        }),
+      ])
+    );
   });
 
   test("should return error for price greater than 2000000 for Project", () => {
     const result = priceValidation(2500000, "Project");
-    expect(result.valid).toBe(false);
-    expect(result.error).toContain("Czy na pewno podałeś dobrą cene projektu?");
+    expect(result).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          error: "Czy na pewno podałeś dobrą cene projektu?",
+          valid: true,
+        }),
+      ])
+    );
   });
 
   test("should return error for price greater than 1000000 for Stage", () => {
     const result = priceValidation(1500000, "Stage");
-    expect(result.valid).toBe(false);
-    expect(result.error).toContain(
-      "Czy na pewno podałeś dobrą cene etapu modyfikacji?"
+    expect(result).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          error: "Czy na pewno podałeś dobrą cene etapu modyfikacji?",
+          valid: true,
+        }),
+      ])
     );
   });
 
   test("should return error for price less than 5", () => {
     const result = priceValidation(3, "CarItem");
-    expect(result.valid).toBe(false);
-    expect(result.error).toContain("Etap nie może kosztować tak mało");
+    expect(result).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          error: "Etap nie może kosztować tak mało",
+          valid: false,
+        }),
+      ])
+    );
   });
 });
 
@@ -44,8 +70,14 @@ describe("performanceValidation", () => {
       sl_150_50: 50,
     };
     const result = performanceValidation(data);
-    expect(result.valid).toBe(false);
-    expect(result.error).toContain("Moc pojazdu nie jest poprawna");
+    expect(result).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          error: "Moc pojazdu nie jest poprawna",
+          valid: false,
+        }),
+      ])
+    );
   });
 
   test("should return error for invalid nm", () => {
@@ -59,8 +91,14 @@ describe("performanceValidation", () => {
       sl_150_50: 50,
     };
     const result = performanceValidation(data);
-    expect(result.valid).toBe(false);
-    expect(result.error).toContain("Moment obrotowy pojazdu nie jest poprawny");
+    expect(result).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          error: " oment obrotowy pojazdu nie jest poprawny",
+          valid: false,
+        }),
+      ])
+    );
   });
 
   test("should return error for invalid acc_0_100", () => {
@@ -74,9 +112,13 @@ describe("performanceValidation", () => {
       sl_150_50: 50,
     };
     const result = performanceValidation(data);
-    expect(result.valid).toBe(false);
-    expect(result.error).toContain(
-      "Przyśpieszenie od 0 do 100 pojazdu nie jest poprawne"
+    expect(result).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          error: "Przyśpieszenie od 0 do 100 pojazdu nie jest poprawne",
+          valid: false,
+        }),
+      ])
     );
   });
 
@@ -91,7 +133,6 @@ describe("performanceValidation", () => {
       sl_150_50: 50,
     };
     const result = performanceValidation(data);
-    expect(result.valid).toBe(true);
-    expect(result.error).toBe("");
+    expect(result).toEqual([]);
   });
 });

@@ -13,7 +13,7 @@ interface IAMPInput<TValue> {
   additionalTailwindCss?: string;
   inputStyles?: CSSProperties;
   marginBotton?: string;
-  validFunction?: (value: string | number) => TValidResult;
+  validFunction?: (value: string | number) => TValidResult[];
 }
 
 export const AMPInput: FC<IAMPInput<string | number>> = ({
@@ -29,7 +29,7 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
   inputStyles,
   marginBotton = "mb-5",
   validFunction = () => {
-    return { error: "", valid: true };
+    return [];
   },
 }) => {
   const [localErrorText, setLocalErrorText] = useState("");
@@ -49,7 +49,7 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
         value={value}
         onChange={(text) => {
           setValue(text.target.value);
-          setLocalErrorText(validFunction(text.target.value).error);
+          setLocalErrorText(validFunction(text.target.value)[0]?.error);
         }}
         id={id}
         style={inputStyles}

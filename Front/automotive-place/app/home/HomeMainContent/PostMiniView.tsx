@@ -1,13 +1,13 @@
 import { TPost } from "@/app/utils/types/post";
-import { TProject } from "@/app/utils/types/project";
 
 export const PostMiniView = ({ data }: { data: TPost }) => {
   return (
-    <div className="flex">
+    <div className="flex flex-col items-center">
       <nav>
         <h2>{data.title}</h2>
       </nav>
       <p>{data.description}</p>
+      <h2>Post</h2>
     </div>
   );
 };

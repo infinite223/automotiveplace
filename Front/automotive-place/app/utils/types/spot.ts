@@ -7,6 +7,12 @@ type TSpot = {
   isVisible: boolean;
 };
 
+type TSpotCreate = {
+  title: string;
+  description: string;
+  isVisible: boolean;
+};
+
 function isTSpot(data: any): data is TSpot {
   return (
     typeof data === "object" &&
@@ -21,4 +27,4 @@ function isTSpot(data: any): data is TSpot {
 }
 
 export { isTSpot };
-export type { TSpot };
+export type { TSpot, TSpotCreate };

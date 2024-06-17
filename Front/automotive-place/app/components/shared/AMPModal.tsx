@@ -13,6 +13,7 @@ interface IModalProps {
   withHeader: boolean;
   title?: string;
   visible: boolean;
+  additionalTailwindCss?: string;
 }
 
 const AMPModal = ({
@@ -20,6 +21,7 @@ const AMPModal = ({
   children,
   withHeader,
   title,
+  additionalTailwindCss,
   visible,
 }: IModalProps) => {
   useKeyboardShortcut(onClose, shortcutConfig);
@@ -37,7 +39,7 @@ const AMPModal = ({
           transition={{ duration: 0.3 }}
         >
           <motion.div
-            className="cursor-default"
+            className={`${additionalTailwindCss} cursor-default`}
             id="onClose_helper"
             onClick={(e) => e.stopPropagation()}
             initial={{ scale: 0.8, opacity: 0 }}

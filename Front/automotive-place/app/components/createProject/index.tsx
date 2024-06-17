@@ -87,13 +87,18 @@ export const CreateProjectView = () => {
       stagesCount: 1,
     };
 
-    const { error, valid } = validProject(newProject);
+    const validResults = validProject(newProject);
+    const findInValidResult = validResults.every(
+      (result) => result.valid == false
+    );
 
-    if (valid) {
+    if (!findInValidResult) {
       const result = createProject(newProject);
       console.log(result);
     } else {
-      throw new Error(error);
+      validResults.map((res) => {
+        throw new Error(res.error);
+      });
     }
   };
 
@@ -135,7 +140,7 @@ export const CreateProjectView = () => {
           setValue={(text) =>
             setNameElement({
               value: text,
-              errorText: validCarNameValue(text).error,
+              errorText: validCarNameValue(text)[0].error,
             })
           }
           value={nameElement.value}

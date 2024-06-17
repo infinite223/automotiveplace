@@ -11,13 +11,18 @@ export const CreateStageView = () => {
   const [stage, setStage] = useState<TStageCreate>(stageCreateData);
 
   const onSubmit = () => {
-    const { error, valid } = validStages(1, [stage]);
+    const validResults = validStages(1, [stage]);
+    const findInValidResult = validResults.every(
+      (result) => result.valid == false
+    );
 
-    if (valid) {
+    if (!findInValidResult) {
       const result = createStage(stage);
       console.log(result);
     } else {
-      throw new Error(error);
+      validResults.map((res) => {
+        throw new Error(res.error);
+      });
     }
   };
 

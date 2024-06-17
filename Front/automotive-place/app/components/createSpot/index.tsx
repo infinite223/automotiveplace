@@ -3,16 +3,16 @@ import { AMPInput } from "./../shared/AMPInput";
 import { AMPTextarea } from "../shared/AMPTextarea";
 import { AMPHelpFooter } from "../shared/AMPHelpFooter";
 import { useDispatch } from "react-redux";
-import { problemData } from "@/app/utils/data";
+import { spotData } from "@/app/utils/data";
 import { TProblemCreate } from "@/app/utils/types/problem";
-import { validProblem } from "./Validation";
+import { validSpot } from "./Validation";
 
-export const CreateProblemView = () => {
+export const CreateSpotView = () => {
   const dispatch = useDispatch();
-  const [problem, setProblem] = useState<TProblemCreate>(problemData);
+  const [spot, setSpot] = useState<TProblemCreate>(spotData);
 
   const onSubmit = async () => {
-    const validResults = validProblem(problem);
+    const { valid, notification } = validSpot(spot);
 
     // if (valid) {
     //   const result = await createProblem(problem);
@@ -47,20 +47,18 @@ export const CreateProblemView = () => {
       >
         <AMPInput
           name="Nazwa elementu"
-          setValue={(value) =>
-            setProblem({ ...problem, title: value.toString() })
-          }
-          value={problem.title}
-          placeholder="Np. jakiś problem"
+          setValue={(value) => setSpot({ ...spot, title: value.toString() })}
+          value={spot.title}
+          placeholder="Np. jakiś spot"
           inputStyles={{ fontSize: 12 }}
           //   validFunction={validCarNameValue}
         />
         <AMPTextarea
           name="Opis elementu"
           setValue={(value) =>
-            setProblem({ ...problem, description: value.toString() })
+            setSpot({ ...spot, description: value.toString() })
           }
-          value={problem.description}
+          value={spot.description}
           placeholder="Np. Seryjna turbina, bez modyfikacji, orginalnie była w audi A3 8p "
           inputStyles={{ fontSize: 12, height: "150px" }}
         />
@@ -68,10 +66,10 @@ export const CreateProblemView = () => {
           type="submit"
           className="mt-4 bg-teal-800 py-2 rounded-md text-white group-invalid:pointer-events-none group-invalid:opacity-50"
         >
-          Dodaj problem
+          Dodaj spot
         </button>
 
-        <AMPHelpFooter footerText="Czym jest problem?" />
+        <AMPHelpFooter footerText="Czym jest spot?" />
       </form>
     </main>
   );

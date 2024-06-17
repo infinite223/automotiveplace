@@ -17,13 +17,14 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
   return (
     <>
       {isClient ? (
-        <div className="flex">
+        <div className="flex flex-col items-center">
           <nav>
             <p>
               {data.carMake} {data.model}
             </p>
           </nav>
           <p>{data.engineStockHp}</p>
+          <h2>Projekt</h2>
         </div>
       ) : (
         <div></div>

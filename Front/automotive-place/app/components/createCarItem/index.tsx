@@ -20,11 +20,6 @@ import { carItemCreateData } from "@/app/utils/data";
 import { AMPTagsView } from "../shared/AMPTagsView";
 import { TTagCreate } from "@/app/utils/types/tag";
 
-interface IInputValue {
-  value: string | number;
-  errorText: string | null;
-}
-
 export const CreateCarItemView = () => {
   const dispatch = useDispatch();
   const [carItem, setCarItem] = useState<TCarItemCreate>(carItemCreateData);
@@ -37,9 +32,12 @@ export const CreateCarItemView = () => {
   ]);
 
   const onSubmit = async () => {
-    const { valid, notification } = validCarElement(carItem);
+    const validResults = validCarElement(carItem);
+    const findInValidResult = validResults.validResults.find(
+      (result) => result.valid == false
+    );
 
-    if (valid) {
+    if (!findInValidResult) {
       const result = await createCarItem(carItem);
 
       if (result) {
@@ -48,8 +46,8 @@ export const CreateCarItemView = () => {
         }
       }
     } else {
-      if (notification) {
-        dispatch(addNotification(JSON.stringify(notification)));
+      if (validResults.notification) {
+        dispatch(addNotification(JSON.stringify(validResults.notification)));
       }
     }
   };

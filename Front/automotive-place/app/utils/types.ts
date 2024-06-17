@@ -1,6 +1,9 @@
 import { ICreateNotification } from "../components/logger/Notification";
 import { TCarItem } from "./types/carItem";
+import { TPost } from "./types/post";
+import { TProblem } from "./types/problem";
 import { TProject } from "./types/project";
+import { TSpot } from "./types/spot";
 
 type TCarItemLikes = {};
 
@@ -73,7 +76,7 @@ type TContentTypes =
 
 type TContentData = {
   type: TContentTypes;
-  data: TCarItem | TProject;
+  data: TCarItem | TProject | TProblem | TSpot | TPost;
 };
 export type {
   TCarItemLikes,

@@ -29,6 +29,7 @@ export default function Home() {
         withHeader={false}
         visible={isModalOpen}
         title="Dodawanie"
+        additionalTailwindCss="relative bottom-40"
       >
         <SelectCreateOption />
       </AMPModal>

@@ -7,107 +7,96 @@ import {
 } from "@/app/utils/validation/globalValidation";
 
 export const validProject = (newElement: TProjectCreate) => {
-  let validResult: TValidResult = { error: "", valid: true };
-  let currentValid: TValidResult = { error: "", valid: true };
+  let validResults: TValidResult[] = [];
 
-  currentValid = validCarNameValue(newElement.name);
-  validResult = {
-    ...currentValid,
-    error: validResult.error + " " + currentValid.error,
-    valid: currentValid.valid ? validResult.valid : false,
-  };
+  validResults = validResults.concat(validCarNameValue(newElement.name));
 
-  currentValid = validCarMakeValue(newElement.carMake);
-  validResult = {
-    ...currentValid,
-    error: validResult.error + " " + currentValid.error,
-    valid: currentValid.valid ? validResult.valid : false,
-  };
-
-  currentValid = validStages(newElement.stagesCount, newElement.stages);
-  validResult = {
-    ...currentValid,
-    error: validResult.error + " " + currentValid.error,
-    valid: currentValid.valid ? validResult.valid : false,
-  };
+  validResults = validResults.concat(validCarMakeValue(newElement.carMake));
+  validResults = validResults.concat(
+    validStages(newElement.stagesCount, newElement.stages)
+  );
 
   if (!newElement.authorId && newElement.authorId.length < 2) {
     //maybe valid authorId?
 
-    validResult.error += "Brak poprawnych danych o autorze. ";
+    validResults.push({
+      error: "Brak poprawnych danych o autorze. ",
+      valid: false,
+    });
   }
 
-  return validResult;
+  return validResults;
 };
 
 export const validCarNameValue = (value: string | number) => {
-  let validResult: TValidResult = { error: "", valid: true };
+  let validResults: TValidResult[] = [];
 
   if (typeof value === "number") {
-    validResult.error += "Nazwa elementu nie może być liczbą. ";
+    validResults.push({
+      error: "Nazwa elementu nie może być liczbą. ",
+      valid: false,
+    });
   } else if (value.length < 3) {
-    validResult.error += "Nazwa elementu musi być dłuższa. ";
+    validResults.push({
+      error: "Nazwa elementu musi być dłuższa. ",
+      valid: false,
+    });
   }
 
-  if (validResult.error.length > 0) {
-    validResult.valid;
-  }
-
-  return validResult;
+  return validResults;
 };
 
 export const validCarMakeValue = (value: string | number) => {
-  let validResult: TValidResult = { error: "", valid: true };
+  let validResults: TValidResult[] = [];
 
   if (typeof value === "number") {
-    validResult.error += "Nazwa projektu nie może być liczbą. ";
+    validResults.push({
+      error: "Nazwa projektu nie może być liczbą. ",
+      valid: false,
+    });
   }
 
   // sprawdzanie czy należy do grupy pojazdów
 
-  if (validResult.error.length > 0) {
-    validResult.valid;
-  }
-
-  return validResult;
+  return validResults;
 };
 
 export const validStages = (
   count: number,
   stages: TStageCreate[] | undefined
 ) => {
-  let validResult: TValidResult = { error: "", valid: true };
-  let currentValid: TValidResult = { error: "", valid: true };
+  let validResults: TValidResult[] = [];
 
   if (count !== stages?.length) {
-    validResult.valid = false;
-    validResult.error +=
-      " Do projektu musi być dodany jeden stage (np. stage 0 który przedstawia oraginalne dane)";
+    validResults.push({
+      error:
+        " Do projektu musi być dodany jeden stage (np. stage 0 który przedstawia oraginalne dane)",
+      valid: false,
+    });
+
+    stages?.forEach((stage) => {
+      validResults = validResults.concat(performanceValidation(stage));
+
+      if (stage.name.length > 20 || stage.name.length < 2) {
+        validResults.push({
+          error: " Długość nazwy etapu musi zawierać od 2 do 20 znaków",
+          valid: false,
+        });
+      }
+
+      if (stage.stagePrice) {
+        validResults = validResults.concat(
+          priceValidation(stage.stagePrice, "Stage")
+        );
+        validResults.push({
+          error: " Długość nazwy etapu musi zawierać od 2 do 20 znaków",
+          valid: false,
+        });
+      }
+
+      // maybe valid all carItems
+    });
   }
 
-  stages?.forEach((stage) => {
-    currentValid = performanceValidation(stage);
-    validResult.error += currentValid.error;
-    validResult.valid = currentValid.valid ? validResult.valid : true;
-
-    if (stage.name.length > 20 || stage.name.length < 2) {
-      validResult.error +=
-        " Długość nazwy etapu musi zawierać od 2 do 20 znaków";
-      validResult.valid = currentValid.valid ? validResult.valid : true;
-    }
-
-    if (stage.stagePrice) {
-      currentValid = priceValidation(stage.stagePrice, "Stage");
-      validResult.error += currentValid.error;
-      validResult.valid = currentValid.valid ? validResult.valid : true;
-    }
-
-    // maybe valid all carItems
-  });
-
-  if (validResult.error.length > 0) {
-    validResult.valid;
-  }
-
-  return validResult;
+  return validResults;
 };
