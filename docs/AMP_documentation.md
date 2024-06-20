@@ -94,7 +94,7 @@ Strony:
 
 - Motywy aplikacji -> Ciemny i jasny
 - Kolory:
-  Main color -> #
-- Czcionki:
+  Main color -> rgb(20 184 166) / #14b8a6 / bg-teal-500
+- Czcionki: idk
 
 Permanent Marker
