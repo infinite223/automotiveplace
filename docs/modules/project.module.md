@@ -28,3 +28,26 @@ Jakie rzeczy można robić z takim projektem?
 - Autor może pobrać PDF jako wizytówkę takiego projektu.
 - Można go wyszukiwać po nazwie, modelu, mocy, tagach
 - Można go udostępnić dla innych
+
+<h3>Architektura aplikacji:</h4>
+
+Widoki w aplikacji:
+
+1. MiniProjectView:
+
+- pokazuje najważniejsze rzeczy związane z projektem (główne zdjęcie projektu, najważniejsze parametry, moc, etap modyfikacji, autora...)
+- widok jest dostępny w głównym oknie, tam gdzie cały kontent strony, jest on wyświetlany razem z postami, spotami, problemami.
+
+2. MainProjectView
+
+- główny widok projektu który przedstawia wszystkie istniejące dane o projekcie
+- widok jest dostępny po kliknięciu na widok "MiniProjectView" oraz w innych przypadkach.
+
+3. ProjectCreateView
+
+- widok, który umożliwia dodanie projektu do apliakcji
+
+4. RowMiniProjectView
+
+- pokazuje najważniejsze dane dla projektu
+- może być wykorzystany w wybieraniu projektu do wydarzenia lub spotu

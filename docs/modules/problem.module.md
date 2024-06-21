@@ -4,7 +4,7 @@ Każdy posiadacz samochodu, tym bardziej w jakimś stopniu zmodyfikowanego, natk
 
 Po co taka część aplikacji?
 
-Taki problem może być pomocny dla innych, w moemncie, gdy aplikacja się powiększy, taka społeczność może sobie pomagać w tym module, sugerując różne rozwiązania danego problemu, komentując dane rozwiązania itp.
+Taki problem może być pomocny dla innych, w moemncie, gdy aplikacja się powiększy, taka społeczność może sobie pom`agać w tym module, sugerując różne rozwiązania danego problemu, komentując dane rozwiązania itp.
 
 Co może zawierać taki projekt?
 
