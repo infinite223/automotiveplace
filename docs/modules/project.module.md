@@ -38,16 +38,44 @@ Widoki w aplikacji:
 - pokazuje najważniejsze rzeczy związane z projektem (główne zdjęcie projektu, najważniejsze parametry, moc, etap modyfikacji, autora...)
 - widok jest dostępny w głównym oknie, tam gdzie cały kontent strony, jest on wyświetlany razem z postami, spotami, problemami.
 
+możliwości w tym widoku?
+
+- nawigowanie do MainProjectView
+- polubienie
+- nawigowanie do chatu z autorem/profilu
+
 2. MainProjectView
 
 - główny widok projektu który przedstawia wszystkie istniejące dane o projekcie
 - widok jest dostępny po kliknięciu na widok "MiniProjectView" oraz w innych przypadkach.
 
+możliwości w tym widoku:
+
+- polubienie
+- nawigowanie do chatu z autorem/profilu
+- edycja projektu dla autora
+- sprawdzenie na jakich spotach/wydarzeniach był ten projekt
+
 3. ProjectCreateView
 
 - widok, który umożliwia dodanie projektu do apliakcji
+- jest dostępny po wybraniu opcji "Dodaj projekt"
+
+możliwości w tym widoku:
+
+- ustawienie zdjęć
+- podstawowych danych
+- dodanie etapów modyfikacji
+- ustawienia dodatkowe (widoczność, na sprzedaż)
+- dodanie tagów
 
 4. RowMiniProjectView
 
 - pokazuje najważniejsze dane dla projektu
 - może być wykorzystany w wybieraniu projektu do wydarzenia lub spotu
+
+możliwości w tym widoku:
+
+- nawigowanie do MainProjectView
+- polubienie
+- nawigowanie do chatu z autorem/profilu
