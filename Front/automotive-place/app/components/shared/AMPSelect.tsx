@@ -1,9 +1,9 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 
 interface IAMPSelect<TValue> {
   value: TValue;
   setValue: (value: TValue) => void;
-  options: {label: string; value: TValue}[];
+  options: { label: string; value: TValue }[];
   title: string;
   leftIcon?: JSX.Element;
 }

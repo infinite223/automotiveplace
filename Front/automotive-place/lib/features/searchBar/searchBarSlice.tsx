@@ -1,7 +1,9 @@
+// Main searchBar handler
+
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isSearchBarOpen: true,
+  isSearchBarOpen: false,
 };
 
 export const searchBarSlice = createSlice({
