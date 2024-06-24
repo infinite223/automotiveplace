@@ -18,7 +18,10 @@ export default function Home() {
     <main className="flex flex-col items-center gap-2 p-2 bg-custom-primary text-custom-primary h-screen overflow-hidden">
       <HomeHeader />
 
-      <div className="flex justify-between w-full h-full">
+      <div
+        className="flex justify-between w-full"
+        style={{ height: `calc(100% - ${70}px)` }}
+      >
         <HomeLeftOptions openModal={openModal} closeModal={closeModal} />
         <HomeMainContent contentData={contentData} />
         <div></div>

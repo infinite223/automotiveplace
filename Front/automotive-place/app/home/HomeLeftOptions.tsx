@@ -7,6 +7,8 @@ import { RiPlayListAddLine } from "react-icons/ri";
 import { MdGroups } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import { MdHome } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { setIsSearchBarOpen } from "@/lib/features/searchBar/searchBarSlice";
 
 interface IHomeLeftOptions {
   openModal: () => void;
@@ -17,6 +19,7 @@ export const HomeLeftOptions: FC<IHomeLeftOptions> = ({
   closeModal,
   openModal,
 }) => {
+  const dispatch = useDispatch();
   return (
     <div className="flex border-zinc-900 h-full overflow-y-auto scroll-smoot flex-col justify-between">
       <div className="flex flex-col gap-1  h-full pl-2">
@@ -31,7 +34,7 @@ export const HomeLeftOptions: FC<IHomeLeftOptions> = ({
             icon={<LuSearch size={25} />}
             tooltip="Odtwórz wyszukiwarkę"
             name="Szukaj"
-            onClick={() => console.log("galo")}
+            onClick={() => dispatch(setIsSearchBarOpen(true))}
           />
           <OptionItem
             icon={<RiPlayListAddLine size={25} />}
