@@ -19,7 +19,7 @@ export const HomeMainContent = ({
   contentData: TContentData[];
 }) => {
   return (
-    <div className="flex w-[1000px] mr-[77px] items-center h-full max-h-screen overflow-y-auto flex-col scroll-smooth">
+    <div className="flex w-[1000px] max-2xl:mr-[60px] mr-[135px] items-center h-full max-h-screen overflow-hidden hover:overflow-y-auto  flex-col scroll-smooth">
       <div className="flex flex-col text-[12px] w-[600px]">
         {contentData.map((content) => (
           <div
