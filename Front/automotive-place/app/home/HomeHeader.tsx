@@ -2,7 +2,8 @@
 
 import React from "react";
 import { HomeSearchBar } from "./HomeSearchBar";
-import { IoPersonCircle } from "react-icons/io5";
+import { IoNotifications, IoPersonCircle } from "react-icons/io5";
+import { TbMessage2Up } from "react-icons/tb";
 
 export const HomeHeader = () => {
   return (
@@ -21,8 +22,9 @@ export const HomeHeader = () => {
         <HomeSearchBar onSearch={() => {}} isLoading={false} />
       </div>
 
-      <div className="text-md flex items-center gap-2">
-        Marcin
+      <div className="text-md flex items-center gap-5">
+        <TbMessage2Up size={22} />
+        <IoNotifications size={22} />
         <IoPersonCircle size={29} />
       </div>
     </div>

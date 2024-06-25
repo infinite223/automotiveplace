@@ -47,11 +47,11 @@ input:-webkit-autofill:active {
 }
 
 /* width */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 5px;
-}
+} */
 
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
   background: transparent;
 }
 
@@ -59,7 +59,33 @@ input:-webkit-autofill:active {
   @apply bg-zinc-400 dark:bg-zinc-600;
 }
 
-/* Handle on hover */
+
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-zinc-500 dark:bg-zinc-500;
+  @apply bg-teal-500;
+} */
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0);
+  transition:
+    background-color 0.3s,
+    opacity 0.3s;
+  opacity: 0;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  @apply bg-zinc-500;
+  opacity: 1;
+}
+
+.custom-scrollbar:hover {
+  overflow-y: auto;
 }

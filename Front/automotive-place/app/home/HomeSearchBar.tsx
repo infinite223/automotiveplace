@@ -6,9 +6,7 @@ import { GoChevronDown, GoChevronUp } from "react-icons/go";
 import { motion, AnimatePresence } from "framer-motion";
 import useKeyboardShortcut from "../hooks/useKeydown";
 import { useDispatch, useSelector } from "react-redux";
-import searchBarSlice, {
-  setIsSearchBarOpen,
-} from "@/lib/features/searchBar/searchBarSlice";
+import { setIsSearchBarOpen } from "@/lib/features/searchBar/searchBarSlice";
 import { RootState } from "@/lib/store";
 
 const shortcutConfigStart = {
@@ -99,6 +97,7 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
       >
         <LuSearch size={24} className="text-custom-secend text-red-300" />
         <input
+          ref={inputRef}
           onFocus={() => setIsFocused(true)}
           placeholder="Szukaj projektów, wydarzeń, firm, problemów"
           className="outline-none border-gray-300 w-full bg-custom-primary text-custom-secend text-[13px] focus:ring-teal-500 focus:border-teal-500 block dark:border-zinc-800 dark:placeholder-gray-500 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-800 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer bg-inherit"
