@@ -77,14 +77,7 @@ export const CarItem: FC<CarItemProps> = ({
               isLoading && "w-full bg-custom-secend rounded-md h-[50px]"
             }`}
           >
-            {!isLoading ? (
-              data.description
-            ) : (
-              <span className="loading-text-custom">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                feugiat iaculis elementum.
-              </span>
-            )}
+            {!isLoading && data.description}
           </div>
           <AMPFooterItem
             isLoading={isLoading}

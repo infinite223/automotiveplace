@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { getGenerateStartData } from "./services/data";
 import { AMPButton } from "./components/shared/AMPButton";
@@ -32,11 +30,11 @@ export default async function Home() {
         </div>
       </div>
 
-      <AMPButton
+      {/* <AMPButton
         name="Generate data"
         onClick={getGenerateStartData}
         // disabled={true}
-      />
+      /> */}
 
       <div className="flex flex-col"></div>
     </main>
