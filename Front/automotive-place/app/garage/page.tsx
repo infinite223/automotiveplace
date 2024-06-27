@@ -33,7 +33,6 @@ export default function Garage() {
     setIsLoading(true);
 
     const carItems: any = await getAllCarItems();
-    console.log(carItems.hasMore);
     setHasMore(carItems.hasMore);
 
     if (carItemsData.length == 0) {

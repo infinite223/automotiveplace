@@ -102,6 +102,14 @@ export function generateRandomProjects(count: number) {
       garageId: generateRandomString(8),
       userId: generateRandomString(8),
       images: [] as string[],
+      author: {
+        id: "",
+        name: "Dawid",
+        imageUrl:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeyk55eIDh4grMFV4505_KRgtOm7HTGbm_7Q&s",
+        description: "",
+        email: "",
+      },
     };
     if (Math.random() < 0.5) {
       project.images = [];

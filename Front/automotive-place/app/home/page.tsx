@@ -15,7 +15,7 @@ export default function Home() {
   const closeModal = () => setIsModalOpen(false);
 
   return (
-    <main className="flex flex-col items-center gap-2 p-2 bg-custom-primary text-custom-primary h-screen overflow-hidden">
+    <main className="flex flex-col items-center gap-2 p-2 bg-custom-primary text-custom-primary h-screen overflow">
       <HomeHeader />
 
       <div

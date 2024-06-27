@@ -12,12 +12,7 @@ import { setIsSearchBarOpen } from "@/lib/features/searchBar/searchBarSlice";
 import { AMPSeparator } from "../components/shared/AMPSeparator";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { MdEventNote } from "react-icons/md";
-import { GrMapLocation } from "react-icons/gr";
-import { LuBuilding2 } from "react-icons/lu";
-import { AiOutlineQuestionCircle } from "react-icons/ai";
-import { BsBuildingUp } from "react-icons/bs";
 import { RiBuildingFill } from "react-icons/ri";
-import { TbHelpSquareRoundedFilled } from "react-icons/tb";
 
 interface IHomeLeftOptions {
   openModal: () => void;
@@ -32,7 +27,7 @@ export const HomeLeftOptions: FC<IHomeLeftOptions> = ({
   const dispatch = useDispatch();
 
   return (
-    <div className="flex border-zinc-900 h-full scroll-smoot custom-scrollbar flex-col justify-between">
+    <div className="flex border-zinc-900 h-full scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
       <div className="flex flex-col gap-1  h-full pl-2 justify-between">
         <div className="flex flex-col items-start max-2xl:items-center max-2xl:pr-3 max-2xl:min-w-0 min-w-[170px]">
           <OptionItem
@@ -86,7 +81,7 @@ export const HomeLeftOptions: FC<IHomeLeftOptions> = ({
           />
         </div>
 
-        <div className="flex flex-col items-start mb-2">
+        <div className="flex flex-col items-start max-2xl:items-center mb-1 max-2xl:pr-3 max-2xl:min-w-0 min-w-[170px]">
           <OptionItem
             icon={<FiSettings size={iconSize} />}
             name="Ustawienia"
