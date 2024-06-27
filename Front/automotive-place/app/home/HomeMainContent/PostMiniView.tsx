@@ -2,7 +2,7 @@ import { TPost } from "@/app/utils/types/post";
 
 export const PostMiniView = ({ data }: { data: TPost }) => {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center h-[350px]">
       <nav>
         <h2>{data.title}</h2>
       </nav>

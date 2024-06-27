@@ -24,7 +24,7 @@ export const HomeMainContent = ({
         {contentData.map((content) => (
           <div
             key={content.data.id}
-            className="flex w-full h-[400px] border-zinc-900 border-b-[1px] border-t-2 items-center justify-center"
+            className="flex w-full border-zinc-900 border-b-[1px] border-t-0 items-center justify-center"
           >
             <ContentSelect content={content} />
           </div>

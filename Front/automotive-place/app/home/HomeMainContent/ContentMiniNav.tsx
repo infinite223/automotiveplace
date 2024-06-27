@@ -20,7 +20,7 @@ export const ContentMiniNav = ({
     <nav className="flex text-custom-primary items-center w-full justify-between">
       <div className="flex flex-col gap-2">
         <p className="text-[11px] text-custom-secend opacity-65">
-          Nowy {type} dodany: {moment(createdAt, "YYYYMMDD").fromNow()}
+          {type} dodany: {moment(createdAt, "YYYYMMDD").fromNow()}
         </p>
 
         <div className="flex items-center gap-4">

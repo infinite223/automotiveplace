@@ -3,6 +3,11 @@
 import { TProject } from "@/app/utils/types/project";
 import { useEffect, useState } from "react";
 import { ContentMiniNav } from "./ContentMiniNav";
+import { AMPFooterItem } from "@/app/components/shared/AMPFooterItem";
+import { ContentMiniFooter } from "./ContentMiniFooter";
+
+const projectImage =
+  "https://cylindersi.pl/wp-content/uploads/2022/06/Dodge-Charger-Scat-Pack-sylwetka.jpg";
 
 export const ProjectMiniView = ({ data }: { data: TProject }) => {
   const [isClient, setIsClient] = useState(false);
@@ -18,12 +23,24 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
   return (
     <>
       {isClient ? (
-        <div className="flex flex-col w-full h-full py-2">
+        <div className="flex flex-col w-full h-full py-2 gap-2">
           <ContentMiniNav
             createdAt={data.createdAt}
             title={data.carMake + " " + data.model}
             type="Project"
             author={data.author}
+          />
+
+          <div className="flex">
+            <img alt="project-image" src={projectImage} className="w-[55%]" />
+            {/* main content, images, stages... */}
+          </div>
+
+          <div>{/* <ContentMiniFooter /> likes, tags...*/}</div>
+          <ContentMiniFooter
+            isLikedByAuthUser={false}
+            likesCount={12}
+            type="Project"
           />
         </div>
       ) : (

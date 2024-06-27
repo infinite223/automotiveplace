@@ -2,7 +2,7 @@ import { TSpot } from "@/app/utils/types/spot";
 
 export const SpotMiniView = ({ data }: { data: TSpot }) => {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center h-[550px]">
       <nav>
         <h2>{data.title}</h2>
       </nav>
