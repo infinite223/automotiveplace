@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ContentMiniNav } from "./ContentMiniNav";
 import { AMPFooterItem } from "@/app/components/shared/AMPFooterItem";
 import { ContentMiniFooter } from "./ContentMiniFooter";
+import { IoIosArrowForward } from "react-icons/io";
 
 const projectImage =
   "https://cylindersi.pl/wp-content/uploads/2022/06/Dodge-Charger-Scat-Pack-sylwetka.jpg";
@@ -23,7 +24,7 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
   return (
     <>
       {isClient ? (
-        <div className="flex flex-col w-full h-full py-2 gap-2">
+        <div className="flex flex-col w-full h-full py-2 gap-1">
           <ContentMiniNav
             createdAt={data.createdAt}
             title={data.carMake + " " + data.model}
@@ -31,7 +32,7 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
             author={data.author}
           />
 
-          <div className="flex">
+          <div className="flex mt-1">
             <img alt="project-image" src={projectImage} className="w-[55%]" />
             {/* main content, images, stages... */}
           </div>
@@ -41,6 +42,12 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
             isLikedByAuthUser={false}
             likesCount={12}
             type="Project"
+            actions={
+              <div className="flex items-center cursor-pointer transition ease-in-out gap-2 bg-teal-700/30 hover:bg-teal-600 rounded-full px-3 py-1">
+                Zobacz projekt
+                <IoIosArrowForward size={15} />
+              </div>
+            }
           />
         </div>
       ) : (

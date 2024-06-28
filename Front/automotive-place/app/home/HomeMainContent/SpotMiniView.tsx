@@ -1,13 +1,22 @@
 import { TSpot } from "@/app/utils/types/spot";
+import { ContentMiniFooter } from "./ContentMiniFooter";
+import { ContentMiniNav } from "./ContentMiniNav";
 
 export const SpotMiniView = ({ data }: { data: TSpot }) => {
   return (
-    <div className="flex flex-col items-center h-[550px]">
-      <nav>
-        <h2>{data.title}</h2>
-      </nav>
-      <p>{data.description}</p>
-      <h2>Spot</h2>
+    <div className="flex flex-col items-center h-[550px] w-full py-2 gap-1">
+      <ContentMiniNav
+        createdAt={data.createdAt}
+        title={data.title}
+        type="Project"
+        // author={data.}
+      />
+      <h2 className="h-full">Spot</h2>
+      <ContentMiniFooter
+        isLikedByAuthUser={false}
+        likesCount={12}
+        type="Project"
+      />
     </div>
   );
 };
