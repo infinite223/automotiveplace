@@ -69,10 +69,11 @@ możliwości w tym widoku:
 - ustawienia dodatkowe (widoczność, na sprzedaż)
 - dodanie tagów
 
-4. RowMiniProjectView
+4. AMPRowProjectView
 
 - pokazuje najważniejsze dane dla projektu
-- może być wykorzystany w wybieraniu projektu do wydarzenia lub spotu
+- może być wykorzystany w wybieraniu projektu do wydarzenia lub spotu, może
+  postadać różne opcje wyświelania np. z widokiem na autora lub z możliwością polubienia projektu
 
 możliwości w tym widoku:
 

@@ -12,6 +12,8 @@ Wszystkie najważniejsze funkcjonalności aplikacji:
 
 - Spoty -> mapa, dojazdy wspólne, czaty
 
+- Wydarzenia - większe spoty - które są organizowane przez konkretną osobę
+
 - Problemy -> statusy, rozwiązania, komentarze
 
 - Posty (nowy projekt, nowy spot, problem, jakaś informacja)
@@ -23,6 +25,8 @@ Wszystkie najważniejsze funkcjonalności aplikacji:
 - Wystawianie modyfikacji
 
 - Konto Firmy -> dodatkowe funkcjonalności, promowanie, zaufanie, opinie
+
+- tagowanie - różne moduły, i miejsca w aplikacji mogą być otagowane tak aby łatwiej je było znaleźć, oznaczyć
 
 Każda część może posiadać informacje o tym w jakim aucie była zastosowana.
 
@@ -38,6 +42,8 @@ Aplikacja dzielić się może na kilka modułów, które są od siebie odseparow
 
 - Spotkania (spoty) -> Najbliższe
 
+- Wydarzenia
+
 - Problemy
 
 - Profil
@@ -49,6 +55,18 @@ Aplikacja dzielić się może na kilka modułów, które są od siebie odseparow
 Aplikacja musi posiadać pełen system rejestracji, logowania, z dodatkową walidacją po stronie backendu i frontu. Front musi być dobrze przemyślany pod kątem dostępności do poszczególnych routów, musi być też stale walidowany pod kątem rodzaju konta. Aplikacja musi oferować także autoryzacje za pomocą googla, stąd z góry trzeba przemyśleć pod to typy danych.
 
 6. Dane w aplikacji (modele)
+
+- User
+- Project
+- CarItem
+- Spot
+- Event
+- Problem
+- Post
+- Group
+- Company
+- Garage
+
 7. Architektura
 
 Strony:
