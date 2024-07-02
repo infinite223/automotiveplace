@@ -1,4 +1,3 @@
-import { ICreateNotification } from "../components/logger/Notification";
 import { TCarItem } from "./types/carItem";
 import { TPost } from "./types/post";
 import { TProblem } from "./types/problem";
@@ -78,6 +77,20 @@ type TContentData = {
   type: TContentTypes;
   data: TCarItem | TProject | TProblem | TSpot | TPost;
 };
+
+type ICreateNotification = {
+  log: TLog;
+  leftIcon?: JSX.Element;
+  timer: number;
+};
+
+type INotification = {
+  id: number;
+  log: TLog;
+  leftIcon?: JSX.Element;
+  timer: number;
+};
+
 export type {
   TCarItemLikes,
   TTableView,
@@ -85,6 +98,12 @@ export type {
   TLog,
   TPerformanceType,
 };
-export type { TValidResult, TContentData, TContentTypes };
+export type {
+  TValidResult,
+  TContentData,
+  TContentTypes,
+  ICreateNotification,
+  INotification,
+};
 
 export { ErrorStatus };

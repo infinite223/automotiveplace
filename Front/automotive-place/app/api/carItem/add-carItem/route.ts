@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { validCarElement } from "./../../../components/createCarItem/Validation";
 import { TCarItemCreate } from "@/app/utils/types/carItem";
-import { ICreateNotification } from "@/app/components/logger/Notification";
-import { ErrorStatus } from "@/app/utils/types";
+import { ErrorStatus, ICreateNotification } from "@/app/utils/types";
 import { Prisma } from "@prisma/client";
 
 export async function POST(request: NextRequest) {

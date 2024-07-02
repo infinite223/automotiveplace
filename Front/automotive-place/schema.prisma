@@ -18,14 +18,16 @@ model Post {
   projectId String?
   carItemId String?
   spotId String?
+  companyId String?
 
   author User? @relation(fields: [authorId], references: [id])
+  company  Company?  @relation(fields: [companyId], references: [id])
 }
 
 model User {
   id        String   @id @default(cuid())
   password  String
-  name      String
+  name      String   @unique
   email     String?  @unique
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @updatedAt @map(name: "updated_at")
@@ -54,8 +56,6 @@ model Company {
   carItems     CarItem[]
 
   tags        Tag[]
-
-  @@map(name: "users")
 }
 
 model Garage {

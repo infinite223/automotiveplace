@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { apiErrorMessages } from "../../apiMessages";
-import { ErrorStatus } from "@/app/utils/types";
-import { ICreateNotification } from "@/app/components/logger/Notification";
+import { ErrorStatus, ICreateNotification } from "@/app/utils/types";
 
 export async function DELETE(request: NextRequest) {
   const { searchParams }: any = new URL(request.url);

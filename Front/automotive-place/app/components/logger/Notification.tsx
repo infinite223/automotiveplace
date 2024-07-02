@@ -1,34 +1,9 @@
-import { TLog } from "@/app/utils/types";
 import { removeNotification } from "@/lib/features/notifications/notificationsSlice";
 import { RootState } from "@/lib/store";
 import moment from "moment";
 import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
-
-export type ICreateNotification = {
-  log: TLog;
-  leftIcon?: JSX.Element;
-  timer: number;
-};
-
-export type INotification = {
-  id: number;
-  log: TLog;
-  leftIcon?: JSX.Element;
-  timer: number;
-};
-
-const notificationTestData: INotification = {
-  id: 1,
-  log: {
-    date: new Date(),
-    status: "Success",
-    title: "Udało się dodać element",
-    message: "Element został pomyślnie dodany do Twojego garażu",
-  },
-  timer: 2000,
-};
 
 export const Notification: FC = () => {
   const notifications = useSelector((state: RootState) => state.notifications);

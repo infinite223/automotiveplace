@@ -1,8 +1,7 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { hash } from "bcrypt";
-import { TValidResult } from "@/app/utils/types";
-import { ICreateNotification } from "@/app/components/logger/Notification";
+import { ICreateNotification, TValidResult } from "@/app/utils/types";
 import { log } from "console";
 
 export async function POST(req: Request) {

@@ -5,15 +5,13 @@ import { PiQuestionMarkFill } from "react-icons/pi";
 import { motion, AnimatePresence } from "framer-motion";
 import { BsPostcardFill } from "react-icons/bs";
 
-interface ISelectCreateOption {
-  //   postData: TPost;
-}
+interface ISelectCreateOption {}
 
 const iconSize = 22;
 
 export const SelectCreateOption: FC = () => {
   return (
-    <div className="flex items-center gap-1 min-w-20 min-h-10">
+    <div className="flex items-center min-w-20 min-h-10 p-1">
       <OptionItem
         name="Dodaj projekt"
         onClick={() => {}}

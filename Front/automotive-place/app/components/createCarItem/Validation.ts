@@ -1,6 +1,9 @@
-import { ErrorStatus, TValidResult } from "@/app/utils/types";
+import {
+  ErrorStatus,
+  ICreateNotification,
+  TValidResult,
+} from "@/app/utils/types";
 import { TCarItemCreate, isValidItemType } from "@/app/utils/types/carItem";
-import { ICreateNotification } from "../logger/Notification";
 
 export const validCarElement = (newElement: TCarItemCreate) => {
   let validResults: TValidResult[] = [];

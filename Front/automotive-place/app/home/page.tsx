@@ -33,6 +33,7 @@ export default function Home() {
         visible={isModalOpen}
         title="Dodawanie"
         additionalTailwindCss="relative bottom-40"
+        defoultBG={false}
       >
         <SelectCreateOption />
       </AMPModal>

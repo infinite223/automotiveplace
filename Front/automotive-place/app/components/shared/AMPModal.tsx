@@ -14,6 +14,7 @@ interface IModalProps {
   title?: string;
   visible: boolean;
   additionalTailwindCss?: string;
+  defoultBG?: boolean;
 }
 
 const AMPModal = ({
@@ -23,6 +24,7 @@ const AMPModal = ({
   title,
   additionalTailwindCss,
   visible,
+  defoultBG = true,
 }: IModalProps) => {
   useKeyboardShortcut(onClose, shortcutConfig);
 
@@ -47,7 +49,9 @@ const AMPModal = ({
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="bg-custom-primary shadow-zinc-200 dark:shadow-zinc-800 rounded-md p-0 z-30">
+            <div
+              className={`${defoultBG && "bg-custom-primary"} shadow-zinc-200 dark:shadow-zinc-800 rounded-md p-0 z-30`}
+            >
               {withHeader && <AMPModalHeader title={title} onClose={onClose} />}
               {children}
             </div>
