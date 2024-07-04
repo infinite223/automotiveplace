@@ -1,4 +1,4 @@
-import { INotification } from "@/app/components/logger/Notification";
+import { INotification } from "@/app/utils/types";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: INotification[] = [];

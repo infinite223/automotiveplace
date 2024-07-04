@@ -1,4 +1,4 @@
-import { ICreateNotification } from "../components/logger/Notification";
+import { ICreateNotification } from "../utils/types";
 import { TCarItemCreate } from "../utils/types/carItem";
 
 export const getAllCarItems = async (limit = 10) => {
