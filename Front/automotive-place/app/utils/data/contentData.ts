@@ -1,10 +1,8 @@
 import { TContentData } from "../types";
-import {
-  generateRandomPosts,
-  generateRandomProblems,
-  generateRandomProjects,
-  generateRandomSpots,
-} from "./project";
+import { generateRandomPosts } from "./post";
+import { generateRandomProblems } from "./problem";
+import { generateRandomProjects } from "./project";
+import { generateRandomSpots } from "./spot";
 
 export const contentData: TContentData[] = [
   {
