@@ -28,8 +28,8 @@ function isTCarItem(data: any): data is TCarItem {
     typeof data === "object" &&
     data !== null &&
     typeof data.id === "string" &&
-    data.createdAt instanceof Date &&
-    data.updatedAt instanceof Date &&
+    // data.createdAt instanceof Date &&
+    // data.updatedAt instanceof Date &&
     typeof data.forSell === "boolean" &&
     typeof data.isVisible === "boolean" &&
     typeof data.inUse === "boolean" &&

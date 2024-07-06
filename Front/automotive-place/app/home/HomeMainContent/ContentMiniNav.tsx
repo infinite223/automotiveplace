@@ -2,6 +2,8 @@ import { TContentTypes } from "@/app/utils/types";
 import { TUser } from "@/app/utils/types/user";
 import moment from "moment";
 import { BiDotsVertical } from "react-icons/bi";
+import "moment/locale/pl";
+moment.locale("pl");
 
 interface IContentMiniNav {
   title: string;

@@ -16,7 +16,7 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
   useEffect(() => {
     setIsClient(true);
   }, []);
-
+  console.log(data, "tutaj adas");
   if (!data) {
     return null;
   }

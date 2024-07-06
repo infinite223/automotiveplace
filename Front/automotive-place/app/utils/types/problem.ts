@@ -18,8 +18,8 @@ function isTProblem(data: any): data is TProblem {
     typeof data === "object" &&
     data !== null &&
     typeof data.id === "string" &&
-    data.createdAt instanceof Date &&
-    data.updatedAt instanceof Date &&
+    // data.createdAt instanceof Date &&
+    // data.updatedAt instanceof Date &&
     typeof data.isVisible === "boolean" &&
     typeof data.title === "string" &&
     typeof data.description === "string"
