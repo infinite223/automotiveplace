@@ -8,7 +8,7 @@ import { Prisma } from "@prisma/client";
 export async function POST(request: NextRequest) {
   const authUser = false;
   const carItem: TCarItemCreate = await request.json();
-  console.log("carItem: ", carItem);
+
   let notification: ICreateNotification | null = {
     log: {
       date: new Date(),

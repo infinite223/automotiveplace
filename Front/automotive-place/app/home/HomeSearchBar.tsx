@@ -8,6 +8,7 @@ import useKeyboardShortcut from "../hooks/useKeydown";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsSearchBarOpen } from "@/lib/features/searchBar/searchBarSlice";
 import { RootState } from "@/lib/store";
+import { FaLongArrowAltDown } from "react-icons/fa";
 
 const shortcutConfigStart = {
   code: "ctrl+f",
@@ -85,28 +86,36 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
 
   return (
     <main className={`flex w-full flex-col relative`}>
-      <div
-        onClick={() => {
-          dispatch(setIsSearchBarOpen(true));
-        }}
-        onFocus={() => setIsFocused(true)}
-        tabIndex={0}
-        className={`w-full z-10 bg-custom-primary rounded-full border flex items-center gap-4 pl-5 pr-4 p-3 ${
-          isFocused ? "border-zinc-500" : "border-zinc-300 dark:border-zinc-800"
-        } hover:border-zinc-400 focus-within:border-zinc-500`}
-      >
-        <LuSearch size={24} className="text-custom-secend text-red-300" />
-        <input
-          ref={inputRef}
-          onFocus={() => setIsFocused(true)}
-          placeholder="Szukaj projektów, wydarzeń, firm, problemów"
-          className="outline-none border-gray-300 w-full bg-custom-primary text-custom-secend text-[13px] focus:ring-teal-500 focus:border-teal-500 block dark:border-zinc-800 dark:placeholder-gray-500 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-800 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer bg-inherit"
-        />
+      <div className="flex flex-col items-center gap-3">
         <div
-          className={`text-custom-secend text-[11px]  p-1 pr-2 pl-2 cursor-pointer`}
+          onClick={() => {
+            dispatch(setIsSearchBarOpen(true));
+          }}
+          onFocus={() => setIsFocused(true)}
+          tabIndex={0}
+          className={`w-full z-10 bg-custom-primary rounded-full border flex items-center gap-4 pl-4 pr-3 p-2.5 ${
+            isFocused
+              ? "border-zinc-500"
+              : "border-zinc-300 dark:border-zinc-800"
+          } hover:border-zinc-400 focus-within:border-zinc-500`}
+        >
+          <input
+            ref={inputRef}
+            onFocus={() => setIsFocused(true)}
+            placeholder="Szukaj projektów, wydarzeń, firm, problemów"
+            className="outline-none border-gray-300 w-full bg-custom-primary text-custom-secend text-[13px] focus:ring-teal-500 focus:border-teal-500 block dark:border-zinc-800 dark:placeholder-gray-500 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-800 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer bg-inherit"
+          />
+          <LuSearch
+            size={22}
+            className="text-custom-secend text-red-300 mr-1"
+          />
+        </div>
+        {/* <div
+          className={`flex items-center gap-1 text-custom-secend text-[10px] opacity-50 cursor-pointer`}
         >
           {searchTypeOption.name.toUpperCase()}
-        </div>
+          <FaLongArrowAltDown />
+        </div> */}
       </div>
       <AnimatePresence>
         {isFocused && (
@@ -182,12 +191,12 @@ export enum SearchTypes {
 
 const searchTypesOptions = [
   { name: "Wszystko", value: SearchTypes.All },
-  { name: "Projekt", value: SearchTypes.Project },
-  { name: "Wydarzenie", value: SearchTypes.Event },
-  { name: "Problem", value: SearchTypes.Problem },
-  { name: "Element", value: SearchTypes.Element },
-  { name: "Firma", value: SearchTypes.Company },
-  { name: "Grupa", value: SearchTypes.Group },
+  { name: "Projekty", value: SearchTypes.Project },
+  { name: "Wydarzenia", value: SearchTypes.Event },
+  { name: "Problemy", value: SearchTypes.Problem },
+  { name: "Elementy", value: SearchTypes.Element },
+  { name: "Firmy", value: SearchTypes.Company },
+  { name: "Grupy", value: SearchTypes.Group },
 ];
 
 export type TSearchTypesOptions = {

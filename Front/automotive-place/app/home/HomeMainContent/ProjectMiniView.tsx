@@ -16,7 +16,6 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
   useEffect(() => {
     setIsClient(true);
   }, []);
-  console.log(data, "tutaj adas");
   if (!data) {
     return null;
   }
@@ -43,7 +42,7 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
             likesCount={12}
             type="Project"
             actions={
-              <div className="flex items-center cursor-pointer transition ease-in-out gap-2 bg-teal-700/30 hover:bg-teal-600 rounded-full px-3 py-1">
+              <div className="flex items-center cursor-pointer transition ease-in-out gap-2 bg-zinc-700/30 hover:bg-zinc-700 rounded-full px-3 py-1">
                 Zobacz projekt
                 <IoIosArrowForward size={15} />
               </div>

@@ -40,7 +40,7 @@ export const createCarItem = async (
     body: JSON.stringify(carItem),
     headers: { "Content-Type": "application/json" },
   });
-  console.log(response);
+
   if (!response.ok) {
     throw new Error("Failed to add car items");
   }

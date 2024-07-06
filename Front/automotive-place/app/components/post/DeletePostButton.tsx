@@ -1,18 +1,17 @@
 "use client";
 
-import React, {FC} from "react";
+import React, { FC } from "react";
 
 interface DeletePostButtonProps {
   postId: string;
 }
 
-const DeletePostButton: FC<DeletePostButtonProps> = ({postId}) => {
-  
+const DeletePostButton: FC<DeletePostButtonProps> = ({ postId }) => {
   async function handleClick(postId: string) {
     try {
-      await fetch(`/api/post/${postId}`, {method: "DELETE"});
+      await fetch(`/api/post/${postId}`, { method: "DELETE" });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

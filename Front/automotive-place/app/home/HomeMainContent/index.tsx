@@ -26,7 +26,6 @@ export const HomeMainContent = ({
     const getData = async () => {
       const res = await getMainContentDataForUser();
       setContent(res.data);
-      console.log(res, "tutaj");
       setLoading(false);
     };
 
@@ -59,19 +58,53 @@ export const ContentSelect = ({
 }: {
   content: TContentData;
 }) => {
+  const errorText = " data is not valid";
   switch (type) {
     case "Project":
-      console.log(data, type, "jalooo ", isTProject(data));
+      const contentDataIsProject = isTProject(data);
 
-      return isTProject(data) ? <ProjectMiniView data={data} /> : null;
+      if (contentDataIsProject) {
+        return <ProjectMiniView data={data} />;
+      }
+
+      console.error(type, errorText);
+      return null;
     case "Problem":
-      return isTProblem(data) ? <ProblemMiniView data={data} /> : null;
+      const contentDataIsProblem = isTProblem(data);
+
+      if (contentDataIsProblem) {
+        return <ProblemMiniView data={data} />;
+      }
+
+      console.error(type, errorText);
+      return null;
     case "Post":
-      return isTPost(data) ? <PostMiniView data={data} /> : null;
+      const contentDataIsPost = isTPost(data);
+
+      if (contentDataIsPost) {
+        return <PostMiniView data={data} />;
+      }
+
+      console.error(type, errorText);
+      return null;
     case "Spot":
-      return isTSpot(data) ? <SpotMiniView data={data} /> : null;
+      const contentDataIsSpot = isTSpot(data);
+
+      if (contentDataIsSpot) {
+        return <SpotMiniView data={data} />;
+      }
+
+      console.error(type, errorText);
+      return null;
     case "CarItem":
-      return isTCarItem(data) ? <CarItemMiniView data={data} /> : null;
+      const contentDataIsCarItem = isTCarItem(data);
+
+      if (contentDataIsCarItem) {
+        return <CarItemMiniView data={data} />;
+      }
+
+      console.error(type, errorText);
+      return null;
     default:
       return null;
   }
