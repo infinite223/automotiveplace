@@ -4,30 +4,19 @@ import { AMPButton } from "./components/shared/AMPButton";
 
 export default async function Home() {
   return (
-    <main className="flex text-zinc-900 min-h-screen flex-col items-center justify-between p-24">
-      <div className="flex flex-col items-center">
-        <h2 className="font-bold text-[25px]">AMP</h2>
-        <h3 className="text-rose-700 font-extrabold text-[20px]">
-          AutoMotive place
+    <main className="flex text-zinc-900 min-h-screen flex-col items-center p-2">
+      <div className="flex items-center gap-3">
+        <h3 className="font-extrabold text-[18px] uppercase">
+          AutoMotive <span className="text-teal-600">place</span>
         </h3>
-      </div>
 
-      <div className="flex flex-col gap-3 items-center justify-center">
-        <h2>Pages: </h2>
+        <div></div>
 
-        <div className="flex flex-wrap gap-2">
-          <Link href={"/garage"}>
-            <div className="border-blue-400 p-2 rounded-sm border">
-              Go to garage
-            </div>
-          </Link>
-
-          <Link href={"/home"}>
-            <div className="border-blue-400 p-2 rounded-sm border">
-              Go to home
-            </div>
-          </Link>
-        </div>
+        <Link href={"/test"} className="absolute top-2 right-2">
+          <div className="border-teal-700 border py-1 p-2 rounded-md text-sm font-bold">
+            TEST PAGE
+          </div>
+        </Link>
       </div>
 
       {/* <AMPButton
