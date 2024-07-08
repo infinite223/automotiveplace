@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { AMPSeparator } from "../components/shared/AMPSeparator";
+import { usePathname, useRouter } from "next/navigation";
+import TestNavigation from "./TestNavigation";
+// import { usePathname } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,5 +17,12 @@ export default function Layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div>{children}</div>;
+  // const route = useRouter();
+  return (
+    <div className="bg-custom-primary min-h-screen text-custom-primary flex-col items-center gap-2">
+      <TestNavigation />
+      <AMPSeparator />
+      {children}
+    </div>
+  );
 }
