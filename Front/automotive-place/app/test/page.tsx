@@ -27,12 +27,12 @@ export default function Test() {
 }
 
 const pages = [
-  "Garage",
-  "Home",
-  "Project",
-  "Profile",
-  "Problem",
-  "Wydarzenie",
-  "Spot",
-  "Settings",
+  "garage",
+  "home",
+  "project",
+  "profile",
+  "problem",
+  "event",
+  "spot",
+  "settings",
 ];

@@ -13,6 +13,7 @@ import { SpotMiniView } from "./SpotMiniView";
 import { CarItemMiniView } from "./CarItemMiniView";
 import { isTCarItem } from "@/app/utils/types/carItem";
 import { getMainContentDataForUser } from "@/app/services/content";
+import { LoadingMiniView } from "./LoadingMiniView";
 
 export const HomeMainContent = ({
   contentData,
@@ -32,22 +33,30 @@ export const HomeMainContent = ({
     getData();
   }, []);
 
-  console.log(_content);
-  if (isLoading) return <p className="text-sm font-thin">Loading...</p>;
-
   return (
-    <div className="flex w-[1000px] max-2xl:mr-[80px] mr-[160px] items-center h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth">
+    <div className="flex w-[1000px] max-2xl:mr-[80px] mr-[175px] items-center h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth">
       <div className="flex flex-col text-[12px] w-[600px]">
-        {_content.map((content) => {
-          return (
-            <div
-              key={content.data.id}
-              className="flex w-full border-zinc-900 border-b-[1px] border-t-0 items-center justify-center"
-            >
-              <ContentSelect content={content} />
-            </div>
-          );
-        })}
+        {!isLoading &&
+          _content.map((content) => {
+            return (
+              <div
+                key={content.data.id}
+                className="flex w-full border-zinc-900 border-b-[1px] border-t-0 items-center justify-center"
+              >
+                <ContentSelect content={content} />
+              </div>
+            );
+          })}
+
+        {isLoading && (
+          <>
+            <LoadingMiniView />
+            <LoadingMiniView />
+            <LoadingMiniView />
+            <LoadingMiniView />
+            <LoadingMiniView />
+          </>
+        )}
       </div>
     </div>
   );

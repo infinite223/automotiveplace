@@ -22,6 +22,21 @@ import { Md1kPlus } from "react-icons/md";
 
 export default function Page() {
   const [selectElement, setSelectElement] = useState<null | JSX.Element>(null);
+  const showAllComponents = () => {
+    const allElements = () => {
+      return (
+        <div className="flex flex-wrap w-full gap-2">
+          {componentsList.map((component) => (
+            <div className="flex flex-col gap-1 p-1 border-2 dark:border-zinc-900 p-1">
+              {component.name}:{component.value}
+            </div>
+          ))}
+        </div>
+      );
+    };
+
+    setSelectElement(allElements);
+  };
   return (
     <main className="flex min-h-screen bg-custom-primary text-custom-primary flex-col items-center gap-2 p-2">
       <div className="flex flex-col gap-3 w-full">
@@ -40,6 +55,14 @@ export default function Page() {
         </div>
         <AMPSeparator />
         <div className="p-2 flex items-start flex-col gap-2">
+          <nav>
+            <button
+              onClick={showAllComponents}
+              className="bg-custom-secend py-2 px-4 rounded-sm text-sm"
+            >
+              Pokaż wszystkie komponenty
+            </button>
+          </nav>
           <h3>Test component: </h3>
           {selectElement || (
             <p className="text-sm text-custom-secend">
