@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { TCarItemCreate } from "@/app/utils/types/carItem";
-import { ICreateCarItemResponse } from "@/app/services/carItem";
 import { AMPSeparator } from "@/app/components/shared/AMPSeparator";
 import { endpointsWithNumberRunList, IEndpoint } from "./endpointsList ";
 import { AMPInput } from "@/app/components/shared/AMPInput";

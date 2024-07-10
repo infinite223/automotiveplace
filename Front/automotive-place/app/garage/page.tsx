@@ -66,8 +66,6 @@ export default function Garage() {
         document.documentElement.scrollHeight <= window.innerHeight &&
         hasMore === true
       ) {
-        console.log("tutaj 2", hasMore);
-
         loadMoreItems();
       }
     };

@@ -7,11 +7,10 @@ export async function GET(request: NextRequest) {
 
   const authUser = false; // Change this to your actual authentication logic
 
-  // Retrieve limited data
   const result = await prisma.carItem.findMany({
     take: limit,
     orderBy: {
-      createdAt: 'desc', // Ensure consistent ordering
+      createdAt: 'desc', 
     },
   });
 

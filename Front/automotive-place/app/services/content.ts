@@ -7,7 +7,7 @@ export const getMainContentDataForUser = async () => {
     throw new Error("Failed to get data");
   }
 
-  const result: { hasMore: boolean; data: TContentData[] } =
+  const result: { hasMore: boolean; data: TContentData[] } =  
     await response.json();
   return result;
 };
