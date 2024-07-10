@@ -3,7 +3,6 @@
 import { TProject } from "@/app/utils/types/project";
 import { useEffect, useState } from "react";
 import { ContentMiniNav } from "./ContentMiniNav";
-import { AMPFooterItem } from "@/app/components/shared/AMPFooterItem";
 import { ContentMiniFooter } from "./ContentMiniFooter";
 import { IoIosArrowForward } from "react-icons/io";
 

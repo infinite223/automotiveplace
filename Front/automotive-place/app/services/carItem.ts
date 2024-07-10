@@ -10,7 +10,7 @@ export const getAllCarItems = async (limit = 10) => {
   return result;
 };
 
-interface IRemoveCarItemResponse {
+export interface IRemoveCarItemResponse {
   result: any;
   notification: ICreateNotification | null;
 }
@@ -27,7 +27,7 @@ export const removeCarItem = async (
   return result;
 };
 
-interface ICreateCarItemResponse {
+export interface ICreateCarItemResponse {
   carItem: any;
   notification: ICreateNotification | null;
 }

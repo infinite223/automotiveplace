@@ -44,4 +44,8 @@ const options = [
     name: "MiniViews",
     path: "/test/miniViews",
   },
+  {
+    name: "Endpoints",
+    path: "/test/endpoints",
+  },
 ];
