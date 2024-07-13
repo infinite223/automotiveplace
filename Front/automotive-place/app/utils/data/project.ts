@@ -1,14 +1,12 @@
 import { TPost } from "../types/post";
 import { TProblem } from "../types/problem";
-import { TProject } from "../types/project";
+import { TProject, TProjectCreate } from "../types/project";
 import { TSpot } from "../types/spot";
 import {
   generateRandomDate,
   generateRandomString,
   getRandomInt,
 } from "./randomData";
-
-
 
 export function generateRandomProjects(count: number) {
   const projects = [];
@@ -53,6 +51,34 @@ export function generateRandomProjects(count: number) {
         project.images.push(`image_${j}`);
       }
     }
+    projects.push(project);
+  }
+  return projects;
+}
+
+export function generateRandomProjectsToCreate(count: number) {
+  const projects = [];
+  for (let i = 0; i < count; i++) {
+    const project: TProjectCreate = {
+      forSell: Math.random() < 0.5,
+      isVisible: Math.random() < 0.5,
+      carMake: generateRandomString(5),
+      model: generateRandomString(5),
+      description: "",
+      authorId: "",
+      engineCapacity: 2,
+      engineName: "TSI",
+      engineStockHp: 200,
+      engineStockNm: 280,
+      transmissionGears: 6,
+      transmissionName: "",
+      stagesCount: getRandomInt(0, 5),
+      garageId: generateRandomString(8),
+      inUse: false,
+      name: generateRandomString(5),
+      projectPrice: getRandomInt(5000, 500000),
+    };
+
     projects.push(project);
   }
   return projects;

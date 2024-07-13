@@ -17,6 +17,12 @@ import {
 } from "@/app/utils/data/carItem";
 import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
+import { createProject } from "@/app/services/project";
+import { getMainContentDataForUser } from "@/app/services/content";
+import {
+  generateRandomProjects,
+  generateRandomProjectsToCreate,
+} from "@/app/utils/data/project";
 
 export default function Page() {
   const [endpointsWithNumberRun, setEndpointsWithNumberRun] = useState<
@@ -63,6 +69,27 @@ export default function Page() {
         dispatch(addNotification(JSON.stringify(result.notification)));
 
         break;
+
+      case "CreateProjectFunction":
+        const randomProjectsData = generateRandomProjectsToCreate(runs);
+
+        randomProjectsData.forEach(async (project) => {
+          const result = await createProject(project);
+
+          dispatch(addNotification(JSON.stringify(result.notification)));
+        });
+
+        break;
+
+      case "GetMainContentDataForUserFunction":
+        const { data, hasMore } = await getMainContentDataForUser();
+
+        if (data) {
+          // dispatch(addNotification(JSON.stringify(result.notification)));
+          console.log(data);
+        }
+
+        break;
       default:
         break;
     }
@@ -84,7 +111,7 @@ export default function Page() {
           {endpointsWithNumberRun.map((endpoint, index) => (
             <div
               key={endpoint.name}
-              className="border-zinc-700 flex max-w-[200px] justify-between flex-col gap-1  border p-4 rounded-sm text-sm"
+              className="border-zinc-700 flex w-min min-w-[200px] justify-between flex-col gap-1  border p-4 rounded-sm text-sm"
             >
               <div className="flex flex-col gap-2">
                 {endpoint.name}
@@ -103,7 +130,7 @@ export default function Page() {
                 />
                 <button
                   onClick={() => evaluateFunction(endpoint)}
-                  className="bg-custom-secend py-1 px-4 font-bold rounded-sm text-[12px] uppercase"
+                  className="bg-custom-secend hover:opacity-85 py-1 px-4 font-bold rounded-sm text-[12px] uppercase"
                 >
                   Run endpoint
                 </button>
@@ -117,7 +144,7 @@ export default function Page() {
           {/* <h3>Test endpoint: </h3> */}
           <button
             onClick={evaluateFunctions}
-            className="bg-green-800 flex items-center gap-2 py-1 px-4 font-bold rounded-md text-sm uppercase"
+            className="bg-green-800 hover:opacity-85 flex items-center gap-2 py-1 px-4 font-bold rounded-sm text-sm uppercase"
           >
             Run all endpoints
             <VscRunAll size={14} />
