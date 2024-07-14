@@ -1,4 +1,4 @@
-import { TValidResult } from "@/app/utils/types";
+import { ICreateNotification, TValidResult } from "@/app/utils/types";
 import { TProjectCreate } from "@/app/utils/types/project";
 import { TStageCreate } from "@/app/utils/types/stage";
 import {
@@ -8,6 +8,7 @@ import {
 
 export const validProject = (newElement: TProjectCreate) => {
   let validResults: TValidResult[] = [];
+  let notification: ICreateNotification | null = null;
 
   validResults = validResults.concat(validCarNameValue(newElement.name));
 
@@ -17,15 +18,13 @@ export const validProject = (newElement: TProjectCreate) => {
   );
 
   if (!newElement.authorId && newElement.authorId.length < 2) {
-    //maybe valid authorId?
-
     validResults.push({
       error: "Brak poprawnych danych o autorze. ",
       valid: false,
     });
   }
 
-  return validResults;
+  return { validResults, notification };
 };
 
 export const validCarNameValue = (value: string | number) => {

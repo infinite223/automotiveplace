@@ -43,7 +43,7 @@ export const endpointsWithNumberRunList: IEndpoint[] = [
   {
     name: "GetMainContentDataForUser",
     description:
-      "Pobiera z bazy daną ilość kontentu dla użytkownika (posty, projekty, problemy itp...)",
+      "Pobiera z bazy, daną ilość kontentu dla użytkownika (posty, projekty, problemy itp...)",
     functionType: "GetMainContentDataForUserFunction",
     runs: 0,
   },
