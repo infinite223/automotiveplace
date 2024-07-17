@@ -4,6 +4,7 @@ import { BiDotsVertical, BiRightArrow, BiShare } from "react-icons/bi";
 import { CgShare } from "react-icons/cg";
 import { FaHeart } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
+import { MediumIconSize } from ".";
 
 interface IContentMiniFooter {
   type: TContentTypes;
@@ -24,7 +25,7 @@ export const ContentMiniFooter = ({
   return (
     <nav className="flex text-custom-primary items-center justify-between w-full">
       <div className="flex items-center gap-2">
-        <CgShare size={20} />
+        <CgShare size={MediumIconSize} />
         <div className="flex flex-col gap-2">
           {!isLoading && (
             <div
@@ -34,7 +35,7 @@ export const ContentMiniFooter = ({
               onClick={handleClickLike}
             >
               <FaHeart
-                size={19}
+                size={MediumIconSize}
                 color={isLikedByAuthUser ? "#df1515" : "gray"}
                 className={`cursor-pointer transition-colors duration-300 ease-in-out ${
                   isLikedByAuthUser ? "transform scale-95" : ""

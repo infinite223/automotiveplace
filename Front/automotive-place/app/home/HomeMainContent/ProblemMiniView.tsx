@@ -8,7 +8,7 @@ export const ProblemMiniView = ({ data }: { data: TProblem }) => {
       <ContentMiniNav
         createdAt={data.createdAt}
         title={data.title}
-        type="Project"
+        typeName="Problem"
         // author={data.}
       />
       <h2 className="h-full">Problem</h2>

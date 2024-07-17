@@ -8,7 +8,7 @@ export const PostMiniView = ({ data }: { data: TPost }) => {
       <ContentMiniNav
         createdAt={data.createdAt}
         title={data.title}
-        type="Project"
+        type="Post"
         // author={data.}
       />
       <h2 className="h-full">Post</h2>

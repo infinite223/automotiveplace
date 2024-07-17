@@ -15,6 +15,9 @@ import { isTCarItem } from "@/app/utils/types/carItem";
 import { getMainContentDataForUser } from "@/app/services/content";
 import { LoadingMiniView } from "./LoadingMiniView";
 
+// TODO - add global settings for icons and more
+export const MediumIconSize = 22;
+
 export const HomeMainContent = ({
   contentData,
 }: {

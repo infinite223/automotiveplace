@@ -23,7 +23,8 @@ export const HomeLeftOptions: FC<IHomeLeftOptions> = ({
   closeModal,
   openModal,
 }) => {
-  const iconSize = 25;
+  // TODO - change to global variable
+  const iconSize = 22;
   const dispatch = useDispatch();
   const smallScreenHiddenItem = "max-2xl:hidden";
 

@@ -3,26 +3,27 @@ import { TUser } from "@/app/utils/types/user";
 import moment from "moment";
 import { BiDotsVertical } from "react-icons/bi";
 import "moment/locale/pl";
+import { MediumIconSize } from ".";
 moment.locale("pl");
 
 interface IContentMiniNav {
   title: string;
   author?: TUser;
   createdAt: Date;
-  type: TContentTypes;
+  typeName: string;
 }
 
 export const ContentMiniNav = ({
   author,
   createdAt,
   title,
-  type,
+  typeName,
 }: IContentMiniNav) => {
   return (
     <nav className="flex text-custom-primary items-center w-full justify-between">
       <div className="flex flex-col gap-2">
         <p className="text-[11px] text-custom-secend opacity-65">
-          {type} dodany: {moment(createdAt, "YYYYMMDD").fromNow()}
+          {typeName} dodany: {moment(createdAt, "YYYYMMDD").fromNow()}
         </p>
 
         <div className="flex items-center gap-4">
@@ -30,7 +31,7 @@ export const ContentMiniNav = ({
             <img
               alt="author-image"
               src={author?.imageUrl}
-              className="h-7 w-7 rounded-full"
+              className="h-8 w-8 rounded-full"
             />
           )}
           <div className="flex flex-col leading-4	">
@@ -43,7 +44,7 @@ export const ContentMiniNav = ({
       </div>
 
       <div>
-        <BiDotsVertical size={22} />
+        <BiDotsVertical size={MediumIconSize} />
       </div>
     </nav>
   );
