@@ -25,7 +25,7 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
         <div className="flex flex-col w-full h-full py-2 gap-1">
           <ContentMiniNav
             createdAt={data.createdAt}
-            title={data.carMake + " " + data.model}
+            title={data.carMake + " " + data.carModel}
             type="Project"
             author={data.author}
           />

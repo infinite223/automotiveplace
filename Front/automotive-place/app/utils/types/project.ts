@@ -1,6 +1,6 @@
 import { TCarItem, TCarItemCreate } from "./carItem";
 import { TStageCreate, TStage } from "./stage";
-import { TTag } from "./tag";
+import { TTag, TTagCreate } from "./tag";
 import { TUser } from "./user";
 
 type TProject = {
@@ -10,8 +10,9 @@ type TProject = {
   forSell: boolean;
   isVisible: boolean;
 
+  name?: string;
   carMake: string;
-  model: string;
+  carModel: string;
   description?: string;
   isVerified: boolean;
   imagesCount: number;
@@ -51,7 +52,7 @@ function isTProject(data: any): data is TProject {
     typeof data.forSell === "boolean" &&
     typeof data.isVisible === "boolean" &&
     typeof data.carMake === "string" &&
-    typeof data.model === "string" &&
+    typeof data.carModel === "string" &&
     typeof data.description === "string" &&
     typeof data.isVerified === "boolean" &&
     typeof data.imagesCount === "number" &&
@@ -87,33 +88,36 @@ function isTProject(data: any): data is TProject {
 
 type TProjectCreate = {
   forSell: boolean;
-  isVisible: boolean;
   inUse: boolean;
-  name: string;
-  description?: string;
   authorId: string;
-  projectId?: string;
+  name?: string;
   carMake: string;
-  model: string;
+  carModel: string;
+  description?: string;
   stagesCount: number;
+  carItemsCount: number;
+  imagesCount: number;
 
+  isVisible: boolean;
   garageId: string;
-  projectPrice: number;
-
-  stages?: TStageCreate[];
-  carItems?: TCarItemCreate[];
+  projectPrice?: number;
 
   engineName: string;
+  likesCount: number;
   engineStockHp: number;
   engineStockNm: number;
   engineDescription?: string;
   engineCapacity: number;
+  engineWasSwapped: boolean;
 
   transmissionName: string;
   transmissionGears: number;
   transmissionDescription?: string;
   transmissionWasSwapped?: boolean;
-  tags?: TTag[];
+
+  stages?: TStageCreate[];
+  carItems?: TCarItemCreate[];
+  tags?: TTagCreate[];
 };
 
 export type { TProject, TProjectCreate };

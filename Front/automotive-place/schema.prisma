@@ -79,17 +79,18 @@ model Project {
 
   createdAt     DateTime @default(now()) @map(name: "created_at")
   updatedAt     DateTime @updatedAt @map(name: "updated_at")
+  name          String?
   carMake       String
   carModel      String
   description   String?
   isVerified    Boolean
   isVisible     Boolean
   imagesUrl     String // folder localisation by id  
-  imagesCount   Int
   likesCount    Int
-  carItemsCount Int
-  forSell       Boolean
   stagesCount   Int
+  carItemsCount Int
+  imagesCount   Int
+  forSell       Boolean
   garageId      String
   projectPrice  Decimal?
 
@@ -97,6 +98,7 @@ model Project {
   engineStockHp        Int
   engineStockNm    Int
   engineDescription String?
+  engineCapacity Decimal
   engineWasSwapped   Boolean?
 
   transmissionName String

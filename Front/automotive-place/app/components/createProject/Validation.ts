@@ -6,18 +6,18 @@ import {
   priceValidation,
 } from "@/app/utils/validation/globalValidation";
 
-export const validProject = (newElement: TProjectCreate) => {
+export const validProject = (newProject: TProjectCreate) => {
   let validResults: TValidResult[] = [];
   let notification: ICreateNotification | null = null;
 
-  validResults = validResults.concat(validCarNameValue(newElement.name));
-
-  validResults = validResults.concat(validCarMakeValue(newElement.carMake));
+  validResults = validResults.concat(validCarMakeValue(newProject.carMake));
   validResults = validResults.concat(
-    validStages(newElement.stagesCount, newElement.stages)
+    validStages(newProject.stagesCount, newProject.stages)
   );
 
-  if (!newElement.authorId && newElement.authorId.length < 2) {
+  // TODO - valid tags, stages, carItems and all data if exists
+
+  if (!newProject.authorId && newProject.authorId.length < 2) {
     validResults.push({
       error: "Brak poprawnych danych o autorze. ",
       valid: false,
@@ -55,7 +55,7 @@ export const validCarMakeValue = (value: string | number) => {
     });
   }
 
-  // sprawdzanie czy należy do grupy pojazdów
+  // TODO - sprawdzanie czy należy do grupy pojazdów
 
   return validResults;
 };

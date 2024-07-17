@@ -5,8 +5,14 @@ import { AMPTextarea } from "../shared/AMPTextarea";
 import { AMPSwitch } from "../shared/AMPSwitch";
 import { createProject } from "@/app/services/project";
 import { AMPHelpFooter } from "../shared/AMPHelpFooter";
-import { ItemTypes, ItemTypesPL } from "@/app/utils/types/carItem";
+import {
+  ItemTypes,
+  ItemTypesPL,
+  TCarItemCreate,
+} from "@/app/utils/types/carItem";
 import { TProjectCreate } from "@/app/utils/types/project";
+import { TStageCreate } from "@/app/utils/types/stage";
+import { TTagCreate } from "@/app/utils/types/tag";
 
 interface IInputValue {
   value: string | number;
@@ -38,7 +44,8 @@ export const CreateProjectView = () => {
   );
   const [forSell, setForSell] = useState(false);
   const [inUse, setInUse] = useState(false);
-  const [model, setModel] = useState("");
+  const [engineWasSwapped, setEngineWasSwapped] = useState(false);
+  const [carModel, setCarModel] = useState("");
   const [carMake, setCarMake] = useState("");
 
   const [isVisible, setIsVisible] = useState(false);
@@ -62,6 +69,12 @@ export const CreateProjectView = () => {
     transmissionWasSwapped: false,
   });
 
+  const [carItems, setCarItems] = useState<TCarItemCreate[]>([]);
+  const [stages, setStages] = useState<TStageCreate[]>([]);
+  const [tags, setTags] = useState<TTagCreate[]>([]);
+
+  const [images, setImages] = useState<TCarItemCreate[]>([]);
+
   const onSubmit = () => {
     const newProject: TProjectCreate = {
       authorId: "",
@@ -70,7 +83,7 @@ export const CreateProjectView = () => {
       forSell,
       inUse,
       carMake,
-      model,
+      carModel,
       isVisible,
       engineName: engine.engineName,
       engineStockHp: engine.engineStockHp,
@@ -82,13 +95,21 @@ export const CreateProjectView = () => {
       transmissionName: transmission.transmissionName,
       transmissionWasSwapped: transmission.transmissionWasSwapped,
 
+      carItemsCount: carItems.length,
+      imagesCount: images.length,
+      engineWasSwapped,
+      likesCount: 0,
+      carItems,
+      stages,
+      tags,
+
       garageId: "",
       projectPrice: 0,
       stagesCount: 1,
     };
 
-    const validResults = validProject(newProject);
-    const findInValidResult = validResults.every(
+    const result = validProject(newProject);
+    const findInValidResult = result.validResults.find(
       (result) => result.valid == false
     );
 
@@ -96,7 +117,7 @@ export const CreateProjectView = () => {
       const result = createProject(newProject);
       console.log(result);
     } else {
-      validResults.map((res) => {
+      result.validResults.map((res) => {
         throw new Error(res.error);
       });
     }

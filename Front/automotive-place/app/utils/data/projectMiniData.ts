@@ -16,7 +16,7 @@ const projectMiniData: TProject = {
   isVerified: false,
   isVisible: true,
   likesCount: 3,
-  model: "A3",
+  carModel: "A3",
   stagesCount: 0,
   transmissionGears: 6,
   transmissionName: "Dq250",
