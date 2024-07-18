@@ -46,6 +46,5 @@ export const createCarItem = async (
   }
 
   const result: ICreateCarItemResponse = await response.json();
-  console.log(result);
   return result;
 };

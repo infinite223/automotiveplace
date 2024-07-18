@@ -19,18 +19,19 @@ export async function POST(request: NextRequest) {
   };
   let newCarItem = null;
 
+  // TODO - change to auth user
   const author = await prisma.user.findFirst();
   const project = await prisma.project.findFirst();
 
-  const validElement = validCarElement(carItem);
-  const findInValidResult = validElement.validResults.find(
+  const result = validCarElement(carItem);
+  const findInValidResult = result.validResults.find(
     (result) => result.valid == false
   );
 
   if (findInValidResult) {
     return NextResponse.json({
       carItem: newCarItem,
-      notification: validElement.notification,
+      notification: result.notification,
     });
   }
 

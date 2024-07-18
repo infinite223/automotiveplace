@@ -65,6 +65,7 @@ type TPerformanceType = {
   sl_100_0?: number;
   sl_150_50?: number;
 };
+
 type TContentTypes =
   | "CarItem"
   | "Project"

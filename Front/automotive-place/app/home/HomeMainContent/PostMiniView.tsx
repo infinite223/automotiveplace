@@ -8,7 +8,7 @@ export const PostMiniView = ({ data }: { data: TPost }) => {
       <ContentMiniNav
         createdAt={data.createdAt}
         title={data.title}
-        type="Post"
+        typeName="Post"
         // author={data.}
       />
       <h2 className="h-full">Post</h2>
@@ -16,7 +16,7 @@ export const PostMiniView = ({ data }: { data: TPost }) => {
       <ContentMiniFooter
         isLikedByAuthUser={false}
         likesCount={12}
-        type="Project"
+        type="Post"
       />
     </div>
   );

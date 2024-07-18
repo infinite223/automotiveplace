@@ -16,7 +16,7 @@ export const ProblemMiniView = ({ data }: { data: TProblem }) => {
       <ContentMiniFooter
         isLikedByAuthUser={false}
         likesCount={12}
-        type="Project"
+        type="Problem"
       />
     </div>
   );

@@ -15,7 +15,7 @@ export const SpotMiniView = ({ data }: { data: TSpot }) => {
       <ContentMiniFooter
         isLikedByAuthUser={false}
         likesCount={12}
-        type="Project"
+        type="Spot"
       />
     </div>
   );
