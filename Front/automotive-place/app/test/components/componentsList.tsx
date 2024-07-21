@@ -1,5 +1,6 @@
 import { CarItem } from "@/app/components/carItem";
 import { CreateCarItemView } from "@/app/components/createCarItem";
+import { CreatePostView } from "@/app/components/createPost";
 import { CreateProblemView } from "@/app/components/createProblem";
 import { CreateProjectView } from "@/app/components/createProject";
 import { CreateSpotView } from "@/app/components/createSpot";
@@ -45,6 +46,11 @@ export const componentsList = [
     name: "createSpot",
     value: <CreateSpotView />,
     description: "Widok który daje możliwość dodania do bazy spotu",
+  },
+  {
+    name: "createPost",
+    value: <CreatePostView />,
+    description: "Widok który daje możliwość dodania do bazy post",
   },
   {
     name: "AMPButton",

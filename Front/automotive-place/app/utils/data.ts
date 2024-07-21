@@ -1,4 +1,5 @@
 import { ItemTypes, TCarItem, TCarItemCreate } from "./types/carItem";
+import { TPostCreate } from "./types/post";
 import { TProblem, TProblemCreate } from "./types/problem";
 import { TSpotCreate } from "./types/spot";
 import { TStageCreate } from "./types/stage";
@@ -35,6 +36,12 @@ const problemData: TProblemCreate = {
   title: "",
 };
 
+const postData: TPostCreate = {
+  description: "",
+  isVisible: true,
+  title: "",
+};
+
 const spotData: TSpotCreate = {
   description: "",
   isVisible: true,
@@ -62,4 +69,5 @@ export {
   stageCreateData,
   problemData,
   spotData,
+  postData,
 };

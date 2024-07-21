@@ -7,6 +7,12 @@ type TPost = {
   isVisible: boolean;
 };
 
+type TPostCreate = {
+  title: string;
+  description: string;
+  isVisible: boolean;
+};
+
 function isTPost(data: any): data is TPost {
   return (
     typeof data === "object" &&
@@ -21,4 +27,4 @@ function isTPost(data: any): data is TPost {
 }
 
 export { isTPost };
-export type { TPost };
+export type { TPost, TPostCreate };

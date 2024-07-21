@@ -208,3 +208,7 @@ model CarItemLikes {
   author  User     @relation(fields: [authorId], references: [id])
   carItem CarItem? @relation(fields: [carItemId], references: [id])
 }
+
+generator erd {
+  provider = "prisma-erd-generator"
+}
