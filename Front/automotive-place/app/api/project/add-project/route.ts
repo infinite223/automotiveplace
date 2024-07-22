@@ -72,7 +72,6 @@ async function createProject(project: TProjectCreate, authorId: string) {
         authorId: "",
         imagesUrl: "",
         // TODO - first we need save images
-        likesCount: 0,
         isVerified: false,
       },
     });

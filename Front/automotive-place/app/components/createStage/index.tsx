@@ -11,7 +11,7 @@ export const CreateStageView = () => {
   const [stage, setStage] = useState<TStageCreate>(stageCreateData);
 
   const onSubmit = () => {
-    const validResults = validStages(1, [stage]);
+    const validResults = validStages([stage]);
     const findInValidResult = validResults.every(
       (result) => result.valid == false
     );

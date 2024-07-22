@@ -1,7 +1,4 @@
-import { TPost } from "../types/post";
-import { TProblem } from "../types/problem";
 import { TProject, TProjectCreate } from "../types/project";
-import { TSpot } from "../types/spot";
 import {
   generateRandomDate,
   generateRandomString,
@@ -22,7 +19,6 @@ export function generateRandomProjects(count: number) {
       isVerified: Math.random() < 0.5,
       description: "",
       imagesCount: getRandomInt(0, 10),
-      likesCount: getRandomInt(0, 100),
       authorId: "",
       engineCapacity: 2,
       engineName: "TSI",
@@ -31,7 +27,6 @@ export function generateRandomProjects(count: number) {
       transmissionGears: 6,
       transmissionName: "",
       carItemsCount: getRandomInt(0, 20),
-      stagesCount: getRandomInt(0, 5),
       garageId: generateRandomString(8),
       userId: generateRandomString(8),
       images: [] as string[],
@@ -72,11 +67,9 @@ export function generateRandomProjectsToCreate(count: number) {
       carItemsCount: 0,
       engineWasSwapped: false,
       imagesCount: 32,
-      likesCount: 32,
       engineStockNm: 280,
       transmissionGears: 6,
       transmissionName: "",
-      stagesCount: getRandomInt(0, 5),
       garageId: generateRandomString(8),
       inUse: false,
       name: generateRandomString(5),

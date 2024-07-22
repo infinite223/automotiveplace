@@ -1,11 +1,11 @@
 "use client";
 
-import {TCarItemLikes, TTableView} from "@/app/utils/types";
-import React, {FC} from "react";
-import {FaHeart} from "react-icons/fa";
-import {MdOutlineAttachMoney, MdOutlineMoneyOff} from "react-icons/md";
+import { TCarItemLikes, TTableView } from "@/app/utils/types";
+import React, { FC } from "react";
+import { FaHeart } from "react-icons/fa";
+import { MdOutlineAttachMoney, MdOutlineMoneyOff } from "react-icons/md";
 import "react-tooltip/dist/react-tooltip.css";
-import {Tooltip} from "react-tooltip";
+import { Tooltip } from "react-tooltip";
 import moment from "moment";
 
 interface AMPFooterItemProps {
@@ -32,12 +32,12 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
   isMyElement,
   data: {
     createdAt,
-    likesCount,
     authorName,
     forSell,
     inUse,
-    isLikedByAuthUser = false,
     likes,
+    isLikedByAuthUser,
+    likesCount,
   },
 }) => {
   return (
@@ -89,7 +89,7 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
             )}
           </div>
         )}
-        <Tooltip id="forsell-option-item-1" style={{fontSize: "11px"}} />
+        <Tooltip id="forsell-option-item-1" style={{ fontSize: "11px" }} />
       </div>
       <div
         className={`${

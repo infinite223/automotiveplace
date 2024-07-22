@@ -10,7 +10,6 @@ type TCarItem = {
   forSell: boolean;
   isVisible: boolean;
   inUse: boolean;
-  likesCount: number;
   name: string;
   description: string;
   isLikedByAuthUser?: boolean;
@@ -33,7 +32,6 @@ function isTCarItem(data: any): data is TCarItem {
     typeof data.forSell === "boolean" &&
     typeof data.isVisible === "boolean" &&
     typeof data.inUse === "boolean" &&
-    typeof data.likesCount === "number" &&
     typeof data.name === "string" &&
     typeof data.description === "string" &&
     (typeof data.isLikedByAuthUser === "boolean" ||

@@ -19,6 +19,7 @@ model Post {
   carItemId String?
   spotId String?
   companyId String?
+  likes    Like[]
 
   author User? @relation(fields: [authorId], references: [id])
   company  Company?  @relation(fields: [companyId], references: [id])
@@ -36,9 +37,8 @@ model User {
   garage       Garage?
   projects     Project[]
   carItems     CarItem[]
-  carItemLikes CarItemLikes[]
-  projectLikes ProjectLikes[]
   createdStages      Stage[]
+  likes       Like[]
   tags        Tag[]
 
   @@map(name: "users")
@@ -86,13 +86,11 @@ model Project {
   isVerified    Boolean
   isVisible     Boolean
   imagesUrl     String // folder localisation by id  
-  likesCount    Int
-  stagesCount   Int
-  carItemsCount Int
-  imagesCount   Int
+  carItemsCount Int // user can expand car items
+  imagesCount   Int // user can expand images 
   forSell       Boolean
   garageId      String
-  projectPrice  Decimal?
+  projectPrice  Decimal
 
   engineName      String
   engineStockHp        Int
@@ -108,7 +106,7 @@ model Project {
 
   carItems CarItem[]
   stages Stage[]
-  likes    ProjectLikes[]
+  likes    Like[]
   tags Tag[]
   authorId String
   companyId String?
@@ -142,7 +140,6 @@ model Stage {
   carItems CarItem[]
   project Project? @relation(fields: [projectId], references: [id])
   createdBy User? @relation(fields: [createdById], references: [id])
-  // author User    @relation(fields: [authorId], references: [id]) //company?
 }
 
 model Tag {
@@ -170,12 +167,11 @@ model CarItem {
   forSell     Boolean
   isVisible   Boolean
   inUse       Boolean
-  likesCount  Int
   name        String
   description String
   itemType    String
   carItemPrice  Decimal?
-  likes       CarItemLikes[]
+  likes       Like[]
   tags        Tag[]
 
   projectId   String
@@ -191,22 +187,32 @@ model CarItem {
   company   Company? @relation(fields: [companyId], references: [id])
 }
 
-model ProjectLikes {
-  id        String @id @default(cuid())
-  projectId String
-  authorId  String
+model Like {
+  id           String   @id @default(cuid())
+  userId       String
+  likeableId   String
+  likeableType LikeableType
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+ 
+  carItemId    String?
+  projectId    String?
+  postId       String?
 
-  author  User     @relation(fields: [authorId], references: [id])
-  project Project? @relation(fields: [projectId], references: [id])
+  author         User     @relation(fields: [userId], references: [id])
+  post         Post?    @relation(fields: [postId], references: [id])
+  project      Project? @relation(fields: [projectId], references: [id])
+  carItem      CarItem? @relation(fields: [carItemId], references: [id])
+
+  @@index([likeableId, likeableType], name: "likeable_index")
 }
 
-model CarItemLikes {
-  id        String @id @default(cuid())
-  carItemId String
-  authorId  String
 
-  author  User     @relation(fields: [authorId], references: [id])
-  carItem CarItem? @relation(fields: [carItemId], references: [id])
+enum LikeableType {
+  POST
+  PROJECT
+  CARITEM
+  SPOT
+  COMPANY
 }
 
 generator erd {

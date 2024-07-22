@@ -11,7 +11,6 @@ const carItemData: TCarItem = {
   description: "Lorem ipsum...",
   forSell: false,
   inUse: false,
-  likesCount: 4,
   isVisible: true,
   itemType: ItemTypes.Turbo,
   name: "Turbo K04",

@@ -11,9 +11,7 @@ export const validProject = (newProject: TProjectCreate) => {
   let notification: ICreateNotification | null = null;
 
   validResults = validResults.concat(validCarMakeValue(newProject.carMake));
-  validResults = validResults.concat(
-    validStages(newProject.stagesCount, newProject.stages)
-  );
+  validResults = validResults.concat(validStages(newProject.stages));
 
   // TODO - valid tags, stages, carItems and all data if exists
 
@@ -60,42 +58,37 @@ export const validCarMakeValue = (value: string | number) => {
   return validResults;
 };
 
-export const validStages = (
-  count: number,
-  stages: TStageCreate[] | undefined
-) => {
+export const validStages = (stages: TStageCreate[] | undefined) => {
   let validResults: TValidResult[] = [];
 
-  if (count !== stages?.length) {
-    validResults.push({
-      error:
-        " Do projektu musi być dodany jeden stage (np. stage 0 który przedstawia oraginalne dane)",
-      valid: false,
-    });
+  validResults.push({
+    error:
+      " Do projektu musi być dodany jeden stage (np. stage 0 który przedstawia oraginalne dane)",
+    valid: false,
+  });
 
-    stages?.forEach((stage) => {
-      validResults = validResults.concat(performanceValidation(stage));
+  stages?.forEach((stage) => {
+    validResults = validResults.concat(performanceValidation(stage));
 
-      if (stage.name.length > 20 || stage.name.length < 2) {
-        validResults.push({
-          error: " Długość nazwy etapu musi zawierać od 2 do 20 znaków",
-          valid: false,
-        });
-      }
+    if (stage.name.length > 20 || stage.name.length < 2) {
+      validResults.push({
+        error: " Długość nazwy etapu musi zawierać od 2 do 20 znaków",
+        valid: false,
+      });
+    }
 
-      if (stage.stagePrice) {
-        validResults = validResults.concat(
-          priceValidation(stage.stagePrice, "Stage")
-        );
-        validResults.push({
-          error: " Długość nazwy etapu musi zawierać od 2 do 20 znaków",
-          valid: false,
-        });
-      }
+    if (stage.stagePrice) {
+      validResults = validResults.concat(
+        priceValidation(stage.stagePrice, "Stage")
+      );
+      validResults.push({
+        error: " Długość nazwy etapu musi zawierać od 2 do 20 znaków",
+        valid: false,
+      });
+    }
 
-      // maybe valid all carItems
-    });
-  }
+    // maybe valid all carItems
+  });
 
   return validResults;
 };

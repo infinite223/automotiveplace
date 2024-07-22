@@ -16,12 +16,9 @@ type TProject = {
   description?: string;
   isVerified: boolean;
   imagesCount: number;
-  likesCount: number;
   carItemsCount: number;
-  stagesCount: number;
   garageId: string;
   userId: string;
-  isLikedByAuthUser?: boolean;
   images?: string[];
   authorId: string;
   author?: TUser;
@@ -56,9 +53,7 @@ function isTProject(data: any): data is TProject {
     typeof data.description === "string" &&
     typeof data.isVerified === "boolean" &&
     typeof data.imagesCount === "number" &&
-    typeof data.likesCount === "number" &&
     typeof data.carItemsCount === "number" &&
-    typeof data.stagesCount === "number" &&
     typeof data.garageId === "string" &&
     typeof data.userId === "string" &&
     (typeof data.isLikedByAuthUser === "boolean" ||
@@ -94,16 +89,14 @@ type TProjectCreate = {
   carMake: string;
   carModel: string;
   description?: string;
-  stagesCount: number;
   carItemsCount: number;
   imagesCount: number;
 
   isVisible: boolean;
   garageId: string;
-  projectPrice?: number;
+  projectPrice: number;
 
   engineName: string;
-  likesCount: number;
   engineStockHp: number;
   engineStockNm: number;
   engineDescription?: string;

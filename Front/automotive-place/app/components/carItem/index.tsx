@@ -39,13 +39,11 @@ export const CarItem: FC<CarItemProps> = ({
       if (localData.isLikedByAuthUser) {
         setLocalData({
           ...localData,
-          likesCount: localData.likesCount - 1,
           isLikedByAuthUser: false,
         });
       } else {
         setLocalData({
           ...localData,
-          likesCount: localData.likesCount + 1,
           isLikedByAuthUser: true,
         });
       }
@@ -82,7 +80,7 @@ export const CarItem: FC<CarItemProps> = ({
           <AMPFooterItem
             isLoading={isLoading}
             handleClickLike={handleClickLike}
-            data={localData}
+            data={{ createdAt: new Date(), likesCount: 21 }}
             tableView={tableView}
             isMyElement={isMyCarElement}
           />

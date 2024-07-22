@@ -75,7 +75,6 @@ async function createCarItem(
         ...restCarItemData,
         authorId,
         projectId: projectId || "",
-        likesCount: 0,
         tags: {
           create: tagData,
         },

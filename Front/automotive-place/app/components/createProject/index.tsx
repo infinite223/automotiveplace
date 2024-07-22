@@ -98,14 +98,12 @@ export const CreateProjectView = () => {
       carItemsCount: carItems.length,
       imagesCount: images.length,
       engineWasSwapped,
-      likesCount: 0,
       carItems,
       stages,
       tags,
 
       garageId: "",
       projectPrice: 0,
-      stagesCount: 1,
     };
 
     const result = validProject(newProject);
