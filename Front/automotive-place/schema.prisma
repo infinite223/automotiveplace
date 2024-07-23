@@ -16,9 +16,9 @@ model Post {
   authorId  String?
 
   projectId String?
-  carItemId String?
-  spotId String?
-  companyId String?
+  carItemId String? // TODO - remove thsi
+  spotId String?// TODO - remove thsi
+  companyId String? // TODO - remove thsi
   likes    Like[]
 
   author User? @relation(fields: [authorId], references: [id])
@@ -114,6 +114,45 @@ model Project {
   author User    @relation(fields: [authorId], references: [id])
   garage Garage? @relation(fields: [garageId], references: [id])
   company Company? @relation(fields: [companyId], references: [id])
+}
+
+model Spot {
+  id String     @id @default(cuid())
+
+  name          String
+  description   String?
+  createdAt     DateTime @default(now()) @map(name: "created_at")
+  updatedAt     DateTime @updatedAt @map(name: "updated_at")
+  
+  authorId String
+  userWithProject UserWithProject[]
+}
+
+model Event {
+  id String     @id @default(cuid())
+
+  name          String
+  description   String?
+  createdAt     DateTime @default(now()) @map(name: "created_at")
+  updatedAt     DateTime @updatedAt @map(name: "updated_at")
+
+  authorId String
+  userWithProject UserWithProject[]
+}
+
+model UserWithProject {
+  id String     @id @default(cuid())
+  createdAt     DateTime @default(now()) @map(name: "created_at")
+  updatedAt     DateTime @updatedAt @map(name: "updated_at")
+
+  projectId     String?
+  userId        String
+
+  eventId       String?
+  spotId        String?
+
+  event Event? @relation(fields: [eventId], references: [id])
+  spot Spot? @relation(fields: [spotId], references: [id])
 }
 
 model Stage {
