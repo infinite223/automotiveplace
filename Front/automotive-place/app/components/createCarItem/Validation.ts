@@ -34,6 +34,7 @@ export const validCarElement = (newElement: TCarItemCreate) => {
         title: "Błąd weryfikacji danych elementu",
       },
       timer: 3000,
+      showIcon: true,
     };
   }
 

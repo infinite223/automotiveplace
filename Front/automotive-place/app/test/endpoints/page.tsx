@@ -23,6 +23,7 @@ import {
   generateRandomProjects,
   generateRandomProjectsToCreate,
 } from "@/app/utils/data/project";
+import { Notification } from "@/app/components/logger/Notification";
 
 export default function Page() {
   const [endpointsWithNumberRun, setEndpointsWithNumberRun] = useState<
@@ -46,7 +47,7 @@ export default function Page() {
 
         randomCarItemsData.forEach(async (carItemData) => {
           const result = await createCarItem(carItemData);
-
+          console.log(result, "result");
           dispatch(addNotification(JSON.stringify(result.notification)));
         });
 
@@ -103,6 +104,7 @@ export default function Page() {
 
   return (
     <main className="flex min-h-screen bg-custom-primary text-custom-primary flex-col items-center gap-2 p-2">
+      <Notification />
       <div className="flex flex-col gap-3 w-full">
         <p className="text-sm font-semibold">
           Dane do każdego endpointu są generowane automatycznie

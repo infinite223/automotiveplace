@@ -8,6 +8,7 @@ import { Prisma } from "@prisma/client";
 export async function POST(request: NextRequest) {
   const authUser = false;
   const carItem: TCarItemCreate = await request.json();
+  console.log(carItem, "car item");
 
   let notification: ICreateNotification | null = {
     log: {
@@ -16,6 +17,7 @@ export async function POST(request: NextRequest) {
       title: "Coś poszło nie tak",
     },
     timer: 3000,
+    showIcon: true,
   };
   let newCarItem = null;
 
@@ -24,6 +26,8 @@ export async function POST(request: NextRequest) {
   const project = await prisma.project.findFirst();
 
   const result = validCarElement(carItem);
+  console.log(result, "result");
+
   const findInValidResult = result.validResults.find(
     (result) => result.valid == false
   );

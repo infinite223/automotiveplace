@@ -83,12 +83,14 @@ type ICreateNotification = {
   log: TLog;
   leftIcon?: JSX.Element;
   timer: number;
+  showIcon?: boolean;
 };
 
 type INotification = {
   id: number;
   log: TLog;
   leftIcon?: JSX.Element;
+  showIcon?: boolean;
   timer: number;
 };
 

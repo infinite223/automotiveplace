@@ -9,11 +9,10 @@ export const notificationsSlice = createSlice({
   reducers: {
     addNotification: (state, action) => {
       const lastIdNotification = state.findLast((_n) => _n.id);
-      console.log(lastIdNotification);
 
       const newNotification = {
         ...JSON.parse(action.payload),
-        id: lastIdNotification ? lastIdNotification : 1,
+        id: lastIdNotification ? lastIdNotification.id + 1 : 1,
       };
       return [...state, newNotification];
     },

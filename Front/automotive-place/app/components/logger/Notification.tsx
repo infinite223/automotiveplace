@@ -4,6 +4,7 @@ import moment from "moment";
 import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
+import { NotificationIcon } from "./NotificationIcon";
 
 export const Notification: FC = () => {
   const notifications = useSelector((state: RootState) => state.notifications);
@@ -11,13 +12,16 @@ export const Notification: FC = () => {
 
   useEffect(() => {
     if (notifications.length === 0) return;
+    const timers = notifications.map((notification) => {
+      const timerId = setTimeout(() => {
+        dispatch(removeNotification(notification.id));
+      }, notification.timer);
 
-    const timerId = setTimeout(() => {
-      dispatch(removeNotification(notifications[0].id));
-    }, notifications[0].timer);
+      return timerId;
+    });
 
     return () => {
-      clearTimeout(timerId);
+      timers.forEach((timerId) => clearTimeout(timerId));
     };
   }, [notifications, dispatch]);
 
@@ -33,11 +37,11 @@ export const Notification: FC = () => {
             transition={{ duration: 0.5 }}
             className="border-2 border-zinc-200 dark:border-zinc-900 bg-custom-primary text-custom-primary p-2 rounded-sm shadow-lg"
           >
-            <div className="w-1 h-full bg-teal-500"></div>
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3 justify-between w-full">
+                <NotificationIcon {...notification} />
                 <h3 className="text-sm">{notification.log.title}</h3>
-                <div className="text-[9px] font-thin text-custom-secend">
+                <div className="text-[11px] font-thin text-custom-secend">
                   {moment(notification.log.date).calendar()}
                 </div>
               </div>
