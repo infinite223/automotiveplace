@@ -63,7 +63,7 @@ export const HeaderCarItem: FC<IHeaderCarItemProps> = ({
       <div className="flex gap-2">
         <IconFromItemType itemType={itemType} isLoading={isLoading} />
         <div
-          className={`${isLoading && "bg-custom-secend rounded-md w-[70px]"}`}
+          className={`${isLoading && "bg-custom-secendary rounded-md w-[70px]"}`}
         >
           {!isLoading && (
             <>

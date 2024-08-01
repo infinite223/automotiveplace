@@ -6,7 +6,7 @@
   @apply bg-zinc-100 dark:bg-zinc-950;
 }
 
-.bg-custom-secend {
+.bg-custom-secendary {
   @apply bg-zinc-300 dark:bg-zinc-800;
 }
 
@@ -14,11 +14,19 @@
   @apply bg-zinc-200 dark:bg-zinc-800;
 }
 
+.border-custom-primary {
+  @apply border-zinc-200 dark:border-zinc-800;
+}
+
+.border-custom-secendary {
+  @apply border-zinc-100 dark:border-zinc-900;
+}
+
 .text-custom-primary {
   @apply text-black dark:text-white;
 }
 
-.text-custom-secend {
+.text-custom-secendary {
   @apply text-zinc-700 dark:text-zinc-300;
 }
 

@@ -22,7 +22,7 @@ export const ContentMiniNav = ({
   return (
     <nav className="flex text-custom-primary items-center w-full justify-between">
       <div className="flex flex-col gap-2">
-        <p className="text-[11px] text-custom-secend opacity-65">
+        <p className="text-[11px] text-custom-secendary opacity-65">
           {typeName} dodany: {moment(createdAt, "YYYYMMDD").fromNow()}
         </p>
 
@@ -36,7 +36,7 @@ export const ContentMiniNav = ({
           )}
           <div className="flex flex-col leading-4	">
             <h4 className="text-[14px]">{title}</h4>
-            <span className="text-[11px] text-custom-secend">
+            <span className="text-[11px] text-custom-secendary">
               {author?.name}
             </span>
           </div>

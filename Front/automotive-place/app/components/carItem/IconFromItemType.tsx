@@ -27,12 +27,14 @@ export const IconFromItemType: FC<IconFromItemTypeProps> = ({
   }, [itemType]);
 
   return (
-    <div className={`${isLoading && "bg-custom-secend w-7 h-7 rounded-full"}`}>
+    <div
+      className={`${isLoading && "bg-custom-secendary w-7 h-7 rounded-full"}`}
+    >
       {!isLoading && (
         <>
           <img
             className={`${
-              isLoading && "bg-custom-secend rounded-md"
+              isLoading && "bg-custom-secendary rounded-md"
             } w-8 h-8 rounded-sm dark:invert`}
             alt="car item tyoe image"
             src={iconUrl}

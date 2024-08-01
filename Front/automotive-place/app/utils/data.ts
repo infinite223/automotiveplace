@@ -27,6 +27,7 @@ const carItemCreateData: TCarItemCreate = {
   name: "",
   authorId: "1qw2",
   projectId: "",
+  tags: [],
 };
 
 const problemData: TProblemCreate = {

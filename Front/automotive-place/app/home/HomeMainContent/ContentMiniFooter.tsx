@@ -41,7 +41,9 @@ export const ContentMiniFooter = ({
                   isLikedByAuthUser ? "transform scale-95" : ""
                 }`}
               />
-              <span className="text-custom-secend text-sm">{likesCount}</span>
+              <span className="text-custom-secendary text-sm">
+                {likesCount}
+              </span>
             </div>
           )}
         </div>

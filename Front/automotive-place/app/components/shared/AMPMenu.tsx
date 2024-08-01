@@ -27,7 +27,8 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading }) => {
 
       <div
         className={`${
-          isLoading && "bg-custom-secend text-custom-primary w-7 h-7 rounded-md"
+          isLoading &&
+          "bg-custom-secendary text-custom-primary w-7 h-7 rounded-md"
         }`}
       >
         {!isLoading && (
@@ -45,7 +46,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading }) => {
           role="menu"
           data-popover="menu"
           data-popover-placement="bottom"
-          className="absolute bg-custom-3 text-[11px] z-10 min-w-[180px] overflow-auto rounded-md border border-zinc-200 dark:border-zinc-800 bg-custom-secend  p-1 font-sans font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none"
+          className="absolute bg-custom-3 text-[11px] z-10 min-w-[180px] overflow-auto rounded-md border border-zinc-200 dark:border-zinc-800 bg-custom-secendary  p-1 font-sans font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none"
         >
           {items.map(({ name, handleClick, icon, isDisable }, i) => (
             <li

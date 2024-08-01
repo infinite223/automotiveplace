@@ -7,29 +7,15 @@ import { createCarItem } from "@/app/services/carItem";
 import { AMPSelect } from "../shared/AMPSelect";
 import { IconFromItemType } from "../carItem/IconFromItemType";
 import { AMPSwitch } from "../shared/AMPSwitch";
-import {
-  ItemTypes,
-  ItemTypesPL,
-  TCarItemCreate,
-  itemTypesArray,
-  translateCarItemTypesToEnglish,
-} from "@/app/utils/types/carItem";
+import { TCarItemCreate, itemTypesArray } from "@/app/utils/types/carItem";
 import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { carItemCreateData } from "@/app/utils/data";
 import { AMPTagsView } from "../shared/AMPTagsView";
-import { TTagCreate } from "@/app/utils/types/tag";
 
 export const CreateCarItemView = () => {
   const dispatch = useDispatch();
   const [carItem, setCarItem] = useState<TCarItemCreate>(carItemCreateData);
-  const [tags, settags] = useState<TTagCreate[]>([
-    {
-      authorId: "",
-      localId: "",
-      name: "BMW",
-    },
-  ]);
 
   const onSubmit = async () => {
     const validResults = validCarElement(carItem);
@@ -97,10 +83,10 @@ export const CreateCarItemView = () => {
           <hr className="border-zinc-100 dark:border-zinc-800 w-full" />
           <h3 className="text-sm mb-1 font-bold">Tagi:</h3>
 
-          <AMPTagsView tags={tags} />
+          <AMPTagsView tags={carItem.tags} />
           <hr className="border-zinc-100 dark:border-zinc-800 w-full" />
 
-          <p className="text-custom-secend leading-3 text-[11px] mt-2">
+          <p className="text-custom-secendary leading-3 text-[11px] mt-2">
             Po utworzeniu elementu można go edytować.
           </p>
         </div>

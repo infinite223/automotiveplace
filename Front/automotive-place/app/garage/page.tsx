@@ -93,6 +93,7 @@ export default function Garage() {
           visible={isModalOpen}
           withHeader={true}
           title="Dodawanie elementu"
+          additionalTailwindCss="border-custom-secendary border-2"
         >
           <CreateCarItemView />
         </AMPModal>

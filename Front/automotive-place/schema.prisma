@@ -40,6 +40,7 @@ model User {
   createdStages      Stage[]
   likes       Like[]
   tags        Tag[]
+  pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
 
   @@map(name: "users")
 }
@@ -107,6 +108,7 @@ model Project {
   carItems CarItem[]
   stages Stage[]
   likes    Like[]
+  pickedProjectsOnEventOrSpot PickedProjectOnEventOrSpot[]
   tags Tag[]
   authorId String
   companyId String?
@@ -125,7 +127,7 @@ model Spot {
   updatedAt     DateTime @updatedAt @map(name: "updated_at")
   
   authorId String
-  userWithProject UserWithProject[]
+  pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
 }
 
 model Event {
@@ -137,10 +139,10 @@ model Event {
   updatedAt     DateTime @updatedAt @map(name: "updated_at")
 
   authorId String
-  userWithProject UserWithProject[]
+  pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
 }
 
-model UserWithProject {
+model PickedProjectOnEventOrSpot {
   id String     @id @default(cuid())
   createdAt     DateTime @default(now()) @map(name: "created_at")
   updatedAt     DateTime @updatedAt @map(name: "updated_at")
@@ -150,6 +152,9 @@ model UserWithProject {
 
   eventId       String?
   spotId        String?
+
+  project Project? @relation(fields: [projectId], references: [id])
+  user User? @relation(fields: [userId], references: [id])
 
   event Event? @relation(fields: [eventId], references: [id])
   spot Spot? @relation(fields: [spotId], references: [id])

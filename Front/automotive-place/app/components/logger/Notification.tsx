@@ -41,7 +41,7 @@ export const Notification: FC = () => {
               <div className="flex items-center gap-3 justify-between w-full">
                 <NotificationIcon {...notification} />
                 <h3 className="text-sm">{notification.log.title}</h3>
-                <div className="text-[11px] font-thin text-custom-secend">
+                <div className="text-[11px] font-thin text-custom-secendary">
                   {moment(notification.log.date).calendar()}
                 </div>
               </div>

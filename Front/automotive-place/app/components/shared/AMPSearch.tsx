@@ -28,7 +28,7 @@ export const AMPSearch: FC<AMPSearchProps> = ({
     <main
       className={`flex w-full mb-2 mt-2 ${
         isLoading &&
-        "animate-pulse bg-custom-secend text-custom-primary w-full h-7 rounded-md"
+        "animate-pulse bg-custom-secendary text-custom-primary w-full h-7 rounded-md"
       }`}
     >
       {!isLoading && (
@@ -52,7 +52,7 @@ export const AMPSearch: FC<AMPSearchProps> = ({
             <input
               type="text"
               id="simple-search"
-              className="mr-2 bg-custom-primary border-b outline-none border-gray-300 text-custom-secend text-sm focus:ring-teal-500 focus:border-teal-500 block w-full ps-10 p-2.5 dark:border-gray-800 dark:placeholder-gray-500 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-800"
+              className="mr-2 bg-custom-primary border-b outline-none border-gray-300 text-custom-secendary text-sm focus:ring-teal-500 focus:border-teal-500 block w-full ps-10 p-2.5 dark:border-gray-800 dark:placeholder-gray-500 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-800"
               placeholder={placeholder}
               required
               onChange={(text) => setSearchValue(text.target.value)}

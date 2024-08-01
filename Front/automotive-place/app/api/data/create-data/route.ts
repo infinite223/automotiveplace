@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
 export async function GET() {
+  // TODO - zaaktualizować dane do większej ilości
   // const user = await prisma.user.create({
   //   data: {
   //     email: "user@example.com",

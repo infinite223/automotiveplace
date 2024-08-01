@@ -54,7 +54,7 @@ type TCarItemCreate = {
   itemType: ItemTypes;
   authorId: string;
   projectId?: string;
-  tags?: TTagCreate[];
+  tags: TTagCreate[];
 };
 
 enum ItemTypes {

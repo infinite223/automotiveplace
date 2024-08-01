@@ -112,7 +112,7 @@ const OptionItem: FC<{
       className={`${additionalTailwindCss} flex-row gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 pl-1 hover:opacity-70 cursor-pointer flex items-center justify-center`}
       onClick={onClick}
     >
-      <div className="text-custom-secend">{icon}</div>
+      <div className="text-custom-secendary">{icon}</div>
       <div className="text-md max-2xl:text-[12px] text-center">{name}</div>
     </div>
   );

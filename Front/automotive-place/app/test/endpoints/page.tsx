@@ -24,6 +24,7 @@ import {
   generateRandomProjectsToCreate,
 } from "@/app/utils/data/project";
 import { Notification } from "@/app/components/logger/Notification";
+import { getGenerateStartData } from "@/app/services/data";
 
 export default function Page() {
   const [endpointsWithNumberRun, setEndpointsWithNumberRun] = useState<
@@ -102,6 +103,12 @@ export default function Page() {
     });
   };
 
+  const generateBaseData = async () => {
+    const result = await getGenerateStartData();
+
+    dispatch(addNotification(JSON.stringify(result.notification)));
+  };
+
   return (
     <main className="flex min-h-screen bg-custom-primary text-custom-primary flex-col items-center gap-2 p-2">
       <Notification />
@@ -117,7 +124,7 @@ export default function Page() {
             >
               <div className="flex flex-col gap-2">
                 {endpoint.name}
-                <span className="text-[12px] text-custom-secend leading-4">
+                <span className="text-[12px] text-custom-secendary leading-4">
                   {endpoint.description}
                 </span>
               </div>
@@ -132,7 +139,7 @@ export default function Page() {
                 />
                 <button
                   onClick={() => evaluateFunction(endpoint)}
-                  className="bg-custom-secend hover:opacity-85 py-1 px-4 font-bold rounded-sm text-[12px] uppercase"
+                  className="bg-custom-secendary hover:opacity-85 py-1 px-4 font-bold rounded-sm text-[12px] uppercase"
                 >
                   Run endpoint
                 </button>
@@ -143,16 +150,22 @@ export default function Page() {
         <AMPSeparator />
         <div className="p-2 flex items-start flex-col gap-2">
           <nav>{/* Można dodać dodatkowe elementy nawigacji */}</nav>
-          {/* <h3>Test endpoint: </h3> */}
           <button
             onClick={evaluateFunctions}
-            className="bg-green-800 hover:opacity-85 flex items-center gap-2 py-1 px-4 font-bold rounded-sm text-sm uppercase"
+            className="bg-green-800 rounded-md hover:opacity-85 flex items-center gap-2 py-1 px-4 font-bold text-sm uppercase"
           >
             Run all endpoints
             <VscRunAll size={14} />
           </button>
-          {/* Tutaj można dodać przycisk i inputy generowane automatycznie z typu */}
+          <button
+            onClick={generateBaseData}
+            className="bg-green-800 rounded-md hover:opacity-85 flex items-center gap-2 py-1 px-4 font-bold text-sm uppercase"
+          >
+            Generate base data for tests
+            <VscRunAll size={14} />
+          </button>
         </div>
+        <AMPSeparator />
       </div>
     </main>
   );

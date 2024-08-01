@@ -67,6 +67,7 @@ export function generateRandomCarItemsToCreate(count: number) {
       itemType: ItemTypes.Turbo,
       name: generateRandomString(5),
       projectId: generateRandomString(34),
+      tags: [],
     });
   }
 

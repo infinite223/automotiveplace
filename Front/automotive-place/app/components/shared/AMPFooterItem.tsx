@@ -51,7 +51,7 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
       <div
         className={`flex items-center gap-1 ${
           isLoading &&
-          "w-[70px] bg-zinc-100 bg-custom-secend rounded-md h-[20px]"
+          "w-[70px] bg-zinc-100 bg-custom-secendary rounded-md h-[20px]"
         }`}
       >
         {!isLoading && (
@@ -68,7 +68,7 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
                 isLikedByAuthUser ? "transform scale-95" : ""
               }`}
             />
-            <span className="text-custom-secend text-sm">{likesCount}</span>
+            <span className="text-custom-secendary text-sm">{likesCount}</span>
           </div>
         )}
 
@@ -97,7 +97,7 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
         }`}
       >
         {!isLoading && (
-          <div className={`text-[10px] leading-3 text-custom-secend`}>
+          <div className={`text-[10px] leading-3 text-custom-secendary`}>
             {!authorName && (
               <div>
                 Autor:{" "}
@@ -107,7 +107,7 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
               </div>
             )}
 
-            <span className="text_secend">
+            <span className="text_secendary">
               {moment(createdAt, "YYYYMMDD").fromNow()}
             </span>
           </div>

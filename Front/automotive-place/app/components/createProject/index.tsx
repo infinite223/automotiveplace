@@ -144,7 +144,7 @@ export const CreateProjectView = () => {
             value={forSell}
           />
 
-          <p className="text-custom-secend leading-3 text-[11px] mt-2">
+          <p className="text-custom-secendary leading-3 text-[11px] mt-2">
             Po utworzeniu projektu można go edytować.
           </p>
         </div>
