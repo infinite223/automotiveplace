@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "intersection-observer";
-import { Providers } from "./StoreProvider";
+import { Providers } from "./app/StoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 

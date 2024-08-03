@@ -37,8 +37,8 @@ export const HomeMainContent = ({
   }, []);
 
   return (
-    <div className="flex w-[1000px] max-2xl:mr-[80px] mr-[175px] items-center h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth">
-      <div className="flex flex-col text-[12px] w-[600px]">
+    <div className="flex max-2xl:mr-[80px] mr-[175px] items-center h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth">
+      <div className="flex flex-col text-[12px] w-[550px]">
         {!isLoading &&
           _content.map((content) => {
             return (

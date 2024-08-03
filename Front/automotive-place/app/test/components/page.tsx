@@ -46,7 +46,7 @@ export default function Page() {
           <nav>
             <button
               onClick={showAllComponents}
-              className="bg-custom-secendary py-2 px-4 rounded-sm text-sm"
+              className="bg-custom-secendary py-2 px-4 rounded-md text-sm"
             >
               Pokaż wszystkie komponenty
             </button>

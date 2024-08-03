@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { LuSearch } from "react-icons/lu";
 import { BiSolidCarGarage } from "react-icons/bi";
 import { RiPlayListAddLine } from "react-icons/ri";
@@ -9,24 +9,24 @@ import { FiSettings } from "react-icons/fi";
 import { MdHome } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { setIsSearchBarOpen } from "@/lib/features/searchBar/searchBarSlice";
-import { AMPSeparator } from "../components/shared/AMPSeparator";
+import { AMPSeparator } from "./AMPSeparator";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { MdEventNote } from "react-icons/md";
 import { RiBuildingFill } from "react-icons/ri";
+import AMPModal from "./AMPModal";
+import { SelectCreateOption } from "../selectCreateOption";
 
-interface IHomeLeftOptions {
-  openModal: () => void;
-  closeModal: () => void;
-}
+interface ISideBar {}
 
-export const HomeLeftOptions: FC<IHomeLeftOptions> = ({
-  closeModal,
-  openModal,
-}) => {
+export const SideBar: FC<ISideBar> = ({}) => {
   // TODO - change to global variable
   const iconSize = 22;
   const dispatch = useDispatch();
   const smallScreenHiddenItem = "max-2xl:hidden";
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <div className="flex border-zinc-900 h-full scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
@@ -52,7 +52,7 @@ export const HomeLeftOptions: FC<IHomeLeftOptions> = ({
           />
           <OptionItem
             icon={<BiSolidCarGarage size={iconSize} />}
-            name="Twój garaż"
+            name="Garaż"
             onClick={() => {}}
           />
           <AMPSeparator additionalTailwindCss={smallScreenHiddenItem} />
@@ -97,6 +97,18 @@ export const HomeLeftOptions: FC<IHomeLeftOptions> = ({
           />
         </div>
       </div>
+
+      {/* TODO -  czy na pewno chce w ten sposób dodawać rzeczy?*/}
+      <AMPModal
+        onClose={closeModal}
+        withHeader={false}
+        visible={isModalOpen}
+        title="Dodawanie"
+        additionalTailwindCss="relative bottom-40"
+        defoultBG={false}
+      >
+        <SelectCreateOption />
+      </AMPModal>
     </div>
   );
 };
@@ -113,7 +125,9 @@ const OptionItem: FC<{
       onClick={onClick}
     >
       <div className="text-custom-secendary">{icon}</div>
-      <div className="text-md max-2xl:text-[12px] text-center">{name}</div>
+      <div className="text-md max-2xl:text-[12px] text-center leading-4">
+        {name}
+      </div>
     </div>
   );
 };

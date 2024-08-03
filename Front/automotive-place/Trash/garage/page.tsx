@@ -1,19 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { carItems as initialCarItems } from "../utils/data/carItem";
-import { CarItem } from "../components/carItem";
-import { TTableView } from "../utils/types";
-import { AMPTable } from "../components/shared/AMPTable";
+import { carItems as initialCarItems } from "../../app/utils/data/carItem";
+import { CarItem } from "../../app/components/carItem";
+import { TTableView } from "../../app/utils/types";
+import { AMPTable } from "../../app/components/shared/AMPTable";
 import { FaListUl } from "react-icons/fa6";
 import { FiGrid } from "react-icons/fi";
 import { BiSolidCarGarage } from "react-icons/bi";
-import useOnScreen from "../hooks/useOnScreen";
-import AMPModal from "../components/shared/AMPModal";
-import { CreateCarItemView } from "../components/createCarItem";
-import { getAllCarItems } from "../services/carItem";
-import { TCarItem } from "../utils/types/carItem";
-import { Notification } from "../components/logger/Notification";
+import useOnScreen from "../../app/hooks/useOnScreen";
+import AMPModal from "../../app/components/shared/AMPModal";
+import { CreateCarItemView } from "../../app/components/createCarItem";
+import { getAllCarItems } from "../../app/services/carItem";
+import { TCarItem } from "../../app/utils/types/carItem";
+import { Notification } from "../../app/components/logger/Notification";
 
 export default function Garage() {
   const [isLoading, setIsLoading] = useState(true);

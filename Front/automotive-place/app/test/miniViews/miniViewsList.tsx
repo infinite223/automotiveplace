@@ -1,4 +1,4 @@
-import { ProjectMiniView } from "@/app/home/HomeMainContent/ProjectMiniView";
+import { ProjectMiniView } from "@/app/(root)/HomeMainContent/ProjectMiniView";
 import { projectMiniData } from "@/app/utils/data/projectMiniData";
 
 export const miniViewsList = [
