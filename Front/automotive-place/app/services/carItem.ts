@@ -1,3 +1,5 @@
+"use server";
+
 import { ICreateNotification } from "../utils/types";
 import { TCarItemCreate } from "../utils/types/carItem";
 
