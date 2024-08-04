@@ -20,12 +20,14 @@ export default function Page() {
           <AMPInput
             value={email}
             name="Email"
+            type="email"
             placeholder="Podaj email"
             setValue={(text) => setEmail(text.toString())}
           />
           <AMPInput
             placeholder="Podaj hasło"
             value={password}
+            type="password"
             name="Hasło"
             setValue={(text) => setPassword(text.toString())}
           />

@@ -1,3 +1,5 @@
+"use client";
+
 import { removeNotification } from "@/lib/features/notifications/notificationsSlice";
 import { RootState } from "@/lib/store";
 import moment from "moment";
@@ -26,7 +28,7 @@ export const Notification: FC = () => {
   }, [notifications, dispatch]);
 
   return (
-    <div className="fixed top-0 z-30 p-4 flex flex-col gap-2">
+    <div className="fixed top-0 z-30 p-4 flex flex-col gap-2 right-0">
       <AnimatePresence>
         {notifications.map((notification) => (
           <motion.div
