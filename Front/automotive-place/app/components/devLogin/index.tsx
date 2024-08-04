@@ -8,10 +8,10 @@ import React, {
 } from "react";
 import AMPModal from "../shared/AMPModal";
 import useKeyboardShortcut from "@/app/hooks/useKeydown";
-import { ICreateNotification } from "@/app/utils/types";
 import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
-import { Notification } from "../logger/Notification";
+import { loginAsDev } from "@/app/services/dev";
+import { useRouter } from "next/navigation";
 
 const shortcutConfigDevMode = {
   code: "ctrl+d",
@@ -58,7 +58,7 @@ const PinInput: React.FC<PinInputProps> = ({ length, onChange, inputsRef }) => {
           ref={(el) => {
             inputsRef.current![index] = el!;
           }}
-          className="w-10 custom-number-input h-10 text-center border-b-2 border-custom-primary hover:border-teal-500 bg-custom-primary outline-none"
+          className="w-12 custom-number-input h-10 text-center border-b-2 border-custom-primary hover:border-teal-500 bg-custom-primary outline-none"
         />
       ))}
     </div>
@@ -66,11 +66,11 @@ const PinInput: React.FC<PinInputProps> = ({ length, onChange, inputsRef }) => {
 };
 
 export const DevLogin: React.FC = () => {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [pin, setPin] = useState("");
   const inputsRef = useRef<HTMLInputElement[]>([]);
   const dispatch = useDispatch();
-
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -81,22 +81,16 @@ export const DevLogin: React.FC = () => {
 
   useKeyboardShortcut(openModal, shortcutConfigDevMode);
 
-  const handlePinChange = (pin: string) => {
+  const handlePinChange = async (pin: string) => {
     if (pin.length == 5) {
-      if (pin == "43221") {
-        const notification: ICreateNotification = {
-          log: {
-            date: new Date(),
-            status: "Success",
-            title: "Udało się zalogować jako developer",
-          },
-          showIcon: true,
-          timer: 3000,
-        };
+      const result = await loginAsDev(pin);
 
-        dispatch(addNotification(JSON.stringify(notification)));
+      if (result.notification.log.status === "Success") {
         closeModal();
+        router.push("/test");
       }
+
+      dispatch(addNotification(JSON.stringify(result.notification)));
     }
   };
 
@@ -112,7 +106,7 @@ export const DevLogin: React.FC = () => {
       visible={isModalOpen}
       withHeader={true}
       title="Dev login"
-      additionalTailwindCss="border-custom-secendary border-2"
+      additionalTailwindCss=""
     >
       <div className="flex gap-2 items-center p-2 ">
         <PinInput length={5} onChange={handlePinChange} inputsRef={inputsRef} />

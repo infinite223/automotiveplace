@@ -40,7 +40,7 @@ export default function Page() {
       </form>
 
       <footer className="mt-3">
-        <p className="text-sm font-light">
+        <p className="text-xs font-light text-custom-secendary">
           Nie masz jeszcze konta?
           <Link href={"./sign-up"} className="text-baseColor">
             {" "}

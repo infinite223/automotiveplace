@@ -11,7 +11,10 @@ export default function RootLayout({
   return (
     <main className="flex min-h-screen bg-custom-primary text-custom-primary w-full justify-between font-inter">
       <DevLogin />
-      {children}
+      <div className="flex items-center justify-center w-full bg-gradient-to-tl from-slate-600 via-teal-100/50 to-neutral-900 h-screen"></div>
+      <div className="flex flex-col items-center max-w-[380px] w-full justify-center">
+        {children}
+      </div>
     </main>
   );
 }
