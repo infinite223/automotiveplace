@@ -16,7 +16,7 @@ import { getMainContentDataForUser } from "@/app/services/content";
 import { LoadingMiniView } from "./LoadingMiniView";
 
 // TODO - add global settings for icons and more
-export const MediumIconSize = 22;
+export const MediumIconSize = 19;
 
 export const HomeMainContent = ({
   contentData,
@@ -35,10 +35,10 @@ export const HomeMainContent = ({
 
     getData();
   }, []);
-
+  // max-2xl:mr-[80px] mr-[175px]
   return (
-    <div className="flex max-2xl:mr-[80px] mr-[175px] items-center h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth">
-      <div className="flex flex-col text-[12px] w-[550px]">
+    <div className="flex w-full max-lg:mr-0 max-2xl:mr-[80px] max-xl:mr-[155px] items-center h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth">
+      <div className="flex flex-col text-[12px] w-full lg:w-[550px]">
         {!isLoading &&
           _content.map((content) => {
             return (

@@ -42,7 +42,7 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
             likesCount={12}
             type="Project"
             actions={
-              <div className="flex items-center text-sm font-light cursor-pointer transition ease-in-out gap-2 bg-zinc-700/30 hover:bg-zinc-700 rounded-full px-3 py-1">
+              <div className="flex items-center text-sm font-light cursor-pointer transition ease-in-out gap-2 bg-zinc-700/70 hover:bg-zinc-700 rounded-md pl-2 pr-1 py-1">
                 Zobacz projekt
                 <IoIosArrowForward size={MediumIconSize} />
               </div>

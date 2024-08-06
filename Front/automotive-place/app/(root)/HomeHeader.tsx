@@ -14,7 +14,7 @@ export const HomeHeader = () => {
         </h2>
         <p className="text-sm p-0 m-0 mt-[-5px]">
           <span>Auto</span>
-          <span className="text-baseColor">motiveplace</span>
+          <span className="text-baseColor uppercase">motiveplace</span>
         </p>
       </div>
 

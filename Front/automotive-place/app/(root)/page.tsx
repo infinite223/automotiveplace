@@ -5,8 +5,8 @@ import { contentData } from "../utils/data/contentData";
 
 export default function Page() {
   return (
-    <main className="w-full items-center">
+    <div className="flex w-full items-center justify-center">
       <HomeMainContent contentData={contentData} />
-    </main>
+    </div>
   );
 }

@@ -1,16 +1,15 @@
 import { TContentTypes } from "@/app/utils/types";
-import moment from "moment";
-import { BiDotsVertical, BiRightArrow, BiShare } from "react-icons/bi";
 import { CgShare } from "react-icons/cg";
 import { FaHeart } from "react-icons/fa";
-import { IoIosArrowForward } from "react-icons/io";
 import { MediumIconSize } from ".";
+import { TTag } from "@/app/utils/types/tag";
 
 interface IContentMiniFooter {
   type: TContentTypes;
   likesCount: number;
   isLikedByAuthUser: boolean;
   actions?: JSX.Element;
+  tags?: TTag[];
 }
 
 export const ContentMiniFooter = ({
@@ -18,6 +17,7 @@ export const ContentMiniFooter = ({
   likesCount,
   isLikedByAuthUser,
   actions,
+  tags,
 }: IContentMiniFooter) => {
   const isLoading = false;
 

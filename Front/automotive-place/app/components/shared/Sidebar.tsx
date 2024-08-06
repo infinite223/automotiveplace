@@ -27,11 +27,11 @@ export const SideBar: FC<ISideBar> = ({}) => {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
+  // TODO - zmiana wyświetlania się sidebara dla mobilnej wersji lub implementacja nowego
   return (
-    <div className="flex border-zinc-900 h-full scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
-      <div className="flex flex-col gap-1  h-full pl-2 justify-between">
-        <div className="flex flex-col items-start max-2xl:items-center max-2xl:pr-3 max-2xl:min-w-0 min-w-[170px]">
+    <div className="flex 2xl:w-[200px] border-zinc-900 h-full scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
+      <div className="flex flex-col gap-1 h-full pl-2 justify-between">
+        <div className="flex flex-col items-start max-2xl:items-center max-2xl:pr-3 max-2xl:min-w-0">
           <OptionItem
             icon={<MdHome size={iconSize} />}
             name="Główna"
