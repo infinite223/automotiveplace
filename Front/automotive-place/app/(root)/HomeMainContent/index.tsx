@@ -35,9 +35,8 @@ export const HomeMainContent = ({
 
     getData();
   }, []);
-  // max-2xl:mr-[80px] mr-[175px]
   return (
-    <div className="flex w-full max-lg:mr-0 max-2xl:mr-[80px] max-xl:mr-[155px] items-center h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth">
+    <div className="flex w-full mr-[140px] max-lg:mr-0 max-2xl:mr-[80px] max-xl:mr-[75px] items-center h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth">
       <div className="flex flex-col text-[12px] w-full lg:w-[550px]">
         {!isLoading &&
           _content.map((content) => {

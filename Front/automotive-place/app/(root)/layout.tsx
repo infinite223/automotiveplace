@@ -19,12 +19,8 @@ export default function Layout({
   return (
     <div className="flex h-screen flex-col bg-custom-primary text-custom-primary">
       <HomeHeader />
-      <div
-        className="flex h-full w-full justify-between flex-col-reverse lg:flex-row"
-        style={{ height: `calc(100% - ${170}px)` }}
-      >
+      <div className="flex lg:h-[calc(100%-70px)] h-[calc(100%-170px)] w-full justify-between flex-col-reverse lg:flex-row">
         <SideBar />
-
         {children}
       </div>
     </div>
