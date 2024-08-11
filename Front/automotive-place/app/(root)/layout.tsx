@@ -13,9 +13,6 @@ export default function Layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const loggedIn = true;
-  if (!loggedIn) redirect("/sign-in");
-
   return (
     <div className="flex h-screen flex-col bg-custom-primary text-custom-primary">
       <HomeHeader />
