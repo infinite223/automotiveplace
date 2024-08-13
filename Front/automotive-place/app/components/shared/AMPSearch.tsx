@@ -60,7 +60,7 @@ export const AMPSearch: FC<AMPSearchProps> = ({
           </div>
           <button
             type="submit"
-            className="p-2.5 ms-2 text-sm font-medium text-white bg-teal-600 rounded-lg border border-teal-700 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800"
+            className="p-2.5 ms-2 text-sm font-medium text-white bg-baseColor rounded-lg border border-teal-700 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800"
           >
             <svg
               className="w-4 h-4"

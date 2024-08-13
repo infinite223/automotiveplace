@@ -47,7 +47,11 @@
 }
 
 .text-baseColor-secendary {
-  @apply text-teal-600;
+  @apply text-teal-700;
+}
+
+.bg-baseColor-secendary {
+  @apply text-teal-700;
 }
 
 input:-webkit-autofill,

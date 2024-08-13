@@ -29,6 +29,7 @@ export const AMPSwitch: FC<IAMPSwitch> = ({
         onChange={() => setValue(!value)}
         checked={value}
         className="sr-only peer"
+        required={required}
         style={inputStyles}
       />
       <div

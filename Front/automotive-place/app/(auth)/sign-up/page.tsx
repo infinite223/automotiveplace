@@ -5,15 +5,20 @@ import { AMPInput } from "../../components/shared/AMPInput";
 import { AMPButton } from "@/app/components/shared/AMPButton";
 import Link from "next/link";
 import { signUp } from "@/lib/actions/user.actions";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [nick, setNick] = useState(""); // TODO - dodać w przyszłości do bazy itp
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
 
-    const newUser = await signUp({ email, password });
+    const newUser = await signUp({ email, password, name });
+    if (newUser) router.push("/");
   };
 
   return (
@@ -40,6 +45,13 @@ export default function Page() {
             type="password"
             name="Hasło"
             setValue={(text) => setPassword(text.toString())}
+          />
+          <AMPInput
+            placeholder="Podaj nazwę konta"
+            value={name}
+            type="text"
+            name="Nazwa"
+            setValue={(text) => setName(text.toString())}
           />
         </div>
         <AMPButton

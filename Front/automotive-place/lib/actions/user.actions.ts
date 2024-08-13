@@ -3,31 +3,51 @@
 import { ID } from "node-appwrite";
 import { createAdminClient, createSessionClient } from "../server/appwrite";
 import { cookies } from "next/headers";
+import prisma from "../prisma";
 
-export type SignUpParams = {
+export type SignInParams = {
   email: string;
   password: string;
 };
 
-type SignInParams = SignUpParams;
+type SignUpParams = SignInParams & {
+  name: string;
+};
+
+export const getUserInfo = async (id: string) => {
+  try {
+    const findUser = await prisma.user.findUnique({ where: { id } });
+    return JSON.parse(JSON.stringify(findUser));
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export const signUp = async (userData: SignUpParams) => {
   try {
-    console.log(userData);
     const { account } = await createAdminClient();
-
+    const newUserId = ID.unique();
     const newUserAccount = await account.create(
-      ID.unique(),
+      newUserId,
       userData.email,
-      userData.password
+      userData.password,
+      userData.name
     );
+    //  TODO - maybe we need nick for user
+    await prisma.user.create({
+      data: {
+        name: userData.name,
+        password: "",
+        id: newUserId,
+      },
+    });
+
     const session = await account.createEmailPasswordSession(
       userData.email,
       userData.password
     );
 
-    console.log(session);
-    cookies().set("my-custom-session", session.secret, {
+    cookies().set("appwrite-session", session.secret, {
       path: "/",
       httpOnly: true,
       sameSite: "strict",
@@ -40,8 +60,26 @@ export const signUp = async (userData: SignUpParams) => {
   }
 };
 
-export const signIn = (userData: SignInParams) => {
+export const signIn = async (userData: SignInParams) => {
   try {
+    const { account } = await createAdminClient();
+    const session = await account.createEmailPasswordSession(
+      userData.email,
+      userData.password
+    );
+
+    const user = await getUserInfo(session.userId);
+    if (user) {
+      cookies().set("appwrite-session", session.secret, {
+        path: "/",
+        httpOnly: true,
+        sameSite: "strict",
+        secure: true,
+      });
+    }
+    // TODO - można jakiś provider do tego zrobić
+
+    return JSON.parse(JSON.stringify(user));
   } catch (error) {
     console.error(error);
   }

@@ -4,9 +4,11 @@ import { useState } from "react";
 import { AMPInput } from "../../components/shared/AMPInput";
 import { AMPButton } from "@/app/components/shared/AMPButton";
 import Link from "next/link";
-import { signIn, signUp } from "@/lib/actions/user.actions";
+import { signIn } from "@/lib/actions/user.actions";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,7 +16,7 @@ export default function Page() {
     e.preventDefault();
 
     const userData = await signIn({ email, password });
-    console.log(userData);
+    if (userData) router.push("/");
   };
 
   return (
