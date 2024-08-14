@@ -51,7 +51,7 @@
 }
 
 .bg-baseColor-secendary {
-  @apply text-teal-700;
+  @apply bg-teal-700;
 }
 
 input:-webkit-autofill,
