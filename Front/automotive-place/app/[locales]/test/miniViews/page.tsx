@@ -1,6 +1,5 @@
 "use client";
 
-import { ProjectMiniView } from "@/app/(root)/HomeMainContent/ProjectMiniView";
 import { miniViewsList } from "./miniViewsList";
 
 export default function Page() {

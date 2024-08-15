@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { AMPSeparator } from "../components/shared/AMPSeparator";
 import { usePathname, useRouter } from "next/navigation";
 import TestNavigation from "./TestNavigation";
+import { AMPSeparator } from "@/app/components/shared/AMPSeparator";
 // import { usePathname } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
