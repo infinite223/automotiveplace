@@ -1,22 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { AMPInput } from "../../components/shared/AMPInput";
+import { AMPInput } from "../../../components/shared/AMPInput";
 import { AMPButton } from "@/app/components/shared/AMPButton";
 import Link from "next/link";
-import { signIn } from "@/lib/actions/user.actions";
+import { signUp } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [nick, setNick] = useState(""); // TODO - dodać w przyszłości do bazy itp
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
 
-    const userData = await signIn({ email, password });
-    if (userData) router.push("/");
+    const newUser = await signUp({ email, password, name });
+    if (newUser) router.push("/");
   };
 
   return (
@@ -26,8 +28,8 @@ export default function Page() {
         className="w-[300px] gap-2 border-custom-primary bottom-1 flex flex-col"
       >
         <div className="flex flex-col mb-10">
-          <p className="text-xs font-thin">Witaj ponownie!</p>
-          <h1 className="text-2xl font-bold">Zaloguj się</h1>
+          <p className="text-xs font-thin">Witaj!</p>
+          <h1 className="text-2xl font-bold">Utwórz konto</h1>
         </div>
         <div className="flex flex-col bordre-2">
           <AMPInput
@@ -44,6 +46,13 @@ export default function Page() {
             name="Hasło"
             setValue={(text) => setPassword(text.toString())}
           />
+          <AMPInput
+            placeholder="Podaj nazwę konta"
+            value={name}
+            type="text"
+            name="Nazwa"
+            setValue={(text) => setName(text.toString())}
+          />
         </div>
         <AMPButton
           name="Zaloguj"
@@ -54,10 +63,10 @@ export default function Page() {
 
       <footer className="mt-3">
         <p className="text-xs font-light text-custom-secendary">
-          Nie masz jeszcze konta?
-          <Link href={"./sign-up"} className="text-baseColor">
+          Masz już konto?
+          <Link href={"./sign-in"} className="text-baseColor">
             {" "}
-            Zarejestruj się
+            Zaloguj się
           </Link>
         </p>
       </footer>

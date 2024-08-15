@@ -4,11 +4,10 @@ import { LuSearch } from "react-icons/lu";
 import { HomeSearchBarFilterView } from "./HomeSearchBarFilterView";
 import { GoChevronDown, GoChevronUp } from "react-icons/go";
 import { motion, AnimatePresence } from "framer-motion";
-import useKeyboardShortcut from "../hooks/useKeydown";
+import useKeyboardShortcut from "../../hooks/useKeydown";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsSearchBarOpen } from "@/lib/features/searchBar/searchBarSlice";
 import { RootState } from "@/lib/store";
-import { FaLongArrowAltDown } from "react-icons/fa";
 
 const shortcutConfigStart = {
   code: "ctrl+f",

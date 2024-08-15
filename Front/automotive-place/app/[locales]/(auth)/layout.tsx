@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { DevLogin } from "../components/devLogin";
+import { DevLogin } from "../../components/devLogin";
 
 export default function RootLayout({
   children,

@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { TContentData } from "../../utils/types";
-import { isTProject } from "../../utils/types/project";
+import { TContentData } from "../../../utils/types";
+import { isTProject } from "../../../utils/types/project";
 import { ProjectMiniView } from "./ProjectMiniView";
 import { isTPost } from "@/app/utils/types/post";
 import { PostMiniView } from "./PostMiniView";
