@@ -4,8 +4,9 @@ import React from "react";
 const Header = () => {
   return (
     <section className="flex h-screen flex-col items-center gap-8 justify-center">
-      <h1 className="text-5xl font-bold">
-        <span className="text-baseColor-secendary">Automotive</span> place
+      <h1 className="text-5xl font-extrabold" style={{ fontFamily: "fantasy" }}>
+        <span className="text-baseColor-secendary uppercase">Automotive</span>{" "}
+        place
       </h1>
       <div className="flex gap-4">
         <Link

@@ -2,11 +2,15 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+:root {
+  --baseColor: rgb(158, 10, 203);
+  --baseColorSecendary: rgb(126, 6, 162);
+}
+
 .bg-custom-primary {
   @apply bg-zinc-100 dark:bg-zinc-950;
 }
-
-.bg-custom-secendary {
+6 .bg-custom-secendary {
   @apply bg-zinc-300 dark:bg-zinc-800;
 }
 
@@ -40,18 +44,22 @@
 
 .bg-baseColor {
   @apply bg-teal-600;
+  background-color: var(--baseColor);
 }
 
 .text-baseColor {
   @apply text-teal-600;
+  color: var(--baseColor);
 }
 
 .text-baseColor-secendary {
   @apply text-teal-700;
+  color: var(--baseColorSecendary);
 }
 
 .bg-baseColor-secendary {
   @apply bg-teal-700;
+  background-color: var(--baseColorSecendary);
 }
 
 input:-webkit-autofill,
