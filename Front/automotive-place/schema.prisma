@@ -16,9 +16,9 @@ model Post {
   authorId  String?
 
   projectId String?
-  carItemId String? // TODO - remove thsi
-  spotId String?// TODO - remove thsi
-  companyId String? // TODO - remove thsi
+  carItemId String? // TODO - remove THIS
+  spotId String?// TODO - remove THIS
+  companyId String? // TODO - remove THIS
   likes    Like[]
 
   author User? @relation(fields: [authorId], references: [id])

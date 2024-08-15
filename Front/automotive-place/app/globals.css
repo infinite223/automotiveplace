@@ -10,7 +10,7 @@
 .bg-custom-primary {
   @apply bg-zinc-100 dark:bg-zinc-950;
 }
-6 .bg-custom-secendary {
+.bg-custom-secendary {
   @apply bg-zinc-300 dark:bg-zinc-800;
 }
 
