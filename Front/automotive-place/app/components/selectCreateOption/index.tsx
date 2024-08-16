@@ -5,8 +5,6 @@ import { PiQuestionMarkFill } from "react-icons/pi";
 import { motion, AnimatePresence } from "framer-motion";
 import { BsPostcardFill } from "react-icons/bs";
 
-interface ISelectCreateOption {}
-
 const iconSize = 22;
 
 export const SelectCreateOption: FC = () => {

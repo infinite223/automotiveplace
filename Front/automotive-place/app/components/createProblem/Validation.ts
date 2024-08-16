@@ -1,5 +1,4 @@
-import { ErrorStatus, TValidResult } from "@/app/utils/types";
-import { TCarItemCreate, isValidItemType } from "@/app/utils/types/carItem";
+import { TValidResult } from "@/app/utils/types";
 import { TProblemCreate } from "@/app/utils/types/problem";
 
 export const validProblem = (newProblem: TProblemCreate) => {

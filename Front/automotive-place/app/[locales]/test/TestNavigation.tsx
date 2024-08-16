@@ -6,7 +6,7 @@ import React from "react";
 
 function TestNavigation() {
   const pathname = usePathname();
-  console.log(pathname, "tutaj");
+
   return (
     <nav className="flex flex-col gap-2 w-full p-2">
       <h1 className="text-lg">Page for testing</h1>

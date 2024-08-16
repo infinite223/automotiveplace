@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React, { FC, useState } from "react";
 import { GrHelpBook } from "react-icons/gr";
 interface IAMPHelpFooter {
