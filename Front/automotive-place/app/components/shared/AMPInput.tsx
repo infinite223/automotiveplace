@@ -53,7 +53,7 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
         }}
         id={id}
         style={inputStyles}
-        className={`${additionalTailwindCss} w-full bg-custom-primary border-b outline-none border-gray-300 text-custom-secendary text-sm focus:ring-teal-500 focus:border-teal-500 block dark:border-zinc-800 dark:placeholder-gray-500 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-800bg-inherit py-3 shadow appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer`}
+        className={`${additionalTailwindCss} w-full bg-custom-primary border-b outline-none border-gray-300 text-custom-secendary text-sm focus:ring-teal-500 focus:border-teal-500 block dark:border-zinc-800 dark:placeholder-gray-500 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-800bg-inherit py-3 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer`}
         placeholder={placeholder}
         required={required}
         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"

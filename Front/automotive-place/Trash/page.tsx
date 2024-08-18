@@ -10,7 +10,7 @@ export default async function Home() {
           AutoMotive <span className="text-baseColor">place</span>
         </h3>
 
-        <div></div>
+        <div> </div>
 
         <Link href={"/test"} className="absolute top-2 right-2">
           <div className="border-teal-700 border py-1 p-2 rounded-md text-sm font-bold">

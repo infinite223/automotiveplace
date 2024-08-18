@@ -57,14 +57,14 @@ export default function Page() {
         <AMPButton
           name="Zaloguj"
           onClick={() => {}}
-          additionalTailwindCss="bg-baseColor text-sm rounded-sm py-1.5"
+          additionalTailwindCss="bg-baseColor-secendary text-white text-sm rounded-sm py-1.5"
         />
       </form>
 
       <footer className="mt-3">
         <p className="text-xs font-light text-custom-secendary">
           Masz już konto?
-          <Link href={"./sign-in"} className="text-baseColor">
+          <Link href={"./sign-in"} className="text-baseColor-secendary font-semibold">
             {" "}
             Zaloguj się
           </Link>

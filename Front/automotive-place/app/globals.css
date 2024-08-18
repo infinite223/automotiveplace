@@ -3,8 +3,8 @@
 @import "tailwindcss/utilities";
 
 :root {
-  --baseColor: rgb(158, 10, 203);
-  --baseColorSecendary: rgb(126, 6, 162);
+  --baseColor: rgba(4, 151, 139, 0.58);
+  --baseColorSecendary: rgba(3, 177, 160, 0.86);
 }
 
 .bg-custom-primary {
