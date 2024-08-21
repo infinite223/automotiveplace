@@ -1,12 +1,31 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-
+/* Color palette - https://www.canva.com/colors/color-palettes/facing-forward/ */
+/* 
+  baseColor - #01949a 60%
+  baseColorSecendary - #004369 25%
+  sandColor - #e5ddc8 10%
+  redColor - #db1f48 5%
+ */
 :root {
-  --baseColor: rgba(4, 151, 139, 0.58);
-  --baseColorSecendary: rgba(3, 177, 160, 0.86);
+  --baseColor: #01949a;
+  --baseColorSecendary: #004369;
+  --whiteColor: white;
+  --redColor: #db1f48;
 }
 
+.custom-gradient {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    356deg,
+    var(--whiteColor) 0%,
+    var(--whiteColor) 20%,
+    var(--baseColorSecendary) 20%,
+    var(--baseColor) 90%,
+    var(--baseColor) 100%
+  );
+}
 .bg-custom-primary {
   @apply bg-zinc-100 dark:bg-zinc-950;
 }

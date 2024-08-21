@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@nextui-org/navbar": "^2.0.36",
+    "@nextui-org/react": "^2.4.6",
     "@nextui-org/system": "^2.2.5",
     "@nextui-org/theme": "^2.2.9",
     "@prisma/client": "^5.13.0",
