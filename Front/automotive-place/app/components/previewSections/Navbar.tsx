@@ -10,6 +10,29 @@ import {
   Button,
 } from "@nextui-org/react";
 
+const navOptions = [
+  {
+    name: "Nowość",
+    path: "",
+  },
+  {
+    name: "Kontakt",
+    path: "",
+  },
+  {
+    name: "Aplikacja mobilna",
+    path: "",
+  },
+  {
+    name: "Możliwości",
+    path: "",
+  },
+  {
+    name: "Subskrybcja",
+    path: "",
+  },
+];
+
 export default function CustomNavbar() {
   const [navbarBg, setNavbarBg] = useState("transparent");
 
@@ -39,32 +62,18 @@ export default function CustomNavbar() {
       <NavbarBrand>
         <p className="text-inherit font-extrabold ">A|M|P</p>
       </NavbarBrand>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Nowości
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Kontakt
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Aplikacja mobilna
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Możliwości
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Subskrybcja
-          </Link>
-        </NavbarItem>
+      <NavbarContent className={`hidden sm:flex gap-4 `} justify="center">
+        {navOptions.map(({ name }, id) => (
+          <NavbarItem key={id}>
+            <Link
+              color="foreground"
+              className={`${navbarBg === "transparent" ? "text-zinc-300 hover:text-zinc-100" : "text-zinc-500 hover:text-zinc-900"}`}
+              href="#"
+            >
+              {name}
+            </Link>
+          </NavbarItem>
+        ))}
       </NavbarContent>
       <NavbarContent justify="end">
         <div className="flex gap-2">
