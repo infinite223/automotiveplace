@@ -14,6 +14,7 @@ interface IAMPInput<TValue> {
   inputStyles?: CSSProperties;
   marginBotton?: string;
   validFunction?: (value: string | number) => TValidResult[];
+  themeOption?: "auto" | "dark" | "white";
 }
 
 export const AMPInput: FC<IAMPInput<string | number>> = ({
@@ -27,6 +28,7 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
   required = false,
   additionalTailwindCss,
   inputStyles,
+  themeOption = "auto",
   marginBotton = "mb-5",
   validFunction = () => {
     return [];
@@ -34,15 +36,19 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
 }) => {
   const [localErrorText, setLocalErrorText] = useState("");
 
-  // useEffect(() => {
-  //   if (validFunction) {
-  //     setLocalErrorText(validFunction(value).error);
-  //   }
-  // }, [value]);
+  const themeAMPButtonStyles = () => {
+    if (themeOption === "auto") {
+      return "bg-custom-primary border-gray-300 focus:ring-teal-500 focus:border-teal-500 dark:border-zinc-800 dark:placeholder-gray-500 dark:text-white";
+    } else if (themeOption === "white") {
+      return "bg-white border-gray-300 text-black";
+    } else {
+      return "bg-black border-gray-800 text-white";
+    }
+  };
 
   return (
     <label htmlFor={htmlFor} className={`${marginBotton}`}>
-      <span className="font-light text-sm">{name}</span>
+      <span className="font-semibold text-sm">{name}</span>
       <input
         type={type}
         name={name}
@@ -53,7 +59,7 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
         }}
         id={id}
         style={inputStyles}
-        className={`${additionalTailwindCss} w-full bg-custom-primary border-b outline-none border-gray-300 text-custom-secendary text-sm focus:ring-teal-500 focus:border-teal-500 block dark:border-zinc-800 dark:placeholder-gray-500 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-800bg-inherit py-3 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer`}
+        className={`${additionalTailwindCss} ${themeAMPButtonStyles()} w-full border-b outline-none text-sm block dark:focus:ring-teal-500 dark:focus:border-teal-800 bg-inherit py-3 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer`}
         placeholder={placeholder}
         required={required}
         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"

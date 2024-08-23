@@ -79,7 +79,7 @@ export default function CustomNavbar() {
         <div className="flex gap-2">
           <Link
             href={"./sign-up"}
-            className="border-zinc-700 border-2 py-1.5 px-4 font-semibold rounded-sm text-sm"
+            className={`border-1.5 py-1.5 px-4 font-semibold rounded-sm text-sm ${navbarBg === "transparent" ? "text-zinc-300 hover:text-zinc-100 border-zinc-300" : "text-zinc-500 hover:text-zinc-900 border-zinc-700"}`}
           >
             Utwórz konto
           </Link>

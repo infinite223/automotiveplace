@@ -23,7 +23,7 @@ export default function Page() {
     <main className="w-full items-center flex flex-col justify-center">
       <form
         onSubmit={onSubmit}
-        className="w-[300px] gap-2 border-custom-primary bottom-1 flex flex-col"
+        className="w-[300px] gap-2 bottom-1 flex flex-col"
       >
         <div className="flex flex-col mb-10">
           <p className="text-xs font-thin">Witaj ponownie!</p>
@@ -34,6 +34,7 @@ export default function Page() {
             value={email}
             name="Email"
             type="email"
+            themeOption="white"
             placeholder="Podaj email"
             setValue={(text) => setEmail(text.toString())}
           />
@@ -42,6 +43,7 @@ export default function Page() {
             value={password}
             type="password"
             name="Hasło"
+            themeOption="white"
             setValue={(text) => setPassword(text.toString())}
           />
         </div>
@@ -53,9 +55,12 @@ export default function Page() {
       </form>
 
       <footer className="mt-3">
-        <p className="text-xs font-light text-custom-secendary">
+        <p className="text-xs">
           Nie masz jeszcze konta?
-          <Link href={"./sign-up"} className="text-baseColor-secendary font-semibold">
+          <Link
+            href={"./sign-up"}
+            className="text-baseColor-secendary font-semibold"
+          >
             {" "}
             Zarejestruj się
           </Link>

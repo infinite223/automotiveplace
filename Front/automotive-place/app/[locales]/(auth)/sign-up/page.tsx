@@ -25,7 +25,7 @@ export default function Page() {
     <main className="w-full items-center flex flex-col justify-center">
       <form
         onSubmit={onSubmit}
-        className="w-[300px] gap-2 border-custom-primary bottom-1 flex flex-col"
+        className="w-[300px] gap-2 bottom-1 flex flex-col"
       >
         <div className="flex flex-col mb-10">
           <p className="text-xs font-thin">Witaj!</p>
@@ -38,6 +38,7 @@ export default function Page() {
             type="email"
             placeholder="Podaj email"
             setValue={(text) => setEmail(text.toString())}
+            themeOption="white"
           />
           <AMPInput
             placeholder="Podaj hasło"
@@ -45,11 +46,13 @@ export default function Page() {
             type="password"
             name="Hasło"
             setValue={(text) => setPassword(text.toString())}
+            themeOption="white"
           />
           <AMPInput
             placeholder="Podaj nazwę konta"
             value={name}
             type="text"
+            themeOption="white"
             name="Nazwa"
             setValue={(text) => setName(text.toString())}
           />
@@ -62,9 +65,12 @@ export default function Page() {
       </form>
 
       <footer className="mt-3">
-        <p className="text-xs font-light text-custom-secendary">
+        <p className="text-xs">
           Masz już konto?
-          <Link href={"./sign-in"} className="text-baseColor-secendary font-semibold">
+          <Link
+            href={"./sign-in"}
+            className="text-baseColor-secendary font-semibold"
+          >
             {" "}
             Zaloguj się
           </Link>
