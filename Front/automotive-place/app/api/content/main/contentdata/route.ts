@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { contentData } from "@/app/utils/data/contentData";
+import {
+  contentData,
+  generateRandomContent,
+} from "@/app/utils/data/contentData";
 
 export async function GET(request: NextRequest) {
   const { searchParams }: any = new URL(request.url);
@@ -20,7 +23,7 @@ export async function GET(request: NextRequest) {
   }
 
   return NextResponse.json({
-    data: contentData,
+    data: generateRandomContent(30),
     hasMore,
   });
 }

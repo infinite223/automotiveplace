@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AMPInput } from "../../../components/shared/AMPInput";
 import { AMPButton } from "@/app/components/shared/AMPButton";
 import Link from "next/link";
-import { signIn } from "@/lib/actions/user.actions";
+import { getLoggedInUser, signIn } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
@@ -12,11 +12,21 @@ export default function Page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    const chekUserLoggedIn = async () => {
+      const user = await getLoggedInUser();
+      console.log(user, "tutaj");
+      if (user) router.push(`./app`);
+    };
+
+    chekUserLoggedIn();
+  }, [router]);
+
   const onSubmit = async (e: any) => {
     e.preventDefault();
 
     const userData = await signIn({ email, password });
-    if (userData) router.push("/");
+    if (userData) router.push("./app");
   };
 
   return (

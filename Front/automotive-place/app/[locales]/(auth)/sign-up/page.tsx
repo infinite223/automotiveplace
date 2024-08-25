@@ -18,7 +18,7 @@ export default function Page() {
     e.preventDefault();
 
     const newUser = await signUp({ email, password, name });
-    if (newUser) router.push("/");
+    if (newUser) router.push("/app");
   };
 
   return (

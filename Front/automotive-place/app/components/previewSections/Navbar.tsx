@@ -60,7 +60,11 @@ export default function CustomNavbar() {
       style={{ backgroundColor: navbarBg, transition: "background-color 0.3s" }}
     >
       <NavbarBrand>
-        <p className="text-inherit font-extrabold ">A|M|P</p>
+        <p
+          className={`text-inherit font-extrabold ${navbarBg === "transparent" ? "text-zinc-300" : "text-zinc-700"}`}
+        >
+          A|M|P
+        </p>
       </NavbarBrand>
       <NavbarContent className={`hidden sm:flex gap-4 `} justify="center">
         {navOptions.map(({ name }, id) => (
