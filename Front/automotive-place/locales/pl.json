@@ -1,4 +1,11 @@
 {
+  "Core": {
+    "SignIn": "Zaloguj się",
+    "SignUp": "Zarejestruj się",
+    "CreateAccount": "Utwórz konto",
+    "DoYouAlreadyHaveAnAccount": "Masz już konto?",
+    "DontHaveAnAccountYet": "Nie masz jeszcze konta?"
+  },
   "Preview": {
     "title": "Aplikacja webowa stworzona w celu połączenia motoryzacyjnej społeczności do jednego wspólnego miejsca."
   }

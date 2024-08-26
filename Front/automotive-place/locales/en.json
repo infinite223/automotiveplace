@@ -1,4 +1,11 @@
 {
+  "Core": {
+    "SignIn": "Sign In",
+    "SignUp": "Sign Up",
+    "CreateAccount": "Create account",
+    "DoYouAlreadyHaveAnAccount": "Do you already have an account?",
+    "DontHaveAnAccountYet": "Don't have an account yet?"
+  },
   "Preview": {
     "title": "Web application created to connect the automotive community to one common place."
   }

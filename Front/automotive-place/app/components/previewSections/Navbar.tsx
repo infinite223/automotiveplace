@@ -9,6 +9,7 @@ import {
   Link,
   Button,
 } from "@nextui-org/react";
+import { useTranslations } from "next-intl";
 
 const navOptions = [
   {
@@ -35,6 +36,7 @@ const navOptions = [
 
 export default function CustomNavbar() {
   const [navbarBg, setNavbarBg] = useState("transparent");
+  const t = useTranslations();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,13 +87,13 @@ export default function CustomNavbar() {
             href={"./sign-up"}
             className={`border-1.5 py-1.5 px-4 font-semibold rounded-sm text-sm ${navbarBg === "transparent" ? "text-zinc-300 hover:text-zinc-100 border-zinc-300" : "text-zinc-500 hover:text-zinc-900 border-zinc-700"}`}
           >
-            Utwórz konto
+            {t("Core.CreateAccount")}
           </Link>
           <Link
             href={`./sign-in`}
-            className="bg-baseColor-secendary text-white py-1.5 font-semibold px-4 rounded-sm text-sm"
+            className="bg-baseColor text-white py-1.5 font-semibold px-4 rounded-sm text-sm"
           >
-            Zaloguj się
+            {t("Core.SignIn")}
           </Link>
         </div>
       </NavbarContent>

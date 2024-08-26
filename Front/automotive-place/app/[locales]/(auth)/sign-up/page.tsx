@@ -6,9 +6,12 @@ import { AMPButton } from "@/app/components/shared/AMPButton";
 import Link from "next/link";
 import { signUp } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function Page() {
   const router = useRouter();
+  const t = useTranslations();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -58,21 +61,18 @@ export default function Page() {
           />
         </div>
         <AMPButton
-          name="Zaloguj"
+          name={t("Core.SignUp")}
           onClick={() => {}}
-          additionalTailwindCss="bg-baseColor-secendary text-white text-sm rounded-sm py-1.5"
+          additionalTailwindCss="bg-baseColor text-white text-sm rounded-sm py-1.5"
         />
       </form>
 
       <footer className="mt-3">
         <p className="text-xs">
-          Masz już konto?
-          <Link
-            href={"./sign-in"}
-            className="text-baseColor-secendary font-semibold"
-          >
+          {t("Core.DoYouAlreadyHaveAnAccount")}
+          <Link href={"./sign-in"} className="text-baseColor font-semibold">
             {" "}
-            Zaloguj się
+            {t("Core.SignIn")}
           </Link>
         </p>
       </footer>

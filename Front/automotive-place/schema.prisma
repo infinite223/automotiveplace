@@ -23,6 +23,9 @@ model Post {
 
   author User? @relation(fields: [authorId], references: [id])
   company  Company?  @relation(fields: [companyId], references: [id])
+
+  isBlockedByAdmin Boolean?
+  reportId    String?
 }
 
 model User {
@@ -41,8 +44,13 @@ model User {
   likes       Like[]
   tags        Tag[]
   pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
+  reports    Report[]
+  suggestedContentModel     String? // model tworzący proponowane treści
 
   @@map(name: "users")
+
+  isBlockedByAdmin Boolean?
+  reportId    String?
 }
 
 model Company {
@@ -50,6 +58,7 @@ model Company {
   name      String
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @updatedAt @map(name: "updated_at")
+  // TODO - dane firmy, nip, regon itp
 
   posts        Post[]
   garage       Garage?
@@ -57,6 +66,9 @@ model Company {
   carItems     CarItem[]
 
   tags        Tag[]
+
+  isBlockedByAdmin Boolean?
+  reportId    String?
 }
 
 model Garage {
@@ -73,6 +85,9 @@ model Garage {
 
   author   User    @relation(fields: [authorId], references: [id])
   company  Company?  @relation(fields: [companyId], references: [id])
+
+  isBlockedByAdmin Boolean?
+  reportId    String?
 }
 
 model Project {
@@ -101,9 +116,13 @@ model Project {
   engineWasSwapped   Boolean?
 
   transmissionName String
+  transmissionType Int // type -> 0 - maual | 1 - automat
   transmissionGears Int
   transmissionDescription String?
   transmissionWasSwapped Boolean?
+
+  topSpeedStock Decimal?
+  weightStock   Decimal?
 
   carItems CarItem[]
   stages Stage[]
@@ -116,6 +135,9 @@ model Project {
   author User    @relation(fields: [authorId], references: [id])
   garage Garage? @relation(fields: [garageId], references: [id])
   company Company? @relation(fields: [companyId], references: [id])
+
+  isBlockedByAdmin Boolean?
+  reportId    String?
 }
 
 model Spot {
@@ -128,6 +150,9 @@ model Spot {
   
   authorId String
   pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
+
+  isBlockedByAdmin Boolean?
+  reportId    String?
 }
 
 model Event {
@@ -140,6 +165,9 @@ model Event {
 
   authorId String
   pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
+
+  isBlockedByAdmin Boolean?
+  reportId    String?
 }
 
 model PickedProjectOnEventOrSpot {
@@ -158,6 +186,9 @@ model PickedProjectOnEventOrSpot {
 
   event Event? @relation(fields: [eventId], references: [id])
   spot Spot? @relation(fields: [spotId], references: [id])
+
+  isBlockedByAdmin Boolean?
+  reportId    String?
 }
 
 model Stage {
@@ -176,6 +207,9 @@ model Stage {
 
   sl_150_50     Decimal? // droga hamowania w metrach
   sl_100_0      Decimal?
+  topSpeed Decimal?
+  weight   Decimal?
+
   projectId     String
   createdById   String?
   stagePrice    Decimal?
@@ -183,7 +217,10 @@ model Stage {
 
   carItems CarItem[]
   project Project? @relation(fields: [projectId], references: [id])
-  createdBy User? @relation(fields: [createdById], references: [id])
+  createdBy User? @relation(fields: [createdById], references: [id]) 
+
+  isBlockedByAdmin Boolean?
+  reportId    String?
 }
 
 model Tag {
@@ -201,6 +238,9 @@ model Tag {
   project   Project?  @relation(fields: [projectId], references: [id])
   company   Company?  @relation(fields: [companyId], references: [id])
   carItem   CarItem?   @relation(fields: [carItemId], references: [id])
+
+  isBlockedByAdmin Boolean?
+  reportId    String?
 }
 
 model CarItem {
@@ -229,6 +269,22 @@ model CarItem {
   garage   Garage? @relation(fields: [garageId], references: [id])
   stage     Stage? @relation(fields: [stageId], references: [id])
   company   Company? @relation(fields: [companyId], references: [id])
+
+  isBlockedByAdmin Boolean?
+  reportId    String?
+}
+
+model Report {
+  id           String   @id @default(cuid())
+  userId       String
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  name         String
+  description  String 
+  appeal       String? // Wypełnia użytkownik który utworzył daną rzecz (spot, element, projekt)
+
+  reportType   String
+  reportElementId String 
+  author         User     @relation(fields: [userId], references: [id])
 }
 
 model Like {
@@ -249,6 +305,11 @@ model Like {
 
   @@index([likeableId, likeableType], name: "likeable_index")
 }
+
+// TODO - cały osobny model czatu 
+// Chats -> Messages
+
+// miejsca (osobna tabela)-> gdzie można spotkać dany projekt, gdzie jest firma itp 
 
 
 enum LikeableType {
