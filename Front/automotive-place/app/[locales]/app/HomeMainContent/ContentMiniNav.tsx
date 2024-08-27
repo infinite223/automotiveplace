@@ -4,6 +4,7 @@ import moment from "moment";
 import { BiDotsVertical } from "react-icons/bi";
 import "moment/locale/pl";
 import { MediumIconSize } from ".";
+import Image from "next/image";
 moment.locale("pl");
 
 interface IContentMiniNav {
@@ -28,7 +29,7 @@ export const ContentMiniNav = ({
 
         <div className="flex items-center gap-4">
           {author?.imageUrl && (
-            <img
+            <Image
               alt="author-image"
               src={author?.imageUrl}
               className="h-8 w-8 rounded-full"

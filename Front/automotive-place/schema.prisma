@@ -46,6 +46,8 @@ model User {
   pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
   reports    Report[]
   suggestedContentModel     String? // model tworzący proponowane treści
+  companyId   String?
+  company  Company?  @relation(fields: [companyId], references: [id])
 
   @@map(name: "users")
 
@@ -64,8 +66,10 @@ model Company {
   garage       Garage?
   projects     Project[]
   carItems     CarItem[]
-
   tags        Tag[]
+  users       User[] // osoby należące do firmy 
+  authorId      String // Twórca firmy w aplikacji
+  location Location?
 
   isBlockedByAdmin Boolean?
   reportId    String?
@@ -131,6 +135,7 @@ model Project {
   tags Tag[]
   authorId String
   companyId String?
+  location Location?
 
   author User    @relation(fields: [authorId], references: [id])
   garage Garage? @relation(fields: [garageId], references: [id])
@@ -150,6 +155,7 @@ model Spot {
   
   authorId String
   pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
+  location Location?
 
   isBlockedByAdmin Boolean?
   reportId    String?
@@ -165,6 +171,7 @@ model Event {
 
   authorId String
   pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
+  location Location?
 
   isBlockedByAdmin Boolean?
   reportId    String?
@@ -304,6 +311,24 @@ model Like {
   carItem      CarItem? @relation(fields: [carItemId], references: [id])
 
   @@index([likeableId, likeableType], name: "likeable_index")
+}
+
+model Location {
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  name         String   // nazwa miejsca - np. miejscowość
+  description  String   // dodatkowe informacje - np. kod pocztowy, ulica, budynek 
+  lat          Decimal
+  lng          Decimal
+  projectId    String?  @unique
+  companyId    String?  @unique
+  spotId       String?  @unique
+  eventId      String?  @unique
+  
+  project      Project? @relation(fields: [projectId], references: [id])
+  company      Company? @relation(fields: [companyId], references: [id])
+  event        Event? @relation(fields: [spotId], references: [id])
+  spot        Spot? @relation(fields: [eventId], references: [id])
 }
 
 // TODO - cały osobny model czatu 

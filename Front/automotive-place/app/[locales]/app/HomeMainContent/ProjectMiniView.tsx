@@ -6,6 +6,7 @@ import { ContentMiniNav } from "./ContentMiniNav";
 import { ContentMiniFooter } from "./ContentMiniFooter";
 import { IoIosArrowForward } from "react-icons/io";
 import { MediumIconSize } from ".";
+import Image from "next/image";
 
 const projectImage =
   "https://cylindersi.pl/wp-content/uploads/2022/06/Dodge-Charger-Scat-Pack-sylwetka.jpg";
@@ -32,7 +33,7 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
           />
 
           <div className="flex mt-1">
-            <img alt="project-image" src={projectImage} className="w-[55%]" />
+            <Image alt="project-image" src={projectImage} className="w-[55%]" />
             {/* main content, images, stages... */}
           </div>
 

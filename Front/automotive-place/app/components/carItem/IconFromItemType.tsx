@@ -1,6 +1,7 @@
 "use client";
 
 import { ItemTypes, ItemTypesPL } from "@/app/utils/types/carItem";
+import Image from "next/image";
 import React, { FC, useEffect, useState } from "react";
 
 interface IconFromItemTypeProps {
@@ -32,7 +33,7 @@ export const IconFromItemType: FC<IconFromItemTypeProps> = ({
     >
       {!isLoading && (
         <>
-          <img
+          <Image
             className={`${
               isLoading && "bg-custom-secendary rounded-md"
             } w-8 h-8 rounded-sm dark:invert`}
