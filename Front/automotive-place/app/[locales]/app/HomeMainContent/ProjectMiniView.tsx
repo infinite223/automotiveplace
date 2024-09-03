@@ -33,7 +33,13 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
           />
 
           <div className="flex mt-1">
-            <Image alt="project-image" src={projectImage} className="w-[55%]" />
+            <Image
+              alt="project-image"
+              src={projectImage}
+              className="w-[55%]"
+              width={200}
+              height={200}
+            />
             {/* main content, images, stages... */}
           </div>
 

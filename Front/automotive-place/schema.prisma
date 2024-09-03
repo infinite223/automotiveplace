@@ -324,6 +324,7 @@ model Location {
   companyId    String?  @unique
   spotId       String?  @unique
   eventId      String?  @unique
+   
   
   project      Project? @relation(fields: [projectId], references: [id])
   company      Company? @relation(fields: [companyId], references: [id])

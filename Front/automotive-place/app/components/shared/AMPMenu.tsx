@@ -1,3 +1,4 @@
+import { iconSizes } from "@/app/utils/constants";
 import React, { FC, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
@@ -11,9 +12,10 @@ export type TMenuItem = {
 interface IAMPMenuProps {
   items: TMenuItem[];
   isLoading: boolean;
+  size?: number;
 }
 
-export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading }) => {
+export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -36,6 +38,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading }) => {
             <BsThreeDotsVertical
               onClick={() => setShowMenu(!showMenu)}
               className="cursor-pointer"
+              size={size ?? iconSizes.base}
             />
           </>
         )}{" "}
@@ -46,7 +49,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading }) => {
           role="menu"
           data-popover="menu"
           data-popover-placement="bottom"
-          className="absolute bg-custom-3 text-[11px] z-10 min-w-[180px] overflow-auto rounded-md border border-zinc-200 dark:border-zinc-800 bg-custom-secendary  p-1 font-sans font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none"
+          className="absolute bg-custom-3 text-[11px] z-10 min-w-[180px] overflow-auto rounded-sm border border-zinc-200 dark:border-zinc-800 bg-custom-secendary  py-1 font-sans font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none"
         >
           {items.map(({ name, handleClick, icon, isDisable }, i) => (
             <li

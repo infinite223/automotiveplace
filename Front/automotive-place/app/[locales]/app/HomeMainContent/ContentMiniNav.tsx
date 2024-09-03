@@ -5,6 +5,7 @@ import { BiDotsVertical } from "react-icons/bi";
 import "moment/locale/pl";
 import { MediumIconSize } from ".";
 import Image from "next/image";
+import { AMPMenu, TMenuItem } from "@/app/components/shared/AMPMenu";
 moment.locale("pl");
 
 interface IContentMiniNav {
@@ -13,6 +14,14 @@ interface IContentMiniNav {
   createdAt: Date;
   typeName: string;
 }
+
+const menuItems: TMenuItem[] = [
+  {
+    name: "Zgłoś ",
+    isDisable: false,
+    handleClick: () => {},
+  },
+];
 
 export const ContentMiniNav = ({
   author,
@@ -33,6 +42,8 @@ export const ContentMiniNav = ({
               alt="author-image"
               src={author?.imageUrl}
               className="h-8 w-8 rounded-full"
+              width={200}
+              height={200}
             />
           )}
           <div className="flex flex-col leading-4	">
@@ -44,9 +55,7 @@ export const ContentMiniNav = ({
         </div>
       </div>
 
-      <div>
-        <BiDotsVertical size={MediumIconSize} />
-      </div>
+      <AMPMenu items={menuItems} isLoading={false} />
     </nav>
   );
 };

@@ -39,6 +39,8 @@ export const IconFromItemType: FC<IconFromItemTypeProps> = ({
             } w-8 h-8 rounded-sm dark:invert`}
             alt="car item tyoe image"
             src={iconUrl}
+            width={10}
+            height={10}
           />
         </>
       )}

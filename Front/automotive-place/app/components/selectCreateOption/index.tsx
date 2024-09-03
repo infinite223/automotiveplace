@@ -4,8 +4,7 @@ import { FaCalendarDay, FaLocationArrow } from "react-icons/fa";
 import { PiQuestionMarkFill } from "react-icons/pi";
 import { motion, AnimatePresence } from "framer-motion";
 import { BsPostcardFill } from "react-icons/bs";
-
-const iconSize = 22;
+import { iconSizes } from "@/app/utils/constants";
 
 export const SelectCreateOption: FC = () => {
   return (
@@ -13,27 +12,27 @@ export const SelectCreateOption: FC = () => {
       <OptionItem
         name="Dodaj projekt"
         onClick={() => {}}
-        icon={<FaCarRear size={iconSize} />}
+        icon={<FaCarRear size={iconSizes.base} />}
       />
       <OptionItem
         name="Dodaj spot"
         onClick={() => {}}
-        icon={<FaLocationArrow size={iconSize} />}
+        icon={<FaLocationArrow size={iconSizes.base} />}
       />
       <OptionItem
         name="Dodaj wydarzenie"
         onClick={() => {}}
-        icon={<FaCalendarDay size={iconSize} />}
+        icon={<FaCalendarDay size={iconSizes.base} />}
       />
       <OptionItem
         name="Dodaj problem"
         onClick={() => {}}
-        icon={<PiQuestionMarkFill size={iconSize} />}
+        icon={<PiQuestionMarkFill size={iconSizes.base} />}
       />
       <OptionItem
         name="Dodaj post"
         onClick={() => {}}
-        icon={<BsPostcardFill size={iconSize} />}
+        icon={<BsPostcardFill size={iconSizes.base} />}
       />
     </div>
   );
