@@ -65,16 +65,16 @@ async function createProject(project: TProjectCreate, authorId: string) {
 
   let newProject;
   try {
-    newProject = await prisma.project.create({
-      data: {
-        ...restProjectData,
-        garageId: "",
-        authorId: "",
-        imagesUrl: "",
-        // TODO - first we need save images
-        isVerified: false,
-      },
-    });
+    // newProject = await prisma.project.create({
+    //   data: {
+    //     ...restProjectData,
+    //     garageId: "",
+    //     authorId: "",
+    //     imagesUrl: "",
+    //     // TODO - first we need save images
+    //     isVerified: false,
+    //   },
+    // });
   } catch (error) {
     console.error("Error creating car item:", error);
     throw error;
