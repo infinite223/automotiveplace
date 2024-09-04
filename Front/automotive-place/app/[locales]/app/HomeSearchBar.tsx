@@ -8,14 +8,7 @@ import useKeyboardShortcut from "../../hooks/useKeydown";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsSearchBarOpen } from "@/lib/features/searchBar/searchBarSlice";
 import { RootState } from "@/lib/store";
-
-const shortcutConfigStart = {
-  code: "ctrl+f",
-};
-
-const shortcutConfigEnd = {
-  code: "esc",
-};
+import { shortcutConfigs } from "@/app/utils/constants";
 
 interface HomeSearchBarProps {
   onSearch: (value: string) => void;
@@ -78,10 +71,10 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
 
   useKeyboardShortcut(() => {
     dispatch(setIsSearchBarOpen(true));
-  }, shortcutConfigStart);
+  }, shortcutConfigs.search);
   useKeyboardShortcut(() => {
     dispatch(setIsSearchBarOpen(false));
-  }, shortcutConfigEnd);
+  }, shortcutConfigs.escape);
 
   return (
     <main className={`flex w-full flex-col relative`}>

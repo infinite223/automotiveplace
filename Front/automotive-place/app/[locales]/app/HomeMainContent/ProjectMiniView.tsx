@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { ContentMiniNav } from "./ContentMiniNav";
 import { ContentMiniFooter } from "./ContentMiniFooter";
 import { IoIosArrowForward } from "react-icons/io";
-import { MediumIconSize } from ".";
 import Image from "next/image";
+import { iconSizes } from "@/app/utils/constants";
 
 const projectImage =
   "https://cylindersi.pl/wp-content/uploads/2022/06/Dodge-Charger-Scat-Pack-sylwetka.jpg";
@@ -51,7 +51,7 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
             actions={
               <div className="flex items-center text-sm font-light cursor-pointer transition ease-in-out gap-2 bg-zinc-700/70 hover:bg-zinc-700 rounded-md pl-2 pr-1 py-1">
                 Zobacz projekt
-                <IoIosArrowForward size={MediumIconSize} />
+                <IoIosArrowForward size={iconSizes.small} />
               </div>
             }
           />

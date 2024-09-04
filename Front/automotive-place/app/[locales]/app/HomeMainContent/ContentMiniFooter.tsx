@@ -1,8 +1,8 @@
 import { TContentTypes } from "@/app/utils/types";
 import { CgShare } from "react-icons/cg";
 import { FaHeart } from "react-icons/fa";
-import { MediumIconSize } from ".";
 import { TTag } from "@/app/utils/types/tag";
+import { iconSizes } from "@/app/utils/constants";
 
 interface IContentMiniFooter {
   type: TContentTypes;
@@ -25,7 +25,7 @@ export const ContentMiniFooter = ({
   return (
     <nav className="flex text-custom-primary items-center justify-between w-full">
       <div className="flex items-center gap-2">
-        <CgShare size={MediumIconSize} />
+        <CgShare size={iconSizes.small} />
         <div className="flex flex-col gap-2">
           {!isLoading && (
             <div
@@ -35,7 +35,7 @@ export const ContentMiniFooter = ({
               onClick={handleClickLike}
             >
               <FaHeart
-                size={MediumIconSize}
+                size={iconSizes.small}
                 color={isLikedByAuthUser ? "#df1515" : "gray"}
                 className={`cursor-pointer transition-colors duration-300 ease-in-out ${
                   isLikedByAuthUser ? "transform scale-95" : ""

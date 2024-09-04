@@ -12,10 +12,7 @@ import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { loginAsDev } from "@/app/services/dev";
 import { useRouter } from "next/navigation";
-
-const shortcutConfigDevMode = {
-  code: "ctrl+d",
-};
+import { shortcutConfigs } from "@/app/utils/constants";
 
 interface PinInputProps {
   length: number;
@@ -79,7 +76,7 @@ export const DevLogin: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  useKeyboardShortcut(openModal, shortcutConfigDevMode);
+  useKeyboardShortcut(openModal, shortcutConfigs.devMode);
 
   const handlePinChange = async (pin: string) => {
     if (pin.length == 5) {

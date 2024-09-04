@@ -1,9 +1,6 @@
-import { TContentTypes } from "@/app/utils/types";
 import { TUser } from "@/app/utils/types/user";
 import moment from "moment";
-import { BiDotsVertical } from "react-icons/bi";
 import "moment/locale/pl";
-import { MediumIconSize } from ".";
 import Image from "next/image";
 import { AMPMenu, TMenuItem } from "@/app/components/shared/AMPMenu";
 moment.locale("pl");

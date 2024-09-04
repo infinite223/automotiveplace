@@ -2,10 +2,7 @@ import { ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MdOutlineCloseFullscreen } from "react-icons/md";
 import useKeyboardShortcut from "@/app/hooks/useKeydown";
-
-const shortcutConfig = {
-  code: "esc",
-};
+import { shortcutConfigs } from "@/app/utils/constants";
 
 interface IModalProps {
   onClose: () => void;
@@ -26,7 +23,7 @@ const AMPModal = ({
   visible,
   defoultBG = true,
 }: IModalProps) => {
-  useKeyboardShortcut(onClose, shortcutConfig);
+  useKeyboardShortcut(onClose, shortcutConfigs.escape);
 
   return (
     <AnimatePresence>

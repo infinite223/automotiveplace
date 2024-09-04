@@ -1,4 +1,5 @@
-import { iconSizes } from "@/app/utils/constants";
+import useKeyboardShortcut from "@/app/hooks/useKeydown";
+import { iconSizes, shortcutConfigs } from "@/app/utils/constants";
 import React, { FC, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
@@ -17,6 +18,7 @@ interface IAMPMenuProps {
 
 export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
   const [showMenu, setShowMenu] = useState(false);
+  useKeyboardShortcut(() => setShowMenu(false), shortcutConfigs.escape);
 
   return (
     <main className="relative">
