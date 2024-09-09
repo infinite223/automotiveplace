@@ -6,9 +6,14 @@ import { ErrorStatus, ICreateNotification } from "@/app/utils/types";
 import { Prisma } from "@prisma/client";
 import { TProjectCreate } from "@/app/utils/types/project";
 import { validProject } from "@/app/components/createProject/Validation";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
 
 export async function POST(request: NextRequest) {
-  const authUser = false;
+  const user = await getLoggedInUser();
+  if (!user) {
+    return NextResponse.json({}, { status: 404, statusText: "" });
+  }
+
   const project: TProjectCreate = await request.json();
 
   let notification: ICreateNotification | null = {

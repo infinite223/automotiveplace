@@ -4,7 +4,8 @@
     "SignUp": "Zarejestruj się",
     "CreateAccount": "Utwórz konto",
     "DoYouAlreadyHaveAnAccount": "Masz już konto?",
-    "DontHaveAnAccountYet": "Nie masz jeszcze konta?"
+    "DontHaveAnAccountYet": "Nie masz jeszcze konta?",
+    "YouMustBeLoggedInToUseThisFunctionality": "Musisz być zalogowany aby korzystać z tej funkcjonalności"
   },
   "Preview": {
     "title": "Aplikacja webowa stworzona w celu połączenia motoryzacyjnej społeczności do jednego wspólnego miejsca."

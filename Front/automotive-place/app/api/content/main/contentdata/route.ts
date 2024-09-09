@@ -4,8 +4,14 @@ import {
   contentData,
   generateRandomContent,
 } from "@/app/utils/data/contentData";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
 
 export async function GET(request: NextRequest) {
+  const user = await getLoggedInUser();
+  if (!user) {
+    return NextResponse.json({}, { status: 404, statusText: "" });
+  }
+
   const { searchParams }: any = new URL(request.url);
   const limit = parseInt(searchParams.get("limit")) || 10;
 

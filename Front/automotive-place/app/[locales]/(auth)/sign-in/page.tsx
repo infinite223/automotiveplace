@@ -18,7 +18,6 @@ export default function Page() {
   useEffect(() => {
     const chekUserLoggedIn = async () => {
       const user = await getLoggedInUser();
-      console.log(user, "tutaj");
       if (user) router.push(`./app`);
     };
 
