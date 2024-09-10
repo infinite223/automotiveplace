@@ -1,8 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { ErrorStatus, ICreateNotification } from "@/app/utils/types";
+import { getTranslations } from "../../helpers";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
 
 export async function DELETE(request: NextRequest) {
+  const user = await getLoggedInUser();
+  const locale = request.headers.get("accept-language")?.split(",")[0] || "en";
+  const t = getTranslations(locale);
+
+  if (!user) {
+    return NextResponse.json(
+      { message: t["Core"]["YouMustBeLoggedInToUseThisFunctionality"] },
+      {
+        status: 404,
+        statusText: "Unauthorized",
+      }
+    );
+  }
+
   const { searchParams }: any = new URL(request.url);
   const id = searchParams.get("id");
   const authUser = true;

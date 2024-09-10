@@ -15,11 +15,7 @@ import { isTCarItem } from "@/app/utils/types/carItem";
 import { getMainContentDataForUser } from "@/app/services/content";
 import { LoadingMiniView } from "./LoadingMiniView";
 
-export const HomeMainContent = ({
-  contentData,
-}: {
-  contentData: TContentData[];
-}) => {
+export const HomeMainContent = () => {
   const [_content, setContent] = useState<TContentData[] | []>([]);
   const [isLoading, setLoading] = useState(true);
 

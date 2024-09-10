@@ -4,9 +4,24 @@ import { validCarElement } from "./../../../components/createCarItem/Validation"
 import { TCarItemCreate } from "@/app/utils/types/carItem";
 import { ErrorStatus, ICreateNotification } from "@/app/utils/types";
 import { Prisma } from "@prisma/client";
+import { getTranslations } from "../../helpers";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
 
 export async function POST(request: NextRequest) {
-  const authUser = false;
+  const user = await getLoggedInUser();
+  const locale = request.headers.get("accept-language")?.split(",")[0] || "en";
+  const t = getTranslations(locale);
+
+  if (!user) {
+    return NextResponse.json(
+      { message: t["Core"]["YouMustBeLoggedInToUseThisFunctionality"] },
+      {
+        status: 404,
+        statusText: "Unauthorized",
+      }
+    );
+  }
+
   const carItem: TCarItemCreate = await request.json();
   console.log(carItem, "car item");
 

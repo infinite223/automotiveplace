@@ -7,7 +7,6 @@ import {
   NavbarContent,
   NavbarItem,
   Link,
-  Button,
 } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 

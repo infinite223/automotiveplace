@@ -7,11 +7,21 @@ import { Prisma } from "@prisma/client";
 import { TProjectCreate } from "@/app/utils/types/project";
 import { validProject } from "@/app/components/createProject/Validation";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
+import { getTranslations } from "../../helpers";
 
 export async function POST(request: NextRequest) {
   const user = await getLoggedInUser();
+  const locale = request.headers.get("accept-language")?.split(",")[0] || "en";
+  const t = getTranslations(locale);
+
   if (!user) {
-    return NextResponse.json({}, { status: 404, statusText: "" });
+    return NextResponse.json(
+      { message: t["Core"]["YouMustBeLoggedInToUseThisFunctionality"] },
+      {
+        status: 404,
+        statusText: "Unauthorized",
+      }
+    );
   }
 
   const project: TProjectCreate = await request.json();
