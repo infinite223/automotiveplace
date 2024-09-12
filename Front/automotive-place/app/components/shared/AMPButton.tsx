@@ -4,7 +4,7 @@ import React, { FC } from "react";
 
 interface IAMPButton {
   name: string;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
   additionalTailwindCss?: string;
 }

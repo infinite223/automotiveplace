@@ -26,6 +26,8 @@ export default async function Layout({
       <div className="flex lg:h-[calc(100%-70px)] h-[calc(100%-170px)] w-full justify-between flex-col-reverse lg:flex-row">
         <SideBar />
         {children}
+        {/* TODO - left bar for some data, add mobile view */}
+        <div className="h-full w-[150px]"></div>
       </div>
     </div>
   );
