@@ -1,7 +1,7 @@
+import { FC, useState, useRef, useEffect } from "react";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import useKeyboardShortcut from "@/app/hooks/useKeydown";
 import { iconSizes, shortcutConfigs } from "@/app/utils/constants";
-import React, { FC, useState } from "react";
-import { BsThreeDotsVertical } from "react-icons/bs";
 
 export type TMenuItem = {
   name: string;
@@ -18,17 +18,29 @@ interface IAMPMenuProps {
 
 export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null); // Referencja do menu
   useKeyboardShortcut(() => setShowMenu(false), shortcutConfigs.escape);
 
-  return (
-    <main className="relative">
-      {showMenu && (
-        <div
-          className="absolute w-[300px] top-[-100px] left-[-60px] h-[300px]"
-          onClick={() => setShowMenu(!showMenu)}
-        />
-      )}
+  const handleClickOutside = (event: MouseEvent) => {
+    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      setShowMenu(false);
+    }
+  };
 
+  useEffect(() => {
+    if (showMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showMenu]);
+
+  return (
+    <main className="relative" ref={menuRef}>
       <div
         className={`${
           isLoading &&
@@ -43,7 +55,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
               size={size ?? iconSizes.base}
             />
           </>
-        )}{" "}
+        )}
       </div>
 
       {showMenu && (
@@ -58,7 +70,11 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
               onClick={!isDisable ? handleClick : () => {}}
               key={i}
               role="menuitem"
-              className={`${isDisable ? "opacity-65" : "cursor-pointer hover:bg-zinc-300 dark:hover:bg-zinc-600 hover:text-blue-gray-900"} w-full flex items-center gap-2 select-none rounded-sm px-3 pt-[5px] pb-1.5 text-start leading-tight transition-all focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900`}
+              className={`${
+                isDisable
+                  ? "opacity-65"
+                  : "cursor-pointer hover:bg-zinc-300 dark:hover:bg-zinc-600 hover:text-blue-gray-900"
+              } w-full flex items-center gap-2 select-none rounded-sm px-3 pt-[5px] pb-1.5 text-start leading-tight transition-all focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900`}
             >
               {icon}
               <span>{name}</span>

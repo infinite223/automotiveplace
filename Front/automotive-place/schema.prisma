@@ -43,16 +43,42 @@ model User {
   createdStages      Stage[]
   likes       Like[]
   tags        Tag[]
+  userActivity UserActivity[]
+
   pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
   reports    Report[]
-  suggestedContentModel     String? // model tworzący proponowane treści
+  suggestedContentModel     String? 
   companyId   String?
   company  Company?  @relation(fields: [companyId], references: [id])
-
   @@map(name: "users")
 
   isBlockedByAdmin Boolean?
   reportId    String?
+}
+
+model UserActivity {
+  id           String   @id @default(cuid())
+  userId       String   
+  activityType ActivityType
+  entityId     String  
+  entityType   EntityType 
+  createdAt    DateTime @default(now())
+  
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+enum ActivityType {
+  VIEW
+  LIKE
+  COMMENT
+}
+
+enum EntityType {
+  POST
+  PROJECT
+  CARITEM
+  EVENT
+  SPOT
 }
 
 model Company {

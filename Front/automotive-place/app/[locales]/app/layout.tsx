@@ -18,7 +18,7 @@ export default async function Layout({
   const user = await getLoggedInUser();
   const locale = await getLocale();
 
-  if (!user) return redirect(`/${locale}/sign-up`);
+  if (!user) return redirect(`/${locale}/sign-in`);
 
   return (
     <div className="flex h-screen flex-col bg-custom-primary text-custom-primary">

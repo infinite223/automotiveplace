@@ -1,8 +1,10 @@
 import { ICreateNotification } from "../utils/types";
 import { TCarItemCreate } from "../utils/types/carItem";
 
-export const getAllCarItems = async (limit = 10) => {
-  const response = await fetch(`/api/carItem/get-carItem?limit=${limit}`);
+export const getAllCarItems = async (locale: string = "en", limit = 10) => {
+  const response = await fetch(`/api/carItem/get-carItem?limit=${limit}`, {
+    headers: { "Accept-Language": locale },
+  });
   if (!response.ok) {
     throw new Error("Failed to fetch car items");
   }
@@ -16,10 +18,12 @@ export interface IRemoveCarItemResponse {
 }
 
 export const removeCarItem = async (
-  id: string
+  id: string,
+  locale: string = "en"
 ): Promise<IRemoveCarItemResponse> => {
   const response = await fetch(`/api/carItem/delete-carItem?id=${id}`, {
     method: "DELETE",
+    headers: { "Accept-Language": locale },
   });
 
   const result: IRemoveCarItemResponse = await response.json();

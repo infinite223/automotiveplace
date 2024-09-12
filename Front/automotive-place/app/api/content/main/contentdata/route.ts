@@ -6,9 +6,11 @@ import { getTranslations } from "@/app/api/helpers";
 export async function GET(request: NextRequest) {
   const user = await getLoggedInUser();
   const locale = request.headers.get("accept-language")?.split(",")[0] || "en";
+  console.log(locale, "locale");
   const t = getTranslations(locale);
 
   if (!user) {
+    console.log("auth problem");
     return NextResponse.json(
       { message: t["Core"]["YouMustBeLoggedInToUseThisFunctionality"] },
       {
