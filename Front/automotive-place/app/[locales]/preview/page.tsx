@@ -9,12 +9,12 @@ import CustomNavbar from "@/app/components/previewSections/Navbar";
 export default function page() {
   return (
     <main>
-        <CustomNavbar/>
-        <Header />
-        <About />
-        <Services />
-        <PreviewTests />
-        <Footer />
+      <CustomNavbar />
+      <Header />
+      <About />
+      <Services />
+      <PreviewTests />
+      <Footer />
     </main>
   );
 }

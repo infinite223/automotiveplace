@@ -61,7 +61,7 @@ export default function Page() {
         </div>
         <AMPButton
           name={t("Core.SignIn")}
-          additionalTailwindCss="bg-baseColor text-white text-sm rounded-sm py-1.5"
+          additionalTailwindCss="bg-redColor text-white text-sm rounded-sm py-1.5"
         />
       </form>
 

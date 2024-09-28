@@ -1,6 +1,6 @@
 import { TContentData } from "../utils/types";
 
-export const getMainContentDataForUser = async (locale: string = "pl") => {
+export const getMainContentDataForUser = async (locale: string = "en") => {
   // get auth user on backend
   const response = await fetch(`/api/content/main/contentdata`, {
     headers: { "Accept-Language": locale },

@@ -15,7 +15,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className="scroll-smoot custom-scrollbar overflow-y">
       <body>
         <NextIntlClientProvider messages={messages}>
           <Providers>

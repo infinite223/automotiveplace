@@ -72,7 +72,7 @@ export default function CustomNavbar() {
           <NavbarItem key={id}>
             <Link
               color="foreground"
-              className={`${navbarBg === "transparent" ? "text-zinc-300 hover:text-zinc-100" : "text-zinc-500 hover:text-zinc-900"}`}
+              className={`${navbarBg === "transparent" ? "text-zinc-300 hover:text-zinc-100" : "text-zinc-900 hover:text-zinc-500"}`}
               href="#"
             >
               {name}
@@ -84,13 +84,13 @@ export default function CustomNavbar() {
         <div className="flex gap-2">
           <Link
             href={"./sign-up"}
-            className={`border-1.5 py-1.5 px-4 font-semibold rounded-sm text-sm ${navbarBg === "transparent" ? "text-zinc-300 hover:text-zinc-100 border-zinc-300" : "text-zinc-500 hover:text-zinc-900 border-zinc-700"}`}
+            className={`border-1.5 py-1.5 px-4 font-semibold rounded-sm text-sm ${navbarBg === "transparent" ? "text-zinc-300 hover:text-zinc-100 border-zinc-300" : "text-zinc-900 hover:text-zinc-500 border-zinc-700"}`}
           >
             {t("Core.CreateAccount")}
           </Link>
           <Link
             href={`./sign-in`}
-            className="bg-baseColor text-white py-1.5 font-semibold px-4 rounded-sm text-sm"
+            className="bg-redColor text-white py-1.5 font-semibold px-4 rounded-sm text-sm"
           >
             {t("Core.SignIn")}
           </Link>

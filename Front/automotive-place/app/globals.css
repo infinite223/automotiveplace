@@ -85,6 +85,11 @@
   background-color: var(--baseColorSecendary);
 }
 
+.bg-redColor {
+  @apply bg-red-600;
+  background-color: var(--redColor);
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
