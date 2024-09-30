@@ -7,10 +7,13 @@ import Link from "next/link";
 import { getLoggedInUser, signIn } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { useDispatch } from "react-redux";
+import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 
 export default function Page() {
   const router = useRouter();
   const t = useTranslations();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,8 +30,9 @@ export default function Page() {
   const onSubmit = async (e: any) => {
     e.preventDefault();
 
-    const userData = await signIn({ email, password });
-    if (userData) router.push("./app");
+    const result = await signIn({ email, password });
+    dispatch(addNotification(JSON.stringify(result)));
+    if (result.log.status === "Success") router.push("./app");
   };
 
   return (

@@ -4,6 +4,9 @@ import { ID } from "node-appwrite";
 import { createAdminClient, createSessionClient } from "../server/appwrite";
 import { cookies } from "next/headers";
 import prisma from "../prisma";
+import { ErrorStatus, ICreateNotification } from "@/app/utils/types";
+import { CreateNotification } from "@/app/components/logger/NotificationHelper";
+import { getTranslations } from "@/app/api/helpers";
 
 export type SignInParams = {
   email: string;
@@ -63,6 +66,7 @@ export const signUp = async (userData: SignUpParams) => {
 export const signIn = async (userData: SignInParams) => {
   try {
     const { account } = await createAdminClient();
+
     const session = await account.createEmailPasswordSession(
       userData.email,
       userData.password
@@ -77,11 +81,13 @@ export const signIn = async (userData: SignInParams) => {
         secure: true,
       });
     }
-    // TODO - można jakiś provider do tego zrobić
 
-    return JSON.parse(JSON.stringify(user));
+    return CreateNotification("Success", "Core.WelcomeBackToAmp");
   } catch (error) {
-    console.error(error);
+    return CreateNotification(
+      ErrorStatus.Medium,
+      error instanceof Error ? error.message : "Unknown error"
+    );
   }
 };
 

@@ -7,10 +7,12 @@ import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 import { NotificationIcon } from "./NotificationIcon";
+import { useTranslations } from "next-intl";
 
 export const Notification: FC = () => {
   const notifications = useSelector((state: RootState) => state.notifications);
   const dispatch = useDispatch();
+  const t = useTranslations();
 
   useEffect(() => {
     if (notifications.length === 0) return;
@@ -42,14 +44,14 @@ export const Notification: FC = () => {
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3 justify-between w-full">
                 <NotificationIcon {...notification} />
-                <h3 className="text-sm">{notification.log.title}</h3>
+                <h3 className="text-sm">{t(notification.log.title)}</h3>
                 <div className="text-[11px] font-thin text-custom-secendary">
                   {moment(notification.log.date).calendar()}
                 </div>
               </div>
               {notification.log.message && (
                 <p className="text-[11px] font-light">
-                  {notification.log.message}
+                  {t(notification.log.message)}
                 </p>
               )}
             </div>
