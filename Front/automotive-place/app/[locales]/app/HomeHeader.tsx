@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { HomeSearchBar } from "./HomeSearchBar";
 import { IoNotifications, IoPersonCircle } from "react-icons/io5";
 import { TbMessage2Up } from "react-icons/tb";
 import { SlMenu } from "react-icons/sl";
@@ -20,7 +19,9 @@ export const HomeHeader = () => {
           </h2>
           <p className="text-sm p-0 m-0 mt-[-5px]">
             <span>Auto</span>
-            <span className="text-baseColor uppercase">motiveplace</span>
+            <span className="text-baseColor uppercase font-bold">
+              motiveplace
+            </span>
           </p>
         </div>
       </div>{" "}

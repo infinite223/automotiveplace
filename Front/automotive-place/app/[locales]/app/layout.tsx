@@ -4,6 +4,8 @@ import { SideBar } from "../../components/shared/Sidebar";
 import { redirect } from "next/navigation";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { getLocale } from "next-intl/server";
+import { TbMessage2Up } from "react-icons/tb";
+import { IoNotifications, IoPersonCircle } from "react-icons/io5";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -22,12 +24,18 @@ export default async function Layout({
 
   return (
     <div className="flex h-screen flex-col bg-custom-primary text-custom-primary">
-      <HomeHeader />
-      <div className="flex lg:h-[calc(100%-70px)] h-[calc(100%-170px)] w-full justify-between flex-col-reverse lg:flex-row">
+      {/* <HomeHeader /> */}
+      <div className="flex lg:h-[calc(100%-0px)] h-[calc(100%-170px)] w-full justify-between flex-col-reverse lg:flex-row">
         <SideBar />
         {children}
         {/* TODO - left bar for some data, add mobile view */}
-        <div className="h-full w-[150px]"></div>
+        <div className="h-full w-[150px]">
+          <div className="text-md flex items-center gap-5">
+            <TbMessage2Up size={22} />
+            <IoNotifications size={22} />
+            <IoPersonCircle size={29} />
+          </div>
+        </div>
       </div>
     </div>
   );

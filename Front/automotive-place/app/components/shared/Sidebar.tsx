@@ -16,6 +16,7 @@ import { RiBuildingFill } from "react-icons/ri";
 import AMPModal from "./AMPModal";
 import { SelectCreateOption } from "../selectCreateOption";
 import { iconSizes } from "@/app/utils/constants";
+import { SlMenu } from "react-icons/sl";
 
 interface ISideBar {}
 
@@ -29,9 +30,25 @@ export const SideBar: FC<ISideBar> = ({}) => {
   const closeModal = () => setIsModalOpen(false);
   // TODO - zmiana wyświetlania się sidebara dla mobilnej wersji lub implementacja nowego
   return (
-    <div className="flex 2xl:w-[200px] border-zinc-900 h-full scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
-      <div className="flex flex-col gap-1 h-full pl-2 justify-between">
+    <div className="flex 2xl:w-[240px] border-zinc-900 h-full border-r-1 scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
+      <div className="flex flex-col gap-1 h-[100%] pl-2 justify-between py-1">
         <div className="flex flex-col items-start max-2xl:items-center max-2xl:pr-3 max-2xl:min-w-0">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="px-4 ml-1 2xl:hidden mt-4">
+              <SlMenu size={iconSizes.base} />
+            </div>
+            <div className="flex flex-col pl-1  max-2xl:hidden">
+              <h2 className="m-0 p-0 text-2xl font-extrabold tracking-[2px]">
+                <span className="text-baseColor">A</span>MP
+              </h2>
+              <p className="text-sm p-0 m-0 mt-[-5px]">
+                <span>Auto</span>
+                <span className="text-baseColor uppercase font-bold">
+                  motiveplace
+                </span>
+              </p>
+            </div>
+          </div>
           <OptionItem
             icon={<MdHome size={iconSizes.base} />}
             name="Główna"
@@ -89,7 +106,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
           />
         </div>
 
-        <div className="flex flex-col items-start max-2xl:items-center mb-1 max-2xl:pr-3 max-2xl:min-w-0 min-w-[170px]">
+        <div className="flex flex-col items-start max-2xl:items-center max-2xl:pr-3 max-2xl:min-w-0 min-w-[170px]">
           <OptionItem
             icon={<FiSettings size={iconSizes.base} />}
             name="Ustawienia"
