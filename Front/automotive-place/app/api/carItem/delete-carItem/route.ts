@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { ErrorStatus, ICreateNotification } from "@/app/utils/types";
 import { getTranslations } from "../../helpers";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
+import { CreateNotification } from "@/app/components/logger/NotificationHelper";
 
 export async function DELETE(request: NextRequest) {
   const user = await getLoggedInUser();
@@ -23,14 +24,10 @@ export async function DELETE(request: NextRequest) {
   const id = searchParams.get("id");
   const authUser = true;
   let result = {};
-  let notification: ICreateNotification | null = {
-    log: {
-      date: new Date(),
-      status: ErrorStatus.Low,
-      title: "Coś poszło nie tak",
-    },
-    timer: 3000,
-  };
+  let notification: ICreateNotification | null = CreateNotification(
+    ErrorStatus.Low,
+    "Coś poszło nie tak"
+  );
 
   if (authUser) {
     result = await prisma.carItem.delete({

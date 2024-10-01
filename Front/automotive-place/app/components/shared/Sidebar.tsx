@@ -17,12 +17,16 @@ import AMPModal from "./AMPModal";
 import { SelectCreateOption } from "../selectCreateOption";
 import { iconSizes } from "@/app/utils/constants";
 import { SlMenu } from "react-icons/sl";
+import { useRouter } from "next/router";
+import { useTranslations } from "next-intl";
 
 interface ISideBar {}
 
 export const SideBar: FC<ISideBar> = ({}) => {
   // TODO - change to global variable
   const dispatch = useDispatch();
+  const t = useTranslations();
+  const router = useRouter();
   const smallScreenHiddenItem = "max-2xl:hidden";
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -51,12 +55,12 @@ export const SideBar: FC<ISideBar> = ({}) => {
           </div>
           <OptionItem
             icon={<MdHome size={iconSizes.base} />}
-            name="Główna"
+            name={t("Core.Home")}
             onClick={() => console.log("główna")}
           />
           <OptionItem
             icon={<LuSearch size={iconSizes.base} />}
-            name="Szukaj"
+            name={t("Core.Search")}
             additionalTailwindCss={smallScreenHiddenItem}
             onClick={() => dispatch(setIsSearchBarOpen(true))}
           />
@@ -64,43 +68,43 @@ export const SideBar: FC<ISideBar> = ({}) => {
 
           <OptionItem
             icon={<RiPlayListAddLine size={iconSizes.base} />}
-            name="Dodaj"
+            name={t("Core.Add")}
             onClick={() => openModal()}
           />
           <OptionItem
             icon={<BiSolidCarGarage size={iconSizes.base} />}
-            name="Garaż"
-            onClick={() => {}}
+            name={t("Core.Garage")}
+            onClick={() => router.push("/garage")}
           />
           <AMPSeparator additionalTailwindCss={smallScreenHiddenItem} />
 
           <OptionItem
             icon={<MdGroups size={iconSizes.base} />}
-            name="Grupy"
+            name={t("Core.Groups")}
             additionalTailwindCss={smallScreenHiddenItem}
             onClick={() => {}}
           />
           <OptionItem
             icon={<MdOutlineLocationOn size={iconSizes.base} />}
-            name="Spoty"
+            name={t("Core.Spots")}
             additionalTailwindCss={smallScreenHiddenItem}
             onClick={() => {}}
           />
           <OptionItem
             icon={<MdEventNote size={iconSizes.base} />}
-            name="Wydarzenia"
+            name={t("Core.Events")}
             additionalTailwindCss={smallScreenHiddenItem}
             onClick={() => {}}
           />
           <OptionItem
             icon={<MdLiveHelp size={iconSizes.base} />}
-            name="Problemy"
+            name={t("Core.Problems")}
             additionalTailwindCss={smallScreenHiddenItem}
             onClick={() => {}}
           />
           <OptionItem
             icon={<RiBuildingFill size={iconSizes.base} />}
-            name="Firmy"
+            name={t("Core.Company")}
             additionalTailwindCss={smallScreenHiddenItem}
             onClick={() => {}}
           />
@@ -109,7 +113,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         <div className="flex flex-col items-start max-2xl:items-center max-2xl:pr-3 max-2xl:min-w-0 min-w-[170px]">
           <OptionItem
             icon={<FiSettings size={iconSizes.base} />}
-            name="Ustawienia"
+            name={t("Core.Settings")}
             onClick={() => {}}
           />
         </div>

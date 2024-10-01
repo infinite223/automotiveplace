@@ -1,4 +1,9 @@
-import { ICreateNotification, TValidResult } from "@/app/utils/types";
+import { CreateNotification } from "@/app/components/logger/NotificationHelper";
+import {
+  ErrorStatus,
+  ICreateNotification,
+  TValidResult,
+} from "@/app/utils/types";
 import prisma from "@/lib/prisma";
 import { hash } from "bcrypt";
 
@@ -18,14 +23,10 @@ export const validUserIfExistInDatabse = async ({
     return {
       error: "Ten email jest już używany w aplikacji",
       valid: false,
-      notification: {
-        log: {
-          date: new Date(),
-          status: "Information",
-          message: "Ten email jest już używany w aplikacji",
-        },
-        timer: 3000,
-      },
+      notification: CreateNotification(
+        "Information",
+        "Ten email jest już używany w aplikacji"
+      ),
     } as TValidResult;
   }
 
@@ -38,14 +39,10 @@ export const validUserIfExistInDatabse = async ({
     return {
       error: "Nazwa użytkownika jest już zajęta",
       valid: false,
-      notification: {
-        log: {
-          date: new Date(),
-          status: "Information",
-          message: "Nazwa użytkownika jest już zajęta",
-        },
-        timer: 3000,
-      },
+      notification: CreateNotification(
+        "Information",
+        "Nazwa użytkownika jest już zajęta"
+      ),
     } as TValidResult;
   }
 
@@ -70,26 +67,14 @@ export const createNewUser = async (
       },
     });
 
-    const notification: ICreateNotification = {
-      log: {
-        date: new Date(),
-        status: "Success",
-        title: "Pomyślnie utworzono konto",
-      },
-      timer: 3000,
+    return {
+      user: newUser,
+      notification: CreateNotification("Success", "Pomyślnie utworzono konto"),
     };
-
-    return { user: newUser, notification };
   } catch (error) {
-    const notification: ICreateNotification = {
-      log: {
-        date: new Date(),
-        status: "Information",
-        title: "Coś poszło nie tak",
-      },
-      timer: 3000,
+    return {
+      user: null,
+      notification: CreateNotification(ErrorStatus.Low, "Coś poszło nie tak"),
     };
-
-    return { user: null, notification };
   }
 };

@@ -11,7 +11,6 @@ export async function GET(request: NextRequest) {
   const t = getTranslations(locale);
 
   if (!user) {
-    console.log("auth problem");
     return NextResponse.json(
       { message: t["Core"]["YouMustBeLoggedInToUseThisFunctionality"] },
       {
@@ -49,18 +48,12 @@ export async function GET(request: NextRequest) {
     },
   });
 
-  const authUser = false;
-
   // logic for getting content data...
 
   // Check if more data exists
   const hasMore = false;
 
   let responseResult: any;
-
-  if (authUser) {
-    // responseResult = result.map(({ id, ...rest }) => rest);
-  }
 
   return NextResponse.json({
     data: generateRandomContent(30),

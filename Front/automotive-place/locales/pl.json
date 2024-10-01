@@ -6,7 +6,17 @@
     "DoYouAlreadyHaveAnAccount": "Masz już konto?",
     "DontHaveAnAccountYet": "Nie masz jeszcze konta?",
     "YouMustBeLoggedInToUseThisFunctionality": "Musisz być zalogowany aby korzystać z tej funkcjonalności",
-    "WelcomeBackToAmp": "Welcome back to AMP"
+    "WelcomeBackToAmp": "Welcome back to AMP",
+    "Home": "Główna",
+    "Search": "Szukaj",
+    "Add": "Dodaj",
+    "Garage": "Garaż",
+    "Groups": "Grupy",
+    "Spots": "Spoty",
+    "Events": "Wydażenia",
+    "Problems": "Problemu",
+    "Company": "Firmy",
+    "Settings": "Ustawienia"
   },
   "Preview": {
     "title": "Aplikacja webowa stworzona w celu połączenia motoryzacyjnej społeczności do jednego wspólnego miejsca."

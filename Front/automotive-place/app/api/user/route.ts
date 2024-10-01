@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { ICreateNotification } from "@/app/utils/types";
 import { log } from "console";
 import { createNewUser, validUserIfExistInDatabse } from "./Validation";
+import { CreateNotification } from "@/app/components/logger/NotificationHelper";
 
 export async function POST(req: Request) {
   try {
@@ -23,15 +24,15 @@ export async function POST(req: Request) {
     return NextResponse.json({ user: null, notification }, { status: 401 });
   } catch (error) {
     log(error);
-
-    const notification: ICreateNotification = {
-      log: {
-        date: new Date(),
-        status: "Information",
-        title: "Nieoczekiwany błąd, spróbuj ponownie później",
+    return NextResponse.json(
+      {
+        user: null,
+        notification: CreateNotification(
+          "Information",
+          "Nieoczekiwany błąd, spróbuj ponownie później"
+        ),
       },
-      timer: 2000,
-    };
-    return NextResponse.json({ user: null, notification }, { status: 400 });
+      { status: 400 }
+    );
   }
 }

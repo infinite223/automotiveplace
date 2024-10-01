@@ -6,7 +6,17 @@
     "DoYouAlreadyHaveAnAccount": "Do you already have an account?",
     "DontHaveAnAccountYet": "Don't have an account yet?",
     "YouMustBeLoggedInToUseThisFunctionality": "You must be logged in to use this functionality",
-    "WelcomeBackToAmp": "Witaj ponownie w AMP"
+    "WelcomeBackToAmp": "Witaj ponownie w AMP",
+    "Home": "Home",
+    "Search": "Search",
+    "Add": "Add",
+    "Garage": "Garage",
+    "Groups": "Groups",
+    "Spots": "Spots",
+    "Events": "Events",
+    "Problems": "Problems",
+    "Company": "Company",
+    "Settings": "Settings"
   },
   "Preview": {
     "title": "Web application created to connect the automotive community to one common place."

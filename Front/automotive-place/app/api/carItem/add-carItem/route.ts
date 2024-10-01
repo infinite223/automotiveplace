@@ -2,10 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { validCarElement } from "./../../../components/createCarItem/Validation";
 import { TCarItemCreate } from "@/app/utils/types/carItem";
-import { ErrorStatus, ICreateNotification } from "@/app/utils/types";
+import { ErrorStatus } from "@/app/utils/types";
 import { Prisma } from "@prisma/client";
 import { getTranslations } from "../../helpers";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
+import { CreateNotification } from "@/app/components/logger/NotificationHelper";
 
 export async function POST(request: NextRequest) {
   const user = await getLoggedInUser();
@@ -23,17 +24,7 @@ export async function POST(request: NextRequest) {
   }
 
   const carItem: TCarItemCreate = await request.json();
-  console.log(carItem, "car item");
 
-  let notification: ICreateNotification | null = {
-    log: {
-      date: new Date(),
-      status: ErrorStatus.Low,
-      title: "Coś poszło nie tak",
-    },
-    timer: 3000,
-    showIcon: true,
-  };
   let newCarItem = null;
 
   // TODO - change to auth user
@@ -41,8 +32,6 @@ export async function POST(request: NextRequest) {
   const project = await prisma.project.findFirst();
 
   const result = validCarElement(carItem);
-  console.log(result, "result");
-
   const findInValidResult = result.validResults.find(
     (result) => result.valid == false
   );
@@ -50,7 +39,10 @@ export async function POST(request: NextRequest) {
   if (findInValidResult) {
     return NextResponse.json({
       carItem: newCarItem,
-      notification: result.notification,
+      notification: CreateNotification(
+        ErrorStatus.Medium,
+        findInValidResult.error
+      ),
     });
   }
 
@@ -58,15 +50,23 @@ export async function POST(request: NextRequest) {
     newCarItem = await createCarItem(carItem, author.id, project?.id);
 
     if (newCarItem) {
-      notification.log = {
-        status: "Success",
-        date: new Date(),
-        title: "Element został dodany pomyślnie",
-      };
+      return NextResponse.json({
+        carItem: newCarItem,
+        notification: CreateNotification(
+          "Success",
+          "Element został dodany pomyślnie"
+        ),
+      });
     }
-  }
 
-  return NextResponse.json({ carItem: newCarItem, notification });
+    return NextResponse.json({
+      carItem: newCarItem,
+      notification: CreateNotification(
+        ErrorStatus.Medium,
+        "Coś poszło nie tak"
+      ),
+    });
+  }
 }
 
 async function createCarItem(

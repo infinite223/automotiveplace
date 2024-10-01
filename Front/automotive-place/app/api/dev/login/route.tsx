@@ -2,20 +2,16 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { ErrorStatus, ICreateNotification } from "@/app/utils/types";
+import { CreateNotification } from "@/app/components/logger/NotificationHelper";
 
 export async function GET(request: NextRequest) {
   const { searchParams }: any = new URL(request.url);
   const pin: string | undefined = searchParams.get("pin");
 
-  let notification: ICreateNotification | null = {
-    log: {
-      date: new Date(),
-      status: ErrorStatus.Low,
-      title: "Podany pin jest błędny",
-    },
-    timer: 3000,
-    showIcon: true,
-  };
+  let notification: ICreateNotification | null = CreateNotification(
+    ErrorStatus.Low,
+    "Podany pin jest błędny"
+  );
 
   if (pin === process.env.DEV_PIN) {
     notification.log = {
