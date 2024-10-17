@@ -29,7 +29,7 @@ export default async function Layout({
         <SideBar />
         {children}
         {/* TODO - left bar for some data, add mobile view */}
-        <div className="h-full w-[150px]">
+        <div className="h-full w-[150px] pt-4">
           <div className="text-md flex items-center gap-5">
             <TbMessage2Up size={22} />
             <IoNotifications size={22} />

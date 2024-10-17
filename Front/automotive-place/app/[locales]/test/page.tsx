@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-export default function Test() {
+export default function Page() {
   return (
     <main className="flex bg-custom-primary text-custom-primary flex-col items-center gap-2 p-2">
       <main className="flex w-full">

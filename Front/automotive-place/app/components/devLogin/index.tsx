@@ -1,3 +1,5 @@
+"use client";
+
 import React, {
   useState,
   useRef,
@@ -13,6 +15,7 @@ import { addNotification } from "@/lib/features/notifications/notificationsSlice
 import { loginAsDev } from "@/app/services/dev";
 import { useRouter } from "next/navigation";
 import { shortcutConfigs } from "@/app/utils/constants";
+import { signIn } from "@/lib/actions/user.actions";
 
 interface PinInputProps {
   length: number;
@@ -48,7 +51,7 @@ const PinInput: React.FC<PinInputProps> = ({ length, onChange, inputsRef }) => {
       {values.map((value, index) => (
         <input
           key={index}
-          type="number"
+          type="password"
           value={value}
           onChange={(e) => handleChange(e, index)}
           onKeyDown={(e) => handleKeyDown(e, index)}
@@ -83,8 +86,17 @@ export const DevLogin: React.FC = () => {
       const result = await loginAsDev(pin);
 
       if (result.notification.log.status === "Success") {
-        closeModal();
-        router.push("/test");
+        const result = await signIn({
+          email: process.env.NEXT_PUBLIC_TEST_EMAIL!,
+          password: process.env.NEXT_PUBLIC_TEST_PASSWORD!,
+        });
+
+        dispatch(addNotification(JSON.stringify(result)));
+
+        if (result.log.status === "Success") {
+          closeModal();
+          router.push("./app");
+        }
       }
 
       dispatch(addNotification(JSON.stringify(result.notification)));

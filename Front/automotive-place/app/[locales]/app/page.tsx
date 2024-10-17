@@ -1,9 +1,5 @@
-import { HomeMainContent } from "./HomeMainContent";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
-  return (
-    <div className="flex w-full items-center justify-center">
-      <HomeMainContent />
-    </div>
-  );
+  return redirect(`/pl/app/home`);
 }

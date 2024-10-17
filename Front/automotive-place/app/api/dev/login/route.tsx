@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     ErrorStatus.Low,
     "Podany pin jest błędny"
   );
-
+  console.log(process.env.DEV_PIN, "pin");
   if (pin === process.env.DEV_PIN) {
     notification.log = {
       date: new Date(),

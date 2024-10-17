@@ -17,7 +17,7 @@ import AMPModal from "./AMPModal";
 import { SelectCreateOption } from "../selectCreateOption";
 import { iconSizes } from "@/app/utils/constants";
 import { SlMenu } from "react-icons/sl";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 interface ISideBar {}
@@ -29,13 +29,13 @@ export const SideBar: FC<ISideBar> = ({}) => {
   const router = useRouter();
   const smallScreenHiddenItem = "max-2xl:hidden";
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  console.log(router, "router");
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   // TODO - zmiana wyświetlania się sidebara dla mobilnej wersji lub implementacja nowego
   return (
     <div className="flex 2xl:w-[240px] border-zinc-900 h-full border-r-1 scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
-      <div className="flex flex-col gap-1 h-[100%] pl-2 justify-between py-1">
+      <div className="flex flex-col gap-1 h-[100%] pl-2 justify-between py-1 pb-2">
         <div className="flex flex-col items-start max-2xl:items-center max-2xl:pr-3 max-2xl:min-w-0">
           <div className="flex items-center gap-2 mb-2">
             <div className="px-4 ml-1 2xl:hidden mt-4">
@@ -56,7 +56,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
           <OptionItem
             icon={<MdHome size={iconSizes.base} />}
             name={t("Core.Home")}
-            onClick={() => console.log("główna")}
+            onClick={() => router.push("home")}
           />
           <OptionItem
             icon={<LuSearch size={iconSizes.base} />}
@@ -74,7 +74,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
           <OptionItem
             icon={<BiSolidCarGarage size={iconSizes.base} />}
             name={t("Core.Garage")}
-            onClick={() => router.push("/garage")}
+            onClick={() => router.push("garage")}
           />
           <AMPSeparator additionalTailwindCss={smallScreenHiddenItem} />
 

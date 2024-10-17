@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import TestNavigation from "./TestNavigation";
 import { AMPSeparator } from "@/app/components/shared/AMPSeparator";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Test",
