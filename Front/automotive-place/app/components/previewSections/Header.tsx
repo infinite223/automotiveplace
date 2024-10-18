@@ -36,13 +36,13 @@ const Header = () => {
       >
         {t("title")}
       </p>
-      <div className="flex text-md mt-2 z-[2] uppercase font-bold text-baseColor">
+      <div className="flex text-md mt-2 z-[2] uppercase font-bold text-baseColorSecendary">
         Projekty, Spoty, Wydarzenia
       </div>
 
       <div
         className={
-          `absolute text-5xl xl:text-9xl scale-[2] z-[1] opacity-15 ` +
+          `absolute text-8xl xl:text-9xl scale-[2] z-[1] opacity-15 ` +
           kalamBold.className
         }
       >

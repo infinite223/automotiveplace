@@ -1,5 +1,3 @@
-// Main searchBar handler
-
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

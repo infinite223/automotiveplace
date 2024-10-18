@@ -3,6 +3,7 @@ import { getMessages } from "next-intl/server";
 import { Providers } from "../StoreProvider";
 import { Notification } from "../components/logger/Notification";
 import { DevLogin } from "../components/devLogin";
+import { GlobalLoadingView } from "../components/loading/GlobalLoadingView";
 
 export default async function LocaleLayout({
   children,
@@ -21,6 +22,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <Providers>
             <Notification />
+            <GlobalLoadingView />
             <DevLogin />
             {children}
           </Providers>

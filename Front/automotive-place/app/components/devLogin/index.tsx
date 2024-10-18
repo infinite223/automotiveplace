@@ -16,6 +16,8 @@ import { loginAsDev } from "@/app/services/dev";
 import { useRouter } from "next/navigation";
 import { shortcutConfigs } from "@/app/utils/constants";
 import { signIn } from "@/lib/actions/user.actions";
+import { setIsLoading } from "@/lib/features/loading/globalLoadingSlice";
+import { FaBullseye } from "react-icons/fa";
 
 interface PinInputProps {
   length: number;
@@ -83,6 +85,7 @@ export const DevLogin: React.FC = () => {
 
   const handlePinChange = async (pin: string) => {
     if (pin.length == 5) {
+      dispatch(setIsLoading(true));
       const result = await loginAsDev(pin);
 
       if (result.notification.log.status === "Success") {
@@ -100,6 +103,7 @@ export const DevLogin: React.FC = () => {
       }
 
       dispatch(addNotification(JSON.stringify(result.notification)));
+      dispatch(setIsLoading(false));
     }
   };
 
