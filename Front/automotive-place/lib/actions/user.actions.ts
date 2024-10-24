@@ -35,7 +35,7 @@ export const signUp = async (userData: SignUpParams) => {
       userData.password,
       userData.name
     );
-    //  TODO - maybe we need nick for user
+
     await prisma.user.create({
       data: {
         name: userData.name,
@@ -56,9 +56,18 @@ export const signUp = async (userData: SignUpParams) => {
       secure: true,
     });
 
-    return JSON.parse(JSON.stringify(newUserAccount));
+    return {
+      user: JSON.parse(JSON.stringify(newUserAccount)),
+      notification: CreateNotification("Success", "Core.WelcomeBackToAmp"),
+    };
   } catch (error) {
-    console.error(error);
+    return {
+      user: null,
+      notification: CreateNotification(
+        ErrorStatus.Medium,
+        error instanceof Error ? error.message : "Unknown error"
+      ),
+    };
   }
 };
 
@@ -79,21 +88,43 @@ export const signIn = async (userData: SignInParams) => {
         sameSite: "strict",
         secure: true,
       });
+
+      return {
+        user,
+        notification: CreateNotification("Success", "Core.WelcomeBackToAmp"),
+      };
     }
 
-    return CreateNotification("Success", "Core.WelcomeBackToAmp");
+    return {
+      user: null,
+      notification: CreateNotification(
+        ErrorStatus.Medium,
+        "Błąd podczas logowania"
+      ),
+    };
   } catch (error) {
-    return CreateNotification(
-      ErrorStatus.Medium,
-      error instanceof Error ? error.message : "Unknown error"
-    );
+    return {
+      user: null,
+      notification: CreateNotification(
+        ErrorStatus.Medium,
+        error instanceof Error ? error.message : "Unknown error"
+      ),
+    };
   }
 };
 
 export async function getLoggedInUser() {
   try {
     const { account } = await createSessionClient();
-    return await account.get();
+    const user = await account.get();
+
+    if (!user) return;
+
+    const isAdmin = user?.labels.find((l) => l === "admin");
+    const isPremium = user?.labels.find((l) => l === "premium");
+    const isCompany = user?.labels.find((l) => l === "company");
+
+    return { user, isAdmin, isPremium, isCompany };
   } catch (error) {
     return null;
   }

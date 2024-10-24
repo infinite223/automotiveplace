@@ -15,9 +15,9 @@ import { addNotification } from "@/lib/features/notifications/notificationsSlice
 import { loginAsDev } from "@/app/services/dev";
 import { useRouter } from "next/navigation";
 import { shortcutConfigs } from "@/app/utils/constants";
-import { signIn } from "@/lib/actions/user.actions";
+import { getLoggedInUser, signIn } from "@/lib/actions/user.actions";
 import { setIsLoading } from "@/lib/features/loading/globalLoadingSlice";
-import { FaBullseye } from "react-icons/fa";
+import { CreateNotification } from "../logger/NotificationHelper";
 
 interface PinInputProps {
   length: number;
@@ -70,10 +70,26 @@ const PinInput: React.FC<PinInputProps> = ({ length, onChange, inputsRef }) => {
 export const DevLogin: React.FC = () => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [pin, setPin] = useState("");
   const inputsRef = useRef<HTMLInputElement[]>([]);
   const dispatch = useDispatch();
-  const openModal = () => {
+  const openModal = async () => {
+    const data = await getLoggedInUser();
+
+    if (data?.isAdmin) {
+      dispatch(
+        addNotification(
+          JSON.stringify(
+            CreateNotification(
+              "Information",
+              "Core.YouAreAlreadyLoggedInAsAdmin"
+            )
+          )
+        )
+      );
+
+      return;
+    }
+
     setIsModalOpen(true);
   };
 
@@ -96,7 +112,7 @@ export const DevLogin: React.FC = () => {
 
         dispatch(addNotification(JSON.stringify(result)));
 
-        if (result.log.status === "Success") {
+        if (result.notification.log.status === "Success") {
           closeModal();
           router.push("./app");
         }

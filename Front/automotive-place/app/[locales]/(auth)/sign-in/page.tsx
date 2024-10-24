@@ -6,14 +6,16 @@ import { AMPButton } from "@/app/components/shared/AMPButton";
 import Link from "next/link";
 import { getLoggedInUser, signIn } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
+import { setIsLoading } from "@/lib/features/loading/globalLoadingSlice";
 
 export default function Page() {
   const router = useRouter();
   const t = useTranslations();
   const dispatch = useDispatch();
+  const locale = useLocale();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,18 +23,20 @@ export default function Page() {
   useEffect(() => {
     const chekUserLoggedIn = async () => {
       const user = await getLoggedInUser();
-      if (user) router.push(`./app`);
+      if (user) router.push(`./${locale}/app`);
     };
 
     chekUserLoggedIn();
-  }, [router]);
+  }, [router, locale]);
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
+    dispatch(setIsLoading(true));
 
     const result = await signIn({ email, password });
-    dispatch(addNotification(JSON.stringify(result)));
-    if (result.log.status === "Success") router.push("./app");
+    dispatch(addNotification(JSON.stringify(result.notification)));
+    dispatch(setIsLoading(false));
+    if (result.notification.log.status === "Success") router.push("./app");
   };
 
   return (

@@ -47,7 +47,7 @@ const AMPModal = ({
             transition={{ duration: 0.3 }}
           >
             <div
-              className={`${defoultBG && "bg-custom-primary"} shadow-zinc-200 dark:shadow-zinc-800 rounded-md p-0 z-30`}
+              className={`${defoultBG && "bg-custom-primary"} shadow-zinc-200 dark:shadow-zinc-800 rounded-sm p-0 z-30`}
             >
               {withHeader && <AMPModalHeader title={title} onClose={onClose} />}
               {children}

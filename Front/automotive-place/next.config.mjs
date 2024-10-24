@@ -13,8 +13,8 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "cylindersi.pl",
-        pathname: "/wp-content/uploads/**",
+        hostname: "picsum.photos",
+        pathname: "/id/237/200/300",
       },
     ],
   },

@@ -8,8 +8,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import Image from "next/image";
 import { iconSizes } from "@/app/utils/constants";
 
-const projectImage =
-  "https://cylindersi.pl/wp-content/uploads/2022/06/Dodge-Charger-Scat-Pack-sylwetka.jpg";
+const projectImage = "https://picsum.photos/id/237/200/300";
 
 export const ProjectMiniView = ({ data }: { data: TProject }) => {
   const [isClient, setIsClient] = useState(false);
