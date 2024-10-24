@@ -35,7 +35,7 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
             <Image
               alt="project-image"
               src={projectImage}
-              className="w-[55%]"
+              className="w-[55%] max-h-[600px]"
               width={200}
               height={200}
             />
