@@ -23,7 +23,8 @@ export default function Page() {
   useEffect(() => {
     const chekUserLoggedIn = async () => {
       const user = await getLoggedInUser();
-      if (user) router.push(`./${locale}/app`);
+      if (user) router.push(`./app`);
+      // router.push(`./${locale}/app`);
     };
 
     chekUserLoggedIn();
