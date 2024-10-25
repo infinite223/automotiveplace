@@ -16,7 +16,8 @@
     "Events": "Events",
     "Problems": "Problems",
     "Company": "Company",
-    "Settings": "Settings"
+    "Settings": "Settings",
+    "YouAreAlreadyLoggedInAsAdmin": "You are already logged in as admin"
   },
   "Preview": {
     "title": "Web application created to connect the automotive community to one common place."

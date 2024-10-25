@@ -16,7 +16,8 @@
     "Events": "Wydażenia",
     "Problems": "Problemu",
     "Company": "Firmy",
-    "Settings": "Ustawienia"
+    "Settings": "Ustawienia",
+    "YouAreAlreadyLoggedInAsAdmin": "Jesteś już zalogowany jako admin"
   },
   "Preview": {
     "title": "Aplikacja webowa stworzona w celu połączenia motoryzacyjnej społeczności do jednego wspólnego miejsca."

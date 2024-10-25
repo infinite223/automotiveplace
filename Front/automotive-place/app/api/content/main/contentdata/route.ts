@@ -5,12 +5,12 @@ import { getTranslations } from "@/app/api/helpers";
 import prisma from "@/lib/prisma";
 
 export async function GET(request: NextRequest) {
-  const user = await getLoggedInUser();
+  const userData = await getLoggedInUser();
   const locale = request.headers.get("accept-language")?.split(",")[0] || "en";
-  console.log(locale, "locale");
+
   const t = getTranslations(locale);
 
-  if (!user) {
+  if (!userData) {
     return NextResponse.json(
       { message: t["Core"]["YouMustBeLoggedInToUseThisFunctionality"] },
       {
@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
   // TODO - dokończyć implementecje
   const userInterests = await prisma.userActivity.groupBy({
     by: ["entityType"],
-    where: { userId: user.$id },
+    where: { userId: userData.user.$id },
     _count: {
       entityId: true,
     },
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
   let responseResult: any;
 
   return NextResponse.json({
-    data: generateRandomContent(30),
+    data: generateRandomContent(10),
     hasMore,
   });
 }

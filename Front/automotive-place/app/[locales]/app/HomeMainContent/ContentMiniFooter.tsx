@@ -25,7 +25,7 @@ export const ContentMiniFooter = ({
   return (
     <nav className="flex text-custom-primary items-center justify-between w-full">
       <div className="flex items-center gap-2">
-        <CgShare size={iconSizes.small} />
+        <CgShare size={iconSizes.base} />
         <div className="flex flex-col gap-2">
           {!isLoading && (
             <div
@@ -35,7 +35,7 @@ export const ContentMiniFooter = ({
               onClick={handleClickLike}
             >
               <FaHeart
-                size={iconSizes.small}
+                size={iconSizes.base}
                 color={isLikedByAuthUser ? "#df1515" : "gray"}
                 className={`cursor-pointer transition-colors duration-300 ease-in-out ${
                   isLikedByAuthUser ? "transform scale-95" : ""

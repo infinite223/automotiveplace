@@ -8,8 +8,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import Image from "next/image";
 import { iconSizes } from "@/app/utils/constants";
 
-const projectImage =
-  "https://cylindersi.pl/wp-content/uploads/2022/06/Dodge-Charger-Scat-Pack-sylwetka.jpg";
+const projectImage = "https://picsum.photos/id/237/200/300";
 
 export const ProjectMiniView = ({ data }: { data: TProject }) => {
   const [isClient, setIsClient] = useState(false);
@@ -36,7 +35,7 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
             <Image
               alt="project-image"
               src={projectImage}
-              className="w-[55%]"
+              className="w-[55%] max-h-[600px]"
               width={200}
               height={200}
             />
@@ -49,7 +48,7 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
             likesCount={12}
             type="Project"
             actions={
-              <div className="flex items-center text-xs cursor-pointer transition ease-in-out gap-2 bg-zinc-700/70 hover:bg-zinc-700 rounded-md pl-2 pr-1 py-1">
+              <div className="flex items-center text-sm cursor-pointer transition ease-in-out gap-2 border-zinc-700/70 hover:border-zinc-500 border-2 rounded-md pl-2 pr-1 py-1">
                 Więcej informacji
                 <IoIosArrowForward size={iconSizes.small} />
               </div>

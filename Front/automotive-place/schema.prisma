@@ -16,6 +16,7 @@ model Post {
   authorId  String?
 
   projectId String?
+  imagesUrl String? // folder localisation by id  
   carItemId String? // TODO - remove THIS
   spotId String?// TODO - remove THIS
   companyId String? // TODO - remove THIS
@@ -87,6 +88,7 @@ model Company {
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @updatedAt @map(name: "updated_at")
   // TODO - dane firmy, nip, regon itp
+  imagesUrl     String? // folder localisation by id  
 
   posts        Post[]
   garage       Garage?
@@ -139,7 +141,7 @@ model Project {
   projectPrice  Decimal
 
   engineName      String
-  engineStockHp        Int
+  engineStockHp    Int  
   engineStockNm    Int
   engineDescription String?
   engineCapacity Decimal
@@ -194,6 +196,7 @@ model Event {
   description   String?
   createdAt     DateTime @default(now()) @map(name: "created_at")
   updatedAt     DateTime @updatedAt @map(name: "updated_at")
+  imagesUrl     String // folder localisation by id  
 
   authorId String
   pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]

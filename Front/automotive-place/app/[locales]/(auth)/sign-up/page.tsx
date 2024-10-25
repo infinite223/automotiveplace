@@ -6,22 +6,30 @@ import { AMPButton } from "@/app/components/shared/AMPButton";
 import Link from "next/link";
 import { signUp } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { useDispatch } from "react-redux";
+import { setIsLoading } from "@/lib/features/loading/globalLoadingSlice";
+import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 
 export default function Page() {
   const router = useRouter();
   const t = useTranslations();
+  const dispatch = useDispatch();
+  const locale = useLocale();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [nick, setNick] = useState(""); // TODO - dodać w przyszłości do bazy itp
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
+    dispatch(setIsLoading(true));
 
-    const newUser = await signUp({ email, password, name });
-    if (newUser) router.push("/app");
+    const result = await signUp({ email, password, name });
+    dispatch(setIsLoading(false));
+    dispatch(addNotification(JSON.stringify(result.notification)));
+    if (result.notification.log.status === "Success")
+      router.push(`${locale}/app`);
   };
 
   return (
