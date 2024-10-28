@@ -43,13 +43,11 @@ export const SideBar: FC<ISideBar> = ({}) => {
             </div>
             <div className="flex flex-col pl-1  max-2xl:hidden">
               <h2 className="m-0 p-0 text-2xl font-extrabold tracking-[2px]">
-                <span className="text-baseColor">A</span>MP
+                <span className="text-redColor">A</span>MP
               </h2>
-              <p className="text-sm p-0 m-0 mt-[-5px]">
-                <span>Auto</span>
-                <span className="text-baseColor uppercase font-bold">
-                  motiveplace
-                </span>
+              <p className="text-sm p-0 m-0 mt-[2px] border-t-1 border-zinc-600">
+                <span>Automotive</span>
+                <span className="text-redColor font-bold">place</span>
               </p>
             </div>
           </div>

@@ -17,15 +17,19 @@
 
 .custom-gradient {
   /* background: rgb(2, 0, 36); */
-  background: rgb(2, 0, 36);
+  /* background-image: url("../asets/bg.jpg");
+  background-size: cover; */
+  background-color: black;
+  /* background: rgb(2, 0, 36);
   background: linear-gradient(
     180deg,
     rgb(2, 0, 36) 0%,
-    rgb(111, 187, 223) 75%,
+    rgb(2, 2, 36) 70%,
+    rgb(209, 209, 210) 90%,
     rgb(255, 255, 255) 100%
-  );
+  ); */
 
-  /* background: linear-gradient(
+  /* background: linear-gradie`nt(
     356deg,
     var(--whiteColor) 0%,
     var(--whiteColor) 20%,
@@ -38,6 +42,7 @@
     background: rgb(2, 0, 36);
   } */
 }
+
 .bg-custom-primary {
   @apply bg-zinc-100 dark:bg-zinc-950;
 }
@@ -96,6 +101,11 @@
 .bg-redColor {
   @apply bg-red-600;
   background-color: var(--redColor);
+}
+
+.text-redColor {
+  @apply text-red-600;
+  color: var(--redColor);
 }
 
 input:-webkit-autofill,
