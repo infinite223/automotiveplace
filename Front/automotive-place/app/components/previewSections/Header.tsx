@@ -1,28 +1,10 @@
+import { AllanBold, KalamBold } from "@/app/utils/helpers";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import React from "react";
-import { Kalam, Permanent_Marker } from "next/font/google";
-
-const kalamBold = Kalam({
-  subsets: ["latin"],
-  display: "swap",
-  weight: "700",
-});
-
-const AllanBold = Permanent_Marker({
-  subsets: ["latin"],
-  display: "swap",
-  weight: "400",
-});
-
-const kalamMedium = Kalam({
-  subsets: ["latin"],
-  display: "swap",
-  weight: "400",
-});
 
 const Header = () => {
-  const t = useTranslations("Preview");
+  const t = useTranslations();
 
   return (
     <section className="custom-gradient flex h-screen flex-col items-center gap-4 justify-center relative">
@@ -37,10 +19,10 @@ const Header = () => {
       <p
         className={
           `text-3xl max-w-[85%] text-center z-[2] mt-4 text-white/85 ` +
-          kalamBold.className
+          KalamBold.className
         }
       >
-        {t("title")}
+        {t("Preview.title")}
       </p>
 
       <div className="flex items-center gap-4 text-lg mt-4">

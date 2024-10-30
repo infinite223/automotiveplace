@@ -19,6 +19,7 @@ import { iconSizes } from "@/app/utils/constants";
 import { SlMenu } from "react-icons/sl";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { AllanBold, KalamBold } from "@/app/utils/helpers";
 
 interface ISideBar {}
 
@@ -42,10 +43,19 @@ export const SideBar: FC<ISideBar> = ({}) => {
               <SlMenu size={iconSizes.base} />
             </div>
             <div className="flex flex-col pl-1  max-2xl:hidden">
-              <h2 className="m-0 p-0 text-2xl font-extrabold tracking-[2px]">
+              <h2
+                className={
+                  `m-0 p-0 text-3xl font-extrabold mt-2 ` + KalamBold.className
+                }
+              >
                 <span className="text-redColor">A</span>MP
               </h2>
-              <p className="text-sm p-0 m-0 mt-[2px] border-t-1 border-zinc-600">
+              <p
+                className={
+                  `text-sm p-0 m-0 mt-[-2px] border-t-1 border-zinc-600 ` +
+                  KalamBold.className
+                }
+              >
                 <span>Automotive</span>
                 <span className="text-redColor font-bold">place</span>
               </p>
