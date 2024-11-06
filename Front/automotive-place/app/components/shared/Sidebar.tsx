@@ -36,10 +36,10 @@ export const SideBar: FC<ISideBar> = ({}) => {
   // TODO - zmiana wyświetlania się sidebara dla mobilnej wersji lub implementacja nowego
   return (
     <div className="flex min-w-[100px] 2xl:w-[240px] border-zinc-900 h-full border-r-1 scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
-      <div className="flex flex-col gap-1 h-[100%] pl-2 justify-between py-1 pb-2">
+      <div className="flex flex-col gap-1 h-[100%] 2xl:ml-4 justify-between py-1 pb-2">
         <div className="flex flex-col items-start max-2xl:items-center max-2xl:pr-3 max-2xl:min-w-0">
           <div className="flex items-center gap-2 mb-2">
-            <div className="px-4 ml-1 2xl:hidden mt-4">
+            <div className="px-4 2xl:hidden mt-4">
               <SlMenu size={iconSizes.base} />
             </div>
             <div className="flex flex-col pl-1  max-2xl:hidden">
@@ -130,10 +130,11 @@ export const SideBar: FC<ISideBar> = ({}) => {
       {/* TODO -  czy na pewno chce w ten sposób dodawać rzeczy?*/}
       <AMPModal
         onClose={closeModal}
-        withHeader={false}
+        withHeader={true}
         visible={isModalOpen}
-        title="Dodawanie"
-        additionalTailwindCss="relative bottom-40"
+        title="Wybierz co chcesz utworzyć w AMP
+"
+        additionalTailwindCss="relative bottom-40 bg-zinc-900"
         defoultBG={false}
       >
         <SelectCreateOption />

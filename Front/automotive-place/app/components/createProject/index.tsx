@@ -157,7 +157,7 @@ export const CreateProjectView = () => {
         <AMPInput
           name="Nazwa elementu"
           setValue={(text) =>
-            setNameElement({
+            setNameElement({  
               value: text,
               errorText: validCarNameValue(text)[0].error,
             })
