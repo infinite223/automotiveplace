@@ -7,7 +7,7 @@ import { RiPlayListAddLine } from "react-icons/ri";
 import { MdGroups, MdLiveHelp } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import { MdHome } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setIsSearchBarOpen } from "@/lib/features/searchBar/searchBarSlice";
 import { AMPSeparator } from "./AMPSeparator";
 import { MdOutlineLocationOn } from "react-icons/md";
@@ -20,6 +20,9 @@ import { SlMenu } from "react-icons/sl";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { AllanBold, KalamBold } from "@/app/utils/helpers";
+import { CreateProblemView } from "../createProblem";
+import { RootState } from "@/lib/store";
+import { setShowCreateProject } from "@/lib/features/actions/actionsSlice";
 
 interface ISideBar {}
 
@@ -30,7 +33,9 @@ export const SideBar: FC<ISideBar> = ({}) => {
   const router = useRouter();
   const smallScreenHiddenItem = "max-2xl:hidden";
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const showCreateProject = useSelector(
+    (state: RootState) => state.actions.showCreateProject
+  );
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   // TODO - zmiana wyświetlania się sidebara dla mobilnej wersji lub implementacja nowego
@@ -127,17 +132,26 @@ export const SideBar: FC<ISideBar> = ({}) => {
         </div>
       </div>
 
-      {/* TODO -  czy na pewno chce w ten sposób dodawać rzeczy?*/}
       <AMPModal
         onClose={closeModal}
         withHeader={true}
         visible={isModalOpen}
-        title="Wybierz co chcesz utworzyć w AMP
-"
+        title="Wybierz opcje"
         additionalTailwindCss="relative bottom-40 bg-zinc-900"
         defoultBG={false}
       >
         <SelectCreateOption />
+      </AMPModal>
+
+      <AMPModal
+        onClose={() => dispatch(setShowCreateProject(false))}
+        withHeader={true}
+        visible={showCreateProject}
+        title="Dodawanie projektu"
+        additionalTailwindCss="relative bottom-40 bg-zinc-900"
+        defoultBG={false}
+      >
+        <CreateProblemView />
       </AMPModal>
     </div>
   );

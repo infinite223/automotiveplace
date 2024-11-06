@@ -5,35 +5,47 @@ import { PiQuestionMarkFill } from "react-icons/pi";
 import { motion, AnimatePresence } from "framer-motion";
 import { BsPostcardFill } from "react-icons/bs";
 import { iconSizes } from "@/app/utils/constants";
+import { AMPSeparator } from "../shared/AMPSeparator";
+import { useDispatch } from "react-redux";
+import { setShowCreateProject } from "@/lib/features/actions/actionsSlice";
+const iconSize = iconSizes.small;
 
 export const SelectCreateOption: FC = () => {
+  const dispatch = useDispatch();
+
   return (
     <div className="flex flex-col min-w-20 min-h-10 w-[400px]">
       <OptionItem
         name="Dodaj projekt"
-        onClick={() => {}}
-        icon={<FaCarRear size={iconSizes.small} />}
+        onClick={() => dispatch(setShowCreateProject(true))}
+        icon={<FaCarRear size={iconSize} />}
       />
       <OptionItem
         name="Dodaj post"
         onClick={() => {}}
-        icon={<BsPostcardFill size={iconSizes.small} />}
+        icon={<BsPostcardFill size={iconSize} />}
       />
       <OptionItem
         name="Dodaj problem"
         onClick={() => {}}
-        icon={<PiQuestionMarkFill size={iconSizes.small} />}
+        icon={<PiQuestionMarkFill size={iconSize} />}
       />
       <OptionItem
         name="Dodaj spot"
         onClick={() => {}}
-        icon={<FaLocationArrow size={iconSizes.small} />}
+        icon={<FaLocationArrow size={iconSize} />}
       />
       <OptionItem
         name="Dodaj wydarzenie"
         onClick={() => {}}
-        icon={<FaCalendarDay size={iconSizes.small} />}
+        icon={<FaCalendarDay size={iconSize} />}
       />
+
+      <AMPSeparator />
+
+      <footer className="text-sm opacity-75 p-2 px-4 leading-4">
+        Po najechaniu na wybraną opcje możesz zobaczyć dodatkowe informacje.
+      </footer>
     </div>
   );
 };

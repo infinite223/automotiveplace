@@ -28,19 +28,18 @@ const Header = () => {
       <div className="flex items-center gap-4 text-lg mt-4">
         <Link
           href={`./sign-in`}
-          className="text-white py-1.5 font-semibold px-4 rounded-sm border-zinc-300 border-1"
+          className="text-white py-2 font-semibold px-6 rounded-sm border-zinc-300 border-1"
         >
           {t("Core.SignIn")}
         </Link>
         <Link
           href={`./sign-in`}
-          className="bg-redColor text-white py-1.5 font-semibold px-4 rounded-sm"
+          className="bg-redColor text-white py-2 font-semibold px-6 rounded-sm"
         >
           {t("Preview.SeeDemoVesion")}
         </Link>
       </div>
 
-      
       {/* TODO - change this to cards with some data about  Projekty, Spoty, Wydarzenia*/}
       {/* <div className="flex text-md mt-2 z-[2] uppercase font-bold text-baseColor">
         Projekty, Spoty, Wydarzenia
