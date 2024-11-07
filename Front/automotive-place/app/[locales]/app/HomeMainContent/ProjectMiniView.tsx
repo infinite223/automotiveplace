@@ -50,7 +50,7 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
             type="Project"
             actions={
               <Link
-                href={`./project`}
+                href={`./project/${data.id}`}
                 className="flex items-center text-sm cursor-pointer transition ease-in-out gap-2 border-zinc-700/70 hover:border-zinc-500 border-2 rounded-md pl-2 pr-1 py-1"
               >
                 Więcej informacji

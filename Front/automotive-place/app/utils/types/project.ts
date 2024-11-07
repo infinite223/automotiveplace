@@ -35,7 +35,7 @@ type TProject = {
   transmissionDescription?: string;
   transmissionWasSwapped?: boolean;
   carItems?: TCarItem[];
-  stages?: TStage[]; // stage 0 to stock performance
+  stages?: TStage[];
   tags?: TTag[];
 };
 
