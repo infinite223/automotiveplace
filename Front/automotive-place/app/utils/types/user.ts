@@ -6,4 +6,10 @@ type TUser = {
   imageUrl?: string;
 };
 
-export type { TUser };
+type TBaseUser = {
+  id: string;
+  name: string;
+  imageUrl?: string;
+};
+
+export type { TUser, TBaseUser };

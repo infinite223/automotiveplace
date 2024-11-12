@@ -1,4 +1,4 @@
-import { TProject, TProjectCreate } from "../types/project";
+import { TBaseProject, TProject, TProjectCreate } from "../types/project";
 import {
   generateRandomDate,
   generateRandomString,
@@ -61,6 +61,8 @@ export function generateRandomProjects(count: number) {
       carItemsCount: getRandomInt(0, 20),
       garageId: generateRandomString(8),
       userId: generateRandomString(8),
+      imagesUrl: "",
+      transmissionType: getRandomInt(0, 3),
       images: [],
       author: {
         id: generateRandomString(8),
@@ -76,6 +78,45 @@ export function generateRandomProjects(count: number) {
       for (let j = 0; j < project.imagesCount; j++) {
         project.images?.push(`https://example.com/image_${j + 1}.jpg`);
       }
+    }
+
+    projects.push(project);
+  }
+
+  return projects;
+}
+
+export function generateRandomBaseProjects(count: number) {
+  const projects = [];
+
+  for (let i = 0; i < count; i++) {
+    const carMake = carMakes[getRandomInt(0, carMakes.length - 1)];
+    const carModelOptions = carModels[carMake as keyof typeof carModels];
+    const carModel =
+      carModelOptions[getRandomInt(0, carModelOptions.length - 1)];
+
+    const project: TBaseProject = {
+      id: generateRandomString(10),
+      createdAt: generateRandomDate(new Date(2020, 0, 1), new Date()),
+      updatedAt: generateRandomDate(new Date(2020, 0, 1), new Date()),
+      forSell: Math.random() < 0.5,
+      isVisible: Math.random() < 0.5,
+      carMake,
+      carModel,
+      isVerified: Math.random() < 0.5,
+      description: `A well-maintained ${carMake} ${carModel} with excellent performance and features.`,
+      engineName: engineNames[getRandomInt(0, engineNames.length - 1)],
+      images: [],
+      author: {
+        id: generateRandomString(8),
+        name: "Dawid",
+        imageUrl:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeyk55eIDh4grMFV4505_KRgtOm7HTGbm_7Q&s",
+      },
+    };
+
+    for (let j = 0; j < getRandomInt(1, 4); j++) {
+      project.images?.push(`https://example.com/image_${j + 1}.jpg`);
     }
 
     projects.push(project);
