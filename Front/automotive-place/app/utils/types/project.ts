@@ -64,10 +64,13 @@ type TBaseProject = {
   description?: string;
   isVerified: boolean;
 
+  engineName: string;
+  images?: string[];
+
   author: TBaseUser;
 };
 
-function isTProject(data: any): data is TProject {
+function isTProject(data: any): data is TBaseProject {
   return (
     typeof data === "object" &&
     data !== null &&

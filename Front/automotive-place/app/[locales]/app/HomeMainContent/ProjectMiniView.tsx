@@ -1,6 +1,6 @@
 "use client";
 
-import { TProject } from "@/app/utils/types/project";
+import { TBaseProject } from "@/app/utils/types/project";
 import { useEffect, useState } from "react";
 import { ContentMiniNav } from "./ContentMiniNav";
 import { ContentMiniFooter } from "./ContentMiniFooter";
@@ -11,7 +11,7 @@ import Link from "next/link";
 
 const projectImage = "https://picsum.photos/id/237/200/300";
 
-export const ProjectMiniView = ({ data }: { data: TProject }) => {
+export const ProjectMiniView = ({ data }: { data: TBaseProject }) => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {

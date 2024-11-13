@@ -17,7 +17,6 @@ export async function GET(request: NextRequest) {
 
   const { searchParams }: any = new URL(request.url);
   const projectId = parseInt(searchParams.get("id"));
-  console.log("get: ", projectId);
   // TODO - add log for user actions db -> userActivity
 
   return NextResponse.json(generateRandomProjects(1)[0]);
