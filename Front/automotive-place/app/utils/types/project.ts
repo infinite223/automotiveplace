@@ -1,7 +1,7 @@
 import { TCarItem, TCarItemCreate } from "./carItem";
 import { TStageCreate, TStage } from "./stage";
 import { TTag, TTagCreate } from "./tag";
-import { TBaseUser, TUser } from "./user";
+import { TBasicUser, TUser } from "./user";
 
 type TProject = {
   id: string;
@@ -51,7 +51,7 @@ type TProject = {
   // location:
 };
 
-type TBaseProject = {
+type TBasicProject = {
   id: string;
   createdAt: Date;
   updatedAt: Date;
@@ -67,10 +67,10 @@ type TBaseProject = {
   engineName: string;
   images?: string[];
 
-  author: TBaseUser;
+  author: TBasicUser;
 };
 
-function isTProject(data: any): data is TBaseProject {
+function isTProject(data: any): data is TBasicProject {
   return (
     typeof data === "object" &&
     data !== null &&
@@ -144,5 +144,5 @@ type TProjectCreate = {
   tags?: TTagCreate[];
 };
 
-export type { TProject, TBaseProject, TProjectCreate };
+export type { TProject, TBasicProject, TProjectCreate };
 export { isTProject };

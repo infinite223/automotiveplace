@@ -1,4 +1,4 @@
-import { TBaseProject, TProject, TProjectCreate } from "../types/project";
+import { TBasicProject, TProject, TProjectCreate } from "../types/project";
 import {
   generateRandomDate,
   generateRandomString,
@@ -95,7 +95,7 @@ export function generateRandomBaseProjects(count: number) {
     const carModel =
       carModelOptions[getRandomInt(0, carModelOptions.length - 1)];
 
-    const project: TBaseProject = {
+    const project: TBasicProject = {
       id: generateRandomString(10),
       createdAt: generateRandomDate(new Date(2020, 0, 1), new Date()),
       updatedAt: generateRandomDate(new Date(2020, 0, 1), new Date()),
