@@ -110,7 +110,7 @@ export const DevLogin: React.FC = () => {
           password: process.env.NEXT_PUBLIC_TEST_PASSWORD!,
         });
 
-        dispatch(addNotification(JSON.stringify(result)));
+        dispatch(addNotification(JSON.stringify(result.notification)));
 
         if (result.notification.log.status === "Success") {
           closeModal();

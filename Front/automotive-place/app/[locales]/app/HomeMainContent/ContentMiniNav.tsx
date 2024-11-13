@@ -1,4 +1,4 @@
-import { TUser } from "@/app/utils/types/user";
+import { TBasicUser } from "@/app/utils/types/user";
 import moment from "moment";
 import "moment/locale/pl";
 import Image from "next/image";
@@ -7,7 +7,7 @@ moment.locale("pl");
 
 interface IContentMiniNav {
   title: string;
-  author?: TUser;
+  author?: TBasicUser;
   createdAt: Date;
   typeName: string;
 }

@@ -1,53 +1,58 @@
+import { AllanBold, KalamBold } from "@/app/utils/helpers";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import React from "react";
-import { Kalam } from "next/font/google";
-
-const kalamBold = Kalam({
-  subsets: ["latin"],
-  display: "swap",
-  weight: "700",
-});
-
-const kalamMedium = Kalam({
-  subsets: ["latin"],
-  display: "swap",
-  weight: "400",
-});
 
 const Header = () => {
-  const t = useTranslations("Preview");
+  const t = useTranslations();
 
   return (
     <section className="custom-gradient flex h-screen flex-col items-center gap-4 justify-center relative">
       <h1
         className={
-          `text-center text-6xl font-extrabold z-[2] ` + kalamBold.className
+          `text-center text-7xl font-extrabold z-[2] ` + AllanBold.className
         }
       >
-        <span className="text-white uppercase ">Automotive</span>{" "}
-        <span style={{ color: "var(--redColor)" }}>PLACE</span>
+        <span className="text-white ">Automotive</span>{" "}
+        <span style={{ color: "var(--redColor)" }}>place</span>
       </h1>
       <p
         className={
-          `text-xl max-w-[60%] text-center z-[2] text-white/85 ` +
-          kalamMedium.className
+          `text-3xl max-w-[85%] text-center z-[2] mt-4 text-white/85 ` +
+          KalamBold.className
         }
       >
-        {t("title")}
+        {t("Preview.title")}
       </p>
-      <div className="flex text-md mt-2 z-[2] uppercase font-bold text-baseColorSecendary">
-        Projekty, Spoty, Wydarzenia
+
+      <div className="flex items-center gap-4 text-lg mt-4">
+        <Link
+          href={`./sign-in`}
+          className="text-white py-2 font-semibold px-6 rounded-sm border-zinc-300 border-1"
+        >
+          {t("Core.SignIn")}
+        </Link>
+        <Link
+          href={`./sign-in`}
+          className="bg-redColor text-white py-2 font-semibold px-6 rounded-sm"
+        >
+          {t("Preview.SeeDemoVesion")}
+        </Link>
       </div>
 
-      <div
+      {/* TODO - change this to cards with some data about  Projekty, Spoty, Wydarzenia*/}
+      {/* <div className="flex text-md mt-2 z-[2] uppercase font-bold text-baseColor">
+        Projekty, Spoty, Wydarzenia
+      </div> */}
+
+      {/* <div
         className={
           `absolute text-8xl xl:text-9xl scale-[2] z-[1] opacity-15 ` +
           kalamBold.className
         }
       >
         AMP
-      </div>
+      </div> */}
       {/* add car drows on background */}
       {/* <svg
         xmlns="http://www.w3.org/2000/svg"

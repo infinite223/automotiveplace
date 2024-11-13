@@ -7,7 +7,7 @@ import { RiPlayListAddLine } from "react-icons/ri";
 import { MdGroups, MdLiveHelp } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import { MdHome } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setIsSearchBarOpen } from "@/lib/features/searchBar/searchBarSlice";
 import { AMPSeparator } from "./AMPSeparator";
 import { MdOutlineLocationOn } from "react-icons/md";
@@ -19,6 +19,10 @@ import { iconSizes } from "@/app/utils/constants";
 import { SlMenu } from "react-icons/sl";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { AllanBold, KalamBold } from "@/app/utils/helpers";
+import { CreateProblemView } from "../createProblem";
+import { RootState } from "@/lib/store";
+import { setShowCreateProject } from "@/lib/features/actions/actionsSlice";
 
 interface ISideBar {}
 
@@ -29,27 +33,36 @@ export const SideBar: FC<ISideBar> = ({}) => {
   const router = useRouter();
   const smallScreenHiddenItem = "max-2xl:hidden";
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const showCreateProject = useSelector(
+    (state: RootState) => state.actions.showCreateProject
+  );
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   // TODO - zmiana wyświetlania się sidebara dla mobilnej wersji lub implementacja nowego
   return (
     <div className="flex min-w-[100px] 2xl:w-[240px] border-zinc-900 h-full border-r-1 scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
-      <div className="flex flex-col gap-1 h-[100%] pl-2 justify-between py-1 pb-2">
+      <div className="flex flex-col gap-1 h-[100%] 2xl:ml-4 justify-between py-1 pb-2">
         <div className="flex flex-col items-start max-2xl:items-center max-2xl:pr-3 max-2xl:min-w-0">
           <div className="flex items-center gap-2 mb-2">
-            <div className="px-4 ml-1 2xl:hidden mt-4">
+            <div className="px-4 2xl:hidden mt-4">
               <SlMenu size={iconSizes.base} />
             </div>
             <div className="flex flex-col pl-1  max-2xl:hidden">
-              <h2 className="m-0 p-0 text-2xl font-extrabold tracking-[2px]">
-                <span className="text-baseColor">A</span>MP
+              <h2
+                className={
+                  `m-0 p-0 text-3xl font-extrabold mt-2 ` + KalamBold.className
+                }
+              >
+                <span className="text-redColor">A</span>MP
               </h2>
-              <p className="text-sm p-0 m-0 mt-[-5px]">
-                <span>Auto</span>
-                <span className="text-baseColor uppercase font-bold">
-                  motiveplace
-                </span>
+              <p
+                className={
+                  `text-sm p-0 m-0 mt-[-2px] border-t-1 border-zinc-600 ` +
+                  KalamBold.className
+                }
+              >
+                <span>Automotive</span>
+                <span className="text-redColor font-bold">place</span>
               </p>
             </div>
           </div>
@@ -119,16 +132,26 @@ export const SideBar: FC<ISideBar> = ({}) => {
         </div>
       </div>
 
-      {/* TODO -  czy na pewno chce w ten sposób dodawać rzeczy?*/}
       <AMPModal
         onClose={closeModal}
-        withHeader={false}
+        withHeader={true}
         visible={isModalOpen}
-        title="Dodawanie"
-        additionalTailwindCss="relative bottom-40"
+        title="Wybierz opcje"
+        additionalTailwindCss="relative bottom-40 bg-zinc-900"
         defoultBG={false}
       >
         <SelectCreateOption />
+      </AMPModal>
+
+      <AMPModal
+        onClose={() => dispatch(setShowCreateProject(false))}
+        withHeader={true}
+        visible={showCreateProject}
+        title="Dodawanie projektu"
+        additionalTailwindCss="relative bottom-40 bg-zinc-900"
+        defoultBG={false}
+      >
+        <CreateProblemView />
       </AMPModal>
     </div>
   );

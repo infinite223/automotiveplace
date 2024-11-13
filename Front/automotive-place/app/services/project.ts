@@ -1,4 +1,4 @@
-import { TProjectCreate } from "../utils/types/project";
+import { TProject, TProjectCreate } from "../utils/types/project";
 
 export const createProject = async (
   carItem: TProjectCreate,
@@ -14,5 +14,15 @@ export const createProject = async (
   }
 
   const result = await response.json();
+  return result;
+};
+
+export const getProject = async (id: string) => {
+  const response = await fetch(`/api/project/get-project?id=${id}`);
+  if (!response.ok) {
+    throw new Error("Failed to get data");
+  }
+
+  const result: TProject = await response.json();
   return result;
 };

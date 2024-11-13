@@ -1,20 +1,23 @@
 import { TCarItem, TCarItemCreate } from "./carItem";
 import { TStageCreate, TStage } from "./stage";
 import { TTag, TTagCreate } from "./tag";
-import { TUser } from "./user";
+import { TBasicUser, TUser } from "./user";
 
 type TProject = {
   id: string;
   createdAt: Date;
   updatedAt: Date;
+  name?: string;
+  carMake: string;
+  description?: string;
+
   forSell: boolean;
   isVisible: boolean;
 
-  name?: string;
-  carMake: string;
   carModel: string;
-  description?: string;
   isVerified: boolean;
+
+  imagesUrl: string;
   imagesCount: number;
   carItemsCount: number;
   garageId: string;
@@ -34,12 +37,40 @@ type TProject = {
   transmissionGears: number;
   transmissionDescription?: string;
   transmissionWasSwapped?: boolean;
+  transmissionType: number; // type -> 0 - maual | 1 - automat
+
   carItems?: TCarItem[];
-  stages?: TStage[]; // stage 0 to stock performance
+  stages?: TStage[];
   tags?: TTag[];
+
+  // likes:
+  // pickedProjectsOnEventOrSpot:
+  // tags:
+  // authorId:
+  // companyId:
+  // location:
 };
 
-function isTProject(data: any): data is TProject {
+type TBasicProject = {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  forSell: boolean;
+  isVisible: boolean;
+
+  name?: string;
+  carMake: string;
+  carModel: string;
+  description?: string;
+  isVerified: boolean;
+
+  engineName: string;
+  images?: string[];
+
+  author: TBasicUser;
+};
+
+function isTProject(data: any): data is TBasicProject {
   return (
     typeof data === "object" &&
     data !== null &&
@@ -113,5 +144,5 @@ type TProjectCreate = {
   tags?: TTagCreate[];
 };
 
-export type { TProject, TProjectCreate };
+export type { TProject, TBasicProject, TProjectCreate };
 export { isTProject };

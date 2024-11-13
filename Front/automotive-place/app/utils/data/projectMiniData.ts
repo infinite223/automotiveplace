@@ -1,25 +1,19 @@
-import { TProject } from "../types/project";
+import { TBasicProject, TProject } from "../types/project";
 
-const projectMiniData: TProject = {
-  authorId: "",
-  carItemsCount: 2,
+const projectMiniData: TBasicProject = {
   carMake: "Audi",
   createdAt: new Date(),
-  engineCapacity: 2,
   engineName: "TFSI",
-  engineStockHp: 200,
-  engineStockNm: 280,
   forSell: false,
-  garageId: "",
   id: "1",
-  imagesCount: 1,
   isVerified: false,
   isVisible: true,
   carModel: "A3",
-  transmissionGears: 6,
-  transmissionName: "Dq250",
   updatedAt: new Date(),
-  userId: "1",
+  author: {
+    id: "1",
+    name: "Marek",
+  },
 };
 
 export { projectMiniData };

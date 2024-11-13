@@ -5,35 +5,47 @@ import { PiQuestionMarkFill } from "react-icons/pi";
 import { motion, AnimatePresence } from "framer-motion";
 import { BsPostcardFill } from "react-icons/bs";
 import { iconSizes } from "@/app/utils/constants";
+import { AMPSeparator } from "../shared/AMPSeparator";
+import { useDispatch } from "react-redux";
+import { setShowCreateProject } from "@/lib/features/actions/actionsSlice";
+const iconSize = iconSizes.small;
 
 export const SelectCreateOption: FC = () => {
+  const dispatch = useDispatch();
+
   return (
-    <div className="flex items-center min-w-20 min-h-10 p-1">
+    <div className="flex flex-col min-w-20 min-h-10 w-[400px]">
       <OptionItem
         name="Dodaj projekt"
-        onClick={() => {}}
-        icon={<FaCarRear size={iconSizes.base} />}
-      />
-      <OptionItem
-        name="Dodaj spot"
-        onClick={() => {}}
-        icon={<FaLocationArrow size={iconSizes.base} />}
-      />
-      <OptionItem
-        name="Dodaj wydarzenie"
-        onClick={() => {}}
-        icon={<FaCalendarDay size={iconSizes.base} />}
-      />
-      <OptionItem
-        name="Dodaj problem"
-        onClick={() => {}}
-        icon={<PiQuestionMarkFill size={iconSizes.base} />}
+        onClick={() => dispatch(setShowCreateProject(true))}
+        icon={<FaCarRear size={iconSize} />}
       />
       <OptionItem
         name="Dodaj post"
         onClick={() => {}}
-        icon={<BsPostcardFill size={iconSizes.base} />}
+        icon={<BsPostcardFill size={iconSize} />}
       />
+      <OptionItem
+        name="Dodaj problem"
+        onClick={() => {}}
+        icon={<PiQuestionMarkFill size={iconSize} />}
+      />
+      <OptionItem
+        name="Dodaj spot"
+        onClick={() => {}}
+        icon={<FaLocationArrow size={iconSize} />}
+      />
+      <OptionItem
+        name="Dodaj wydarzenie"
+        onClick={() => {}}
+        icon={<FaCalendarDay size={iconSize} />}
+      />
+
+      <AMPSeparator />
+
+      <footer className="text-sm opacity-75 p-2 px-4 leading-4">
+        Po najechaniu na wybraną opcje możesz zobaczyć dodatkowe informacje.
+      </footer>
     </div>
   );
 };
@@ -52,13 +64,10 @@ const OptionItem = ({
   return (
     <motion.div
       onClick={onClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      whileHover={{ backgroundColor: "rgb(13 148 136)", height: "150px" }}
-      className="w-[140px] rounded-sm flex flex-col bg-zinc-200 dark:bg-zinc-900 gap-5 items-center justify-center p-10 cursor-pointer"
+      whileHover={{ backgroundColor: "rgb(82, 82, 91)" }}
+      className="w-full rounded-sm flex flex-co gap-4 px-4 items-center p-2 cursor-pointer"
     >
       <AnimatePresence>
-        {/* {!isHovered && ( */}
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -68,23 +77,20 @@ const OptionItem = ({
         >
           {icon}
         </motion.div>
-        {/* )} */}
       </AnimatePresence>
       <AnimatePresence>
-        {isHovered && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, y: [30, 0] }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.1, delay: 0 }}
-            key="text"
-            className="flex items-center justify-center"
-          >
-            <h3 className="uppercase text-[13px] text-center max-w-[100px] font-bold">
-              {name}
-            </h3>
-          </motion.div>
-        )}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, y: [30, 0] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.1, delay: 0 }}
+          key="text"
+          className="flex justify-center"
+        >
+          <h3 className="uppercase text-[13px] text-center  font-semibold">
+            {name}
+          </h3>
+        </motion.div>
       </AnimatePresence>
     </motion.div>
   );

@@ -1,16 +1,17 @@
 "use client";
 
-import { TProject } from "@/app/utils/types/project";
+import { TBasicProject } from "@/app/utils/types/project";
 import { useEffect, useState } from "react";
 import { ContentMiniNav } from "./ContentMiniNav";
 import { ContentMiniFooter } from "./ContentMiniFooter";
 import { IoIosArrowForward } from "react-icons/io";
 import Image from "next/image";
 import { iconSizes } from "@/app/utils/constants";
+import Link from "next/link";
 
 const projectImage = "https://picsum.photos/id/237/200/300";
 
-export const ProjectMiniView = ({ data }: { data: TProject }) => {
+export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -48,10 +49,13 @@ export const ProjectMiniView = ({ data }: { data: TProject }) => {
             likesCount={12}
             type="Project"
             actions={
-              <div className="flex items-center text-sm cursor-pointer transition ease-in-out gap-2 border-zinc-700/70 hover:border-zinc-500 border-2 rounded-md pl-2 pr-1 py-1">
+              <Link
+                href={`../project/${data.id}`}
+                className="flex items-center text-sm cursor-pointer transition ease-in-out gap-2 border-zinc-700/70 hover:border-zinc-500 border-2 rounded-md pl-2 pr-1 py-1"
+              >
                 Więcej informacji
                 <IoIosArrowForward size={iconSizes.small} />
-              </div>
+              </Link>
             }
           />
         </div>
