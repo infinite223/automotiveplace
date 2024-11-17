@@ -7,7 +7,6 @@ import { createProject } from "@/app/services/project";
 import { AMPHelpFooter } from "../shared/AMPHelpFooter";
 import {
   ItemTypes,
-  ItemTypesPL,
   TCarItemCreate,
 } from "@/app/utils/types/carItem";
 import { TProjectCreate } from "@/app/utils/types/project";
@@ -39,8 +38,8 @@ export const CreateProjectView = () => {
     value: "",
     errorText: null,
   });
-  const [carItemType, setCarItemType] = useState<ItemTypes | ItemTypesPL>(
-    ItemTypesPL.Turbo
+  const [carItemType, setCarItemType] = useState<ItemTypes>(
+    ItemTypes.Turbo
   );
   const [forSell, setForSell] = useState(false);
   const [inUse, setInUse] = useState(false);

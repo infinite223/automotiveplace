@@ -2,7 +2,7 @@ import { TProject, TProjectCreate } from "../utils/types/project";
 
 export const createProject = async (
   carItem: TProjectCreate,
-  locale: string = "en"
+  locale: string = "en",
 ) => {
   const response = await fetch(`/api/project/add-project`, {
     method: "POST",

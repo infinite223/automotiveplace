@@ -12,9 +12,11 @@ import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { carItemCreateData } from "@/app/utils/data";
 import { AMPTagsView } from "../shared/AMPTagsView";
+import { useLocale } from "next-intl";
 
 export const CreateCarItemView = () => {
   const dispatch = useDispatch();
+  const t = useLocale(); 
   const [carItem, setCarItem] = useState<TCarItemCreate>(carItemCreateData);
 
   const onSubmit = async () => {
@@ -28,7 +30,7 @@ export const CreateCarItemView = () => {
 
       if (result) {
         if (result.notification) {
-          dispatch(addNotification(JSON.stringify(result.notification)));
+          dispatch(addNotification(JSON.stringify(result.notification))); 
         }
       }
     } else {
