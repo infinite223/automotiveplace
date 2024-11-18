@@ -12,9 +12,9 @@ Frontend:
 - Next.js
 - Typescript
 - Tailwind
-- clark
 - react icons
 - eslint
   
 Backend:
 - Prisma
+- Appwrite
