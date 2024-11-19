@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { validCarElement } from "./../../../components/createCarItem/Validation";
 import { TCarItemCreate } from "@/app/utils/types/carItem";
-import { ErrorStatus, ICreateNotification } from "@/app/utils/types";
+import { ICreateNotification } from "@/app/utils/types";
 import { Prisma } from "@prisma/client";
 import { TProjectCreate } from "@/app/utils/types/project";
 import { validProject } from "@/app/components/createProject/Validation";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { getTranslations } from "../../helpers";
+import { ErrorStatus } from "@/app/utils/enums";
 
 export async function POST(request: NextRequest) {
   const user = await getLoggedInUser();

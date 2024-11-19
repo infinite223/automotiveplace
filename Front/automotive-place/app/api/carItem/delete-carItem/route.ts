@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { ErrorStatus, ICreateNotification } from "@/app/utils/types";
+import { ICreateNotification } from "@/app/utils/types";
 import { getTranslations } from "../../helpers";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
+import { ErrorStatus } from "@/app/utils/enums";
 
 export async function DELETE(request: NextRequest) {
   const user = await getLoggedInUser();

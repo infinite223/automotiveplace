@@ -1,8 +1,9 @@
 "use server";
 
 import { NextRequest, NextResponse } from "next/server";
-import { ErrorStatus, ICreateNotification } from "@/app/utils/types";
+import { ICreateNotification } from "@/app/utils/types";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
+import { ErrorStatus } from "@/app/utils/enums";
 
 export async function GET(request: NextRequest) {
   const { searchParams }: any = new URL(request.url);

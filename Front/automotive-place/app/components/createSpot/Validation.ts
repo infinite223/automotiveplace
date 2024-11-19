@@ -1,5 +1,4 @@
-import { ErrorStatus, TValidResult } from "@/app/utils/types";
-import { TCarItemCreate, isValidItemType } from "@/app/utils/types/carItem";
+import { TValidResult } from "@/app/utils/types";
 import { TSpotCreate } from "@/app/utils/types/spot";
 
 export const validSpot = (newProblem: TSpotCreate) => {
