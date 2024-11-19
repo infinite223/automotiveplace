@@ -17,7 +17,31 @@
     "Problems": "Problems",
     "Company": "Company",
     "Settings": "Settings",
-    "YouAreAlreadyLoggedInAsAdmin": "You are already logged in as admin"
+    "YouAreAlreadyLoggedInAsAdmin": "You are already logged in as admin",
+    "CarItemTypes": {
+      "Turbo": "Turbo",
+      "Exhaust": "Exhaust",
+      "Kompressor": "Compressor",
+      "Brakes": "Brakes",
+      "Audio": "Audio",
+      "Clutch": "Clutch",
+      "Suspension": "Suspension",
+      "EngineTuneUp": "Engine Tune-Up",
+      "Transmission": "Transmission",
+      "Wheels": "Wheels",
+      "Tires": "Tires",
+      "FuelInjectors": "Fuel Injectors",
+      "CoolingSystem": "Cooling System",
+      "Battery": "Battery",
+      "Alternator": "Alternator",
+      "StarterMotor": "Starter Motor",
+      "SteeringSystem": "Steering System",
+      "Lights": "Lights",
+      "BodyKit": "Body Kit",
+      "Other": "Other",
+      "Candles": "Spark Plugs",
+      "Driver": "Driver"
+    }    
   },
   "Preview": {
     "title": "Application created to connect the automotive community to one common place.",

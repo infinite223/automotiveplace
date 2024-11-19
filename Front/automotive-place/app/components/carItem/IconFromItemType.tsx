@@ -1,11 +1,11 @@
 "use client";
 
-import { ItemTypes, ItemTypesPL } from "@/app/utils/types/carItem";
+import { ItemTypes } from "@/app/utils/types/carItem";
 import Image from "next/image";
 import React, { FC, useEffect, useState } from "react";
 
 interface IconFromItemTypeProps {
-  itemType: ItemTypes | ItemTypesPL;
+  itemType: ItemTypes;
   isLoading: boolean;
 }
 
