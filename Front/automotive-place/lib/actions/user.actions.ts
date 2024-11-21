@@ -4,7 +4,7 @@ import { ID } from "node-appwrite";
 import { createAdminClient, createSessionClient } from "../server/appwrite";
 import { cookies } from "next/headers";
 import prisma from "../prisma";
-import { ErrorStatus } from "@/app/utils/types";
+import { AccountTypes, ErrorStatus } from "@/app/utils/enums";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
 
 export type SignInParams = {
@@ -29,6 +29,7 @@ export const signUp = async (userData: SignUpParams) => {
   try {
     const { account } = await createAdminClient();
     const newUserId = ID.unique();
+
     const newUserAccount = await account.create(
       newUserId,
       userData.email,
@@ -120,9 +121,9 @@ export async function getLoggedInUser() {
 
     if (!user) return;
 
-    const isAdmin = user?.labels.find((l) => l === "admin");
-    const isPremium = user?.labels.find((l) => l === "premium");
-    const isCompany = user?.labels.find((l) => l === "company");
+    const isAdmin = user?.labels.find((l) => l === AccountTypes.Admin);
+    const isPremium = user?.labels.find((l) => l === AccountTypes.Premium);
+    const isCompany = user?.labels.find((l) => l === AccountTypes.Company);
 
     return { user, isAdmin, isPremium, isCompany };
   } catch (error) {

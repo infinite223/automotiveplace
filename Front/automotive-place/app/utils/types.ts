@@ -1,3 +1,4 @@
+import { ErrorStatus } from "./enums";
 import { TCarItem } from "./types/carItem";
 import { TPost } from "./types/post";
 import { TProblem } from "./types/problem";
@@ -48,13 +49,6 @@ type TLog = {
   title: string;
   date: Date;
 };
-
-enum ErrorStatus {
-  Low = 0,
-  Medium = 1,
-  High = 2,
-  Critical = 3,
-}
 
 type TPerformanceType = {
   hp: number;
@@ -108,5 +102,3 @@ export type {
   ICreateNotification,
   INotification,
 };
-
-export { ErrorStatus };

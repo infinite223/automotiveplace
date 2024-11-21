@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { validCarElement } from "./../../../components/createCarItem/Validation";
 import { TCarItemCreate } from "@/app/utils/types/carItem";
-import { ErrorStatus } from "@/app/utils/types";
+import { ErrorStatus } from "@/app/utils/enums";
 import { Prisma } from "@prisma/client";
 import { getTranslations } from "../../helpers";
 import { getLoggedInUser } from "@/lib/actions/user.actions";

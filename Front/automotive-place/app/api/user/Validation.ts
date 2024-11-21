@@ -1,9 +1,6 @@
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
-import {
-  ErrorStatus,
-  ICreateNotification,
-  TValidResult,
-} from "@/app/utils/types";
+import { ErrorStatus } from "@/app/utils/enums";
+import { TValidResult } from "@/app/utils/types";
 import prisma from "@/lib/prisma";
 import { hash } from "bcrypt";
 
