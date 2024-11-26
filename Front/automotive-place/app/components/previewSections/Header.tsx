@@ -36,14 +36,14 @@ const Header = ({ isLogged = false }: { isLogged: boolean }) => {
         </Link>
         <Link
           href={`./sign-in`}
-          className="bg-redColor text-white py-2 font-semibold px-6 rounded-sm"
+          className="bg-amp-500text-white py-2 font-semibold px-6 rounded-sm"
         >
           {t("Preview.SeeDemoVesion")}
         </Link>
       </div>
 
       {/* TODO - change this to cards with some data about  Projekty, Spoty, Wydarzenia*/}
-      {/* <div className="flex text-md mt-2 z-[2] uppercase font-bold text-baseColor">
+      {/* <div className="flex text-md mt-2 z-[2] uppercase font-bold text-amp-700 dark:text-amp-300">
         Projekty, Spoty, Wydarzenia
       </div> */}
 

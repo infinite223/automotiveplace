@@ -37,7 +37,7 @@ export const HomeMainContent = () => {
             return (
               <div
                 key={content.data.id}
-                className="flex w-full border-zinc-900 border-b-[1px] border-t-0 items-center justify-center"
+                className="flex w-full border-amp-300/30 dark:border-amp-700/30 border-b-[1px] border-t-0 items-center justify-center"
               >
                 <ContentSelect content={content} />
               </div>

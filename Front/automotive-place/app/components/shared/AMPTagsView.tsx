@@ -51,7 +51,7 @@ export const AMPTagsView: FC<IAMPTagsView> = ({
         {tags.map((tag, id) => (
           <div
             key={id}
-            className="flex items-center bg-custom-secendary rounded-sm text-[11px] px-3 py-1 gap-1"
+            className="flex items-center bg-amp-800 dark:bg-amp-100 rounded-sm text-[11px] px-3 py-1 gap-1"
           >
             <span>#{tag.name}</span>
             {edit && (

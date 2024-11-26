@@ -25,7 +25,7 @@ export default function Page() {
     setSelectElement(allElements);
   };
   return (
-    <main className="flex min-h-screen bg-custom-primary text-custom-primary flex-col items-center gap-2 p-2">
+    <main className="flex min-h-screen bg-amp-900 dark:bg-amp-0bg-amp-000 dark:bg-amp-900 flex-col items-center gap-2 p-2">
       <div className="flex flex-col gap-3 w-full">
         <div className="flex flex-wrap gap-2">
           {componentsList.map(({ name, value, description }, id) => (
@@ -35,7 +35,7 @@ export default function Page() {
               className="border-zinc-700 flex max-w-[200px] flex-col gap-1 cursor-pointer border py-1 p-2 rounded-sm text-sm"
             >
               {name}
-              <span className="text-[12px] text-custom-secendary leading-4">
+              <span className="text-[12px] bg-amp-800 dark:bg-amp-100 leading-4">
                 {description}
               </span>
             </div>
@@ -46,14 +46,14 @@ export default function Page() {
           <nav>
             <button
               onClick={showAllComponents}
-              className="bg-custom-secendary py-2 px-4 rounded-md text-sm"
+              className="bg-amp-800 dark:bg-amp-100 py-2 px-4 rounded-md text-sm"
             >
               Pokaż wszystkie komponenty
             </button>
           </nav>
           <h3>Test component: </h3>
           {selectElement || (
-            <p className="text-sm text-custom-secendary">
+            <p className="text-sm bg-amp-800 dark:bg-amp-100">
               Wybierz komponent aby przetestować
             </p>
           )}

@@ -15,6 +15,19 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      colors: {
+        amp: {
+          0: "black",
+          100: "#331119",
+          200: "#333339",
+          300: "#004369",
+          500: "#db1f48",
+
+          700: "#ededed",
+          800: "#fefefe",
+          900: "white",
+        },
+      },
     },
   },
   plugins: [nextui()],

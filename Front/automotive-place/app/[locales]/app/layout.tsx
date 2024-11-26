@@ -23,14 +23,14 @@ export default async function Layout({
   if (!user) return redirect(`/${locale}/sign-in`);
 
   return (
-    <div className="flex h-screen flex-col bg-custom-primary text-custom-primary">
+    <div className="flex h-screen flex-col bg-amp-900 dark:bg-amp-0">
       {/* <HomeHeader /> */}
       <div className="flex lg:h-[calc(100%-0px)] h-[calc(100%)] w-full justify-between flex-col-reverse lg:flex-row">
         <SideBar />
         {/* Botton naviagtion */}
         {children}
         {/* TODO - left bar for some data, add mobile view */}
-        <div className="h-full px-4 w-[180px] pt-4 fixed right-0 border-zinc-900 border-l-1 hidden lg:block">
+        <div className="h-full px-4 w-[180px] pt-4 fixed right-0 border-amp-300/30 dark:border-amp-700/30 border-l-1 hidden lg:block">
           <div className="text-md flex items-center gap-5 w-full justify-evenly">
             <TbMessage2Up size={22} />
             <IoNotifications size={22} />

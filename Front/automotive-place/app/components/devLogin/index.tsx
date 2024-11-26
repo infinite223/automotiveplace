@@ -60,7 +60,7 @@ const PinInput: React.FC<PinInputProps> = ({ length, onChange, inputsRef }) => {
           ref={(el) => {
             inputsRef.current![index] = el!;
           }}
-          className="w-12 custom-number-input h-10 text-center border-b-2 border-custom-primary hover:border-teal-500 bg-custom-primary outline-none"
+          className="w-12 custom-number-input h-10 text-center border-b-2 border-custom-primary hover:border-teal-500 bg-amp-900 dark:bg-amp-0outline-none"
         />
       ))}
     </div>
@@ -135,7 +135,7 @@ export const DevLogin: React.FC = () => {
       visible={isModalOpen}
       withHeader={true}
       title="Dev login"
-      additionalTailwindCss="text-custom-primary"
+      additionalTailwindCss="bg-amp-000 dark:bg-amp-900"
     >
       <div className="flex gap-2 items-center p-2">
         <PinInput length={5} onChange={handlePinChange} inputsRef={inputsRef} />

@@ -16,7 +16,7 @@ import { useLocale } from "next-intl";
 
 export const CreateCarItemView = () => {
   const dispatch = useDispatch();
-  const t = useLocale(); 
+  const t = useLocale();
   const [carItem, setCarItem] = useState<TCarItemCreate>(carItemCreateData);
 
   const onSubmit = async () => {
@@ -30,7 +30,7 @@ export const CreateCarItemView = () => {
 
       if (result) {
         if (result.notification) {
-          dispatch(addNotification(JSON.stringify(result.notification))); 
+          dispatch(addNotification(JSON.stringify(result.notification)));
         }
       }
     } else {
@@ -47,7 +47,7 @@ export const CreateCarItemView = () => {
 
   return (
     <main
-      className="flex justify-center text-custom-primary text-sm rounded-md"
+      className="flex justify-center bg-amp-000 dark:bg-amp-900 text-sm rounded-md"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="w-[250px] h-[11/12] p-3 pr-4 rounded-sm border-r border-zinc-700 ml-2">
@@ -88,7 +88,7 @@ export const CreateCarItemView = () => {
           <AMPTagsView tags={carItem.tags} />
           <hr className="border-zinc-100 dark:border-zinc-800 w-full" />
 
-          <p className="text-custom-secendary leading-3 text-[11px] mt-2">
+          <p className="bg-amp-800 dark:bg-amp-100 leading-3 text-[11px] mt-2">
             Po utworzeniu elementu można go edytować.
           </p>
         </div>

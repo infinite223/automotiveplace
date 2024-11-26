@@ -94,7 +94,7 @@ export default function CustomNavbar({
           </Link>
           <Link
             href={`./sign-in`}
-            className="bg-redColor text-white py-1.5 font-semibold px-4 rounded-sm text-sm"
+            className="bg-amp-500text-white py-1.5 font-semibold px-4 rounded-sm text-sm"
           >
             {t(isLogged ? "Core.GoToApp" : "Core.SignIn")}
           </Link>

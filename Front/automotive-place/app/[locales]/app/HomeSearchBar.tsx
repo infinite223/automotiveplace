@@ -85,7 +85,7 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
           }}
           onFocus={() => setIsFocused(true)}
           tabIndex={0}
-          className={`w-full z-10 bg-custom-primary rounded-full border flex items-center gap-4 pl-4 pr-3 p-2.5 ${
+          className={`w-full z-10 bg-amp-900 dark:bg-amp-0rounded-full border flex items-center gap-4 pl-4 pr-3 p-2.5 ${
             isFocused
               ? "border-zinc-500"
               : "border-zinc-300 dark:border-zinc-800"
@@ -95,15 +95,15 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
             ref={inputRef}
             onFocus={() => setIsFocused(true)}
             placeholder="Szukaj projektów, wydarzeń, firm, problemów"
-            className="outline-none border-gray-300 w-full bg-custom-primary text-custom-secendary text-[13px] focus:ring-teal-500 focus:border-teal-500 block dark:border-zinc-800 dark:placeholder-gray-500 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-800 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer bg-inherit"
+            className="outline-none border-gray-300 w-full bg-amp-900 dark:bg-amp-0bg-amp-800 dark:bg-amp-100 text-[13px] focus:ring-teal-500 focus:border-teal-500 block dark:border-zinc-800 dark:placeholder-gray-500 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-800 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer bg-inherit"
           />
           <LuSearch
             size={22}
-            className="text-custom-secendary text-red-300 mr-1"
+            className="bg-amp-800 dark:bg-amp-100 text-red-300 mr-1"
           />
         </div>
         {/* <div
-          className={`flex items-center gap-1 text-custom-secendary text-[10px] opacity-50 cursor-pointer`}
+          className={`flex items-center gap-1 bg-amp-800 dark:bg-amp-100 text-[10px] opacity-50 cursor-pointer`}
         >
           {searchTypeOption.name.toUpperCase()}
           <FaLongArrowAltDown />

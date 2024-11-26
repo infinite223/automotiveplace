@@ -40,7 +40,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
   const closeModal = () => setIsModalOpen(false);
   // TODO - zmiana wyświetlania się sidebara dla mobilnej wersji lub implementacja nowego
   return (
-    <div className="flex min-w-[100px] 2xl:w-[240px] border-zinc-900 h-full border-r-1 scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
+    <div className="flex min-w-[100px] 2xl:w-[240px] border-amp-300/30 dark:border-amp-700/30 h-full border-r-1 scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
       <div className="flex flex-col gap-1 h-[100%] 2xl:ml-4 justify-between py-1 pb-2">
         <div className="flex flex-col items-start max-2xl:items-center max-2xl:pr-3 max-2xl:min-w-0">
           <div className="flex items-center gap-2 mb-2">
@@ -53,7 +53,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
                   `m-0 p-0 text-3xl font-extrabold mt-2 ` + KalamBold.className
                 }
               >
-                <span className="text-redColor">A</span>MP
+                <span className="text-amp-500">A</span>MP
               </h2>
               <p
                 className={
@@ -62,7 +62,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
                 }
               >
                 <span>Automotive</span>
-                <span className="text-redColor font-bold">place</span>
+                <span className="text-amp-500font-bold">place</span>
               </p>
             </div>
           </div>
@@ -168,7 +168,7 @@ const OptionItem: FC<{
       className={`${additionalTailwindCss} flex-row gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 pl-1 hover:opacity-70 cursor-pointer flex items-center justify-center`}
       onClick={onClick}
     >
-      <div className="text-custom-secendary">{icon}</div>
+      <div className="bg-amp-800 dark:bg-amp-100">{icon}</div>
       <div className="text-md max-2xl:text-[12px] text-center leading-4">
         {name}
       </div>

@@ -24,7 +24,7 @@ export default function Project({ params }: { params: { id: string } }) {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <main className="flex w-full min-h-screen bg-black text-custom-primary flex-col items-center gap-2">
+    <main className="flex w-full min-h-screen bg-amp-100 bg-amp-000 dark:bg-amp-900 flex-col items-center gap-2">
       {data && data.images?.[0] && (
         // <Image src={data.images[0]} alt="car-image" width={300} height={200} /> // TODO - add storage images to nextjs config
         <img

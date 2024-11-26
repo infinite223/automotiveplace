@@ -51,7 +51,7 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
             actions={
               <Link
                 href={`../project/${data.id}`}
-                className="flex items-center text-sm cursor-pointer transition ease-in-out gap-2 border-zinc-700/70 hover:border-zinc-500 border-2 rounded-md pl-2 pr-1 py-1"
+                className="flex items-center text-sm cursor-pointer transition ease-in-out gap-2 border-amp-200/50 dark:border-amp-800/50 hover:border-amp-300 border-2 rounded-md pl-2 pr-1 py-1"
               >
                 Więcej informacji
                 <IoIosArrowForward size={iconSizes.small} />
