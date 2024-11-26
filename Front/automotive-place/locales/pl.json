@@ -2,6 +2,7 @@
   "Core": {
     "SignIn": "Zaloguj się",
     "SignUp": "Zarejestruj się",
+    "GoToApp": "Przejdź do aplikacji",
     "CreateAccount": "Utwórz konto",
     "DoYouAlreadyHaveAnAccount": "Masz już konto?",
     "DontHaveAnAccountYet": "Nie masz jeszcze konta?",
@@ -41,7 +42,7 @@
       "Other": "Inny",
       "Candles": "Świece",
       "Driver": "Sterownik"
-    }    
+    }
   },
   "Preview": {
     "title": "Aplikacja stworzona w celu połączenia motoryzacyjnej społeczności do jednego wspólnego miejsca.",

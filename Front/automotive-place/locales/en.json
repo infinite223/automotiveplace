@@ -2,6 +2,7 @@
   "Core": {
     "SignIn": "Sign In",
     "SignUp": "Sign Up",
+    "GoToApp": "Go to app",
     "CreateAccount": "Create account",
     "DoYouAlreadyHaveAnAccount": "Do you already have an account?",
     "DontHaveAnAccountYet": "Don't have an account yet?",
@@ -41,7 +42,7 @@
       "Other": "Other",
       "Candles": "Spark Plugs",
       "Driver": "Driver"
-    }    
+    }
   },
   "Preview": {
     "title": "Application created to connect the automotive community to one common place.",

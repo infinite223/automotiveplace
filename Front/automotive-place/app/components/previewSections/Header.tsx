@@ -1,11 +1,13 @@
+"use server";
+
 import { AllanBold, KalamBold } from "@/app/utils/helpers";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import React from "react";
 
-const Header = () => {
+const Header = ({ isLogged = false }: { isLogged: boolean }) => {
   const t = useTranslations();
 
+  console.log(isLogged);
   return (
     <section className="custom-gradient flex h-screen flex-col items-center gap-4 justify-center relative">
       <h1
@@ -30,7 +32,7 @@ const Header = () => {
           href={`./sign-in`}
           className="text-white py-2 font-semibold px-6 rounded-sm border-zinc-300 border-1"
         >
-          {t("Core.SignIn")}
+          {t(isLogged ? "Core.GoToApp" : "Core.SignIn")}
         </Link>
         <Link
           href={`./sign-in`}

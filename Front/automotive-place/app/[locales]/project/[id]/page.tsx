@@ -5,6 +5,8 @@ import useFetchData from "@/app/hooks/useFetchData";
 import { getProject } from "@/app/services/project";
 import { getCurrentStage } from "@/app/utils/helpers";
 import { TProject } from "@/app/utils/types/project";
+import { MdArrowBackIosNew } from "react-icons/md";
+import Link from "next/link";
 
 export default function Project({ params }: { params: { id: string } }) {
   const { data, loading, error } = useFetchData<TProject>(() =>
@@ -12,7 +14,7 @@ export default function Project({ params }: { params: { id: string } }) {
   );
 
   const lastStage = data ? getCurrentStage(data) : undefined;
-  console.log(lastStage, "lastStage");
+
   if (loading)
     return (
       <div className="flex w-full min-h-screen bg-black justify-center items-center">
@@ -32,10 +34,18 @@ export default function Project({ params }: { params: { id: string } }) {
         />
       )}
 
+      <Link
+        href={"../app"}
+        className="absolute left-5 top-5 rounded-full p-2 bg-black/70 hover:opacity-65 transition-transform-opacity"
+      >
+        <MdArrowBackIosNew />
+      </Link>
+
       <nav className="flex flex-col gap-2 justify-between w-full top-[-150px] relative px-20">
         <h1 className="text-3xl font-semibold gap-2 flex">
           <span>{data?.carMake}</span>
           <span>{data?.carModel}</span>
+          <span className="">- {lastStage?.name}</span>
         </h1>
 
         {lastStage && (
@@ -95,6 +105,17 @@ export default function Project({ params }: { params: { id: string } }) {
               className="w-[100px]"
               alt="car-image"
             />
+          )}
+        </div>
+      </div>
+
+      <div className="flex w-full flex-col gap-2">
+        {/* TODO - create gallery component */}
+        <h3 className="text-sm opacity-85">Etapy modyfikacji projektu</h3>
+        <div>
+          {data && data.stages?.[0] && (
+            // <Image src={data.images[0]} alt="car-image" width={300} height={200} /> // TODO - add storage images to nextjs config
+            <div>{data.stages?.[0].name}</div>
           )}
         </div>
       </div>

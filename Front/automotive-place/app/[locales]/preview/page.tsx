@@ -5,12 +5,15 @@ import Services from "../../components/previewSections/Services";
 import PreviewTests from "../../components/previewSections/PreviewTests";
 import Footer from "../../components/previewSections/Footer";
 import CustomNavbar from "@/app/components/previewSections/Navbar";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
 
-export default function page() {
+export default async function page() {
+  const user = await getLoggedInUser();
+
   return (
     <main>
-      <CustomNavbar />
-      <Header />
+      <CustomNavbar isLogged={!!user} />
+      <Header isLogged={!!user} />
       <About />
       <Services />
       <PreviewTests />

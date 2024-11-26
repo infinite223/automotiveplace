@@ -33,7 +33,11 @@ const navOptions = [
   },
 ];
 
-export default function CustomNavbar() {
+export default function CustomNavbar({
+  isLogged = false,
+}: {
+  isLogged: boolean;
+}) {
   const [navbarBg, setNavbarBg] = useState("transparent");
   const t = useTranslations();
 
@@ -92,7 +96,7 @@ export default function CustomNavbar() {
             href={`./sign-in`}
             className="bg-redColor text-white py-1.5 font-semibold px-4 rounded-sm text-sm"
           >
-            {t("Core.SignIn")}
+            {t(isLogged ? "Core.GoToApp" : "Core.SignIn")}
           </Link>
         </div>
       </NavbarContent>
