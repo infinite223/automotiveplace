@@ -23,7 +23,7 @@ export const ContentMiniFooter = ({
 
   const handleClickLike = () => {};
   return (
-    <nav className="flex bg-amp-000 dark:bg-amp-900 items-center justify-between w-full">
+    <nav className="flex items-center justify-between w-full">
       <div className="flex items-center gap-2">
         <CgShare size={iconSizes.base} />
         <div className="flex flex-col gap-2">

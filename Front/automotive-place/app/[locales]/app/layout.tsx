@@ -23,7 +23,7 @@ export default async function Layout({
   if (!user) return redirect(`/${locale}/sign-in`);
 
   return (
-    <div className="flex h-screen flex-col bg-amp-900 dark:bg-amp-0">
+    <div className="flex h-screen flex-col bg-amp-900 dark:bg-amp-0 text-black dark:text-white">
       {/* <HomeHeader /> */}
       <div className="flex lg:h-[calc(100%-0px)] h-[calc(100%)] w-full justify-between flex-col-reverse lg:flex-row">
         <SideBar />

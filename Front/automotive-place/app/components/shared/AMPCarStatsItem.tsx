@@ -12,7 +12,7 @@ export const AMPCarStatsItem: FC<IAMPCarStatsItem> = ({
   value,
 }) => {
   return (
-    <main className="flex flex-1 min-w-[200px] p-2 px-4 bg-zinc-950/75 rounded-sm flex-col gap-1">
+    <main className="flex flex-1 min-w-[200px] p-2 px-4 bg-amp-100/75 rounded-sm flex-col gap-1">
       <h1 className="font-semibold text-lg">{value}</h1>
 
       <div className="flex flex-col">

@@ -45,7 +45,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
       <div
         className={`${
           isLoading &&
-          "bg-amp-800 dark:bg-amp-100 bg-amp-000 dark:bg-amp-900 w-7 h-7 rounded-md"
+          "bg-amp-800 dark:bg-amp-100 bg-amp-000 w-7 h-7 rounded-md"
         }`}
       >
         {!isLoading && (
@@ -67,7 +67,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
             role="menu"
             data-popover="menu"
             data-popover-placement="bottom"
-            className="absolute bg-amp-800 dark:bg-amp-300 text-[11px] z-10 min-w-[180px] overflow-auto rounded-sm border border-zinc-200 dark:border-zinc-800  py-1 font-sans font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none"
+            className="absolute bg-amp-800 dark:bg-amp-100 text-[11px] z-10 min-w-[180px] overflow-auto rounded-sm border border-amp-800/50 dark:border-amp-200/50  py-1 font-sans font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none"
           >
             {items.map(({ name, handleClick, icon, isDisable }, i) => (
               <li

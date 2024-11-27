@@ -50,8 +50,7 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
     >
       <div
         className={`flex items-center gap-1 ${
-          isLoading &&
-          "w-[70px] bg-zinc-100 bg-amp-800 dark:bg-amp-100 rounded-md h-[20px]"
+          isLoading && "w-[70px] bg-amp-800 dark:bg-amp-100 rounded-md h-[20px]"
         }`}
       >
         {!isLoading && (

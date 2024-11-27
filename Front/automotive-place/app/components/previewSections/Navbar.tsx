@@ -66,7 +66,7 @@ export default function CustomNavbar({
     >
       <NavbarBrand>
         <p
-          className={`text-inherit font-extrabold ${navbarBg === "transparent" ? "text-zinc-300" : "text-zinc-700"}`}
+          className={`text-inherit font-extrabold ${navbarBg === "transparent" ? "text-amp-900" : "text-amp-300"}`}
         >
           A|M|P
         </p>
@@ -76,7 +76,7 @@ export default function CustomNavbar({
           <NavbarItem key={id}>
             <Link
               color="foreground"
-              className={`${navbarBg === "transparent" ? "text-zinc-300 hover:text-zinc-100" : "text-zinc-900 hover:text-zinc-500"}`}
+              className={`${navbarBg === "transparent" ? "text-amp-700 hover:text-amp-900" : "text-amp-100 hover:text-amp-300"}`}
               href="#"
             >
               {name}
@@ -88,13 +88,13 @@ export default function CustomNavbar({
         <div className="flex gap-2">
           <Link
             href={"./sign-up"}
-            className={`border-1.5 py-1.5 px-4 font-semibold rounded-sm text-sm ${navbarBg === "transparent" ? "text-zinc-300 hover:text-zinc-100 border-zinc-300" : "text-zinc-900 hover:text-zinc-500 border-zinc-700"}`}
+            className={`border-1.5 py-1.5 px-4 font-semibold rounded-sm text-sm ${navbarBg === "transparent" ? "text-amp-700 hover:text-amp-900 border-amp-700" : "text-amp-100 hover:text-amp-300 border-amp-300"}`}
           >
             {t("Core.CreateAccount")}
           </Link>
           <Link
             href={`./sign-in`}
-            className="bg-amp-500text-white py-1.5 font-semibold px-4 rounded-sm text-sm"
+            className="bg-amp-500 text-white py-1.5 font-semibold px-4 rounded-sm text-sm"
           >
             {t(isLogged ? "Core.GoToApp" : "Core.SignIn")}
           </Link>

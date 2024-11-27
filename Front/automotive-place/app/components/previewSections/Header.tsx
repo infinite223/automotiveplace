@@ -30,13 +30,13 @@ const Header = ({ isLogged = false }: { isLogged: boolean }) => {
       <div className="flex items-center gap-4 text-lg mt-4">
         <Link
           href={`./sign-in`}
-          className="text-white py-2 font-semibold px-6 rounded-sm border-zinc-300 border-1"
+          className="text-white py-2 font-semibold px-6 rounded-sm border-amp-700 border-1"
         >
           {t(isLogged ? "Core.GoToApp" : "Core.SignIn")}
         </Link>
         <Link
           href={`./sign-in`}
-          className="bg-amp-500text-white py-2 font-semibold px-6 rounded-sm"
+          className="bg-amp-500 text-white py-2 font-semibold px-6 rounded-sm"
         >
           {t("Preview.SeeDemoVesion")}
         </Link>

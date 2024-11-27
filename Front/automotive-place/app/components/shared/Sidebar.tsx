@@ -62,7 +62,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
                 }
               >
                 <span>Automotive</span>
-                <span className="text-amp-500font-bold">place</span>
+                <span className="text-amp-500 font-bold">place</span>
               </p>
             </div>
           </div>
@@ -137,7 +137,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         withHeader={true}
         visible={isModalOpen}
         title="Wybierz opcje"
-        additionalTailwindCss="relative bottom-40 bg-zinc-900"
+        additionalTailwindCss="relative bottom-40 bg-amp-900 dark:bg-amp-100 border-1 border-amp-700 dark:border-amp-300"
         defoultBG={false}
       >
         <SelectCreateOption />
