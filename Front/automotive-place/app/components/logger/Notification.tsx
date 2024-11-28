@@ -39,9 +39,9 @@ export const Notification: FC = () => {
             animate={{ opacity: 1, translateY: 0 }}
             exit={{ opacity: 0, translateY: 20 }}
             transition={{ duration: 0.5 }}
-            className="border-2 border-amp-800 dark:border-amp-200 bg-amp-900 dark:bg-amp-0bg-amp-000 dark:bg-amp-900 p-2 rounded-sm shadow-lg"
+            className="border-2 border-amp-800 dark:border-amp-200 bg-amp-900 dark:bg-amp-0 p-2 rounded-sm shadow-lg"
           >
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 text-black dark:text-white">
               <div className="flex items-center gap-3 justify-between w-full">
                 <NotificationIcon {...notification} />
                 <h3 className="text-sm">{t(notification.log.title)}</h3>

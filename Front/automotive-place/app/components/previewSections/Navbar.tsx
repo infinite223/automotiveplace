@@ -66,7 +66,7 @@ export default function CustomNavbar({
     >
       <NavbarBrand>
         <p
-          className={`text-inherit font-extrabold ${navbarBg === "transparent" ? "text-amp-900" : "text-amp-300"}`}
+          className={` font-extrabold ${navbarBg === "transparent" ? "text-amp-900" : "text-amp-300"}`}
         >
           A|M|P
         </p>

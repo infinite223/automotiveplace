@@ -14,6 +14,7 @@ import { CarItemMiniView } from "./CarItemMiniView";
 import { isTCarItem } from "@/app/utils/types/carItem";
 import { getMainContentDataForUser } from "@/app/services/content";
 import { LoadingMiniView } from "./LoadingMiniView";
+import { AMPSeparator } from "@/app/components/shared/AMPSeparator";
 
 export const HomeMainContent = () => {
   const [_content, setContent] = useState<TContentData[] | []>([]);
@@ -37,9 +38,10 @@ export const HomeMainContent = () => {
             return (
               <div
                 key={content.data.id}
-                className="flex w-full border-amp-300/30 dark:border-amp-700/30 border-b-[1px] border-t-0 items-center justify-center"
+                className="flex w-full flex-col items-center justify-center"
               >
                 <ContentSelect content={content} />
+                <AMPSeparator />
               </div>
             );
           })}
