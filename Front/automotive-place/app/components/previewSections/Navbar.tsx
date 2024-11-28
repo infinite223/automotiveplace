@@ -9,6 +9,9 @@ import {
   Link,
 } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
+import Logo from "../../../asets/logo_2.png";
+import Image from "next/image";
+import { Yant } from "@/app/utils/helpers";
 
 const navOptions = [
   {
@@ -65,11 +68,23 @@ export default function CustomNavbar({
       style={{ backgroundColor: navbarBg, transition: "background-color 0.3s" }}
     >
       <NavbarBrand>
-        <p
+        {/* <p
           className={` font-extrabold ${navbarBg === "transparent" ? "text-amp-900" : "text-amp-300"}`}
         >
           A|M|P
-        </p>
+        </p> */}
+        <div className="flex gap-4 items-center ">
+          <Image src={Logo} alt="logo" width={30} height={30} />
+          <span
+            className={
+              `text-md uppercase` +
+              Yant.className +
+              (navbarBg === "transparent" ? " text-amp-700" : " text-amp-100")
+            }
+          >
+            Automotiveplace
+          </span>
+        </div>{" "}
       </NavbarBrand>
       <NavbarContent className={`hidden sm:flex gap-4 `} justify="center">
         {navOptions.map(({ name }, id) => (

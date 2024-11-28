@@ -19,10 +19,12 @@ import { iconSizes } from "@/app/utils/constants";
 import { SlMenu } from "react-icons/sl";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { AllanBold, KalamBold } from "@/app/utils/helpers";
+import { KalamBold, Yant } from "@/app/utils/helpers";
 import { CreateProblemView } from "../createProblem";
 import { RootState } from "@/lib/store";
 import { setShowCreateProject } from "@/lib/features/actions/actionsSlice";
+import Logo from "../../../asets/logo_2.png";
+import Image from "next/image";
 
 interface ISideBar {}
 
@@ -47,7 +49,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
             <div className="px-4 2xl:hidden mt-4">
               <SlMenu size={iconSizes.base} />
             </div>
-            <div className="flex flex-col pl-1  max-2xl:hidden">
+            {/* <div className="flex flex-col pl-1  max-2xl:hidden">
               <h2
                 className={
                   `m-0 p-0 text-3xl font-extrabold mt-2 ` + KalamBold.className
@@ -64,8 +66,17 @@ export const SideBar: FC<ISideBar> = ({}) => {
                 <span>Automotive</span>
                 <span className="text-amp-500 font-bold">place</span>
               </p>
+            </div> */}
+
+            <div className="flex gap-4 pl-1 pt-2 items-center ">
+              <Image src={Logo} alt="logo" width={25} height={25} />
+              <span className={`text-md uppercase` + Yant.className}>
+                Automotiveplace
+              </span>
             </div>
           </div>
+          <AMPSeparator additionalTailwindCss={smallScreenHiddenItem} />
+
           <OptionItem
             icon={<MdHome size={iconSizes.base} />}
             name={t("Core.Home")}

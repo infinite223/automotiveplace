@@ -1,6 +1,7 @@
-import { Kalam, Permanent_Marker } from "next/font/google";
+import { Kalam, Permanent_Marker, Yantramanav } from "next/font/google";
 import { TProject } from "./types/project";
 import { TStage } from "./types/stage";
+
 const KalamBold = Kalam({
   subsets: ["latin"],
   display: "swap",
@@ -10,6 +11,12 @@ const AllanBold = Permanent_Marker({
   subsets: ["latin"],
   display: "swap",
   weight: "400",
+});
+
+const Yant = Yantramanav({
+  subsets: ["latin-ext"],
+  display: "swap",
+  weight: "900",
 });
 
 export const getCurrentStage = (project: TProject) => {
@@ -38,4 +45,4 @@ export const getCurrentStage = (project: TProject) => {
   return currentStage;
 };
 
-export { AllanBold, KalamBold };
+export { AllanBold, KalamBold, Yant };
