@@ -68,7 +68,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
               </p>
             </div> */}
 
-            <div className="flex gap-4 pl-1 pt-2 items-center ">
+            <div className="gap-4 pl-1 pt-2 items-center hidden 2xl:flex">
               <Image src={Logo} alt="logo" width={25} height={25} />
               <span className={`text-md uppercase` + Yant.className}>
                 Automotiveplace
