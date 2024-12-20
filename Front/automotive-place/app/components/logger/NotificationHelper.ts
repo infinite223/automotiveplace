@@ -1,4 +1,5 @@
-import { ErrorStatus, ICreateNotification } from "@/app/utils/types";
+import { ErrorStatus } from "@/app/utils/enums";
+import { ICreateNotification } from "@/app/utils/types";
 
 const CreateNotification = (
   status: ErrorStatus | "Success" | "Information",

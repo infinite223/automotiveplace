@@ -4,10 +4,11 @@ import { AMPButton } from "../app/components/shared/AMPButton";
 
 export default async function Home() {
   return (
-    <main className="flex text-zinc-900 min-h-screen flex-col items-center p-2">
+    <main className="flex text-amp-100 min-h-screen flex-col items-center p-2">
       <div className="flex items-center gap-3">
         <h3 className="font-extrabold text-[18px] uppercase">
-          AutoMotive <span className="text-baseColor">place</span>
+          AutoMotive{" "}
+          <span className="text-amp-700 dark:text-amp-300">place</span>
         </h3>
 
         <div> </div>

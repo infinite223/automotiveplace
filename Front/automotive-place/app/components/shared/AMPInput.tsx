@@ -38,7 +38,7 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
 
   const themeAMPButtonStyles = () => {
     if (themeOption === "auto") {
-      return "bg-custom-primary border-gray-300 focus:ring-teal-500 focus:border-teal-500 dark:border-zinc-800 dark:placeholder-gray-500 dark:text-white";
+      return "bg-amp-900 dark:bg-amp-0border-gray-300 focus:ring-teal-500 focus:border-teal-500 dark:border-amp-200 dark:placeholder-gray-500 dark:text-white";
     } else if (themeOption === "white") {
       return "bg-white border-gray-300 text-black";
     } else {

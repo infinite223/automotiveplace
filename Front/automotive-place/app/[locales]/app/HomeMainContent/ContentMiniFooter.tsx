@@ -23,13 +23,13 @@ export const ContentMiniFooter = ({
 
   const handleClickLike = () => {};
   return (
-    <nav className="flex text-custom-primary items-center justify-between w-full">
+    <nav className="flex items-center justify-between w-full">
       <div className="flex items-center gap-2">
         <CgShare size={iconSizes.base} />
         <div className="flex flex-col gap-2">
           {!isLoading && (
             <div
-              className={`flex rounded-md bg-custom-primary  h-min gap-2.5 pl-1 pr-1 pt-0.5 pb-0.5 items-center ${
+              className={`flex rounded-md bg-amp-900 dark:bg-amp-0 h-min gap-2.5 pl-1 pr-1 pt-0.5 pb-0.5 items-center ${
                 true && "cursor-pointer"
               }`}
               onClick={handleClickLike}
@@ -41,7 +41,7 @@ export const ContentMiniFooter = ({
                   isLikedByAuthUser ? "transform scale-95" : ""
                 }`}
               />
-              <span className="text-custom-secendary text-sm">
+              <span className="bg-amp-800 dark:bg-amp-100 text-sm">
                 {likesCount}
               </span>
             </div>

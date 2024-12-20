@@ -5,11 +5,7 @@ import { AMPTextarea } from "../shared/AMPTextarea";
 import { AMPSwitch } from "../shared/AMPSwitch";
 import { createProject } from "@/app/services/project";
 import { AMPHelpFooter } from "../shared/AMPHelpFooter";
-import {
-  ItemTypes,
-  ItemTypesPL,
-  TCarItemCreate,
-} from "@/app/utils/types/carItem";
+import { ItemTypes, TCarItemCreate } from "@/app/utils/types/carItem";
 import { TProjectCreate } from "@/app/utils/types/project";
 import { TStageCreate } from "@/app/utils/types/stage";
 import { TTagCreate } from "@/app/utils/types/tag";
@@ -39,9 +35,7 @@ export const CreateProjectView = () => {
     value: "",
     errorText: null,
   });
-  const [carItemType, setCarItemType] = useState<ItemTypes | ItemTypesPL>(
-    ItemTypesPL.Turbo
-  );
+  const [carItemType, setCarItemType] = useState<ItemTypes>(ItemTypes.Turbo);
   const [forSell, setForSell] = useState(false);
   const [inUse, setInUse] = useState(false);
   const [engineWasSwapped, setEngineWasSwapped] = useState(false);
@@ -128,7 +122,7 @@ export const CreateProjectView = () => {
 
   return (
     <main
-      className="flex justify-center text-custom-primary text-sm rounded-md"
+      className="flex justify-center bg-amp-000 dark:bg-amp-900 text-sm rounded-md"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="w-[200px] h-[11/12] p-3 mr-0 rounded-sm border-r border-zinc-700 ml-2">
@@ -144,7 +138,7 @@ export const CreateProjectView = () => {
             value={forSell}
           />
 
-          <p className="text-custom-secendary leading-3 text-[11px] mt-2">
+          <p className="bg-amp-800 dark:bg-amp-100 leading-3 text-[11px] mt-2">
             Po utworzeniu projektu można go edytować.
           </p>
         </div>
@@ -157,7 +151,7 @@ export const CreateProjectView = () => {
         <AMPInput
           name="Nazwa elementu"
           setValue={(text) =>
-            setNameElement({  
+            setNameElement({
               value: text,
               errorText: validCarNameValue(text)[0].error,
             })

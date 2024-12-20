@@ -36,7 +36,8 @@
     "react-tooltip": "^5.26.4",
     "redux": "^5.0.1",
     "sass": "^1.77.1",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@mermaid-js/mermaid-cli": "^10.9.1",

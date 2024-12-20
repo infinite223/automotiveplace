@@ -2,6 +2,7 @@
   "Core": {
     "SignIn": "Zaloguj się",
     "SignUp": "Zarejestruj się",
+    "GoToApp": "Przejdź do aplikacji",
     "CreateAccount": "Utwórz konto",
     "DoYouAlreadyHaveAnAccount": "Masz już konto?",
     "DontHaveAnAccountYet": "Nie masz jeszcze konta?",
@@ -17,7 +18,31 @@
     "Problems": "Problemu",
     "Company": "Firmy",
     "Settings": "Ustawienia",
-    "YouAreAlreadyLoggedInAsAdmin": "Jesteś już zalogowany jako admin"
+    "YouAreAlreadyLoggedInAsAdmin": "Jesteś już zalogowany jako admin",
+    "CarItemTypes": {
+      "Turbo": "Turbo",
+      "Exhaust": "Wydech",
+      "Kompressor": "Kompresor",
+      "Brakes": "Hamulce",
+      "Audio": "Audio",
+      "Clutch": "Sprzęgło",
+      "Suspension": "Zawieszenie",
+      "EngineTuneUp": "Strojenie silnika",
+      "Transmission": "Skrzynia biegów",
+      "Wheels": "Koła",
+      "Tires": "Opony",
+      "FuelInjectors": "Wtryskiwacze paliwa",
+      "CoolingSystem": "Układ chłodzenia",
+      "Battery": "Akumulator",
+      "Alternator": "Alternator",
+      "StarterMotor": "Rozrusznik",
+      "SteeringSystem": "Układ kierowniczy",
+      "Lights": "Światła",
+      "BodyKit": "Body Kit",
+      "Other": "Inny",
+      "Candles": "Świece",
+      "Driver": "Sterownik"
+    }
   },
   "Preview": {
     "title": "Aplikacja stworzona w celu połączenia motoryzacyjnej społeczności do jednego wspólnego miejsca.",

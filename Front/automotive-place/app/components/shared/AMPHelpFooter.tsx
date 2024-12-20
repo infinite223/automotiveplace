@@ -15,7 +15,7 @@ export const AMPHelpFooter: FC<IAMPHelpFooter> = ({
     <div
       onClick={() => setShowHelpInfo(true)}
       style={{ fontSize }}
-      className="p-3 text-custom-secendary opacity-55 text-center self-center flex items-center gap-2"
+      className="p-3 bg-amp-800 dark:bg-amp-100 opacity-55 text-center self-center flex items-center gap-2"
     >
       <GrHelpBook />
       {footerText}

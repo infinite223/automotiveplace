@@ -50,13 +50,12 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
     >
       <div
         className={`flex items-center gap-1 ${
-          isLoading &&
-          "w-[70px] bg-zinc-100 bg-custom-secendary rounded-md h-[20px]"
+          isLoading && "w-[70px] bg-amp-800 dark:bg-amp-100 rounded-md h-[20px]"
         }`}
       >
         {!isLoading && (
           <div
-            className={`flex rounded-md bg-custom-primary h-min gap-1.5 pl-1 pr-1 pt-0.5 pb-0.5 items-center ${
+            className={`flex rounded-md bg-amp-900 dark:bg-amp-0h-min gap-1.5 pl-1 pr-1 pt-0.5 pb-0.5 items-center ${
               handleClickLike && "cursor-pointer"
             }`}
             onClick={handleClickLike}
@@ -68,7 +67,9 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
                 isLikedByAuthUser ? "transform scale-95" : ""
               }`}
             />
-            <span className="text-custom-secendary text-sm">{likesCount}</span>
+            <span className="bg-amp-800 dark:bg-amp-100 text-sm">
+              {likesCount}
+            </span>
           </div>
         )}
 
@@ -97,7 +98,7 @@ export const AMPFooterItem: FC<AMPFooterItemProps> = ({
         }`}
       >
         {!isLoading && (
-          <div className={`text-[10px] leading-3 text-custom-secendary`}>
+          <div className={`text-[10px] leading-3 bg-amp-800 dark:bg-amp-100`}>
             {!authorName && (
               <div>
                 Autor:{" "}

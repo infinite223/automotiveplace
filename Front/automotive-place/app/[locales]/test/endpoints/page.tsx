@@ -110,7 +110,7 @@ export default function Page() {
   };
 
   return (
-    <main className="flex min-h-screen bg-custom-primary text-custom-primary flex-col items-center gap-2 p-2">
+    <main className="flex min-h-screen bg-amp-900 dark:bg-amp-0bg-amp-000 dark:bg-amp-900 flex-col items-center gap-2 p-2">
       {/* <Notification /> */}
       <div className="flex flex-col gap-3 w-full">
         <p className="text-sm font-semibold">
@@ -124,7 +124,7 @@ export default function Page() {
             >
               <div className="flex flex-col gap-2">
                 {endpoint.name}
-                <span className="text-[12px] text-custom-secendary leading-4">
+                <span className="text-[12px] bg-amp-800 dark:bg-amp-100 leading-4">
                   {endpoint.description}
                 </span>
               </div>
@@ -139,7 +139,7 @@ export default function Page() {
                 />
                 <button
                   onClick={() => evaluateFunction(endpoint)}
-                  className="bg-custom-secendary hover:opacity-85 py-1 px-4 font-bold rounded-sm text-[12px] uppercase"
+                  className="bg-amp-800 dark:bg-amp-100 hover:opacity-85 py-1 px-4 font-bold rounded-sm text-[12px] uppercase"
                 >
                   Run endpoint
                 </button>

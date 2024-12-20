@@ -19,10 +19,12 @@ import { iconSizes } from "@/app/utils/constants";
 import { SlMenu } from "react-icons/sl";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { AllanBold, KalamBold } from "@/app/utils/helpers";
+import { KalamBold, Yant } from "@/app/utils/helpers";
 import { CreateProblemView } from "../createProblem";
 import { RootState } from "@/lib/store";
 import { setShowCreateProject } from "@/lib/features/actions/actionsSlice";
+import Logo from "../../../asets/logo_2.png";
+import Image from "next/image";
 
 interface ISideBar {}
 
@@ -40,32 +42,23 @@ export const SideBar: FC<ISideBar> = ({}) => {
   const closeModal = () => setIsModalOpen(false);
   // TODO - zmiana wyświetlania się sidebara dla mobilnej wersji lub implementacja nowego
   return (
-    <div className="flex min-w-[100px] 2xl:w-[240px] border-zinc-900 h-full border-r-1 scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
+    <div className="flex min-w-[100px] 2xl:w-[240px] h-full scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
       <div className="flex flex-col gap-1 h-[100%] 2xl:ml-4 justify-between py-1 pb-2">
         <div className="flex flex-col items-start max-2xl:items-center max-2xl:pr-3 max-2xl:min-w-0">
           <div className="flex items-center gap-2 mb-2">
             <div className="px-4 2xl:hidden mt-4">
               <SlMenu size={iconSizes.base} />
             </div>
-            <div className="flex flex-col pl-1  max-2xl:hidden">
-              <h2
-                className={
-                  `m-0 p-0 text-3xl font-extrabold mt-2 ` + KalamBold.className
-                }
-              >
-                <span className="text-redColor">A</span>MP
-              </h2>
-              <p
-                className={
-                  `text-sm p-0 m-0 mt-[-2px] border-t-1 border-zinc-600 ` +
-                  KalamBold.className
-                }
-              >
-                <span>Automotive</span>
-                <span className="text-redColor font-bold">place</span>
-              </p>
+
+            <div className="gap-4 pl-1 pt-2 items-center hidden 2xl:flex">
+              <Image src={Logo} alt="logo" width={25} height={25} />
+              <span className={`text-md uppercase` + Yant.className}>
+                Automotiveplace
+              </span>
             </div>
           </div>
+          <AMPSeparator additionalTailwindCss={smallScreenHiddenItem} />
+
           <OptionItem
             icon={<MdHome size={iconSizes.base} />}
             name={t("Core.Home")}
@@ -137,7 +130,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         withHeader={true}
         visible={isModalOpen}
         title="Wybierz opcje"
-        additionalTailwindCss="relative bottom-40 bg-zinc-900"
+        additionalTailwindCss="relative bottom-[15vh] bg-amp-900 dark:bg-amp-100 border-1 border-amp-700 dark:border-amp-300"
         defoultBG={false}
       >
         <SelectCreateOption />
@@ -168,7 +161,7 @@ const OptionItem: FC<{
       className={`${additionalTailwindCss} flex-row gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 pl-1 hover:opacity-70 cursor-pointer flex items-center justify-center`}
       onClick={onClick}
     >
-      <div className="text-custom-secendary">{icon}</div>
+      <div className="bg-amp-800 dark:bg-amp-100">{icon}</div>
       <div className="text-md max-2xl:text-[12px] text-center leading-4">
         {name}
       </div>

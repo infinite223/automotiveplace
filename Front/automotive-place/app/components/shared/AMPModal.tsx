@@ -30,7 +30,7 @@ const AMPModal = ({
       {visible && (
         <motion.div
           onClick={onClose}
-          className="fixed cursor-pointer top-0 left-0 w-full z-20 h-full flex justify-center items-center bg-zinc-100/25 dark:bg-zinc-950/25 bg-opacity-50 custom-blur"
+          className="fixed cursor-pointer top-0 left-0 w-full z-20 h-full flex justify-center items-center bg-amp-900/25 dark:bg-amp-100/25 bg-opacity-50 custom-blur"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -47,7 +47,7 @@ const AMPModal = ({
             transition={{ duration: 0.3 }}
           >
             <div
-              className={`${defoultBG && "bg-custom-primary"} shadow-zinc-200 dark:shadow-zinc-800 rounded-sm p-0 z-30`}
+              className={`${defoultBG && "bg-custom-primary"} shadow-amp-800 dark:shadow-amp-200 rounded-sm p-0 z-30`}
             >
               {withHeader && <AMPModalHeader title={title} onClose={onClose} />}
               {children}

@@ -36,7 +36,7 @@ export const CreatePostView = () => {
 
   return (
     <main
-      className="flex justify-center text-custom-primary text-sm rounded-md"
+      className="flex justify-center bg-amp-000 dark:bg-amp-900 text-sm rounded-md"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="w-[250px] h-[11/12] p-3 pr-4 rounded-sm border-r border-zinc-700 ml-2"></div>

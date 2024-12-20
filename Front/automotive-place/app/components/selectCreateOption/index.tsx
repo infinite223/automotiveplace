@@ -64,8 +64,7 @@ const OptionItem = ({
   return (
     <motion.div
       onClick={onClick}
-      whileHover={{ backgroundColor: "rgb(82, 82, 91)" }}
-      className="w-full rounded-sm flex flex-co gap-4 px-4 items-center p-2 cursor-pointer"
+      className="w-full rounded-sm flex flex-co gap-4 px-4 items-center p-2 cursor-pointer hover:bg-amp-700 dark:hover:bg-amp-300"
     >
       <AnimatePresence>
         <motion.div

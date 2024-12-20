@@ -1,11 +1,13 @@
+"use server";
+
 import { AllanBold, KalamBold } from "@/app/utils/helpers";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import React from "react";
 
-const Header = () => {
+const Header = ({ isLogged = false }: { isLogged: boolean }) => {
   const t = useTranslations();
 
+  console.log(isLogged);
   return (
     <section className="custom-gradient flex h-screen flex-col items-center gap-4 justify-center relative">
       <h1
@@ -28,20 +30,20 @@ const Header = () => {
       <div className="flex items-center gap-4 text-lg mt-4">
         <Link
           href={`./sign-in`}
-          className="text-white py-2 font-semibold px-6 rounded-sm border-zinc-300 border-1"
+          className="text-white py-2 font-semibold px-6 rounded-sm border-amp-700 border-1"
         >
-          {t("Core.SignIn")}
+          {t(isLogged ? "Core.GoToApp" : "Core.SignIn")}
         </Link>
         <Link
           href={`./sign-in`}
-          className="bg-redColor text-white py-2 font-semibold px-6 rounded-sm"
+          className="bg-amp-500 text-white py-2 font-semibold px-6 rounded-sm"
         >
           {t("Preview.SeeDemoVesion")}
         </Link>
       </div>
 
       {/* TODO - change this to cards with some data about  Projekty, Spoty, Wydarzenia*/}
-      {/* <div className="flex text-md mt-2 z-[2] uppercase font-bold text-baseColor">
+      {/* <div className="flex text-md mt-2 z-[2] uppercase font-bold text-amp-700 dark:text-amp-300">
         Projekty, Spoty, Wydarzenia
       </div> */}
 

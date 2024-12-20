@@ -1,3 +1,4 @@
+import { ContentType } from "../enums";
 import { TContentData } from "../types";
 import { generateRandomPosts } from "./post";
 import { generateRandomProblems } from "./problem";
@@ -41,7 +42,7 @@ export const generateRandomContent = (count: number): TContentData[] => {
     let data;
 
     switch (randomType) {
-      case "Project":
+      case ContentType.Project:
         data = generateRandomProjects(1)[0];
         break;
       case "Problem":

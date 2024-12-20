@@ -37,7 +37,7 @@ type TProject = {
   transmissionGears: number;
   transmissionDescription?: string;
   transmissionWasSwapped?: boolean;
-  transmissionType: number; // type -> 0 - maual | 1 - automat
+  transmissionType: number; // type -> 0 - maual | 1 - automat -> TransmissionType enum
 
   carItems?: TCarItem[];
   stages?: TStage[];

@@ -1,5 +1,6 @@
 import { iconSizes } from "@/app/utils/constants";
-import { ErrorStatus, INotification } from "@/app/utils/types";
+import { ErrorStatus } from "@/app/utils/enums";
+import { INotification } from "@/app/utils/types";
 import { BiCheck } from "react-icons/bi";
 import { ImInfo } from "react-icons/im";
 import { IoAlert } from "react-icons/io5";

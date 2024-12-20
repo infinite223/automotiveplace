@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <main className="flex bg-custom-primary text-custom-primary flex-col items-center gap-2 p-2">
+    <main className="flex bg-amp-900 dark:bg-amp-0bg-amp-000 dark:bg-amp-900 flex-col items-center gap-2 p-2">
       <main className="flex w-full">
         <div className="flex flex-col gap-3">
           <div className="flex flex-wrap gap-2">

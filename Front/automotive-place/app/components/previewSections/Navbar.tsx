@@ -9,6 +9,9 @@ import {
   Link,
 } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
+import Logo from "../../../asets/logo_2.png";
+import Image from "next/image";
+import { Yant } from "@/app/utils/helpers";
 
 const navOptions = [
   {
@@ -33,7 +36,11 @@ const navOptions = [
   },
 ];
 
-export default function CustomNavbar() {
+export default function CustomNavbar({
+  isLogged = false,
+}: {
+  isLogged: boolean;
+}) {
   const [navbarBg, setNavbarBg] = useState("transparent");
   const t = useTranslations();
 
@@ -61,18 +68,30 @@ export default function CustomNavbar() {
       style={{ backgroundColor: navbarBg, transition: "background-color 0.3s" }}
     >
       <NavbarBrand>
-        <p
-          className={`text-inherit font-extrabold ${navbarBg === "transparent" ? "text-zinc-300" : "text-zinc-700"}`}
+        {/* <p
+          className={` font-extrabold ${navbarBg === "transparent" ? "text-amp-900" : "text-amp-300"}`}
         >
           A|M|P
-        </p>
+        </p> */}
+        <div className="flex gap-4 items-center ">
+          <Image src={Logo} alt="logo" width={30} height={30} />
+          <span
+            className={
+              `text-md uppercase` +
+              Yant.className +
+              (navbarBg === "transparent" ? " text-amp-700" : " text-amp-100")
+            }
+          >
+            Automotiveplace
+          </span>
+        </div>{" "}
       </NavbarBrand>
       <NavbarContent className={`hidden sm:flex gap-4 `} justify="center">
         {navOptions.map(({ name }, id) => (
           <NavbarItem key={id}>
             <Link
               color="foreground"
-              className={`${navbarBg === "transparent" ? "text-zinc-300 hover:text-zinc-100" : "text-zinc-900 hover:text-zinc-500"}`}
+              className={`${navbarBg === "transparent" ? "text-amp-700 hover:text-amp-900" : "text-amp-100 hover:text-amp-300"}`}
               href="#"
             >
               {name}
@@ -84,15 +103,15 @@ export default function CustomNavbar() {
         <div className="flex gap-2">
           <Link
             href={"./sign-up"}
-            className={`border-1.5 py-1.5 px-4 font-semibold rounded-sm text-sm ${navbarBg === "transparent" ? "text-zinc-300 hover:text-zinc-100 border-zinc-300" : "text-zinc-900 hover:text-zinc-500 border-zinc-700"}`}
+            className={`border-1.5 py-1.5 px-4 font-semibold rounded-sm text-sm ${navbarBg === "transparent" ? "text-amp-700 hover:text-amp-900 border-amp-700" : "text-amp-100 hover:text-amp-300 border-amp-300"}`}
           >
             {t("Core.CreateAccount")}
           </Link>
           <Link
             href={`./sign-in`}
-            className="bg-redColor text-white py-1.5 font-semibold px-4 rounded-sm text-sm"
+            className="bg-amp-500 text-white py-1.5 font-semibold px-4 rounded-sm text-sm"
           >
-            {t("Core.SignIn")}
+            {t(isLogged ? "Core.GoToApp" : "Core.SignIn")}
           </Link>
         </div>
       </NavbarContent>

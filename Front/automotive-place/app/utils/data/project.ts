@@ -72,6 +72,26 @@ export function generateRandomProjects(count: number) {
         description: "Car enthusiast and collector.",
         email: "dawid@example.com",
       },
+      stages: [
+        {
+          acc_0_100: 7,
+          acc_100_200: 17,
+          acc_50_150: 14,
+          createdAt: new Date(),
+          createdById: "1",
+          description: "Zwykły stage 1",
+          hp: 270,
+          id: "1",
+          name: "Stage 1",
+          nm: 420,
+          projectId: "1",
+          stageNumber: 1,
+          updatedAt: new Date(),
+          sl_100_0: 150,
+          sl_150_50: 230,
+          stagePrice: 2330,
+        },
+      ],
     };
 
     if (project.imagesCount > 0) {

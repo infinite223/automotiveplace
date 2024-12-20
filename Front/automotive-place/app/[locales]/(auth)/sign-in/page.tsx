@@ -70,14 +70,17 @@ export default function Page() {
         </div>
         <AMPButton
           name={t("Core.SignIn")}
-          additionalTailwindCss="bg-redColor text-white text-sm rounded-sm py-1.5"
+          additionalTailwindCss="bg-amp-500 text-white text-sm rounded-sm py-1.5"
         />
       </form>
 
       <footer className="mt-3">
         <p className="text-xs">
           {t("Core.DontHaveAnAccountYet")}
-          <Link href={"./sign-up"} className="text-baseColor font-semibold">
+          <Link
+            href={"./sign-up"}
+            className="text-amp-700 dark:text-amp-300 font-semibold"
+          >
             {" "}
             {t("Core.SignUp")}
           </Link>
