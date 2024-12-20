@@ -48,6 +48,7 @@ model User {
 
   pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
   reports    Report[]
+  notifications Notification[]
   suggestedContentModel     String? 
   companyId   String?
   company  Company?  @relation(fields: [companyId], references: [id])
@@ -360,6 +361,37 @@ model Location {
   event        Event? @relation(fields: [spotId], references: [id])
   spot        Spot? @relation(fields: [eventId], references: [id])
 }
+
+model Notification {
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  userId       String @unique
+  title        String
+  description  String
+  isRead       Boolean
+  isImportant  Boolean
+  user      User? @relation(fields: [userId], references: [id])
+}
+
+// model Message {
+//   id        String   @id @default(cuid())
+//   content   String
+//   createdAt DateTime @default(now())
+//   senderId  String
+//   receiverId String
+//   sender    User     @relation("SentMessages", fields: [senderId], references: [id])
+//   receiver  User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+// }
+
+
+// model Media {
+//   id        String   @id @default(cuid())
+//   url       String
+//   type      String
+//   createdAt DateTime @default(now())
+//   userId    String
+//   user      User     @relation(fields: [userId], references: [id])
+// }
 
 // TODO - cały osobny model czatu 
 // Chats -> Messages

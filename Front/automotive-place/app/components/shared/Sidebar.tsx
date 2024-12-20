@@ -49,24 +49,6 @@ export const SideBar: FC<ISideBar> = ({}) => {
             <div className="px-4 2xl:hidden mt-4">
               <SlMenu size={iconSizes.base} />
             </div>
-            {/* <div className="flex flex-col pl-1  max-2xl:hidden">
-              <h2
-                className={
-                  `m-0 p-0 text-3xl font-extrabold mt-2 ` + KalamBold.className
-                }
-              >
-                <span className="text-amp-500">A</span>MP
-              </h2>
-              <p
-                className={
-                  `text-sm p-0 m-0 mt-[-2px] border-t-1 border-zinc-600 ` +
-                  KalamBold.className
-                }
-              >
-                <span>Automotive</span>
-                <span className="text-amp-500 font-bold">place</span>
-              </p>
-            </div> */}
 
             <div className="gap-4 pl-1 pt-2 items-center hidden 2xl:flex">
               <Image src={Logo} alt="logo" width={25} height={25} />
@@ -148,7 +130,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         withHeader={true}
         visible={isModalOpen}
         title="Wybierz opcje"
-        additionalTailwindCss="relative bottom-40 bg-amp-900 dark:bg-amp-100 border-1 border-amp-700 dark:border-amp-300"
+        additionalTailwindCss="relative bottom-[15vh] bg-amp-900 dark:bg-amp-100 border-1 border-amp-700 dark:border-amp-300"
         defoultBG={false}
       >
         <SelectCreateOption />

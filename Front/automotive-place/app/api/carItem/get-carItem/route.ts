@@ -1,16 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { getTranslations } from "../../helpers";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 
 export async function GET(request: NextRequest) {
   const user = await getLoggedInUser();
-  const locale = request.headers.get("accept-language")?.split(",")[0] || "en";
-  const t = getTranslations(locale);
 
   if (!user) {
     return NextResponse.json(
-      { message: t["Core"]["YouMustBeLoggedInToUseThisFunctionality"] },
+      { message: "YouMustBeLoggedInToUseThisFunctionality" },
       {
         status: 404,
         statusText: "Unauthorized",

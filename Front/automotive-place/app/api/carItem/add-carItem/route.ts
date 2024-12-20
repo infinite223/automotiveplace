@@ -4,18 +4,15 @@ import { validCarElement } from "./../../../components/createCarItem/Validation"
 import { TCarItemCreate } from "@/app/utils/types/carItem";
 import { ErrorStatus } from "@/app/utils/enums";
 import { Prisma } from "@prisma/client";
-import { getTranslations } from "../../helpers";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
 
 export async function POST(request: NextRequest) {
   const user = await getLoggedInUser();
-  const locale = request.headers.get("accept-language")?.split(",")[0] || "en";
-  const t = getTranslations(locale);
 
   if (!user) {
     return NextResponse.json(
-      { message: t["Core"]["YouMustBeLoggedInToUseThisFunctionality"] },
+      { message: "YouMustBeLoggedInToUseThisFunctionality" },
       {
         status: 404,
         statusText: "Unauthorized",

@@ -1,9 +1,10 @@
-import path from "path";
-import fs from "fs";
+import winston from "winston";
 
-export const getTranslations = (locale: string) => {
-  const filePath = path.join(process.cwd(), `locales/${locale}.json`);
-  const translations = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-
-  return translations;
-};
+export const logger = winston.createLogger({
+  level: "info",
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
+});

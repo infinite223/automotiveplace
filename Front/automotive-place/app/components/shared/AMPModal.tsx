@@ -41,7 +41,7 @@ const AMPModal = ({
             className={`${additionalTailwindCss} cursor-default`}
             id="onClose_helper"
             onClick={(e) => e.stopPropagation()}
-            initial={{ scale: 0.8, opacity: 0 }}  
+            initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.3 }}
