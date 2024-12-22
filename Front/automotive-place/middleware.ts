@@ -1,38 +1,41 @@
 import createMiddleware from "next-intl/middleware";
+import { NextRequest, NextResponse } from "next/server";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
 
-export default createMiddleware({
-  locales: ["en", "pl"],
-  defaultLocale: "en",
-});
+// export default createMiddleware({
+//   locales: ["en", "pl"],
+//   defaultLocale: "en",
+// });
 
 export const config = {
   matcher: ["/", "/(pl|en)/:path*"],
 };
 
-// import { NextResponse } from "next/server";
-// import { getLoggedInUser } from "@/lib/actions/user.actions"; // Z Twojej funkcji getLoggedInUser
+const publicPaths = [
+  "/sign-in",
+  "/sign-up",
+  "/public-page",
+  "/",
+  "/preview",
+  "",
+];
 
-// export default async function middleware(req) {
-//   const { pathname, locale } = req.nextUrl;
+export default async function middleware(request: NextRequest) {
+  const [, locale, ...segments] = request.nextUrl.pathname.split("/");
+  const pathname = request.nextUrl.pathname;
 
-//   // Wyjątki: strony, które nie wymagają zalogowania
-//   const publicPaths = [`/${locale}/sign-in`, `/${locale}/sign-up`, `/${locale}/public-page`];
+  if (!publicPaths.some((path) => pathname.startsWith(`/${locale}${path}`))) {
+    const user = await getLoggedInUser();
 
-//   // Jeśli ścieżka jest publiczna, nie sprawdzaj logowania
-//   if (publicPaths.some((path) => pathname.startsWith(path))) {
-//     return NextResponse.next();
-//   }
+    if (!user) {
+      request.nextUrl.pathname = `/${locale}/sign-in`;
+    }
+  }
 
-//   // Sprawdź, czy użytkownik jest zalogowany
-//   const user = await getLoggedInUser();
-//   if (!user) {
-//     const redirectUrl = `/${locale}/sign-in`;
-//     return NextResponse.redirect(new URL(redirectUrl, req.url));
-//   }
-
-//   return NextResponse.next();
-// }
-
-// export const config = {
-//   matcher: ["/((?!api|_next|static|favicon.ico).*)"], // Middleware działa na wszystkich stronach z wyjątkiem API i zasobów statycznych
-// };
+  const handleI18nRouting = createMiddleware({
+    locales: ["en", "pl"],
+    defaultLocale: "en",
+  });
+  const response = handleI18nRouting(request);
+  return response;
+}

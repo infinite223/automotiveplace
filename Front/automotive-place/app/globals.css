@@ -15,45 +15,6 @@
   --redColor: #db1f48;
 }
 
-.custom-gradient {
-  /* background: rgb(2, 0, 36); */
-  /* background-image: url("../asets/bg.jpg");
-  background-size: cover; */
-  background-color: black;
-  /* background: rgb(2, 0, 36);
-  background: linear-gradient(
-    180deg,
-    rgb(2, 0, 36) 0%,
-    rgb(2, 2, 36) 70%,
-    rgb(209, 209, 210) 90%,
-    rgb(255, 255, 255) 100%
-  ); */
-
-  /* background: linear-gradie`nt(
-    356deg,
-    var(--whiteColor) 0%,
-    var(--whiteColor) 20%,
-    var(--baseColorSecendary) 20%,
-    var(--baseColor) 90%,
-    var(--baseColor) 100%
-  ); */
-
-  /* @media (max-width: 1250px) {
-    background: rgb(2, 0, 36);
-  } */
-}
-
-/* .bg-amp-900 dark:bg-amp-0{
-  @apply bg-zinc-100 dark:bg-zinc-950;
-} */
-/* .bg-amp-800 dark:bg-amp-100 {
-  @apply bg-zinc-300 dark:bg-zinc-800;
-} */
-
-/* .bg-amp-800 dark:bg-amp-300 {
-  @apply bg-zinc-200 dark:bg-zinc-800;
-} */
-
 .border-custom-primary {
   @apply border-zinc-200 dark:border-zinc-800;
 }
@@ -61,14 +22,6 @@
 .border-custom-secendary {
   @apply border-zinc-100 dark:border-zinc-900;
 }
-
-/* .bg-amp-000 dark:bg-amp-900 {
-  @apply text-black dark:text-white;
-} */
-
-/* .bg-amp-800 dark:bg-amp-100 {
-  @apply text-zinc-700 dark:text-zinc-300;
-} */
 
 .loading-text-custom {
   @apply text-zinc-300 dark:text-zinc-800;
@@ -78,31 +31,6 @@
   backdrop-filter: blur(2px);
 }
 
-/* .bg-amp-700 dark:bg-amp-300 {
-  @apply bg-teal-600;
-  background-color: var(--baseColor);
-} */
-
-/* .text-amp-700 dark:text-amp-300 {
-  @apply text-teal-600;
-  color: var(--baseColor);
-} */
-
-/* .bg-amp-700 dark:bg-amp-300 {
-  @apply bg-teal-700;
-  background-color: var(--baseColorSecendary);
-} */
-
-/* .bg-amp-500 {
-  @apply bg-red-600;
-  background-color: var(--redColor);
-}
-
-.text-amp-500 {
-  @apply text-red-600;
-  color: var(--redColor);
-} */
-
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -110,25 +38,6 @@ input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
   -webkit-text-fill-color: #fff !important;
 }
-
-/* width */
-/* ::-webkit-scrollbar {
-  width: 5px;
-} */
-
-/* ::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-zinc-400 dark:bg-zinc-600;
-}
-
-
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-zinc-500 dark:bg-zinc-500;
-  @apply bg-teal-500;
-} */
 
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;

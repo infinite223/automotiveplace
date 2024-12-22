@@ -74,7 +74,13 @@ export default function CustomNavbar({
           A|M|P
         </p> */}
         <div className="flex gap-4 items-center ">
-          <Image src={Logo} alt="logo" width={30} height={30} />
+          <Image
+            src={Logo}
+            alt="logo"
+            width={30}
+            height={30}
+            className="rounded-lg"
+          />
           <span
             className={
               `text-md uppercase` +
