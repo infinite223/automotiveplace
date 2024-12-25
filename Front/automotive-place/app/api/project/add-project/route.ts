@@ -5,6 +5,8 @@ import { TProjectCreate } from "@/app/utils/types/project";
 import { validProject } from "@/app/components/createProject/Validation";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { ErrorStatus } from "@/app/utils/enums";
+import { createProjectSchema } from "../../zod.schmas";
+import { CreateNotification } from "@/app/components/logger/NotificationHelper";
 
 export async function POST(request: NextRequest) {
   const user = await getLoggedInUser();
@@ -32,16 +34,20 @@ export async function POST(request: NextRequest) {
   let newCarItem = null;
 
   const author = await prisma.user.findFirst();
+  // TODO - change validation in all routes to zod
+  const validProject = createProjectSchema.safeParse(project);
+  // const result = validProject(project);
+  // const findInValidResult = result.validResults.find(
+  //   (result) => result.valid == false
+  // );
 
-  const result = validProject(project);
-  const findInValidResult = result.validResults.find(
-    (result) => result.valid == false
-  );
-
-  if (findInValidResult) {
+  if (!validProject.success) {
     return NextResponse.json({
       carItem: newCarItem,
-      notification: result.notification,
+      notification: CreateNotification(
+        ErrorStatus.Medium,
+        validProject.error.message
+      ),
     });
   }
 

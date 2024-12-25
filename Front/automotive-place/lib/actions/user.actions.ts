@@ -6,6 +6,8 @@ import { cookies } from "next/headers";
 import prisma from "../prisma";
 import { AccountTypes, ErrorStatus } from "@/app/utils/enums";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
+import { redirect } from "next/navigation";
+import { getLocale } from "next-intl/server";
 
 export type SignInParams = {
   email: string;
@@ -17,6 +19,13 @@ type SignUpParams = SignInParams & {
 };
 
 export const getUserInfo = async (id: string) => {
+  const user = getLoggedInUser();
+
+  if (!user) {
+    const locale = await getLocale();
+    return redirect(`/${locale}/sign-in`);
+  }
+
   try {
     const findUser = await prisma.user.findUnique({ where: { id } });
     return JSON.parse(JSON.stringify(findUser));
