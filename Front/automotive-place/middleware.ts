@@ -1,8 +1,6 @@
 import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
-import requestIp from "request-ip"; // Import request-ip
-import { NextApiRequest } from "next";
 import { LRUCache } from "lru-cache";
 import { logger } from "./app/api/logger.config";
 
@@ -32,8 +30,17 @@ const rateLimitCache = new LRUCache<
   ttl: 60 * 1000,
 });
 
+function getClientIp(request: NextRequest): string | null {
+  const xForwardedFor = request.headers.get("x-forwarded-for");
+  if (xForwardedFor) {
+    const ips = xForwardedFor.split(",");
+    return ips[0].trim();
+  }
+  return request.headers.get("x-real-ip") || request.ip || null;
+}
+
 function rateLimit(request: NextRequest): boolean {
-  const ip = requestIp.getClientIp(request as unknown as NextApiRequest) || "";
+  const ip = getClientIp(request);
 
   if (!ip) {
     return false;
@@ -55,11 +62,13 @@ function rateLimit(request: NextRequest): boolean {
   rateLimitCache.set(ip, requestCount);
   if (requestCount.count > 100) {
     logger.error(`Rate limit (100) exceeded for IP: ${ip}`);
+
     return false;
   }
 
   if (requestCount.count > 50) {
     logger.error(`Rate limit (50) exceeded for IP: ${ip}`);
+
     return false;
   }
 
