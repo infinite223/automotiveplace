@@ -1,38 +1,95 @@
 import createMiddleware from "next-intl/middleware";
+import { NextRequest, NextResponse } from "next/server";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
+import requestIp from "request-ip"; // Import request-ip
+import { NextApiRequest } from "next";
+import { LRUCache } from "lru-cache";
+import { logger } from "./app/api/logger.config";
 
-export default createMiddleware({
-  locales: ["en", "pl"],
-  defaultLocale: "en",
-});
+// export default createMiddleware({
+//   locales: ["en", "pl"],
+//   defaultLocale: "en",
+// });
 
 export const config = {
   matcher: ["/", "/(pl|en)/:path*"],
 };
 
-// import { NextResponse } from "next/server";
-// import { getLoggedInUser } from "@/lib/actions/user.actions"; // Z Twojej funkcji getLoggedInUser
+const publicPaths = [
+  "/sign-in",
+  "/sign-up",
+  "/public-page",
+  "/",
+  "/preview",
+  "",
+];
 
-// export default async function middleware(req) {
-//   const { pathname, locale } = req.nextUrl;
+const rateLimitCache = new LRUCache<
+  string,
+  { count: number; lastRequestTime: number }
+>({
+  max: 500,
+  ttl: 60 * 1000,
+});
 
-//   // Wyjątki: strony, które nie wymagają zalogowania
-//   const publicPaths = [`/${locale}/sign-in`, `/${locale}/sign-up`, `/${locale}/public-page`];
+function rateLimit(request: NextRequest): boolean {
+  const ip = requestIp.getClientIp(request as unknown as NextApiRequest) || "";
 
-//   // Jeśli ścieżka jest publiczna, nie sprawdzaj logowania
-//   if (publicPaths.some((path) => pathname.startsWith(path))) {
-//     return NextResponse.next();
-//   }
+  if (!ip) {
+    return false;
+  }
 
-//   // Sprawdź, czy użytkownik jest zalogowany
-//   const user = await getLoggedInUser();
-//   if (!user) {
-//     const redirectUrl = `/${locale}/sign-in`;
-//     return NextResponse.redirect(new URL(redirectUrl, req.url));
-//   }
+  const currentTime = Date.now();
+  const requestCount = rateLimitCache.get(ip) || {
+    count: 0,
+    lastRequestTime: currentTime,
+  };
 
-//   return NextResponse.next();
-// }
+  if (currentTime - requestCount.lastRequestTime < 60 * 1000) {
+    requestCount.count += 1;
+  } else {
+    requestCount.count = 1;
+    requestCount.lastRequestTime = currentTime;
+  }
 
-// export const config = {
-//   matcher: ["/((?!api|_next|static|favicon.ico).*)"], // Middleware działa na wszystkich stronach z wyjątkiem API i zasobów statycznych
-// };
+  rateLimitCache.set(ip, requestCount);
+  if (requestCount.count > 100) {
+    logger.error(`Rate limit (100) exceeded for IP: ${ip}`);
+    return false;
+  }
+
+  if (requestCount.count > 50) {
+    logger.error(`Rate limit (50) exceeded for IP: ${ip}`);
+    return false;
+  }
+
+  return true;
+}
+
+export default async function middleware(request: NextRequest) {
+  const [, locale, ...segments] = request.nextUrl.pathname.split("/");
+  const pathname = request.nextUrl.pathname;
+
+  if (!publicPaths.some((path) => pathname.startsWith(`/${locale}${path}`))) {
+    const user = await getLoggedInUser();
+
+    if (!user) {
+      request.nextUrl.pathname = `/${locale}/sign-in`;
+    }
+  }
+
+  if (!rateLimit(request) && !request.url.includes("localhost")) {
+    console.log("Too many requests, please try again later.");
+    return NextResponse.json(
+      { message: "Too many requests, please try again later." },
+      { status: 429 }
+    );
+  }
+
+  const handleI18nRouting = createMiddleware({
+    locales: ["en", "pl"],
+    defaultLocale: "en",
+  });
+  const response = handleI18nRouting(request);
+  return response;
+}

@@ -9,7 +9,7 @@ const Header = ({ isLogged = false }: { isLogged: boolean }) => {
 
   console.log(isLogged);
   return (
-    <section className="custom-gradient flex h-screen flex-col items-center gap-4 justify-center relative">
+    <section className="bg-amp-50 flex h-screen flex-col items-center gap-4 justify-center relative">
       <h1
         className={
           `text-center text-7xl font-extrabold z-[2] ` + AllanBold.className

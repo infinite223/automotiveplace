@@ -4,8 +4,7 @@ import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { logger } from "@/app/api/logger.config";
 import prisma from "@/lib/prisma";
 
-export async function GET(request: NextRequest) {
-  logger.info("Get content data");
+export async function GET(request: NextRequest, response: NextResponse) {
   const userData = await getLoggedInUser();
 
   if (!userData) {
@@ -18,7 +17,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const { searchParams }: any = new URL(request.url);
+  const { searchParams }: any = new URL(request.url!);
   const limit = parseInt(searchParams.get("limit")) || 10;
   // TODO - dokończyć implementecje
   const userInterests = await prisma.userActivity.groupBy({
@@ -52,6 +51,8 @@ export async function GET(request: NextRequest) {
   const hasMore = false;
 
   let responseResult: any;
+
+  logger.info("Content was generated successfully ");
 
   return NextResponse.json({
     data: generateRandomContent(10),

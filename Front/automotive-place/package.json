@@ -21,9 +21,11 @@
     "bcrypt": "^5.1.1",
     "crypto-js": "^4.2.0",
     "deck.gl": "^9.0.17",
+    "express-rate-limit": "^7.5.0",
     "framer-motion": "^11.2.9",
     "fs": "^0.0.1-security",
     "intersection-observer": "^0.12.2",
+    "lru-cache": "^11.0.2",
     "moment": "^2.30.1",
     "mousetrap": "^1.6.5",
     "next": "14.2.3",
@@ -35,9 +37,11 @@
     "react-redux": "^9.1.2",
     "react-tooltip": "^5.26.4",
     "redux": "^5.0.1",
+    "request-ip": "^3.3.0",
     "sass": "^1.77.1",
     "uuid": "^9.0.1",
-    "winston": "^3.17.0"
+    "winston": "^3.17.0",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@mermaid-js/mermaid-cli": "^10.9.1",
@@ -50,6 +54,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/request-ip": "^0.0.41",
     "@types/uuid": "^9.0.8",
     "cross-env": "^7.0.3",
     "eslint": "^8",

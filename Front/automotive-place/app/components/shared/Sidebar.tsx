@@ -42,9 +42,9 @@ export const SideBar: FC<ISideBar> = ({}) => {
   const closeModal = () => setIsModalOpen(false);
   // TODO - zmiana wyświetlania się sidebara dla mobilnej wersji lub implementacja nowego
   return (
-    <div className="flex min-w-[100px] 2xl:w-[240px] h-full scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
+    <div className="flex min-w-[85px] bg-amp-0 2xl:w-[240px] h-full scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
       <div className="flex flex-col gap-1 h-[100%] 2xl:ml-4 justify-between py-1 pb-2">
-        <div className="flex flex-col items-start max-2xl:items-center max-2xl:pr-3 max-2xl:min-w-0">
+        <div className="flex flex-col items-start max-2xl:items-center max-2xl:pr-0 max-2xl:min-w-0">
           <div className="flex items-center gap-2 mb-2">
             <div className="px-4 2xl:hidden mt-4">
               <SlMenu size={iconSizes.base} />
@@ -115,8 +115,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
             onClick={() => {}}
           />
         </div>
-
-        <div className="flex flex-col items-start max-2xl:items-center max-2xl:pr-3 max-2xl:min-w-0 min-w-[170px]">
+        <div className="flex flex-col pr-3 max-2xl:pr-0 items-start max-2xl:items-center">
           <OptionItem
             icon={<FiSettings size={iconSizes.base} />}
             name={t("Core.Settings")}
@@ -161,7 +160,7 @@ const OptionItem: FC<{
       className={`${additionalTailwindCss} flex-row gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 pl-1 hover:opacity-70 cursor-pointer flex items-center justify-center`}
       onClick={onClick}
     >
-      <div className="bg-amp-800 dark:bg-amp-100">{icon}</div>
+      {icon}
       <div className="text-md max-2xl:text-[12px] text-center leading-4">
         {name}
       </div>
