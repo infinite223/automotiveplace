@@ -42,7 +42,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
   const closeModal = () => setIsModalOpen(false);
   // TODO - zmiana wyświetlania się sidebara dla mobilnej wersji lub implementacja nowego
   return (
-    <div className="flex min-w-[100px] bg-amp-50 2xl:w-[240px] h-full scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
+    <div className="flex min-w-[85px] bg-amp-0 2xl:w-[240px] h-full scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
       <div className="flex flex-col gap-1 h-[100%] 2xl:ml-4 justify-between py-1 pb-2">
         <div className="flex flex-col items-start max-2xl:items-center max-2xl:pr-0 max-2xl:min-w-0">
           <div className="flex items-center gap-2 mb-2">
@@ -115,8 +115,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
             onClick={() => {}}
           />
         </div>
-
-        <div className="flex flex-col items-start max-2xl:items-center max-2xl:pr-3 max-2xl:min-w-0 min-w-[170px]">
+        <div className="flex flex-col pr-3 max-2xl:pr-0 items-start max-2xl:items-center">
           <OptionItem
             icon={<FiSettings size={iconSizes.base} />}
             name={t("Core.Settings")}

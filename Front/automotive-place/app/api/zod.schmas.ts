@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { carItems } from "../utils/data/carItem";
 
 export const createTagSchema = z.object({
   name: z.string().min(3).max(50).optional(),

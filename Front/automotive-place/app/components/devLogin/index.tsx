@@ -135,9 +135,9 @@ export const DevLogin: React.FC = () => {
       visible={isModalOpen}
       withHeader={true}
       title="Dev login"
-      additionalTailwindCss="bg-amp-100 text-white"
+      additionalTailwindCss="bg-amp-50 text-white border-amp-300 border-2 rounded-md"
     >
-      <div className="flex gap-2 items-center p-2">
+      <div className="flex gap-2 items-center px-2 pb-2">
         <PinInput length={5} onChange={handlePinChange} inputsRef={inputsRef} />
       </div>
     </AMPModal>

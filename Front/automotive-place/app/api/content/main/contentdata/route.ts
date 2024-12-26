@@ -4,7 +4,7 @@ import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { logger } from "@/app/api/logger.config";
 import prisma from "@/lib/prisma";
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest, response: NextResponse) {
   const userData = await getLoggedInUser();
 
   if (!userData) {
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const { searchParams }: any = new URL(request.url);
+  const { searchParams }: any = new URL(request.url!);
   const limit = parseInt(searchParams.get("limit")) || 10;
   // TODO - dokończyć implementecje
   const userInterests = await prisma.userActivity.groupBy({

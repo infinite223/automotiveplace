@@ -1,6 +1,10 @@
 import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
+import requestIp from "request-ip"; // Import request-ip
+import { NextApiRequest } from "next";
+import { LRUCache } from "lru-cache";
+import { logger } from "./app/api/logger.config";
 
 // export default createMiddleware({
 //   locales: ["en", "pl"],
@@ -20,6 +24,48 @@ const publicPaths = [
   "",
 ];
 
+const rateLimitCache = new LRUCache<
+  string,
+  { count: number; lastRequestTime: number }
+>({
+  max: 500,
+  ttl: 60 * 1000,
+});
+
+function rateLimit(request: NextRequest): boolean {
+  const ip = requestIp.getClientIp(request as unknown as NextApiRequest) || "";
+
+  if (!ip) {
+    return false;
+  }
+
+  const currentTime = Date.now();
+  const requestCount = rateLimitCache.get(ip) || {
+    count: 0,
+    lastRequestTime: currentTime,
+  };
+
+  if (currentTime - requestCount.lastRequestTime < 60 * 1000) {
+    requestCount.count += 1;
+  } else {
+    requestCount.count = 1;
+    requestCount.lastRequestTime = currentTime;
+  }
+
+  rateLimitCache.set(ip, requestCount);
+  if (requestCount.count > 100) {
+    logger.error(`Rate limit (100) exceeded for IP: ${ip}`);
+    return false;
+  }
+
+  if (requestCount.count > 50) {
+    logger.error(`Rate limit (50) exceeded for IP: ${ip}`);
+    return false;
+  }
+
+  return true;
+}
+
 export default async function middleware(request: NextRequest) {
   const [, locale, ...segments] = request.nextUrl.pathname.split("/");
   const pathname = request.nextUrl.pathname;
@@ -30,6 +76,14 @@ export default async function middleware(request: NextRequest) {
     if (!user) {
       request.nextUrl.pathname = `/${locale}/sign-in`;
     }
+  }
+
+  if (!rateLimit(request) && !request.url.includes("localhost")) {
+    console.log("Too many requests, please try again later.");
+    return NextResponse.json(
+      { message: "Too many requests, please try again later." },
+      { status: 429 }
+    );
   }
 
   const handleI18nRouting = createMiddleware({
