@@ -1,3 +1,6 @@
+import fs from "fs";
+import path from "path";
+
 type LogLevel = "info" | "error";
 
 class SimpleLogger {
@@ -24,9 +27,12 @@ class SimpleLogger {
   }
 
   private writeToFile(filename: string, message: string) {
-    // Implementacja zapisu do pliku (może wymagać dodatkowych uprawnień w środowisku serwerowym)
-    // W środowisku Edge Functions na Vercel, zapisywanie do plików może nie być możliwe.
-    // Możesz zamiast tego wysyłać logi do zewnętrznego serwisu logowania.
+    const logDir = path.resolve(process.cwd(), "logs"); // Użyj process.cwd() do uzyskania głównego folderu projektu
+    if (!fs.existsSync(logDir)) {
+      fs.mkdirSync(logDir);
+    }
+    const filePath = path.join(logDir, filename);
+    fs.appendFileSync(filePath, message + "\n", "utf8");
   }
 }
 
