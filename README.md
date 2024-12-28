@@ -1,12 +1,10 @@
 <h2>AMP - Automotive place</h2>
 
-Aplikacja będąca lepszą wersją <a href="https://carsdesigns.netlify.app/">cars design</a>, oferująca znacznie większą ilość funkcjonalności 
-które sprawią że aplkacja będzie bardzo użyteczna dla osób które interesują się motoryzacją.
+The application is a better version of  <a href="https://carsdesigns.netlify.app/">cars design</a>, offering much more functionality which will make the app very useful for people who are interested in cars.
 
-Projekt zostanie znacznie bardziej doprawcowany od poprzednika, stworzony w nowocześniejszej i ciekawszej technologi, 
-dodatkowo będzie posiadał własny backend, a architektóra aplikacji będzie znacznie bardziej przemyślana.
+The project will be much more polished than its predecessor, created in a more modern and interesting technology, in addition it will have its own backend, and the application architecture will be much more thought out.
 
-Wstępne wybrane technologie
+Selected technologies
 
 Frontend: 
 - Next.js
