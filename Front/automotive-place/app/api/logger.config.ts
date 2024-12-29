@@ -27,7 +27,7 @@ class SimpleLogger {
   }
 
   private writeToFile(filename: string, message: string) {
-    const logDir = path.resolve(process.cwd(), "logs"); // Użyj process.cwd() do uzyskania głównego folderu projektu
+    const logDir = path.resolve(__dirname, "logs");
     if (!fs.existsSync(logDir)) {
       fs.mkdirSync(logDir);
     }
