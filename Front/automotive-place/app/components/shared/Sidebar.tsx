@@ -70,7 +70,6 @@ export const SideBar: FC<ISideBar> = ({}) => {
             additionalTailwindCss={smallScreenHiddenItem}
             onClick={() => dispatch(setIsSearchBarOpen(true))}
           />
-          <AMPSeparator additionalTailwindCss={smallScreenHiddenItem} />
 
           <OptionItem
             icon={<RiPlayListAddLine size={iconSizes.base} />}
@@ -129,7 +128,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         withHeader={true}
         visible={isModalOpen}
         title="Wybierz opcje"
-        additionalTailwindCss="relative bottom-[15vh] bg-amp-900 dark:bg-amp-100 border-1 border-amp-700 dark:border-amp-300"
+        additionalTailwindCss="relative bottom-[15vh] bg-amp-900 dark:bg-amp-50 border-1 border-amp-700 dark:border-amp-300"
         defoultBG={false}
       >
         <SelectCreateOption />

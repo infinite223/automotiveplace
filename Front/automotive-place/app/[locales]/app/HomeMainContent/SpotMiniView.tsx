@@ -4,7 +4,7 @@ import { ContentMiniNav } from "./ContentMiniNav";
 
 export const SpotMiniView = ({ data }: { data: TSpot }) => {
   return (
-    <div className="flex flex-col items-center h-[550px] w-full py-2 gap-1">
+    <div className="flex flex-col items-center h-[550px] w-full gap-1">
       <ContentMiniNav
         createdAt={data.createdAt}
         title={data.title}

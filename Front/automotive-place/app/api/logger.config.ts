@@ -27,12 +27,13 @@ class SimpleLogger {
   }
 
   private writeToFile(filename: string, message: string) {
-    const logDir = path.resolve(__dirname, "logs");
-    if (!fs.existsSync(logDir)) {
-      fs.mkdirSync(logDir);
-    }
-    const filePath = path.join(logDir, filename);
-    fs.appendFileSync(filePath, message + "\n", "utf8");
+    // Should be working on VPN
+    // const logDir = path.resolve(__dirname, "logs");
+    // if (!fs.existsSync(logDir)) {
+    //   fs.mkdirSync(logDir);
+    // }
+    // const filePath = path.join(logDir, filename);
+    // fs.appendFileSync(filePath, message + "\n", "utf8");
   }
 }
 

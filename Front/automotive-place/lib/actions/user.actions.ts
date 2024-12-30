@@ -8,6 +8,7 @@ import { AccountTypes, ErrorStatus } from "@/app/utils/enums";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
 import { redirect } from "next/navigation";
 import { getLocale } from "next-intl/server";
+import { userLoginSchema, userRegistrationSchema } from "@/app/api/zod.schmas";
 
 export type SignInParams = {
   email: string;
@@ -36,6 +37,11 @@ export const getUserInfo = async (id: string) => {
 
 export const signUp = async (userData: SignUpParams) => {
   try {
+    const validation = userRegistrationSchema.safeParse(userData);
+    if (!validation.success) {
+      throw new Error(validation.error.errors.map((e) => e.message).join(", "));
+    }
+
     const { account } = await createAdminClient();
     const newUserId = ID.unique();
 
@@ -83,6 +89,12 @@ export const signUp = async (userData: SignUpParams) => {
 
 export const signIn = async (userData: SignInParams) => {
   try {
+    const validation = userLoginSchema.safeParse(userData);
+
+    if (!validation.success) {
+      throw new Error(validation.error.errors.map((e) => e.message).join(", "));
+    }
+
     const { account } = await createAdminClient();
 
     const session = await account.createEmailPasswordSession(

@@ -31,7 +31,7 @@ export default async function Layout({
         {children}
         {/* TODO - left bar for some data, add mobile view */}
         <div className="h-full px-4 w-[180px] pt-4 fixed right-0 hidden lg:block">
-          <div className="text-md flex items-center gap-5 w-full justify-evenly">
+          <div className="text-md flex items-center w-full justify-end gap-3">
             <TbMessage2Up size={22} />
             <IoNotifications size={22} />
             <IoPersonCircle size={29} />

@@ -51,43 +51,48 @@ export default function Project({ params }: { params: { id: string } }) {
         {lastStage && (
           <div className="flex flex-wrap gap-2 w-full">
             <AMPCarStatsItem
-              title={"HP"}
+              typeValue={"HP"}
               value={lastStage.hp.toString()}
-              subTitle="Moc silnika"
+              title="Moc silnika"
             />
             <AMPCarStatsItem
-              title={"NM"}
+              typeValue={"NM"}
               value={lastStage.nm.toString()}
-              subTitle="Moment obrotowy"
+              title="Moment obrotowy"
             />
             <AMPCarStatsItem
-              title={"0-100km/h"}
+              typeValue="s"
+              subTitle={"0-100km/h"}
               value={lastStage.acc_0_100.toString()}
-              subTitle="Przyśpieszenie"
+              title="Przyśpieszenie"
             />
             <AMPCarStatsItem
-              title={"100-200km/h"}
+              typeValue="s"
+              subTitle={"100-200km/h"}
               value={lastStage.acc_100_200.toString()}
-              subTitle="Przyśpieszenie"
+              title="Przyśpieszenie"
             />
             <AMPCarStatsItem
-              title={"50-150km/h"}
+              typeValue="s"
+              subTitle={"50-150km/h"}
               value={lastStage.acc_50_150.toString()}
-              subTitle="Przyśpieszenie"
+              title="Przyśpieszenie"
             />
             {lastStage.sl_100_0 && (
               <AMPCarStatsItem
-                title={"100-0km/h"}
+                typeValue="s"
+                subTitle={"100-0km/h"}
                 value={lastStage.sl_100_0.toString()}
-                subTitle="Droga hamowania"
+                title="Droga hamowania"
               />
             )}
 
             {lastStage.sl_150_50 && (
               <AMPCarStatsItem
-                title={"150-50km/h"}
+                typeValue="s"
+                subTitle={"150-50km/h"}
                 value={lastStage.sl_150_50.toString()}
-                subTitle="Droga hamowania"
+                title="Droga hamowania"
               />
             )}
           </div>

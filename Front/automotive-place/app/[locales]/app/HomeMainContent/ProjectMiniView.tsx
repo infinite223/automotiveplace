@@ -24,7 +24,7 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
   return (
     <>
       {isClient ? (
-        <div className="flex flex-col w-full h-full py-2 gap-1">
+        <div className="flex flex-col w-full h-full gap-1">
           <ContentMiniNav
             createdAt={data.createdAt}
             title={data.carMake + " " + data.carModel}
@@ -51,10 +51,10 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
             actions={
               <Link
                 href={`../project/${data.id}`}
-                className="flex items-center text-sm cursor-pointer transition ease-in-out gap-2 border-amp-200/50 hover:border-amp-200/70 dark:border-amp-800/40 dark:hover:border-amp-800/70 border-1 rounded-md pl-2 pr-1 py-1"
+                className="flex font-semibold items-center text-sm cursor-pointer transition ease-in-out gap-2 border-amp-200/50 hover:border-amp-200/70 dark:border-amp-800/40 dark:hover:border-amp-800/70 border-0 rounded-sm pl-2 pr-1 py-1"
               >
-                Więcej informacji
-                <IoIosArrowForward size={iconSizes.small} />
+                Zobacz projekt
+                <IoIosArrowForward size={iconSizes.base} />
               </Link>
             }
           />

@@ -38,10 +38,10 @@ export const HomeMainContent = () => {
             return (
               <div
                 key={content.data.id}
-                className="flex w-full flex-col items-center justify-center"
+                className="flex w-full flex-col items-center justify-center bg-amp-50 my-1 p-2 rounded-md"
               >
                 <ContentSelect content={content} />
-                <AMPSeparator />
+                {/* <AMPSeparator /> */}
               </div>
             );
           })}

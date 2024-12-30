@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MdOutlineCloseFullscreen } from "react-icons/md";
+import { MdClose, MdOutlineCloseFullscreen } from "react-icons/md";
 import useKeyboardShortcut from "@/app/hooks/useKeydown";
-import { shortcutConfigs } from "@/app/utils/constants";
+import { iconSizes, shortcutConfigs } from "@/app/utils/constants";
 
 interface IModalProps {
   onClose: () => void;
@@ -71,8 +71,9 @@ const AMPModalHeader = ({
   return (
     <div className="w-full flex items-center justify-between p-5">
       <h3 className="font-bold">{title}</h3>
-      <MdOutlineCloseFullscreen
+      <MdClose
         onClick={onClose}
+        size={iconSizes.base}
         className="hover:text-red-500 hover:scale-90 cursor-pointer"
       />
     </div>

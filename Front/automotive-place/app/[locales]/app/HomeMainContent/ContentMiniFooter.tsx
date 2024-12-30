@@ -29,7 +29,7 @@ export const ContentMiniFooter = ({
         <div className="flex flex-col gap-2">
           {!isLoading && (
             <div
-              className={`flex rounded-md bg-amp-900 dark:bg-amp-0 h-min gap-2.5 pl-1 pr-1 pt-0.5 pb-0.5 items-center ${
+              className={`flex rounded-md h-min gap-2.5 pl-1 pr-1 pt-0.5 pb-0.5 items-center ${
                 true && "cursor-pointer"
               }`}
               onClick={handleClickLike}
@@ -41,9 +41,7 @@ export const ContentMiniFooter = ({
                   isLikedByAuthUser ? "transform scale-95" : ""
                 }`}
               />
-              <span className="bg-amp-800 dark:bg-amp-100 text-sm">
-                {likesCount}
-              </span>
+              <span className="text-sm">{likesCount}</span>
             </div>
           )}
         </div>
