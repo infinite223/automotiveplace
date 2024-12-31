@@ -19,6 +19,8 @@ export async function GET(request: NextRequest, response: NextResponse) {
 
   const { searchParams }: any = new URL(request.url!);
   const limit = parseInt(searchParams.get("limit")) || 10;
+  const page = parseInt(searchParams.get("page") || "1", 10);
+
   // TODO - dokończyć implementecje
   const userInterests = await prisma.userActivity.groupBy({
     by: ["entityType"],

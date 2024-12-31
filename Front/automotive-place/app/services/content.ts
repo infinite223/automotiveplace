@@ -1,8 +1,10 @@
 import { TContentData } from "../utils/types";
 
-export const getMainContentDataForUser = async (locale: string = "en") => {
-  // get auth user on backend
-  const response = await fetch(`/api/content/main/contentdata`, {
+export const getMainContentDataForUser = async (
+  page: number,
+  locale: string = "en"
+) => {
+  const response = await fetch(`/api/content/main/contentdata/?page=${page}`, {
     headers: { "Accept-Language": locale },
   });
   if (!response.ok) {

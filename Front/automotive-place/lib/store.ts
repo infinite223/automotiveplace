@@ -6,6 +6,7 @@ import searchBarSlice from "./features/searchBar/searchBarSlice";
 import globalLoadingSlice from "./features/loading/globalLoadingSlice";
 import stepDataSlice from "./features/stepData/stepDataSlice";
 import actionsSlice from "./features/actions/actionsSlice";
+import contentDataSlice from "./features/content/contentSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     globalLoading: globalLoadingSlice,
     stepData: stepDataSlice,
     actions: actionsSlice,
+    contentData: contentDataSlice,
   },
 });
 
