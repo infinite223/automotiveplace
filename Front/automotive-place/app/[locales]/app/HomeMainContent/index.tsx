@@ -20,19 +20,6 @@ import { AppDispatch, RootState } from "@/lib/store";
 import { fetchProjects, setPage } from "@/lib/features/content/contentSlice";
 
 export const HomeMainContent = () => {
-  // const [_content, setContent] = useState<TContentData[] | []>([]);
-  // const [isLoading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     const res = await getMainContentDataForUser();
-  //     setContent(res.data);
-  //     setLoading(false);
-  //   };
-
-  //   getData();
-  // }, []);
-
   const dispatch = useDispatch<AppDispatch>();
   const _content = useSelector(
     (state: RootState) => state.contentData.contentData
@@ -48,11 +35,24 @@ export const HomeMainContent = () => {
     }
   }, [dispatch, page, _content.length]);
 
+  useEffect(() => {
+    const lastClickedId = sessionStorage.getItem("lastClickedId");
+    if (lastClickedId) {
+      const scrollToElement = () => {
+        const element = document.getElementById(`content-${lastClickedId}`);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      };
+
+      setTimeout(scrollToElement, 100);
+    }
+  }, []);
+
   const loadMoreProjects = () => {
     dispatch(setPage(page + 1));
     dispatch(fetchProjects(page + 1));
   };
-
   // mr-[140px] max-lg:mr-0 max-2xl:mr-[80px] max-xl:mr-[75px]
   return (
     <div className="flex w-full items-center lg:pr-[150px] h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth">
