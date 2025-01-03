@@ -84,7 +84,7 @@ export default function Page() {
         break;
 
       case "GetMainContentDataForUserFunction":
-        const { data, hasMore } = await getMainContentDataForUser();
+        const { data, hasMore } = await getMainContentDataForUser(1);
 
         if (data) {
           // dispatch(addNotification(JSON.stringify(result.notification)));
