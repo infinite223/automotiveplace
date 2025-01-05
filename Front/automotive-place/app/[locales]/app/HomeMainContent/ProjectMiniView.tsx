@@ -9,7 +9,15 @@ import Image from "next/image";
 import { iconSizes } from "@/app/utils/constants";
 import Link from "next/link";
 
-const projectImage = "https://picsum.photos/id/237/200/300";
+const projectImage =
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS68Gy62kKm-z60Pe_y32-kfkuaEmprwzvfKXfM_zhLiiC4ulIna5DlScrbubsjMtfzA9w&usqp=CAU";
+const projectImage2 =
+  "https://www.autocentrum.pl/YWNoLTEudjYvDTpnag57ImxVbnskFnQxJwMpeyYUK3o4Cj4nLBo3eHheLm0jF2hifQx-bH1NaWArC3gyIEA_ZWEJIyYhWDQiPRstOiJYLz5jAi03LVhoeSQfK3Y4";
+
+const projectImage3 =
+  "https://iwekcars.pl/wp-content/uploads/2024/04/DSC_6580-2-1024x684.jpg";
+
+const projectImages = [projectImage, projectImage2, projectImage3];
 
 export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
   const [isClient, setIsClient] = useState(false);
@@ -39,7 +47,7 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
             author={data.author}
           />
 
-          <div className="flex mt-1">
+          <div className="flex mt-1 justify-between">
             <Image
               alt="project-image"
               src={projectImage}
@@ -47,9 +55,18 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
               width={200}
               height={200}
             />
+            <div className="flex flex-col gap-2 text-right">
+              <div>STAGE 1</div>
+              <div>450 HP</div>
+              <div>550 NM</div>
+              <div>5s 0-100km/h</div>
+              <div>13s 100-200km/h</div>
+            </div>
             {/* main content, images, stages... */}
           </div>
-
+          {/* <div className="flex items-center w-full">
+            {}
+          </div> */}
           <div>{/* <ContentMiniFooter /> likes, tags...*/}</div>
           <ContentMiniFooter
             isLikedByAuthUser={false}
