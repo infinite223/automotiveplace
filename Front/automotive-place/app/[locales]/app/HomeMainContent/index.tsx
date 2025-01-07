@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { TContentData } from "../../../utils/types";
 import { isTProject } from "../../../utils/types/project";
 import { ProjectMiniView } from "./ProjectMiniView";
@@ -12,9 +12,7 @@ import { isTSpot } from "@/app/utils/types/spot";
 import { SpotMiniView } from "./SpotMiniView";
 import { CarItemMiniView } from "./CarItemMiniView";
 import { isTCarItem } from "@/app/utils/types/carItem";
-import { getMainContentDataForUser } from "@/app/services/content";
 import { LoadingMiniView } from "./LoadingMiniView";
-import { AMPSeparator } from "@/app/components/shared/AMPSeparator";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/store";
 import { fetchProjects, setPage } from "@/lib/features/content/contentSlice";
@@ -53,6 +51,7 @@ export const HomeMainContent = () => {
     dispatch(setPage(page + 1));
     dispatch(fetchProjects(page + 1));
   };
+
   // mr-[140px] max-lg:mr-0 max-2xl:mr-[80px] max-xl:mr-[75px]
   return (
     <div className="flex w-full items-center lg:pr-[150px] h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth">
@@ -62,10 +61,12 @@ export const HomeMainContent = () => {
             return (
               <div
                 key={content.data.id}
-                className="flex w-full flex-col items-center justify-center bg-amp-50 my-1 p-2 rounded-md"
+                className="flex w-full items-center justify-center py-1 "
+                id={`content-${content.data.id}`}
               >
-                <ContentSelect content={content} />
-                {/* <AMPSeparator /> */}
+                <div className="flex w-full bg-amp-50 p-2 rounded-md">
+                  <ContentSelect content={content} />
+                </div>
               </div>
             );
           })}

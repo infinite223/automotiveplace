@@ -29,17 +29,13 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
     return null;
   }
   const handleLinkClick = () => {
-    console.log("handleLinkClick", data.id);
     sessionStorage.setItem("lastClickedId", data.id);
   };
 
   return (
     <>
       {isClient ? (
-        <div
-          className="flex flex-col w-full h-full gap-1"
-          id={`content-${data.id}`}
-        >
+        <div className="flex flex-col w-full h-full gap-1">
           <ContentMiniNav
             createdAt={data.createdAt}
             title={data.carMake + " " + data.carModel}
@@ -48,6 +44,25 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
           />
 
           <div className="flex mt-1 justify-between">
+            <div className="flex flex-col gap-1">
+              <StatisticMiniItem title="Etap modyfikacji" value="STAGE 1" />
+              <StatisticMiniItem title="Moc" value={data.hp} type="HP" />
+              <StatisticMiniItem
+                title="Moment obrotowy"
+                value={data.nm}
+                type="NM"
+              />
+              <StatisticMiniItem
+                title="0-100km/h"
+                value={data.acc_0_100}
+                type="s"
+              />
+              <StatisticMiniItem
+                title="100-200km/h"
+                value={data.acc_100_200}
+                type="s"
+              />
+            </div>
             <Image
               alt="project-image"
               src={projectImage}
@@ -55,13 +70,6 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
               width={200}
               height={200}
             />
-            <div className="flex flex-col gap-2 text-right">
-              <div>STAGE 1</div>
-              <div>450 HP</div>
-              <div>550 NM</div>
-              <div>5s 0-100km/h</div>
-              <div>13s 100-200km/h</div>
-            </div>
             {/* main content, images, stages... */}
           </div>
           {/* <div className="flex items-center w-full">
@@ -88,5 +96,26 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
         <div></div>
       )}
     </>
+  );
+};
+
+const StatisticMiniItem = ({
+  title,
+  value,
+  type,
+}: {
+  title: string;
+  value: string | number;
+  type?: string;
+}) => {
+  return (
+    <div className="flex flex-col">
+      <div className="text-sm font-semibold">
+        {value} {type}
+      </div>
+      <div className="text-xs text-amp-100/90 dark:text-amp-700/90 mt-[-2px]">
+        {title}
+      </div>
+    </div>
   );
 };

@@ -2,7 +2,7 @@ import { ErrorStatus } from "./enums";
 import { TCarItem } from "./types/carItem";
 import { TPost } from "./types/post";
 import { TProblem } from "./types/problem";
-import { TProject } from "./types/project";
+import { TBasicProject, TProject } from "./types/project";
 import { TSpot } from "./types/spot";
 
 type TCarItemLikes = {};
@@ -68,9 +68,11 @@ type TContentTypes =
   | "Post"
   | "Company";
 
+type TContentDataOptions = TCarItem | TBasicProject | TProblem | TSpot | TPost;
+
 type TContentData = {
   type: TContentTypes;
-  data: TCarItem | TProject | TProblem | TSpot | TPost;
+  data: TContentDataOptions;
 };
 
 type ICreateNotification = {
@@ -94,6 +96,7 @@ export type {
   TSearchOptions,
   TLog,
   TPerformanceType,
+  TContentDataOptions,
 };
 export type {
   TValidResult,

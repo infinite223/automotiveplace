@@ -1,3 +1,4 @@
+import { TContentDataOptions } from "../types";
 import { TCarItem, TCarItemCreate } from "./carItem";
 import { TStageCreate, TStage } from "./stage";
 import { TTag, TTagCreate } from "./tag";
@@ -64,12 +65,16 @@ type TBasicProject = {
   description?: string;
   isVerified: boolean;
 
+  hp: number;
+  nm: number;
+  acc_0_100: number;
+  acc_100_200: number;
+
   engineName: string;
   images?: string[];
 
   author: TBasicUser;
 };
-
 function isTProject(data: any): data is TBasicProject {
   return (
     typeof data === "object" &&
@@ -83,32 +88,11 @@ function isTProject(data: any): data is TBasicProject {
     typeof data.carModel === "string" &&
     typeof data.description === "string" &&
     typeof data.isVerified === "boolean" &&
-    typeof data.imagesCount === "number" &&
-    typeof data.carItemsCount === "number" &&
-    typeof data.garageId === "string" &&
-    typeof data.userId === "string" &&
-    (typeof data.isLikedByAuthUser === "boolean" ||
-      data.isLikedByAuthUser === undefined) &&
-    (Array.isArray(data.images) || data.images === undefined) &&
-    typeof data.authorId === "string" &&
-    (typeof data.author === "object" || data.author === undefined) &&
-    typeof data.engineName === "string" &&
-    typeof data.engineStockHp === "number" &&
-    typeof data.engineStockNm === "number" &&
-    (typeof data.engineDescription === "string" ||
-      data.engineDescription === undefined) &&
-    (typeof data.engineWasSwapped === "boolean" ||
-      data.engineWasSwapped === undefined) &&
-    typeof data.engineCapacity === "number" &&
-    typeof data.transmissionName === "string" &&
-    typeof data.transmissionGears === "number" &&
-    (typeof data.transmissionDescription === "string" ||
-      data.transmissionDescription === undefined) &&
-    (typeof data.transmissionWasSwapped === "boolean" ||
-      data.transmissionWasSwapped === undefined) &&
-    (Array.isArray(data.carItems) || data.carItems === undefined) &&
-    (Array.isArray(data.stages) || data.stages === undefined) &&
-    (Array.isArray(data.tags) || data.tags === undefined)
+    typeof data.hp === "number" &&
+    typeof data.nm === "number" &&
+    typeof data.acc_0_100 === "number" &&
+    typeof data.acc_100_200 === "number" &&
+    (Array.isArray(data.images) || data.images === undefined)
   );
 }
 

@@ -127,6 +127,10 @@ export function generateRandomBaseProjects(count: number) {
       description: `A well-maintained ${carMake} ${carModel} with excellent performance and features.`,
       engineName: engineNames[getRandomInt(0, engineNames.length - 1)],
       images: [],
+      hp: getRandomInt(100, 400),
+      acc_0_100: getRandomInt(5, 10),
+      acc_100_200: getRandomInt(15, 25),
+      nm: getRandomInt(150, 500),
       author: {
         id: generateRandomString(8),
         name: "Dawid",
