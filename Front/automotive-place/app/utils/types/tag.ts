@@ -9,6 +9,11 @@ type TTag = {
   carItemId?: string;
 };
 
+type TBasicTag = {
+  id: string;
+  name: string;
+};
+
 type TTagCreate = {
   localId: string;
   name: string;
@@ -18,4 +23,4 @@ type TTagCreate = {
   carItemId?: string;
 };
 
-export type { TTag, TTagCreate };
+export type { TTag, TTagCreate, TBasicTag };

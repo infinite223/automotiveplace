@@ -19,6 +19,16 @@ const projectMiniData: TBasicProject = {
   hp: 150,
   nm: 250,
   description: "Audi A3 8V 1.4 TFSI 150KM",
+  tags: [
+    {
+      id: "1",
+      name: "Audi",
+    },
+    {
+      id: "2",
+      name: "A3",
+    },
+  ],
 };
 
 export { projectMiniData };

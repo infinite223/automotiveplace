@@ -11,7 +11,6 @@ import {
   removeCarItem,
 } from "@/app/services/carItem";
 import {
-  generateRandomCarItems,
   generateRandomCarItemsToCreate,
   getCarItemsTestToRemove,
 } from "@/app/utils/data/carItem";
@@ -19,11 +18,7 @@ import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { createProject } from "@/app/services/project";
 import { getMainContentDataForUser } from "@/app/services/content";
-import {
-  generateRandomProjects,
-  generateRandomProjectsToCreate,
-} from "@/app/utils/data/project";
-import { Notification } from "@/app/components/logger/Notification";
+import { generateRandomProjectsToCreate } from "@/app/utils/data/project";
 import { getGenerateStartData } from "@/app/services/data";
 
 export default function Page() {

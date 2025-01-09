@@ -1,7 +1,7 @@
 import { TContentDataOptions } from "../types";
 import { TCarItem, TCarItemCreate } from "./carItem";
 import { TStageCreate, TStage } from "./stage";
-import { TTag, TTagCreate } from "./tag";
+import { TBasicTag, TTag, TTagCreate } from "./tag";
 import { TBasicUser, TUser } from "./user";
 
 type TProject = {
@@ -72,7 +72,7 @@ type TBasicProject = {
 
   engineName: string;
   images?: string[];
-
+  tags: TBasicTag[];
   author: TBasicUser;
 };
 function isTProject(data: any): data is TBasicProject {

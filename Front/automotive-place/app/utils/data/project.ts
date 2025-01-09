@@ -137,6 +137,10 @@ export function generateRandomBaseProjects(count: number) {
         imageUrl:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeyk55eIDh4grMFV4505_KRgtOm7HTGbm_7Q&s",
       },
+      tags: [
+        { id: generateRandomString(8), name: "Test tag" },
+        { id: generateRandomString(8), name: "Test tag 2" },
+      ],
     };
 
     for (let j = 0; j < getRandomInt(1, 4); j++) {

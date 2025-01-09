@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 import { ContentMiniNav } from "./ContentMiniNav";
 import { ContentMiniFooter } from "./ContentMiniFooter";
 import { IoIosArrowForward } from "react-icons/io";
-import Image from "next/image";
 import { iconSizes } from "@/app/utils/constants";
 import Link from "next/link";
+import AMPSlider from "@/app/components/shared/AMPSlider";
 
 const projectImage =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS68Gy62kKm-z60Pe_y32-kfkuaEmprwzvfKXfM_zhLiiC4ulIna5DlScrbubsjMtfzA9w&usqp=CAU";
@@ -43,7 +43,7 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
             author={data.author}
           />
 
-          <div className="flex mt-1 justify-between">
+          <div className="flex justify-between my-1">
             <div className="flex flex-col gap-1">
               <StatisticMiniItem title="Etap modyfikacji" value="STAGE 1" />
               <StatisticMiniItem title="Moc" value={data.hp} type="HP" />
@@ -63,20 +63,11 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
                 type="s"
               />
             </div>
-            <Image
-              alt="project-image"
-              src={projectImage}
-              className="w-[55%] max-h-[600px]"
-              width={200}
-              height={200}
-            />
-            {/* main content, images, stages... */}
+            <AMPSlider images={projectImages} width={300} height={200} />
           </div>
-          {/* <div className="flex items-center w-full">
-            {}
-          </div> */}
-          <div>{/* <ContentMiniFooter /> likes, tags...*/}</div>
+
           <ContentMiniFooter
+            tags={data.tags}
             isLikedByAuthUser={false}
             likesCount={12}
             type="Project"
@@ -84,7 +75,7 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
               <Link
                 href={`../project/${data.id}`}
                 onClick={handleLinkClick}
-                className="flex font-semibold items-center text-sm cursor-pointer transition ease-in-out gap-2 border-amp-200/50 hover:border-amp-200/70 dark:border-amp-800/40 dark:hover:border-amp-800/70 border-0 rounded-sm pl-2 pr-1 py-1"
+                className="flex font-semibold items-center text-sm cursor-pointer transition ease-in-out gap-2 border-amp-200/50 hover:border-amp-200/70 dark:border-amp-800/40 dark:hover:border-amp-800/70 border-0 rounded-sm pl-2 pr-1 py-1 hover:text-amp-500"
               >
                 Zobacz projekt
                 <IoIosArrowForward size={iconSizes.base} />
