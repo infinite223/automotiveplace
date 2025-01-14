@@ -1,6 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import AMPModal from "./AMPModal";
 import { MdOutlineZoomOutMap } from "react-icons/md";
+import { calculateDominantColor } from "@/app/utils/helpers";
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
+import { iconSizes } from "@/app/utils/constants";
 
 interface AMPSliderProps {
   images: string[];
@@ -11,6 +14,7 @@ interface AMPSliderProps {
 const AMPSlider: React.FC<AMPSliderProps> = ({ images, width, height }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [dominantColor, setDominantColor] = useState("white");
   const imgContainerRef = useRef<HTMLDivElement>(null);
 
   const handlePrevClick = () => {
@@ -32,19 +36,23 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images, width, height }) => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const img = e.currentTarget;
-    if (imgContainerRef.current) {
-      imgContainerRef.current.style.height = `${img.height}px`;
-    }
-  };
+  useEffect(() => {
+    setTimeout(async () => {
+      const dominant = await calculateDominantColor(images[currentIndex]);
+      setDominantColor(`rgb(${dominant})`);
+    }, 10);
+  }, [currentIndex, images]);
 
   return (
     <>
       <div
         ref={imgContainerRef}
-        className="relative overflow-hidden"
-        style={{ width, height }}
+        className="relative overflow-hidden transition-transform-colors-opacity group"
+        style={{
+          width,
+          height,
+          backgroundColor: dominantColor,
+        }}
       >
         <div
           className="flex transition-transform duration-500 ease-in-out"
@@ -52,26 +60,25 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images, width, height }) => {
         >
           {images.map((image, index) => (
             <img
-              key={`${currentIndex}-${index}`} // Wymuszenie nowego renderu po zmianie `currentIndex`
+              key={`${currentIndex}-${index}`}
               src={image}
               alt={`slide-${index}`}
               className="flex-shrink-0 object-contain"
               style={{ width, height }}
-              onLoad={handleImageLoad} // Aktualizacja wysokości kontenera po załadowaniu obrazu
             />
           ))}
         </div>
         <button
-          className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-1 px-2 rounded-full cursor-pointer left-2"
+          className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-1 rounded-full cursor-pointer left-2 opacity-0 group-hover:opacity-100 transition-opacity"
           onClick={handlePrevClick}
         >
-          &#10094;
+          <FaAngleLeft size={iconSizes.small} />
         </button>
         <button
-          className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-1 px-2 rounded-full cursor-pointer right-2"
+          className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-1 rounded-full cursor-pointer right-2 opacity-0 group-hover:opacity-100 transition-opacity"
           onClick={handleNextClick}
         >
-          &#10095;
+          <FaAngleRight size={iconSizes.small} />
         </button>
         <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2">
           {images.map((_, index) => (
@@ -85,7 +92,7 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images, width, height }) => {
           ))}
         </div>
         <button
-          className="absolute top-2 right-2 bg-black bg-opacity-50 text-white p-1 px-2 rounded-full cursor-pointer"
+          className="absolute top-2 right-2 bg-black bg-opacity-50 text-white p-2 rounded-full cursor-pointer"
           onClick={openModal}
         >
           <MdOutlineZoomOutMap />
@@ -107,35 +114,23 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images, width, height }) => {
                   key={`${currentIndex}-${index}`}
                   src={image}
                   alt={`slide-${index}`}
-                  className="flex-shrink-0 object-contain max-w-full max-h-full"
-                  onLoad={handleImageLoad}
+                  className="flex-shrink-0 object-contain max-w-full max-h-[95vh] max-w-[95vw]"
                   style={{ width: width * 2 }}
                 />
               ))}
             </div>
             <button
-              className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-1 px-2 rounded-full cursor-pointer left-2"
+              className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full cursor-pointer left-2"
               onClick={handlePrevClick}
             >
-              &#10094;
+              <FaAngleLeft size={iconSizes.base} />
             </button>
             <button
-              className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-1 px-2 rounded-full cursor-pointer right-2"
+              className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full cursor-pointer right-2"
               onClick={handleNextClick}
             >
-              &#10095;
+              <FaAngleRight size={iconSizes.base} />
             </button>
-            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2">
-              {images.map((_, index) => (
-                <span
-                  key={index}
-                  className={`w-2 h-2 bg-black bg-opacity-50 rounded-full cursor-pointer ${
-                    index === currentIndex ? "bg-white" : ""
-                  }`}
-                  onClick={() => handleBulletClick(index)}
-                ></span>
-              ))}
-            </div>
           </div>
         </div>
       </AMPModal>
