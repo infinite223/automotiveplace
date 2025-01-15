@@ -55,7 +55,7 @@ export const HomeMainContent = () => {
   // mr-[140px] max-lg:mr-0 max-2xl:mr-[80px] max-xl:mr-[75px]
   return (
     <div className="flex w-full items-center lg:pr-[150px] h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth">
-      <div className="flex flex-col text-[12px] w-full lg:w-[550px]">
+      <div className="flex flex-col text-[12px] w-full lg:w-[650px]">
         {!isLoading &&
           _content.map((content) => {
             return (

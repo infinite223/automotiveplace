@@ -45,7 +45,7 @@ export const ContentMiniNav = ({
           )}
           <div className="flex flex-col leading-4	">
             <h4 className="text-[14px]">{title}</h4>
-            <span className="text-[11px]">{author?.name}</span>
+            <span className="text-[11px] opacity-70">{author?.name}</span>
           </div>
         </div>
       </div>

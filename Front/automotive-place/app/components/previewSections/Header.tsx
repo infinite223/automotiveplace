@@ -7,7 +7,6 @@ import Link from "next/link";
 const Header = ({ isLogged = false }: { isLogged: boolean }) => {
   const t = useTranslations();
 
-  console.log(isLogged);
   return (
     <section className="bg-amp-50 flex h-screen flex-col items-center gap-4 justify-center relative">
       <h1

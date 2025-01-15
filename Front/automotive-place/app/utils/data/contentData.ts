@@ -2,7 +2,7 @@ import { ContentType } from "../enums";
 import { TContentData } from "../types";
 import { generateRandomPosts } from "./post";
 import { generateRandomProblems } from "./problem";
-import { generateRandomBaseProjects, generateRandomProjects } from "./project";
+import { generateRandomBaseProjects } from "./project";
 import { generateRandomSpots } from "./spot";
 
 export const contentData: TContentData[] = [

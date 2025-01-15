@@ -94,12 +94,6 @@ export function generateRandomProjects(count: number) {
       ],
     };
 
-    if (project.imagesCount > 0) {
-      for (let j = 0; j < project.imagesCount; j++) {
-        project.images?.push(`https://example.com/image_${j + 1}.jpg`);
-      }
-    }
-
     projects.push(project);
   }
 
@@ -108,6 +102,24 @@ export function generateRandomProjects(count: number) {
 
 export function generateRandomBaseProjects(count: number) {
   const projects = [];
+
+  const projectImage =
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS68Gy62kKm-z60Pe_y32-kfkuaEmprwzvfKXfM_zhLiiC4ulIna5DlScrbubsjMtfzA9w&usqp=CAU";
+  const projectImage2 =
+    "https://media.drive.com.au/obj/tx_q:70,rs:auto:1200:675:1/driveau/upload/cms/uploads/bi36meqa62rhbghgdrkh";
+
+  const projectImage3 =
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAForxurppxANqMjH2I1CjPPg79vtTEN71FQ&s";
+
+  const projectImage4 =
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSdZIVym1fnqh7TWirmnbWEhUy0oJgEsQmCQ&s";
+
+  const projectImages = [
+    projectImage,
+    projectImage2,
+    projectImage3,
+    projectImage4,
+  ];
 
   for (let i = 0; i < count; i++) {
     const carMake = carMakes[getRandomInt(0, carMakes.length - 1)];
@@ -125,8 +137,12 @@ export function generateRandomBaseProjects(count: number) {
       carModel,
       isVerified: Math.random() < 0.5,
       description: `A well-maintained ${carMake} ${carModel} with excellent performance and features.`,
-      engineName: engineNames[getRandomInt(0, engineNames.length - 1)],
-      images: [],
+      engineNameAndCapacity:
+        engineNames[getRandomInt(0, engineNames.length - 1)] +
+        " " +
+        getRandomInt(1, 4) +
+        "L",
+      images: projectImages,
       hp: getRandomInt(100, 400),
       acc_0_100: getRandomInt(5, 10),
       acc_100_200: getRandomInt(15, 25),
@@ -142,10 +158,6 @@ export function generateRandomBaseProjects(count: number) {
         { id: generateRandomString(8), name: "Test tag 2" },
       ],
     };
-
-    for (let j = 0; j < getRandomInt(1, 4); j++) {
-      project.images?.push(`https://example.com/image_${j + 1}.jpg`);
-    }
 
     projects.push(project);
   }

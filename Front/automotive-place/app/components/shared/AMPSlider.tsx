@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import AMPModal from "./AMPModal";
-import { MdOutlineZoomOutMap } from "react-icons/md";
+import { MdClose, MdOutlineZoomOutMap } from "react-icons/md";
 import { calculateDominantColor } from "@/app/utils/helpers";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { iconSizes } from "@/app/utils/constants";
@@ -65,17 +65,18 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images, width, height }) => {
               alt={`slide-${index}`}
               className="flex-shrink-0 object-contain"
               style={{ width, height }}
+              onDoubleClick={openModal}
             />
           ))}
         </div>
         <button
-          className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-1 rounded-full cursor-pointer left-2 opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:opacity-70 text-white p-1 rounded-full cursor-pointer left-2 opacity-0 group-hover:opacity-100 transition-opacity"
           onClick={handlePrevClick}
         >
           <FaAngleLeft size={iconSizes.small} />
         </button>
         <button
-          className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-1 rounded-full cursor-pointer right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:opacity-70 text-white p-1 rounded-full cursor-pointer right-2 opacity-0 group-hover:opacity-100 transition-opacity"
           onClick={handleNextClick}
         >
           <FaAngleRight size={iconSizes.small} />
@@ -92,7 +93,7 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images, width, height }) => {
           ))}
         </div>
         <button
-          className="absolute top-2 right-2 bg-black bg-opacity-50 text-white p-2 rounded-full cursor-pointer"
+          className="absolute top-2 right-2 bg-black bg-opacity-50 hover:opacity-70 text-white p-2 rounded-full cursor-pointer"
           onClick={openModal}
         >
           <MdOutlineZoomOutMap />
@@ -103,7 +104,7 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images, width, height }) => {
         <div className="flex justify-center items-center w-screen h-screen">
           <div
             className="relative max-w-[95vw] max-h-[95vh] overflow-hidden items-center"
-            style={{ width: width * 2 }}
+            style={{ width: width * 2, backgroundColor: dominantColor }}
           >
             <div
               className="flex transition-transform duration-500 ease-in-out"
@@ -126,10 +127,16 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images, width, height }) => {
               <FaAngleLeft size={iconSizes.base} />
             </button>
             <button
-              className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full cursor-pointer right-2"
+              className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:opacity-70 text-white p-2 rounded-full cursor-pointer right-2"
               onClick={handleNextClick}
             >
               <FaAngleRight size={iconSizes.base} />
+            </button>
+            <button
+              className="absolute top-2 right-2 bg-black bg-opacity-50 text-white p-2 rounded-full cursor-pointer hover:opacity-70"
+              onClick={closeModal}
+            >
+              <MdClose size={iconSizes.base} />
             </button>
           </div>
         </div>

@@ -9,16 +9,6 @@ import { iconSizes } from "@/app/utils/constants";
 import Link from "next/link";
 import AMPSlider from "@/app/components/shared/AMPSlider";
 
-const projectImage =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS68Gy62kKm-z60Pe_y32-kfkuaEmprwzvfKXfM_zhLiiC4ulIna5DlScrbubsjMtfzA9w&usqp=CAU";
-const projectImage2 =
-  "https://media.drive.com.au/obj/tx_q:70,rs:auto:1200:675:1/driveau/upload/cms/uploads/bi36meqa62rhbghgdrkh";
-
-const projectImage3 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAForxurppxANqMjH2I1CjPPg79vtTEN71FQ&s";
-
-const projectImages = [projectImage, projectImage2, projectImage3];
-
 export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
   const [isClient, setIsClient] = useState(false);
 
@@ -38,7 +28,13 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
         <div className="flex flex-col w-full h-full gap-1">
           <ContentMiniNav
             createdAt={data.createdAt}
-            title={data.carMake + " " + data.carModel}
+            title={
+              data.carMake +
+              " " +
+              data.carModel +
+              " " +
+              data.engineNameAndCapacity
+            }
             typeName="Projekt"
             author={data.author}
           />
@@ -63,7 +59,10 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
                 type="s"
               />
             </div>
-            <AMPSlider images={projectImages} width={400} height={200} />
+
+            {data.images && (
+              <AMPSlider images={data.images} width={400} height={300} />
+            )}
           </div>
 
           <ContentMiniFooter

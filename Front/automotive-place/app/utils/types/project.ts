@@ -70,7 +70,7 @@ type TBasicProject = {
   acc_0_100: number;
   acc_100_200: number;
 
-  engineName: string;
+  engineNameAndCapacity: string;
   images?: string[];
   tags: TBasicTag[];
   author: TBasicUser;

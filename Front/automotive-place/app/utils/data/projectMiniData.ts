@@ -3,7 +3,7 @@ import { TBasicProject, TProject } from "../types/project";
 const projectMiniData: TBasicProject = {
   carMake: "Audi",
   createdAt: new Date(),
-  engineName: "TFSI",
+  engineNameAndCapacity: "TFSI 2.0",
   forSell: false,
   id: "1",
   isVerified: false,
