@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MdClose, MdOutlineCloseFullscreen } from "react-icons/md";
+import { MdClose } from "react-icons/md";
 import useKeyboardShortcut from "@/app/hooks/useKeydown";
 import { iconSizes, shortcutConfigs } from "@/app/utils/constants";
 
@@ -74,7 +74,7 @@ const AMPModalHeader = ({
       <MdClose
         onClick={onClose}
         size={iconSizes.base}
-        className="hover:text-red-500 hover:scale-90 cursor-pointer"
+        className="hover:opacity-70 cursor-pointer"
       />
     </div>
   );

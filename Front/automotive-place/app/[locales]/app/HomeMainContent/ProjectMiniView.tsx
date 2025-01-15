@@ -39,8 +39,13 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
             author={data.author}
           />
 
-          <div className="flex justify-between my-1">
-            <div className="flex flex-col gap-1">
+          <div className="flex flex-col my-1 gap-2">
+            <h2 className="text-md opacity-80">{data.description}</h2>
+            {data.images && (
+              <AMPSlider images={data.images} width={640} height={500} />
+            )}
+
+            <div className="flex gap-1 w-full justify-between">
               <StatisticMiniItem title="Etap modyfikacji" value="STAGE 1" />
               <StatisticMiniItem title="Moc" value={data.hp} type="HP" />
               <StatisticMiniItem
@@ -59,10 +64,6 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
                 type="s"
               />
             </div>
-
-            {data.images && (
-              <AMPSlider images={data.images} width={400} height={300} />
-            )}
           </div>
 
           <ContentMiniFooter

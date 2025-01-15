@@ -138,10 +138,10 @@ export function generateRandomBaseProjects(count: number) {
       isVerified: Math.random() < 0.5,
       description: `A well-maintained ${carMake} ${carModel} with excellent performance and features.`,
       engineNameAndCapacity:
-        engineNames[getRandomInt(0, engineNames.length - 1)] +
-        " " +
         getRandomInt(1, 4) +
-        "L",
+        ".0 L " +
+        engineNames[getRandomInt(0, engineNames.length - 1)],
+
       images: projectImages,
       hp: getRandomInt(100, 400),
       acc_0_100: getRandomInt(5, 10),
