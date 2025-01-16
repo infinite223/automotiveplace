@@ -8,6 +8,7 @@ const projectMiniData: TBasicProject = {
   id: "1",
   isVerified: false,
   isVisible: true,
+  images: [],
   carModel: "A3",
   updatedAt: new Date(),
   author: {
