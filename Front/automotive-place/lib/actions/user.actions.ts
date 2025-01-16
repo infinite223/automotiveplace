@@ -29,6 +29,7 @@ export const getUserInfo = async (id: string) => {
 
   try {
     const findUser = await prisma.user.findUnique({ where: { id } });
+    console.log(findUser, "findUser");
     return JSON.parse(JSON.stringify(findUser));
   } catch (error) {
     console.error(error);

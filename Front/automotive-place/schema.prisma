@@ -9,64 +9,296 @@ datasource db {
 }
 
 model Post {
-  id        String  @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  authorId  String?
-
-  projectId String?
-  imagesUrl String? // folder localisation by id  
-  carItemId String? // TODO - remove THIS
-  spotId String?// TODO - remove THIS
-  companyId String? // TODO - remove THIS
-  likes    Like[]
-
-  author User? @relation(fields: [authorId], references: [id])
-  company  Company?  @relation(fields: [companyId], references: [id])
-
+  id               String   @id @default(cuid())
+  title            String
+  content          String?
+  published        Boolean  @default(false)
+  authorId         String?
+  projectId        String?
+  carItemId        String?
+  spotId           String?
+  companyId        String?
   isBlockedByAdmin Boolean?
-  reportId    String?
+  reportId         String?
+  imagesUrl        String?
+  likes            Like[]
+  author           User?    @relation(fields: [authorId], references: [id])
+  company          Company? @relation(fields: [companyId], references: [id])
 }
 
 model User {
-  id        String   @id @default(cuid())
-  password  String
-  name      String   @unique
-  email     String?  @unique
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @updatedAt @map(name: "updated_at")
-  // type? company itp
-  posts        Post[]
-  garage       Garage?
-  projects     Project[]
-  carItems     CarItem[]
-  createdStages      Stage[]
-  likes       Like[]
-  tags        Tag[]
-  userActivity UserActivity[]
-
+  id                         String                       @id @default(cuid())
+  password                   String
+  name                       String                       @unique
+  email                      String?                      @unique
+  createdAt                  DateTime                     @default(now()) @map("created_at")
+  updatedAt                  DateTime                     @updatedAt @map("updated_at")
+  companyId                  String?
+  isBlockedByAdmin           Boolean?
+  reportId                   String?
+  suggestedContentModel      String?
+  carItems                   CarItem[]
+  garage                     Garage?
+  likes                      Like[]
   pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
-  reports    Report[]
-  notifications Notification[]
-  suggestedContentModel     String? 
-  companyId   String?
-  company  Company?  @relation(fields: [companyId], references: [id])
-  @@map(name: "users")
+  posts                      Post[]
+  projects                   Project[]
+  reports                    Report[]
+  createdStages              Stage[]
+  tags                       Tag[]
+  userActivity               UserActivity[]
+  company                    Company?                     @relation(fields: [companyId], references: [id])
 
-  isBlockedByAdmin Boolean?
-  reportId    String?
+  @@map("users")
 }
 
 model UserActivity {
-  id           String   @id @default(cuid())
-  userId       String   
+  id           String       @id @default(cuid())
+  userId       String
   activityType ActivityType
-  entityId     String  
-  entityType   EntityType 
-  createdAt    DateTime @default(now())
-  
-  user         User     @relation(fields: [userId], references: [id])
+  entityId     String
+  entityType   EntityType
+  createdAt    DateTime     @default(now())
+  user         User         @relation(fields: [userId], references: [id])
+}
+
+model Company {
+  id               String    @id @default(cuid())
+  name             String
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+  authorId         String
+  isBlockedByAdmin Boolean?
+  reportId         String?
+  imagesUrl        String?
+  carItems         CarItem[]
+  garage           Garage?
+  location         Location?
+  posts            Post[]
+  projects         Project[]
+  tags             Tag[]
+  users            User[]
+}
+
+model Garage {
+  id               String    @id @default(cuid())
+  name             String
+  description      String
+  authorId         String    @unique
+  garageId         String?   @unique
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+  companyId        String?   @unique
+  isBlockedByAdmin Boolean?
+  reportId         String?
+  carItems         CarItem[]
+  author           User      @relation(fields: [authorId], references: [id])
+  company          Company?  @relation(fields: [companyId], references: [id])
+  projects         Project[]
+}
+
+model Project {
+  id                          String                       @id @default(cuid())
+  createdAt                   DateTime                     @default(now()) @map("created_at")
+  updatedAt                   DateTime                     @updatedAt @map("updated_at")
+  name                        String?
+  carMake                     String
+  carModel                    String
+  description                 String?
+  isVerified                  Boolean
+  isVisible                   Boolean
+  imagesUrl                   String
+  carItemsCount               Int
+  imagesCount                 Int
+  forSell                     Boolean
+  garageId                    String
+  projectPrice                Decimal
+  engineName                  String
+  engineStockHp               Int
+  engineStockNm               Int
+  engineDescription           String?
+  engineCapacity              Decimal
+  engineWasSwapped            Boolean?
+  transmissionName            String
+  transmissionGears           Int
+  transmissionDescription     String?
+  transmissionWasSwapped      Boolean?
+  authorId                    String
+  companyId                   String?
+  isBlockedByAdmin            Boolean?
+  reportId                    String?
+  topSpeedStock               Decimal?
+  transmissionType            Int
+  weightStock                 Decimal?
+  carItems                    CarItem[]
+  likes                       Like[]
+  location                    Location?
+  pickedProjectsOnEventOrSpot PickedProjectOnEventOrSpot[]
+  author                      User                         @relation(fields: [authorId], references: [id])
+  company                     Company?                     @relation(fields: [companyId], references: [id])
+  garage                      Garage                       @relation(fields: [garageId], references: [id])
+  stages                      Stage[]
+  tags                        Tag[]
+}
+
+model Spot {
+  id                         String                       @id @default(cuid())
+  name                       String
+  description                String?
+  createdAt                  DateTime                     @default(now()) @map("created_at")
+  updatedAt                  DateTime                     @updatedAt @map("updated_at")
+  authorId                   String
+  isBlockedByAdmin           Boolean?
+  reportId                   String?
+  location                   Location?
+  pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
+}
+
+model Event {
+  id                         String                       @id @default(cuid())
+  name                       String
+  description                String?
+  createdAt                  DateTime                     @default(now()) @map("created_at")
+  updatedAt                  DateTime                     @updatedAt @map("updated_at")
+  authorId                   String
+  isBlockedByAdmin           Boolean?
+  reportId                   String?
+  imagesUrl                  String
+  location                   Location?
+  pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
+}
+
+model PickedProjectOnEventOrSpot {
+  id               String   @id @default(cuid())
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+  projectId        String?
+  userId           String
+  eventId          String?
+  spotId           String?
+  isBlockedByAdmin Boolean?
+  reportId         String?
+  event            Event?   @relation(fields: [eventId], references: [id])
+  project          Project? @relation(fields: [projectId], references: [id])
+  spot             Spot?    @relation(fields: [spotId], references: [id])
+  user             User     @relation(fields: [userId], references: [id])
+}
+
+model Stage {
+  id               String    @id @default(cuid())
+  name             String
+  description      String?
+  stageNumber      Int
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+  hp               Int
+  nm               Int
+  acc_0_100        Decimal?
+  acc_100_200      Decimal?
+  acc_50_150       Decimal?
+  sl_150_50        Decimal?
+  sl_100_0         Decimal?
+  projectId        String
+  createdById      String?
+  stagePrice       Decimal?
+  chartImageUrl    String?
+  isBlockedByAdmin Boolean?
+  reportId         String?
+  topSpeed         Decimal?
+  weight           Decimal?
+  carItems         CarItem[]
+  createdBy        User?     @relation(fields: [createdById], references: [id])
+  project          Project   @relation(fields: [projectId], references: [id])
+}
+
+model Tag {
+  id               String   @id @default(cuid())
+  name             String
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+  authorId         String
+  projectId        String?
+  carItemId        String?
+  companyId        String?
+  isBlockedByAdmin Boolean?
+  reportId         String?
+  author           User     @relation(fields: [authorId], references: [id])
+  carItem          CarItem? @relation(fields: [carItemId], references: [id])
+  company          Company? @relation(fields: [companyId], references: [id])
+  project          Project? @relation(fields: [projectId], references: [id])
+}
+
+model CarItem {
+  id               String   @id @default(cuid())
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+  forSell          Boolean
+  isVisible        Boolean
+  inUse            Boolean
+  name             String
+  description      String
+  itemType         String
+  carItemPrice     Decimal?
+  projectId        String
+  authorId         String
+  garageId         String?
+  stageId          String?
+  companyId        String?
+  isBlockedByAdmin Boolean?
+  reportId         String?
+  author           User     @relation(fields: [authorId], references: [id])
+  company          Company? @relation(fields: [companyId], references: [id])
+  garage           Garage?  @relation(fields: [garageId], references: [id])
+  project          Project  @relation(fields: [projectId], references: [id])
+  stage            Stage?   @relation(fields: [stageId], references: [id])
+  likes            Like[]
+  tags             Tag[]
+}
+
+model Report {
+  id              String   @id @default(cuid())
+  userId          String
+  createdAt       DateTime @default(now()) @map("created_at")
+  name            String
+  description     String
+  appeal          String?
+  reportType      String
+  reportElementId String
+  author          User     @relation(fields: [userId], references: [id])
+}
+
+model Like {
+  id           String       @id @default(cuid())
+  userId       String
+  likeableId   String
+  likeableType LikeableType
+  createdAt    DateTime     @default(now()) @map("created_at")
+  carItemId    String?
+  projectId    String?
+  postId       String?
+  carItem      CarItem?     @relation(fields: [carItemId], references: [id])
+  post         Post?        @relation(fields: [postId], references: [id])
+  project      Project?     @relation(fields: [projectId], references: [id])
+  author       User         @relation(fields: [userId], references: [id])
+
+  @@index([likeableId, likeableType], map: "likeable_index")
+}
+
+model Location {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now()) @map("created_at")
+  name        String
+  description String
+  lat         Decimal
+  lng         Decimal
+  projectId   String?  @unique
+  companyId   String?  @unique
+  spotId      String?  @unique
+  eventId     String?  @unique
+  company     Company? @relation(fields: [companyId], references: [id])
+  spot        Spot?    @relation(fields: [eventId], references: [id])
+  project     Project? @relation(fields: [projectId], references: [id])
+  event       Event?   @relation(fields: [spotId], references: [id])
 }
 
 enum ActivityType {
@@ -83,322 +315,6 @@ enum EntityType {
   SPOT
 }
 
-model Company {
-  id        String   @id @default(cuid())
-  name      String
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @updatedAt @map(name: "updated_at")
-  // TODO - dane firmy, nip, regon itp
-  imagesUrl     String? // folder localisation by id  
-
-  posts        Post[]
-  garage       Garage?
-  projects     Project[]
-  carItems     CarItem[]
-  tags        Tag[]
-  users       User[] // osoby należące do firmy 
-  authorId      String // Twórca firmy w aplikacji
-  location Location?
-
-  isBlockedByAdmin Boolean?
-  reportId    String?
-}
-
-model Garage {
-  id          String   @id @default(cuid())
-  name        String
-  description String
-  authorId    String   @unique
-  garageId    String?   @unique
-  createdAt   DateTime @default(now()) @map(name: "created_at")
-  updatedAt   DateTime @updatedAt @map(name: "updated_at")
-  companyId String? @unique
-  carItems    CarItem[]
-  projects Project[]
-
-  author   User    @relation(fields: [authorId], references: [id])
-  company  Company?  @relation(fields: [companyId], references: [id])
-
-  isBlockedByAdmin Boolean?
-  reportId    String?
-}
-
-model Project {
-  id String @id @default(cuid())
-
-  createdAt     DateTime @default(now()) @map(name: "created_at")
-  updatedAt     DateTime @updatedAt @map(name: "updated_at")
-  name          String?
-  carMake       String
-  carModel      String
-  description   String?
-  isVerified    Boolean
-  isVisible     Boolean
-  imagesUrl     String // folder localisation by id  
-  carItemsCount Int // user can expand car items
-  imagesCount   Int // user can expand images 
-  forSell       Boolean
-  garageId      String
-  projectPrice  Decimal
-
-  engineName      String
-  engineStockHp    Int  
-  engineStockNm    Int
-  engineDescription String?
-  engineCapacity Decimal
-  engineWasSwapped   Boolean?
-
-  transmissionName String
-  transmissionType Int // type -> 0 - maual | 1 - automat
-  transmissionGears Int
-  transmissionDescription String?
-  transmissionWasSwapped Boolean?
-
-  topSpeedStock Decimal?
-  weightStock   Decimal?
-
-  carItems CarItem[]
-  stages Stage[]
-  likes    Like[]
-  pickedProjectsOnEventOrSpot PickedProjectOnEventOrSpot[]
-  tags Tag[]
-  authorId String
-  companyId String?
-  location Location?
-
-  author User    @relation(fields: [authorId], references: [id])
-  garage Garage? @relation(fields: [garageId], references: [id])
-  company Company? @relation(fields: [companyId], references: [id])
-
-  isBlockedByAdmin Boolean?
-  reportId    String?
-}
-
-model Spot {
-  id String     @id @default(cuid())
-
-  name          String
-  description   String?
-  createdAt     DateTime @default(now()) @map(name: "created_at")
-  updatedAt     DateTime @updatedAt @map(name: "updated_at")
-  
-  authorId String
-  pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
-  location Location?
-
-  isBlockedByAdmin Boolean?
-  reportId    String?
-}
-
-model Event {
-  id String     @id @default(cuid())
-
-  name          String
-  description   String?
-  createdAt     DateTime @default(now()) @map(name: "created_at")
-  updatedAt     DateTime @updatedAt @map(name: "updated_at")
-  imagesUrl     String // folder localisation by id  
-
-  authorId String
-  pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
-  location Location?
-
-  isBlockedByAdmin Boolean?
-  reportId    String?
-}
-
-model PickedProjectOnEventOrSpot {
-  id String     @id @default(cuid())
-  createdAt     DateTime @default(now()) @map(name: "created_at")
-  updatedAt     DateTime @updatedAt @map(name: "updated_at")
-
-  projectId     String?
-  userId        String
-
-  eventId       String?
-  spotId        String?
-
-  project Project? @relation(fields: [projectId], references: [id])
-  user User? @relation(fields: [userId], references: [id])
-
-  event Event? @relation(fields: [eventId], references: [id])
-  spot Spot? @relation(fields: [spotId], references: [id])
-
-  isBlockedByAdmin Boolean?
-  reportId    String?
-}
-
-model Stage {
-  id String     @id @default(cuid())
-
-  name          String
-  description   String?
-  stageNumber   Int
-  createdAt     DateTime @default(now()) @map(name: "created_at")
-  updatedAt     DateTime @updatedAt @map(name: "updated_at")
-  hp            Int
-  nm            Int
-  acc_0_100     Decimal?
-  acc_100_200   Decimal?
-  acc_50_150    Decimal?
-
-  sl_150_50     Decimal? // droga hamowania w metrach
-  sl_100_0      Decimal?
-  topSpeed Decimal?
-  weight   Decimal?
-
-  projectId     String
-  createdById   String?
-  stagePrice    Decimal?
-  chartImageUrl String?    
-
-  carItems CarItem[]
-  project Project? @relation(fields: [projectId], references: [id])
-  createdBy User? @relation(fields: [createdById], references: [id]) 
-
-  isBlockedByAdmin Boolean?
-  reportId    String?
-}
-
-model Tag {
-  id String     @id @default(cuid())
-
-  name          String
-  createdAt     DateTime @default(now()) @map(name: "created_at")
-  updatedAt     DateTime @updatedAt @map(name: "updated_at")
-  authorId      String
-  projectId     String?
-  carItemId     String? 
-  companyId     String? 
-
-  author    User     @relation(fields: [authorId], references: [id])
-  project   Project?  @relation(fields: [projectId], references: [id])
-  company   Company?  @relation(fields: [companyId], references: [id])
-  carItem   CarItem?   @relation(fields: [carItemId], references: [id])
-
-  isBlockedByAdmin Boolean?
-  reportId    String?
-}
-
-model CarItem {
-  id String @id @default(cuid())
-
-  createdAt   DateTime       @default(now()) @map(name: "created_at")
-  updatedAt   DateTime       @updatedAt @map(name: "updated_at")
-  forSell     Boolean
-  isVisible   Boolean
-  inUse       Boolean
-  name        String
-  description String
-  itemType    String
-  carItemPrice  Decimal?
-  likes       Like[]
-  tags        Tag[]
-
-  projectId   String
-  authorId    String
-  garageId    String?
-  stageId     String?
-  companyId   String?
-
-  author    User     @relation(fields: [authorId], references: [id])
-  project   Project? @relation(fields: [projectId], references: [id])
-  garage   Garage? @relation(fields: [garageId], references: [id])
-  stage     Stage? @relation(fields: [stageId], references: [id])
-  company   Company? @relation(fields: [companyId], references: [id])
-
-  isBlockedByAdmin Boolean?
-  reportId    String?
-}
-
-model Report {
-  id           String   @id @default(cuid())
-  userId       String
-  createdAt    DateTime @default(now()) @map(name: "created_at")
-  name         String
-  description  String 
-  appeal       String? // Wypełnia użytkownik który utworzył daną rzecz (spot, element, projekt)
-
-  reportType   String
-  reportElementId String 
-  author         User     @relation(fields: [userId], references: [id])
-}
-
-model Like {
-  id           String   @id @default(cuid())
-  userId       String
-  likeableId   String
-  likeableType LikeableType
-  createdAt    DateTime @default(now()) @map(name: "created_at")
- 
-  carItemId    String?
-  projectId    String?
-  postId       String?
-
-  author         User     @relation(fields: [userId], references: [id])
-  post         Post?    @relation(fields: [postId], references: [id])
-  project      Project? @relation(fields: [projectId], references: [id])
-  carItem      CarItem? @relation(fields: [carItemId], references: [id])
-
-  @@index([likeableId, likeableType], name: "likeable_index")
-}
-
-model Location {
-  id           String   @id @default(cuid())
-  createdAt    DateTime @default(now()) @map(name: "created_at")
-  name         String   // nazwa miejsca - np. miejscowość
-  description  String   // dodatkowe informacje - np. kod pocztowy, ulica, budynek 
-  lat          Decimal
-  lng          Decimal
-  projectId    String?  @unique
-  companyId    String?  @unique
-  spotId       String?  @unique
-  eventId      String?  @unique
-   
-  
-  project      Project? @relation(fields: [projectId], references: [id])
-  company      Company? @relation(fields: [companyId], references: [id])
-  event        Event? @relation(fields: [spotId], references: [id])
-  spot        Spot? @relation(fields: [eventId], references: [id])
-}
-
-model Notification {
-  id           String   @id @default(cuid())
-  createdAt    DateTime @default(now()) @map(name: "created_at")
-  userId       String @unique
-  title        String
-  description  String
-  isRead       Boolean
-  isImportant  Boolean
-  user      User? @relation(fields: [userId], references: [id])
-}
-
-// model Message {
-//   id        String   @id @default(cuid())
-//   content   String
-//   createdAt DateTime @default(now())
-//   senderId  String
-//   receiverId String
-//   sender    User     @relation("SentMessages", fields: [senderId], references: [id])
-//   receiver  User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
-// }
-
-
-// model Media {
-//   id        String   @id @default(cuid())
-//   url       String
-//   type      String
-//   createdAt DateTime @default(now())
-//   userId    String
-//   user      User     @relation(fields: [userId], references: [id])
-// }
-
-// TODO - cały osobny model czatu 
-// Chats -> Messages
-
-// miejsca (osobna tabela)-> gdzie można spotkać dany projekt, gdzie jest firma itp 
-
-
 enum LikeableType {
   POST
   PROJECT
@@ -406,7 +322,3 @@ enum LikeableType {
   SPOT
   COMPANY
 }
-
-// generator erd {
-//   provider = "prisma-erd-generator"
-// }

@@ -8,6 +8,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { iconSizes } from "@/app/utils/constants";
 import Link from "next/link";
 import AMPSlider from "@/app/components/shared/AMPSlider";
+import { getLoggedInUser, getUserInfo } from "@/lib/actions/user.actions";
 
 export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
   const [isClient, setIsClient] = useState(false);

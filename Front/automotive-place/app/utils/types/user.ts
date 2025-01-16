@@ -9,7 +9,7 @@ type TUser = {
 type TBasicUser = {
   id: string;
   name: string;
-  imageUrl?: string;
+  imageUrl?: string | null;
 };
 
 export type { TUser, TBasicUser };

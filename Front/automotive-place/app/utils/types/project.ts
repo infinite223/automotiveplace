@@ -59,10 +59,10 @@ type TBasicProject = {
   forSell: boolean;
   isVisible: boolean;
 
-  name?: string;
+  name?: string | null;
   carMake: string;
   carModel: string;
-  description?: string;
+  description?: string | null;
   isVerified: boolean;
 
   hp: number;
@@ -71,7 +71,7 @@ type TBasicProject = {
   acc_100_200: number;
 
   engineNameAndCapacity: string;
-  images?: string[];
+  images: string[];
   tags: TBasicTag[];
   author: TBasicUser;
 };
