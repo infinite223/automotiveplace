@@ -144,6 +144,8 @@ export function generateRandomBaseProjects(count: number) {
 
       images: projectImages,
       hp: getRandomInt(100, 400),
+      engineStockHp: getRandomInt(100, 400),
+      engineStockNm: getRandomInt(100, 400),
       acc_0_100: getRandomInt(5, 10),
       acc_100_200: getRandomInt(15, 25),
       nm: getRandomInt(150, 500),

@@ -59,6 +59,12 @@ export async function GET(request: NextRequest, response: NextResponse) {
     include: {
       tags: true,
       author: true,
+      stages: {
+        orderBy: {
+          stageNumber: "desc",
+        },
+        take: 1,
+      },
     },
   });
 
@@ -73,33 +79,39 @@ export async function GET(request: NextRequest, response: NextResponse) {
     return bMatches - aMatches;
   });
 
-  const basicProjects: TBasicProject[] = sortedProjects.map((project) => ({
-    id: project.id,
-    createdAt: project.createdAt,
-    updatedAt: project.updatedAt,
-    forSell: project.forSell,
-    isVisible: project.isVisible,
-    name: project.name,
-    carMake: project.carMake,
-    carModel: project.carModel,
-    description: project.description,
-    isVerified: project.isVerified,
-    hp: project.engineStockHp, // change to last stage hp
-    nm: project.engineStockNm,
-    acc_0_100: 5.5,
-    acc_100_200: 10.2,
-    engineNameAndCapacity: project.engineName + " " + project.engineCapacity,
-    images: projectImages, // change to images from db
-    tags: project.tags.map((tag) => ({
-      id: tag.id,
-      name: tag.name,
-    })),
-    author: {
-      id: project.author.id,
-      name: project.author.name,
-      email: project.author.email,
-    },
-  }));
+  const basicProjects: TBasicProject[] = sortedProjects.map((project) => {
+    const stage = project.stages[0];
+
+    return {
+      id: project.id,
+      createdAt: project.createdAt,
+      updatedAt: project.updatedAt,
+      forSell: project.forSell,
+      isVisible: project.isVisible,
+      name: project.name,
+      carMake: project.carMake,
+      carModel: project.carModel,
+      description: project.description,
+      isVerified: project.isVerified,
+      hp: stage ? stage.hp : 0,
+      nm: stage ? stage.nm : 0,
+      engineStockHp: project.engineStockHp,
+      engineStockNm: project.engineStockNm,
+      acc_0_100: stage ? stage.acc_0_100?.toNumber() || null : null,
+      acc_100_200: stage ? stage.acc_100_200?.toNumber() || null : null,
+      engineNameAndCapacity: project.engineName + " " + project.engineCapacity,
+      images: projectImages, // change to images from db
+      tags: project.tags.map((tag) => ({
+        id: tag.id,
+        name: tag.name,
+      })),
+      author: {
+        id: project.author.id,
+        name: project.author.name,
+        email: project.author.email,
+      },
+    };
+  });
 
   console.log(basicProjects, "personalizedPosts");
 

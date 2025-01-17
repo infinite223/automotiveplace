@@ -1,10 +1,9 @@
 import { TContentTypes } from "@/app/utils/types";
 import { CgShare } from "react-icons/cg";
 import { FaHeart } from "react-icons/fa";
-import { TBasicTag, TTag } from "@/app/utils/types/tag";
+import { TBasicTag } from "@/app/utils/types/tag";
 import { iconSizes } from "@/app/utils/constants";
 import { AMPTag } from "@/app/components/shared/AMPTag";
-import { AMPSeparator } from "@/app/components/shared/AMPSeparator";
 
 interface IContentMiniFooter {
   type: TContentTypes;

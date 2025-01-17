@@ -1,4 +1,3 @@
-import { TContentDataOptions } from "../types";
 import { TCarItem, TCarItemCreate } from "./carItem";
 import { TStageCreate, TStage } from "./stage";
 import { TBasicTag, TTag, TTagCreate } from "./tag";
@@ -67,8 +66,10 @@ type TBasicProject = {
 
   hp: number;
   nm: number;
-  acc_0_100: number;
-  acc_100_200: number;
+  engineStockHp: number;
+  engineStockNm: number;
+  acc_0_100: number | null;
+  acc_100_200: number | null;
 
   engineNameAndCapacity: string;
   images: string[];
@@ -77,22 +78,25 @@ type TBasicProject = {
 };
 function isTProject(data: any): data is TBasicProject {
   return (
-    typeof data === "object" &&
-    data !== null &&
-    typeof data.id === "string" &&
-    // data.createdAt instanceof Date &&
-    // data.updatedAt instanceof Date &&
-    typeof data.forSell === "boolean" &&
-    typeof data.isVisible === "boolean" &&
-    typeof data.carMake === "string" &&
-    typeof data.carModel === "string" &&
-    typeof data.description === "string" &&
-    typeof data.isVerified === "boolean" &&
-    typeof data.hp === "number" &&
-    typeof data.nm === "number" &&
-    typeof data.acc_0_100 === "number" &&
-    typeof data.acc_100_200 === "number" &&
-    (Array.isArray(data.images) || data.images === undefined)
+    (typeof data === "object" &&
+      data !== null &&
+      typeof data.id === "string" &&
+      // data.createdAt instanceof Date &&
+      // data.updatedAt instanceof Date &&
+      typeof data.forSell === "boolean" &&
+      typeof data.isVisible === "boolean" &&
+      typeof data.carMake === "string" &&
+      typeof data.carModel === "string" &&
+      typeof data.description === "string" &&
+      typeof data.isVerified === "boolean" &&
+      typeof data.hp === "number" &&
+      typeof data.nm === "number" &&
+      typeof data.engineStockHp === "number" &&
+      typeof data.engineStockNm === "number" &&
+      typeof data.acc_0_100 === "number") ||
+    (data.acc_0_100 === null && typeof data.acc_100_200 === "number") ||
+    (data.acc_100_200 === null &&
+      (Array.isArray(data.images) || data.images === undefined))
   );
 }
 

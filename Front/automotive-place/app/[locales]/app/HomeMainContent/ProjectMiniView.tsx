@@ -8,7 +8,6 @@ import { IoIosArrowForward } from "react-icons/io";
 import { iconSizes } from "@/app/utils/constants";
 import Link from "next/link";
 import AMPSlider from "@/app/components/shared/AMPSlider";
-import { getLoggedInUser, getUserInfo } from "@/lib/actions/user.actions";
 
 export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
   const [isClient, setIsClient] = useState(false);
@@ -22,6 +21,14 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
   const handleLinkClick = () => {
     sessionStorage.setItem("lastClickedId", data.id);
   };
+
+  const statisticCurrentHp = data.hp
+    ? data.hp + " (+" + (data.hp - data.engineStockHp) + ") "
+    : data.engineStockHp;
+
+  const statisticCurrentNm = data.nm
+    ? data.nm + " (+" + (data.nm - data.engineStockNm) + ") "
+    : data.engineStockNm;
 
   return (
     <>
@@ -46,12 +53,18 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
               <AMPSlider images={data.images} width={640} height={500} />
             )}
 
-            <div className="flex gap-1 w-full justify-between">
+            <div
+              className={`flex gap-5 w-full ${data.acc_0_100 && " justify-between"}`}
+            >
               <StatisticMiniItem title="Etap modyfikacji" value="STAGE 1" />
-              <StatisticMiniItem title="Moc" value={data.hp} type="HP" />
+              <StatisticMiniItem
+                title="Moc"
+                value={statisticCurrentHp}
+                type="HP"
+              />
               <StatisticMiniItem
                 title="Moment obrotowy"
-                value={data.nm}
+                value={statisticCurrentNm}
                 type="NM"
               />
               <StatisticMiniItem
@@ -97,9 +110,13 @@ const StatisticMiniItem = ({
   type,
 }: {
   title: string;
-  value: string | number;
+  value: string | number | null;
   type?: string;
 }) => {
+  if (value === null) {
+    return;
+  }
+
   return (
     <div className="flex flex-col">
       <div className="text-sm font-semibold">
