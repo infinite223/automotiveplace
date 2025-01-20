@@ -5,10 +5,11 @@ import useFetchData from "@/app/hooks/useFetchData";
 import { getProject } from "@/app/services/project";
 import { getCurrentStage } from "@/app/utils/helpers";
 import { TProject } from "@/app/utils/types/project";
-import { MdArrowBackIosNew } from "react-icons/md";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function Project({ params }: { params: { id: string } }) {
+  const t = useTranslations();
+
   const { data, loading, error } = useFetchData<TProject>(() =>
     getProject(params.id)
   );
@@ -22,22 +23,29 @@ export default function Project({ params }: { params: { id: string } }) {
       </div>
     );
   if (error) return <div>Error: {error.message}</div>;
-  console.log(data, "data");
+
   return (
     <main className="flex w-full min-h-screen bg-amp-900 dark:bg-amp-0 flex-col items-center gap-2 text-black dark:text-white">
-      <div className="w-full bg-amp-700 dark:bg-amp-100 pb-20 flex justify-center">
+      <div className="w-full bg-amp-700 dark:bg-amp-0 pb-32 flex justify-center">
         <div className="max-w-screen-2xl w-full h-[250px]">
           {data && data.images?.[0] && (
             // <Image src={data.images[0]} alt="car-image" width={300} height={200} /> // TODO - add storage images to nextjs config
             <img
-              src="https://www.vcentrum.pl/wp-content/uploads/2024/02/DSC09433.jpg"
-              className="w-full h-full object-cover rounded-b-lg"
+              src={data.images?.[0]}
+              className="w-full h-full object-cover rounded-b-lg blur-sm opacity-80"
               alt="car-image"
             />
           )}
 
-          <nav className="flex flex-col gap-2 justify-between w-full top-[-100px] relative px-4">
-            <h1 className="text-3xl font-semibold gap-2 flex">
+          <nav className="flex flex-col gap-2 justify-between w-full top-[-60px] relative px-4">
+            <h1 className="text-3xl font-semibold gap-2 flex items-center">
+              {data && (
+                <img
+                  src={data.images?.[0]}
+                  className="w-20 h-20 object-cover rounded-full mr-4"
+                  alt="car-image"
+                />
+              )}
               <span>{data?.carMake}</span>
               <span>{data?.carModel}</span>
               <span className="">- {lastStage?.name}</span>
@@ -46,12 +54,12 @@ export default function Project({ params }: { params: { id: string } }) {
             {lastStage && (
               <div className="flex flex-wrap gap-2 w-full">
                 <AMPCarStatsItem
-                  typeValue={"HP"}
+                  typeValue={t("Core.Hp").toUpperCase()}
                   value={lastStage.hp.toString()}
                   title="Moc silnika"
                 />
                 <AMPCarStatsItem
-                  typeValue={"NM"}
+                  typeValue="NM"
                   value={lastStage.nm.toString()}
                   title="Moment obrotowy"
                 />
@@ -104,8 +112,7 @@ export default function Project({ params }: { params: { id: string } }) {
         <MdArrowBackIosNew />
       </Link> */}
 
-      <div className="flex w-full flex-col gap-2">
-        {/* TODO - create gallery component */}
+      {/* <div className="flex w-full flex-col gap-2">
         <h3 className="text-sm opacity-85">Galeria projektu</h3>
         <div>
           {data && data.images?.[0] && (
@@ -117,9 +124,9 @@ export default function Project({ params }: { params: { id: string } }) {
             />
           )}
         </div>
-      </div>
+      </div> */}
 
-      <div className="flex w-full flex-col gap-2">
+      <div className="flex w-full flex-col gap-2 items-center">
         {/* TODO - create gallery component */}
         <h3 className="text-sm opacity-85">Etapy modyfikacji projektu</h3>
         <div>
