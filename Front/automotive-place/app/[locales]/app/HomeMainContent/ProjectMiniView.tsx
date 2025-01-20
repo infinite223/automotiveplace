@@ -50,7 +50,7 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
           <div className="flex flex-col my-1 gap-2">
             <h2 className="text-md opacity-80">{data.description}</h2>
             {data.images && (
-              <AMPSlider images={data.images} width={640} height={500} />
+              <AMPSlider images={data.images} width={555} height={500} />
             )}
 
             <div

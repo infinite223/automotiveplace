@@ -27,7 +27,7 @@ const carModels = {
 };
 const engineNames = ["TSI", "TDI", "EcoBoost", "SkyActiv", "Hybrid", "VTEC"];
 const transmissionNames = ["Manual", "Automatic", "CVT", "DSG"];
-
+  
 export function generateRandomProjects(count: number) {
   const projects = [];
 
