@@ -30,14 +30,26 @@ export default async function Layout({
         {/* Botton naviagtion */}
         {children}
         {/* TODO - left bar for some data, add mobile view */}
-        <div className="h-full px-4 w-[180px] pt-4 fixed right-0 hidden lg:block">
+        <div className="h-full px-4 w-[280px] pt-4 fixed right-0 hidden lg:block bg-amp-0 text-amp-300 dark:text-amp-700/80">
           <div className="text-md flex items-center w-full justify-end gap-3">
-            <TbMessage2Up size={22} />
-            <IoNotifications size={22} />
-            <IoPersonCircle size={29} />
+            <OptionItem icon={<TbMessage2Up size={22} />} />
+            <OptionItem icon={<IoNotifications size={22} />} />
+            <OptionItem icon={<IoPersonCircle size={22} />} />
+          </div>
+
+          <div className="my-4">
+            <h2 className="">Popularne projekty</h2>
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+const OptionItem = ({ icon }: { icon: React.ReactNode }) => {
+  return (
+    <div className="flex items-center p-2 rounded-full bg-amp-700 dark:bg-amp-300 hover:opacity-70 cursor-pointer transition-transform-opacity">
+      {icon}
+    </div>
+  );
+};

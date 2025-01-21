@@ -1,5 +1,3 @@
-"use server";
-
 import { AllanBold, KalamBold } from "@/app/utils/helpers";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -28,7 +26,7 @@ const Header = ({ isLogged = false }: { isLogged: boolean }) => {
 
       <div className="flex items-center gap-4 text-lg mt-4">
         <Link
-          href={`./sign-in`}
+          href={isLogged ? `./app` : `./sign-in`}
           className="text-white py-2 font-semibold px-6 rounded-sm border-amp-700 border-1"
         >
           {t(isLogged ? "Core.GoToApp" : "Core.SignIn")}

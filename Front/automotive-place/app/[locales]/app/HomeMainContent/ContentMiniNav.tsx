@@ -18,6 +18,48 @@ const menuItems: TMenuItem[] = [
     isDisable: false,
     handleClick: () => {},
   },
+  {
+    name: "Udostępnij",
+    isDisable: false,
+    handleClick: () => {
+      // Handle share action
+    },
+  },
+  {
+    name: "Zapisz",
+    isDisable: false,
+    handleClick: () => {
+      // Handle save action
+    },
+  },
+  {
+    name: "Obserwuj",
+    isDisable: false,
+    handleClick: () => {
+      // Handle follow action
+    },
+  },
+  {
+    name: "Edytuj",
+    isDisable: false,
+    handleClick: () => {
+      // Handle edit action
+    },
+  },
+  {
+    name: "Usuń",
+    isDisable: false,
+    handleClick: () => {
+      // Handle delete action
+    },
+  },
+  {
+    name: "Nie interesuje mnie",
+    isDisable: false,
+    handleClick: () => {
+      // Handle block action
+    },
+  },
 ];
 
 export const ContentMiniNav = ({
