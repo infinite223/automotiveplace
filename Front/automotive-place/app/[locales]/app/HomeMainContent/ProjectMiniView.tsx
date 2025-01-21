@@ -83,7 +83,7 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
           <ContentMiniFooter
             tags={data.tags}
             isLikedByAuthUser={false}
-            likesCount={12}
+            likesCount={data.likesCount}
             type="Project"
             actions={
               <Link

@@ -9,7 +9,8 @@ export function generateRandomPosts(count: number) {
       createdAt: generateRandomDate(new Date(2020, 0, 1), new Date()),
       updatedAt: generateRandomDate(new Date(2020, 0, 1), new Date()),
       isVisible: Math.random() < 0.5,
-      description: "",
+      content: "",
+      imagesUrl: "",
       title: "Random post",
     };
 

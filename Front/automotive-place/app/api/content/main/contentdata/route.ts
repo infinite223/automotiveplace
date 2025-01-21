@@ -115,6 +115,7 @@ export async function GET(request: NextRequest) {
         name: project.author.name,
         email: project.author.email,
       },
+      likesCount: 543, // TODO - add likesCount to db or get likees count from likes table
     };
   });
 

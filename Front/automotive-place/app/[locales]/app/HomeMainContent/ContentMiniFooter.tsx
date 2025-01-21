@@ -4,6 +4,8 @@ import { FaHeart } from "react-icons/fa";
 import { TBasicTag } from "@/app/utils/types/tag";
 import { iconSizes } from "@/app/utils/constants";
 import { AMPTag } from "@/app/components/shared/AMPTag";
+import { TbMessageCircleUp } from "react-icons/tb";
+import { AMPSeparator } from "@/app/components/shared/AMPSeparator";
 
 interface IContentMiniFooter {
   type: TContentTypes;
@@ -25,9 +27,9 @@ export const ContentMiniFooter = ({
   const handleClickLike = () => {};
   return (
     <nav className="flex flex-col items-center justify-between w-full">
+      <AMPSeparator />
       <div className="flex items-center justify-between w-full">
-        <div className="flex items-center gap-2">
-          <CgShare size={iconSizes.base} />
+        <div className="flex items-center gap-3">
           <div className="flex flex-col gap-2">
             {!isLoading && (
               <div
@@ -47,6 +49,8 @@ export const ContentMiniFooter = ({
               </div>
             )}
           </div>
+          <CgShare size={iconSizes.base} />
+          <TbMessageCircleUp size={iconSizes.base} />
         </div>
 
         {actions}

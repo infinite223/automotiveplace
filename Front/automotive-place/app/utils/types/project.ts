@@ -72,6 +72,7 @@ type TBasicProject = {
   acc_100_200: number | null;
 
   engineNameAndCapacity: string;
+  likesCount: number;
   images: string[];
   tags: TBasicTag[];
   author: TBasicUser;
@@ -89,6 +90,7 @@ function isTBasicProject(data: any): data is TBasicProject {
       typeof data.carModel === "string" &&
       typeof data.description === "string" &&
       typeof data.isVerified === "boolean" &&
+      typeof data.likesCount === "number" &&
       typeof data.hp === "number" &&
       typeof data.nm === "number" &&
       typeof data.engineStockHp === "number" &&

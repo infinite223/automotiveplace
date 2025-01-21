@@ -32,6 +32,7 @@ const projectMiniData: TBasicProject = {
       name: "A3",
     },
   ],
+  likesCount: 12,
 };
 
 export { projectMiniData };
