@@ -2,9 +2,9 @@
 
 import React, { useEffect } from "react";
 import { TContentData } from "../../../utils/types";
-import { isTProject } from "../../../utils/types/project";
+import { isTBasicProject } from "../../../utils/types/project";
 import { ProjectMiniView } from "./ProjectMiniView";
-import { isTPost } from "@/app/utils/types/post";
+import { isTBasicPost } from "@/app/utils/types/post";
 import { PostMiniView } from "./PostMiniView";
 import { ProblemMiniView } from "./ProblemMiniView";
 import { isTProblem } from "@/app/utils/types/problem";
@@ -93,7 +93,7 @@ export const ContentSelect = ({
   const errorText = " data is not valid";
   switch (type) {
     case "Project":
-      const contentDataIsProject = isTProject(data);
+      const contentDataIsProject = isTBasicProject(data);
 
       if (contentDataIsProject) {
         return <ProjectMiniView data={data} />;
@@ -111,7 +111,7 @@ export const ContentSelect = ({
       console.error(type, errorText);
       return null;
     case "Post":
-      const contentDataIsPost = isTPost(data);
+      const contentDataIsPost = isTBasicPost(data);
 
       if (contentDataIsPost) {
         return <PostMiniView data={data} />;

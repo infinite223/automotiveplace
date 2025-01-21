@@ -76,7 +76,7 @@ type TBasicProject = {
   tags: TBasicTag[];
   author: TBasicUser;
 };
-function isTProject(data: any): data is TBasicProject {
+function isTBasicProject(data: any): data is TBasicProject {
   return (
     (typeof data === "object" &&
       data !== null &&
@@ -133,4 +133,4 @@ type TProjectCreate = {
 };
 
 export type { TProject, TBasicProject, TProjectCreate };
-export { isTProject };
+export { isTBasicProject };

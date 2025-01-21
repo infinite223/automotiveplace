@@ -52,7 +52,7 @@ export default function Project({ params }: { params: { id: string } }) {
             </h1>
 
             {lastStage && (
-              <div className="flex flex-wrap gap-2 w-full">
+              <div className="flex flex-wrap gap-4 w-full">
                 <AMPCarStatsItem
                   typeValue={t("Core.Hp").toUpperCase()}
                   value={lastStage.hp.toString()}

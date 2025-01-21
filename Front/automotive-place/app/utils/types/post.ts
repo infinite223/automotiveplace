@@ -1,7 +1,8 @@
 type TPost = {
   id: string;
   title: string;
-  description: string;
+  content: string;
+  imagesUrl: string;
   createdAt: Date;
   updatedAt: Date;
   isVisible: boolean;
@@ -13,18 +14,25 @@ type TPostCreate = {
   isVisible: boolean;
 };
 
-function isTPost(data: any): data is TPost {
+type TBasicPost = {
+  id: string;
+  title: string;
+  content: string;
+  imagesUrl: string | null;
+  likesCount: number;
+  lastUpdateAt: Date;
+};
+
+function isTBasicPost(data: any): data is TBasicPost {
   return (
     typeof data === "object" &&
     data !== null &&
     typeof data.id === "string" &&
-    // data.createdAt instanceof Date &&
-    // data.updatedAt instanceof Date &&
-    typeof data.isVisible === "boolean" &&
     typeof data.title === "string" &&
-    typeof data.description === "string"
+    typeof data.content === "string" &&
+    typeof data.likesCount === "number"
   );
 }
 
-export { isTPost };
-export type { TPost, TPostCreate };
+export { isTBasicPost };
+export type { TPost, TPostCreate, TBasicPost };

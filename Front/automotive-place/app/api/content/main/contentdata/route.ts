@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateRandomContent } from "@/app/utils/data/contentData";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { logger } from "@/app/api/logger.config";
 import prisma from "@/lib/prisma";
 import { TBasicProject } from "@/app/utils/types/project";
 import { ContentType } from "@/app/utils/enums";
+import { TBasicPost } from "@/app/utils/types/post";
 
 const projectImage =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS68Gy62kKm-z60Pe_y32-kfkuaEmprwzvfKXfM_zhLiiC4ulIna5DlScrbubsjMtfzA9w&usqp=CAU";
@@ -24,7 +24,7 @@ const projectImages = [
   projectImage4,
 ];
 
-export async function GET(request: NextRequest, response: NextResponse) {
+export async function GET(request: NextRequest) {
   const userData = await getLoggedInUser();
 
   if (!userData) {
@@ -41,7 +41,6 @@ export async function GET(request: NextRequest, response: NextResponse) {
   const limit = parseInt(searchParams.get("limit")) || 10;
   const page = parseInt(searchParams.get("page") || "1", 10);
 
-  // TODO - dokończyć implementecje
   const userInterests = await prisma.userActivity.groupBy({
     by: ["entityType"],
     where: { userId: userData.user.$id },
@@ -65,6 +64,12 @@ export async function GET(request: NextRequest, response: NextResponse) {
         },
         take: 1,
       },
+    },
+  });
+
+  const allPosts = await prisma.post.findMany({
+    include: {
+      author: true,
     },
   });
 
@@ -113,24 +118,40 @@ export async function GET(request: NextRequest, response: NextResponse) {
     };
   });
 
-  console.log(basicProjects, "personalizedPosts");
+  const basicPosts: TBasicPost[] = allPosts.map((post) => ({
+    content: post.content ?? "",
+    id: post.id,
+    imagesUrl: post.imagesUrl,
+    lastUpdateAt: new Date(),
+    likesCount: 2, // TODO - add likesCount to db or get likees count from likes table
+    title: post.title,
+  }));
 
-  // logic for getting content data...
+  // Combine projects and posts
+  const combinedContent = [
+    ...basicProjects.map((project) => ({
+      type: ContentType.Project,
+      data: project,
+    })),
+    ...basicPosts.map((post) => ({ type: ContentType.Post, data: post })),
+  ];
+
+  // Shuffle the combined content
+  const shuffledContent = combinedContent.sort(() => Math.random() - 0.5);
+
+  // Paginate the shuffled content
+  const paginatedContent = shuffledContent.slice(
+    (page - 1) * limit,
+    page * limit
+  );
 
   // Check if more data exists
-  const hasMore = false;
+  const hasMore = page * limit < combinedContent.length;
 
-  let responseResult: any;
-
-  logger.info("Content was generated successfully ");
+  logger.info("Content was generated successfully");
 
   return NextResponse.json({
-    data: [{ type: ContentType.Project, data: basicProjects[0] }],
+    data: paginatedContent,
     hasMore,
   });
-
-  // return NextResponse.json({
-  //   data: generateRandomContent(10),
-  //   hasMore,
-  // });
 }
