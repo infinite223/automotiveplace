@@ -98,7 +98,7 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
       <AMPModal onClose={closeModal} visible={isModalOpen} withHeader={false}>
         <div className="flex justify-center items-center w-screen h-screen">
           <div
-            className="relative max-w-[95vw] max-h-[95vh] overflow-hidden items-center w-full h-full"
+            className="relative max-w-[95vw] max-h-[95vh] overflow-hidden w-full h-full flex justify-center items-center"
             style={{ backgroundColor: dominantColor }}
           >
             <div
@@ -110,7 +110,7 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
                   key={`${currentIndex}-${index}`}
                   src={image}
                   alt={`slide-${index}`}
-                  className="flex-shrink-0 object-contain max-w-[95vw] max-h-[95vh] max-w-[95vw] w-full h-full"
+                  className="flex-shrink-0 object-contain max-w-[95vw] max-h-[95vh] w-full h-full my-auto"
                 />
               ))}
             </div>
