@@ -57,6 +57,5 @@ export async function GET(request: NextRequest) {
     ...project,
   };
 
-  console.log(projectWithImages, "test");
   return NextResponse.json(projectWithImages);
 }

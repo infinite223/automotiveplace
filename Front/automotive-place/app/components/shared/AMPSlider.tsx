@@ -7,11 +7,9 @@ import { iconSizes } from "@/app/utils/constants";
 
 interface AMPSliderProps {
   images: string[];
-  width: number;
-  height: number;
 }
 
-const AMPSlider: React.FC<AMPSliderProps> = ({ images, width, height }) => {
+const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dominantColor, setDominantColor] = useState("white");
@@ -47,10 +45,8 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images, width, height }) => {
     <>
       <div
         ref={imgContainerRef}
-        className="relative overflow-hidden transition-transform-colors-opacity group"
+        className="relative overflow-hidden transition-transform-colors-opacity group w-full h-full"
         style={{
-          width,
-          height,
           backgroundColor: dominantColor,
         }}
       >
@@ -63,8 +59,7 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images, width, height }) => {
               key={`${currentIndex}-${index}`}
               src={image}
               alt={`slide-${index}`}
-              className="flex-shrink-0 object-contain"
-              style={{ width, height }}
+              className="flex-shrink-0 object-contain w-full h-full my-auto"
               onDoubleClick={openModal}
             />
           ))}
@@ -103,8 +98,8 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images, width, height }) => {
       <AMPModal onClose={closeModal} visible={isModalOpen} withHeader={false}>
         <div className="flex justify-center items-center w-screen h-screen">
           <div
-            className="relative max-w-[95vw] max-h-[95vh] overflow-hidden items-center"
-            style={{ width: width * 2, backgroundColor: dominantColor }}
+            className="relative max-w-[95vw] max-h-[95vh] overflow-hidden items-center w-full h-full"
+            style={{ backgroundColor: dominantColor }}
           >
             <div
               className="flex transition-transform duration-500 ease-in-out"
@@ -115,8 +110,7 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images, width, height }) => {
                   key={`${currentIndex}-${index}`}
                   src={image}
                   alt={`slide-${index}`}
-                  className="flex-shrink-0 object-contain max-w-full max-h-[95vh] max-w-[95vw]"
-                  style={{ width: width * 2 }}
+                  className="flex-shrink-0 object-contain max-w-[95vw] max-h-[95vh] max-w-[95vw] w-full h-full"
                 />
               ))}
             </div>

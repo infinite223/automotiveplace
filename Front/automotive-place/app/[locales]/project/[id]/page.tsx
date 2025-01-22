@@ -4,21 +4,44 @@ import { AMPCarStatsItem } from "@/app/components/shared/AMPCarStatsItem";
 import useFetchData from "@/app/hooks/useFetchData";
 import { getProject } from "@/app/services/project";
 import { getCurrentStage } from "@/app/utils/helpers";
-import { TProject } from "@/app/utils/types/project";
+import { TBasicProject, TProject } from "@/app/utils/types/project";
+import { RootState } from "@/lib/store";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function Project({ params }: { params: { id: string } }) {
   const t = useTranslations();
+  const contentData = useSelector(
+    (state: RootState) => state.contentData.contentData
+  );
 
+  const [tempData, setTempData] = useState<TBasicProject | null>(null);
   const { data, loading, error } = useFetchData<TProject>(() =>
     getProject(params.id)
   );
 
-  const lastStage = data ? getCurrentStage(data) : undefined;
+  useEffect(() => {
+    if (loading) {
+      // Pobierz dane z Redux store i ustaw jako dane tymczasowe
+      const content = contentData.find((item) => item.data.id === params.id);
+      if (content?.data) {
+        setTempData(content.data as TBasicProject);
+      }
+    }
+  }, [loading, contentData, params.id]);
 
-  if (loading)
+  // Dane do wyświetlenia - albo z API, albo tymczasowe
+  const displayData = loading ? tempData : data;
+
+  const lastStage =
+    displayData && "stages" in displayData
+      ? getCurrentStage(displayData as TProject)
+      : undefined;
+
+  if (loading && !tempData)
     return (
-      <div className="flex w-full min-h-screen bg-black justify-center items-center">
+      <div className="flex w-full min-h-screen bg-black justify-center items-center text-white text-lg">
         Loading...
       </div>
     );
@@ -28,10 +51,9 @@ export default function Project({ params }: { params: { id: string } }) {
     <main className="flex w-full min-h-screen bg-amp-900 dark:bg-amp-0 flex-col items-center gap-2 text-black dark:text-white">
       <div className="w-full bg-amp-700 dark:bg-amp-0 pb-32 flex justify-center">
         <div className="max-w-screen-2xl w-full h-[250px]">
-          {data && data.images?.[0] && (
-            // <Image src={data.images[0]} alt="car-image" width={300} height={200} /> // TODO - add storage images to nextjs config
+          {displayData?.images?.[0] && (
             <img
-              src={data.images?.[0]}
+              src={displayData.images?.[0]}
               className="w-full h-full object-cover rounded-b-lg blur-sm opacity-80"
               alt="car-image"
             />
@@ -39,16 +61,16 @@ export default function Project({ params }: { params: { id: string } }) {
 
           <nav className="flex flex-col gap-2 justify-between w-full top-[-60px] relative px-4">
             <h1 className="text-3xl font-semibold gap-2 flex items-center">
-              {data && (
+              {displayData?.images?.[0] && (
                 <img
-                  src={data.images?.[0]}
+                  src={displayData.images?.[0]}
                   className="w-20 h-20 object-cover rounded-full mr-4"
                   alt="car-image"
                 />
               )}
-              <span>{data?.carMake}</span>
-              <span>{data?.carModel}</span>
-              <span className="">- {lastStage?.name}</span>
+              <span>{displayData?.carMake}</span>
+              <span>{displayData?.carModel}</span>
+              <span className="">- {lastStage?.name || "N/A"}</span>
             </h1>
 
             {lastStage && (
@@ -89,7 +111,6 @@ export default function Project({ params }: { params: { id: string } }) {
                     title="Droga hamowania"
                   />
                 )}
-
                 {lastStage.sl_150_50 && (
                   <AMPCarStatsItem
                     typeValue="s"
@@ -101,39 +122,6 @@ export default function Project({ params }: { params: { id: string } }) {
               </div>
             )}
           </nav>
-        </div>
-      </div>
-
-      {/* TODO: remove back button or change to global component */}
-      {/* <Link
-        href={"../app"}
-        className="absolute left-5 top-5 rounded-full p-2 bg-black/70 hover:opacity-65 transition-transform-opacity"
-      >
-        <MdArrowBackIosNew />
-      </Link> */}
-
-      {/* <div className="flex w-full flex-col gap-2">
-        <h3 className="text-sm opacity-85">Galeria projektu</h3>
-        <div>
-          {data && data.images?.[0] && (
-            // <Image src={data.images[0]} alt="car-image" width={300} height={200} /> // TODO - add storage images to nextjs config
-            <img
-              src="https://www.vcentrum.pl/wp-content/uploads/2024/02/DSC09433.jpg"
-              className="w-[100px]"
-              alt="car-image"
-            />
-          )}
-        </div>
-      </div> */}
-
-      <div className="flex w-full flex-col gap-2 items-center">
-        {/* TODO - create gallery component */}
-        <h3 className="text-sm opacity-85">Etapy modyfikacji projektu</h3>
-        <div>
-          {data && data.stages?.[0] && (
-            // <Image src={data.images[0]} alt="car-image" width={300} height={200} /> // TODO - add storage images to nextjs config
-            <div>{data.stages?.[0].name}</div>
-          )}
         </div>
       </div>
     </main>
