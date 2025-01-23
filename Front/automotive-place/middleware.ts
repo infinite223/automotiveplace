@@ -3,11 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { LRUCache } from "lru-cache";
 import { logger } from "./app/api/logger.config";
-
-// export default createMiddleware({
-//   locales: ["en", "pl"],
-//   defaultLocale: "en",
-// });
+import arcjet, { detectBot, shield, tokenBucket } from "@arcjet/next";
 
 export const config = {
   matcher: ["/", "/(pl|en)/:path*"],
@@ -75,9 +71,60 @@ function rateLimit(request: NextRequest): boolean {
   return true;
 }
 
+const aj = arcjet({
+  key: process.env.ARCJET_KEY!,
+  characteristics: ["ip.src"], // Track requests by IP
+  rules: [
+    // Shield protects your app from common attacks e.g. SQL injection
+    shield({ mode: "LIVE" }),
+    // Create a bot detection rule
+    detectBot({
+      mode: "LIVE", // Blocks requests. Use "DRY_RUN" to log only
+      // Block all bots except the following
+      allow: [
+        "CATEGORY:SEARCH_ENGINE", // Google, Bing, etc
+        // Uncomment to allow these other common bot categories
+        // See the full list at https://arcjet.com/bot-list
+        //"CATEGORY:MONITOR", // Uptime monitoring services
+        //"CATEGORY:PREVIEW", // Link previews e.g. Slack, Discord
+      ],
+    }),
+    // Create a token bucket rate limit. Other algorithms are supported.
+    tokenBucket({
+      mode: "LIVE",
+      refillRate: 20, // Refill 5 tokens per interval
+      interval: 10, // Refill every 10 seconds
+      capacity: 40, // Bucket capacity of 10 tokens
+    }),
+  ],
+});
+
 export default async function middleware(request: NextRequest) {
   const [, locale, ...segments] = request.nextUrl.pathname.split("/");
   const pathname = request.nextUrl.pathname;
+
+  const decision = await aj.protect(request, { requested: 5 });
+
+  if (decision.isDenied()) {
+    if (decision.reason.isRateLimit()) {
+      logger.error("Rate limit exceeded");
+
+      return NextResponse.json(
+        { error: "Too Many Requests", reason: decision.reason },
+        { status: 429 }
+      );
+    } else if (decision.reason.isBot()) {
+      return NextResponse.json(
+        { error: "No bots allowed", reason: decision.reason },
+        { status: 403 }
+      );
+    } else {
+      return NextResponse.json(
+        { error: "Forbidden", reason: decision.reason },
+        { status: 403 }
+      );
+    }
+  }
 
   if (!publicPaths.some((path) => pathname.startsWith(`/${locale}${path}`))) {
     const user = await getLoggedInUser();
@@ -88,7 +135,6 @@ export default async function middleware(request: NextRequest) {
   }
 
   if (!rateLimit(request) && !request.url.includes("localhost")) {
-    console.log("Too many requests, please try again later.");
     return NextResponse.json(
       { message: "Too many requests, please try again later." },
       { status: 429 }
