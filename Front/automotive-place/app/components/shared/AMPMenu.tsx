@@ -19,7 +19,7 @@ interface IAMPMenuProps {
 
 export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const menuRef = useRef<HTMLDivElement | null>(null); // Referencja do menu
+  const menuRef = useRef<HTMLDivElement | null>(null);
   useKeyboardShortcut(() => setShowMenu(false), shortcutConfigs.escape);
 
   const handleClickOutside = (event: MouseEvent) => {
