@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { HomeHeader } from "./HomeHeader";
 import { SideBar } from "../../components/shared/Sidebar";
 import { redirect } from "next/navigation";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { getLocale } from "next-intl/server";
-import { TbMessage2Up } from "react-icons/tb";
-import { IoNotifications, IoPersonCircle } from "react-icons/io5";
 import { RightSidebar } from "@/app/components/rightSidebar";
 
 export const metadata: Metadata = {

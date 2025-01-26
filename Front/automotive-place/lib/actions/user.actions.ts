@@ -152,3 +152,29 @@ export async function getLoggedInUser() {
     return null;
   }
 }
+
+export const signOut = async () => {
+  try {
+    const { account } = await createSessionClient();
+    await account.deleteSession("current");
+
+    cookies().set("appwrite-session", "", {
+      path: "/",
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+      maxAge: -1,
+    });
+
+    return {
+      notification: CreateNotification("Success", "Core.LoggedOutSuccessfully"),
+    };
+  } catch (error) {
+    return {
+      notification: CreateNotification(
+        ErrorStatus.Medium,
+        error instanceof Error ? error.message : "Unknown error"
+      ),
+    };
+  }
+};
