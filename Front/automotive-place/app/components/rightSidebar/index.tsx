@@ -5,7 +5,7 @@ import { IoNotifications, IoPersonCircle } from "react-icons/io5";
 import { TbMessage2Up } from "react-icons/tb";
 import { RightSidebarModal, TContentType } from "./RightSidebarModal";
 import useKeyboardShortcut from "@/app/hooks/useKeydown";
-import { shortcutConfigs } from "@/app/utils/constants";
+import { iconSizes, shortcutConfigs } from "@/app/utils/constants";
 
 export const RightSidebar = () => {
   const [selectedContent, setSelectedContent] = useState<TContentType>(null);
@@ -16,21 +16,21 @@ export const RightSidebar = () => {
   };
 
   return (
-    <div className="h-full px-4 w-[280px] pt-4 fixed right-0 hidden lg:block bg-amp-0 text-amp-300 dark:text-amp-700/80">
+    <div className="h-full px-4 w-[280px] pt-4 right-0 hidden lg:block bg-amp-0 text-amp-300 dark:text-amp-700/80">
       <div className="text-md flex items-center w-full justify-end gap-3">
         <OptionItem
           selected={selectedContent === "chat"}
-          icon={<TbMessage2Up size={22} />}
+          icon={<TbMessage2Up size={iconSizes.base} />}
           onClickHandler={() => onClickHandler("chat")}
         />
         <OptionItem
           selected={selectedContent === "notifications"}
-          icon={<IoNotifications size={22} />}
+          icon={<IoNotifications size={iconSizes.base} />}
           onClickHandler={() => onClickHandler("notifications")}
         />
         <OptionItem
           selected={selectedContent === "user"}
-          icon={<IoPersonCircle size={22} />}
+          icon={<IoPersonCircle size={iconSizes.base} />}
           onClickHandler={() => onClickHandler("user")}
         />
       </div>

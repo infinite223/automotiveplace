@@ -1,6 +1,12 @@
 import { TCarItem } from "@/app/utils/types/carItem";
 
-export const CarItemMiniView = ({ data }: { data: TCarItem }) => {
+export const CarItemMiniView = ({
+  data,
+  isUserContent,
+}: {
+  data: TCarItem;
+  isUserContent: boolean;
+}) => {
   return (
     <div className="flex flex-col items-center">
       <nav>

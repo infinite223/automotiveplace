@@ -9,7 +9,13 @@ import { iconSizes } from "@/app/utils/constants";
 import Link from "next/link";
 import AMPSlider from "@/app/components/shared/AMPSlider";
 
-export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
+export const ProjectMiniView = ({
+  data,
+  isUserContent = false,
+}: {
+  data: TBasicProject;
+  isUserContent: boolean;
+}) => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -35,6 +41,7 @@ export const ProjectMiniView = ({ data }: { data: TBasicProject }) => {
       {isClient ? (
         <div className="flex flex-col w-full h-full gap-1">
           <ContentMiniNav
+            isUserContent={isUserContent}
             createdAt={data.createdAt}
             title={
               data.carMake +

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { TContentData } from "../../../utils/types";
 import { isTBasicProject } from "../../../utils/types/project";
 import { ProjectMiniView } from "./ProjectMiniView";
@@ -16,8 +16,10 @@ import { LoadingMiniView } from "./LoadingMiniView";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/store";
 import { fetchProjects, setPage } from "@/lib/features/content/contentSlice";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
 
 export const HomeMainContent = () => {
+  const [userId, setUserId] = useState<string | null>(null);
   const dispatch = useDispatch<AppDispatch>();
   const _content = useSelector(
     (state: RootState) => state.contentData.contentData
@@ -47,6 +49,14 @@ export const HomeMainContent = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const getUser = async () => {
+      setUserId((await getLoggedInUser())?.user.$id ?? null);
+    };
+
+    getUser();
+  }, []);
+
   const loadMoreProjects = () => {
     dispatch(setPage(page + 1));
     dispatch(fetchProjects(page + 1));
@@ -65,7 +75,7 @@ export const HomeMainContent = () => {
                 id={`content-${content.data.id}`}
               >
                 <div className="flex w-full bg-amp-50 p-2 rounded-md">
-                  <ContentSelect content={content} />
+                  <ContentSelect content={content} userId={userId} />
                 </div>
               </div>
             );
@@ -87,8 +97,10 @@ export const HomeMainContent = () => {
 
 export const ContentSelect = ({
   content: { data, type },
+  userId,
 }: {
   content: TContentData;
+  userId: string | null;
 }) => {
   const errorText = " data is not valid";
   switch (type) {
@@ -96,7 +108,12 @@ export const ContentSelect = ({
       const contentDataIsProject = isTBasicProject(data);
 
       if (contentDataIsProject) {
-        return <ProjectMiniView data={data} />;
+        return (
+          <ProjectMiniView
+            data={data}
+            isUserContent={userId === data.author.id}
+          />
+        );
       }
 
       console.error(type, errorText);
@@ -105,7 +122,7 @@ export const ContentSelect = ({
       const contentDataIsProblem = isTProblem(data);
 
       if (contentDataIsProblem) {
-        return <ProblemMiniView data={data} />;
+        return <ProblemMiniView data={data} isUserContent={false} />;
       }
 
       console.error(type, errorText);
@@ -114,7 +131,7 @@ export const ContentSelect = ({
       const contentDataIsPost = isTBasicPost(data);
 
       if (contentDataIsPost) {
-        return <PostMiniView data={data} />;
+        return <PostMiniView data={data} isUserContent={false} />;
       }
 
       console.error(type, errorText);
@@ -123,7 +140,7 @@ export const ContentSelect = ({
       const contentDataIsSpot = isTSpot(data);
 
       if (contentDataIsSpot) {
-        return <SpotMiniView data={data} />;
+        return <SpotMiniView data={data} isUserContent={false} />;
       }
 
       console.error(type, errorText);
@@ -132,7 +149,7 @@ export const ContentSelect = ({
       const contentDataIsCarItem = isTCarItem(data);
 
       if (contentDataIsCarItem) {
-        return <CarItemMiniView data={data} />;
+        return <CarItemMiniView data={data} isUserContent={false} />;
       }
 
       console.error(type, errorText);
