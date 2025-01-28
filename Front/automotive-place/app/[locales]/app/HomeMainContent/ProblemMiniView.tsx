@@ -4,10 +4,10 @@ import { ContentMiniNav } from "./ContentMiniNav";
 
 export const ProblemMiniView = ({
   data,
-  isLoggedUserContent,
+  isUserContent,
 }: {
   data: TProblem;
-  isLoggedUserContent: boolean;
+  isUserContent: boolean;
 }) => {
   return (
     <div className="flex flex-col items-center h-[250px] w-full gap-1">
@@ -15,7 +15,7 @@ export const ProblemMiniView = ({
         createdAt={data.createdAt}
         title={data.title}
         typeName="Problem"
-        isLoggedUserContent={isLoggedUserContent}
+        isUserContent={isUserContent}
         // author={data.}
       />
       <h2 className="h-full">Problem</h2>
