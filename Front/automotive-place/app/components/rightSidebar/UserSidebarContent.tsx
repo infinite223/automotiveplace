@@ -23,16 +23,18 @@ export default function UserSidebarContent({
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const handleOnCLickSignOut = async () => {
+    const result = await signOut();
+    dispatch(addNotification(JSON.stringify(result.notification)));
+  };
+
+  const handleOnCLick = () => {};
+
   if (error) {
     router.push("/");
   }
 
   if (loading) return null;
-
-  const onClickHandler = async () => {
-    const result = await signOut();
-    dispatch(addNotification(JSON.stringify(result.notification)));
-  };
 
   return (
     <motion.div
@@ -42,20 +44,22 @@ export default function UserSidebarContent({
       key={1}
       className={tailwindContainer}
     >
-      <div className="flex flex-col w-full gap-2">
-        <nav className="flex w-full font-bold items-center gap-4">
-          <IoPersonCircle size={iconSizes.large} />
+      <div className="flex flex-col w-full gap-3">
+        <nav className="flex w-full font-bold items-center gap-2">
+          <span className="p-1 bg-amp-700 dark:bg-amp-200 rounded-full w-10 h-10 flex items-center justify-center">
+            <IoPersonCircle size={iconSizes.large} />
+          </span>
           <h1>{user?.name}</h1>
         </nav>
 
         <AMPSeparator />
 
-        <div className="flex gap-2 w-full">
-          <AMPButton
-            name={t("Core.LogOut")}
-            onClick={onClickHandler}
-            additionalTailwindCss="text-sm"
-          />
+        <div className="flex gap-2 w-full flex-col items-start">
+          <AMPButton name={"Ustawienia"} onClick={handleOnCLick} />
+
+          <AMPButton name={"Przekaź opinie"} onClick={handleOnCLick} />
+
+          <AMPButton name={t("Core.LogOut")} onClick={handleOnCLickSignOut} />
         </div>
       </div>
     </motion.div>

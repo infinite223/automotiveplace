@@ -58,6 +58,7 @@ export async function GET(request: NextRequest) {
     include: {
       tags: true,
       author: true,
+      likes: true,
       stages: {
         orderBy: {
           stageNumber: "desc",
@@ -70,6 +71,7 @@ export async function GET(request: NextRequest) {
   const allPosts = await prisma.post.findMany({
     include: {
       author: true,
+      likes: true,
     },
   });
 
@@ -115,7 +117,10 @@ export async function GET(request: NextRequest) {
         name: project.author.name,
         email: project.author.email,
       },
-      likesCount: 543, // TODO - add likesCount to db or get likees count from likes table
+      likesCount: project.likes.length,
+      isLikedByAuthUser: !!project.likes.find(
+        (l) => l.userId === userData.user.$id
+      ),
     };
   });
 
@@ -124,11 +129,11 @@ export async function GET(request: NextRequest) {
     id: post.id,
     imagesUrl: post.imagesUrl,
     lastUpdateAt: new Date(),
-    likesCount: 2, // TODO - add likesCount to db or get likees count from likes table
+    isLikedByAuthUser: !!post.likes.find((l) => l.userId === userData.user.$id),
+    likesCount: post.likes.length,
     title: post.title,
   }));
 
-  // Combine projects and posts
   const combinedContent = [
     ...basicProjects.map((project) => ({
       type: ContentType.Project,
@@ -137,16 +142,13 @@ export async function GET(request: NextRequest) {
     ...basicPosts.map((post) => ({ type: ContentType.Post, data: post })),
   ];
 
-  // Shuffle the combined content
   const shuffledContent = combinedContent.sort(() => Math.random() - 0.5);
 
-  // Paginate the shuffled content
   const paginatedContent = shuffledContent.slice(
     (page - 1) * limit,
     page * limit
   );
 
-  // Check if more data exists
   const hasMore = page * limit < combinedContent.length;
 
   logger.info("Content was generated successfully");

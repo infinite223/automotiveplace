@@ -19,7 +19,7 @@ export const AMPButton: FC<IAMPButton> = ({
     <button
       disabled={disabled}
       onClick={onClick}
-      className={`${disabled ? "opacity-35" : ""} ${additionalTailwindCss}`}
+      className={`${disabled ? "opacity-35" : ""} ${additionalTailwindCss} hover:opacity-70`}
     >
       {name}
     </button>

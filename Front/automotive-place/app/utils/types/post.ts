@@ -19,6 +19,7 @@ type TBasicPost = {
   title: string;
   content: string;
   imagesUrl: string | null;
+  isLikedByAuthUser: boolean;
   likesCount: number;
   lastUpdateAt: Date;
 };

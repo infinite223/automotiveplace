@@ -20,7 +20,8 @@ export const PostMiniView = ({
       />
       <p>{data.content}</p>
       <ContentMiniFooter
-        isLikedByAuthUser={false}
+        contentId={data.id}
+        isLikedByAuthUser={data.isLikedByAuthUser}
         likesCount={data.likesCount}
         type="Post"
       />

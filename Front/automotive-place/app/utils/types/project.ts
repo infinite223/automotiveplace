@@ -72,6 +72,7 @@ type TBasicProject = {
   acc_100_200: number | null;
 
   engineNameAndCapacity: string;
+  isLikedByAuthUser: boolean;
   likesCount: number;
   images: string[];
   tags: TBasicTag[];

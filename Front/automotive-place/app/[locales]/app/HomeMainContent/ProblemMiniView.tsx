@@ -21,6 +21,7 @@ export const ProblemMiniView = ({
       <h2 className="h-full">Problem</h2>
 
       <ContentMiniFooter
+        contentId={data.id}
         isLikedByAuthUser={false}
         likesCount={12}
         type="Problem"

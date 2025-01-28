@@ -1,7 +1,7 @@
 export const iconSizes = {
   small: 18,
   base: 22,
-  large: 28,
+  large: 26,
 };
 
 export const shortcutConfigs = {

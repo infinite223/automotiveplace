@@ -160,6 +160,7 @@ export function generateRandomBaseProjects(count: number) {
         { id: generateRandomString(8), name: "Test tag 2" },
       ],
       likesCount: 12,
+      isLikedByAuthUser: true,
     };
 
     projects.push(project);

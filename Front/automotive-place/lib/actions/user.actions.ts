@@ -9,6 +9,7 @@ import { CreateNotification } from "@/app/components/logger/NotificationHelper";
 import { redirect } from "next/navigation";
 import { getLocale } from "next-intl/server";
 import { userLoginSchema, userRegistrationSchema } from "@/app/api/zod.schmas";
+import { logger } from "@/app/api/logger.config";
 
 export type SignInParams = {
   email: string;
@@ -170,11 +171,21 @@ export const signOut = async () => {
       notification: CreateNotification("Success", "Core.LoggedOutSuccessfully"),
     };
   } catch (error) {
+    if (error instanceof Error) {
+      logger.error(error.message);
+
+      return {
+        notification: CreateNotification(
+          ErrorStatus.Medium,
+          error instanceof Error ? error.message : "Unknown error"
+        ),
+      };
+    }
+
+    logger.error("Unknown critical error: " + error);
+
     return {
-      notification: CreateNotification(
-        ErrorStatus.Medium,
-        error instanceof Error ? error.message : "Unknown error"
-      ),
+      notification: CreateNotification(ErrorStatus.Critical, "Unknown error"),
     };
   }
 };

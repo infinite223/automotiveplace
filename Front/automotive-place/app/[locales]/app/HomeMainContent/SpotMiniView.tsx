@@ -20,6 +20,7 @@ export const SpotMiniView = ({
       />
       <h2 className="h-full">Spot</h2>
       <ContentMiniFooter
+        contentId={data.id}
         isLikedByAuthUser={false}
         likesCount={12}
         type="Spot"

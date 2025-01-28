@@ -87,7 +87,8 @@ export const ProjectMiniView = ({
 
           <ContentMiniFooter
             tags={data.tags}
-            isLikedByAuthUser={false}
+            contentId={data.id}
+            isLikedByAuthUser={data.isLikedByAuthUser}
             likesCount={data.likesCount}
             type="Project"
             actions={
