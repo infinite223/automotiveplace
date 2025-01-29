@@ -92,6 +92,8 @@ function isTBasicProject(data: any): data is TBasicProject {
       typeof data.description === "string" &&
       typeof data.isVerified === "boolean" &&
       typeof data.likesCount === "number" &&
+      typeof data.engineNameAndCapacity === "string" &&
+      typeof data.isLikedByAuthUser === "boolean" &&
       typeof data.hp === "number" &&
       typeof data.nm === "number" &&
       typeof data.engineStockHp === "number" &&

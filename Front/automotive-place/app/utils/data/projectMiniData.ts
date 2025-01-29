@@ -1,4 +1,4 @@
-import { TBasicProject, TProject } from "../types/project";
+import { TBasicProject } from "../types/project";
 
 const projectMiniData: TBasicProject = {
   carMake: "Audi",

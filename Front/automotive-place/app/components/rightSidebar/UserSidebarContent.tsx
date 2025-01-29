@@ -34,8 +34,6 @@ export default function UserSidebarContent({
     router.push("/");
   }
 
-  if (loading) return null;
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -49,16 +47,18 @@ export default function UserSidebarContent({
           <span className="p-1 bg-amp-700 dark:bg-amp-200 rounded-full w-10 h-10 flex items-center justify-center">
             <IoPersonCircle size={iconSizes.large} />
           </span>
-          <h1>{user?.name}</h1>
+          {loading ? (
+            <h1 className="animate-pulse">{t("Core.Loading")}...</h1>
+          ) : (
+            <h1>{user?.name}</h1>
+          )}
         </nav>
 
         <AMPSeparator />
 
         <div className="flex gap-2 w-full flex-col items-start">
-          <AMPButton name={"Ustawienia"} onClick={handleOnCLick} />
-
-          <AMPButton name={"Przekaź opinie"} onClick={handleOnCLick} />
-
+          <AMPButton name={t("Core.Settings")} onClick={handleOnCLick} />
+          <AMPButton name={t("Core.GiveFeedback")} onClick={handleOnCLick} />
           <AMPButton name={t("Core.LogOut")} onClick={handleOnCLickSignOut} />
         </div>
       </div>

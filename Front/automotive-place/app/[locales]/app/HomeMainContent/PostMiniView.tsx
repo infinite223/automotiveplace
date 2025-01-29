@@ -1,6 +1,7 @@
 import { TBasicPost } from "@/app/utils/types/post";
 import { ContentMiniFooter } from "./ContentMiniFooter";
 import { ContentMiniNav } from "./ContentMiniNav";
+import AMPSlider from "@/app/components/shared/AMPSlider";
 
 export const PostMiniView = ({
   data,
@@ -18,7 +19,9 @@ export const PostMiniView = ({
         isUserContent={isUserContent}
         // author={data.}
       />
-      <p>{data.content}</p>
+      <p className="mt-1 opacity-80">{data.content}</p>
+      {data.imagesUrl && <AMPSlider images={[data.imagesUrl]} />}
+
       <ContentMiniFooter
         contentId={data.id}
         isLikedByAuthUser={data.isLikedByAuthUser}

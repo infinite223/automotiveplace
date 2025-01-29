@@ -26,12 +26,15 @@ type TBasicPost = {
 
 function isTBasicPost(data: any): data is TBasicPost {
   return (
-    typeof data === "object" &&
-    data !== null &&
-    typeof data.id === "string" &&
-    typeof data.title === "string" &&
-    typeof data.content === "string" &&
-    typeof data.likesCount === "number"
+    (typeof data === "object" &&
+      data !== null &&
+      typeof data.id === "string" &&
+      typeof data.title === "string" &&
+      typeof data.content === "string" &&
+      typeof data.likesCount === "number" &&
+      typeof data.isLikedByAuthUser === "boolean" &&
+      typeof data.imagesUrl === "string") ||
+    data.imagesUrl === null
   );
 }
 

@@ -45,7 +45,9 @@
       "Driver": "Sterownik"
     },
     "LogOut": "Wyloguj się",
-    "LoggedOutSuccessfully": "Wylogowano pomyślnie"
+    "LoggedOutSuccessfully": "Wylogowano pomyślnie",
+    "Loading": "Ładowanie",
+    "GiveFeedback": "Przekaż opinie"
   },
   "Preview": {
     "title": "Aplikacja stworzona w celu połączenia motoryzacyjnej społeczności do jednego wspólnego miejsca.",

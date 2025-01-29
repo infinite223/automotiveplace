@@ -7,7 +7,7 @@ import arcjet, { detectBot, shield, tokenBucket } from "@arcjet/next";
 
 export const config = {
   matcher: ["/", "/(pl|en)/:path*"],
-};
+}; 
 
 const publicPaths = [
   "/sign-in",

@@ -28,8 +28,12 @@ export const ContentMiniFooter = ({
 }: IContentMiniFooter) => {
   const [currentLikesCount, setCurrentLikesCount] = useState(likesCount);
   const [currentIsLiked, setCurrentIsLiked] = useState(isLikedByAuthUser);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClickLike = async () => {
+    if (isLoading) return;
+
+    setIsLoading(true);
     if (currentIsLiked) {
       setCurrentLikesCount((prev) => prev - 1);
       setCurrentIsLiked(false);
@@ -53,6 +57,8 @@ export const ContentMiniFooter = ({
         setCurrentIsLiked(false);
       }
     }
+
+    setIsLoading(false);
   };
 
   return (

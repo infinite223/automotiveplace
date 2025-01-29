@@ -45,7 +45,9 @@
       "Driver": "Driver"
     },
     "LogOut": "Log out",
-    "LoggedOutSuccessfully": "Logged out successfully"
+    "LoggedOutSuccessfully": "Logged out successfully",
+    "Loading": "Loading",
+    "GiveFeedback": "Give feedback"
   },
   "Preview": {
     "title": "Application created to connect the automotive community to one common place.",

@@ -64,18 +64,24 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
             />
           ))}
         </div>
-        <button
-          className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:opacity-70 text-white p-1 rounded-full cursor-pointer left-2 opacity-0 group-hover:opacity-100 transition-opacity"
-          onClick={handlePrevClick}
-        >
-          <FaAngleLeft size={iconSizes.small} />
-        </button>
-        <button
-          className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:opacity-70 text-white p-1 rounded-full cursor-pointer right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-          onClick={handleNextClick}
-        >
-          <FaAngleRight size={iconSizes.small} />
-        </button>
+
+        {images.length > 1 && (
+          <>
+            <button
+              className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:opacity-70 text-white p-1 rounded-full cursor-pointer left-2 opacity-0 group-hover:opacity-100 transition-opacity"
+              onClick={handlePrevClick}
+            >
+              <FaAngleLeft size={iconSizes.small} />
+            </button>
+            <button
+              className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:opacity-70 text-white p-1 rounded-full cursor-pointer right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+              onClick={handleNextClick}
+            >
+              <FaAngleRight size={iconSizes.small} />
+            </button>
+          </>
+        )}
+
         <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2">
           {images.map((_, index) => (
             <span
@@ -114,18 +120,22 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
                 />
               ))}
             </div>
-            <button
-              className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full cursor-pointer left-2"
-              onClick={handlePrevClick}
-            >
-              <FaAngleLeft size={iconSizes.base} />
-            </button>
-            <button
-              className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:opacity-70 text-white p-2 rounded-full cursor-pointer right-2"
-              onClick={handleNextClick}
-            >
-              <FaAngleRight size={iconSizes.base} />
-            </button>
+            {images.length > 1 && (
+              <>
+                <button
+                  className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full cursor-pointer left-2"
+                  onClick={handlePrevClick}
+                >
+                  <FaAngleLeft size={iconSizes.base} />
+                </button>
+                <button
+                  className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:opacity-70 text-white p-2 rounded-full cursor-pointer right-2"
+                  onClick={handleNextClick}
+                >
+                  <FaAngleRight size={iconSizes.base} />
+                </button>
+              </>
+            )}
             <button
               className="absolute top-2 right-2 bg-black bg-opacity-50 text-white p-2 rounded-full cursor-pointer hover:opacity-70"
               onClick={closeModal}

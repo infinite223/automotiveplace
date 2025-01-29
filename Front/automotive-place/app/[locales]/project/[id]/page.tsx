@@ -23,7 +23,6 @@ export default function Project({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     if (loading) {
-      // Pobierz dane z Redux store i ustaw jako dane tymczasowe
       const content = contentData.find((item) => item.data.id === params.id);
       if (content?.data) {
         setTempData(content.data as TBasicProject);
@@ -31,7 +30,6 @@ export default function Project({ params }: { params: { id: string } }) {
     }
   }, [loading, contentData, params.id]);
 
-  // Dane do wyświetlenia - albo z API, albo tymczasowe
   const displayData = loading ? tempData : data;
 
   const lastStage =
