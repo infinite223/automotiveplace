@@ -37,6 +37,7 @@ export const HomeMainContent = () => {
 
   useEffect(() => {
     const lastClickedId = sessionStorage.getItem("lastClickedId");
+
     if (lastClickedId) {
       const scrollToElement = () => {
         const element = document.getElementById(`content-${lastClickedId}`);
@@ -45,7 +46,7 @@ export const HomeMainContent = () => {
         }
       };
 
-      setTimeout(scrollToElement, 100);
+      setTimeout(scrollToElement, 300);
     }
   }, []);
 
@@ -131,7 +132,9 @@ export const ContentSelect = ({
       const contentDataIsPost = isTBasicPost(data);
 
       if (contentDataIsPost) {
-        return <PostMiniView data={data} isUserContent={false} />;
+        return (
+          <PostMiniView data={data} isUserContent={userId === data.author.id} />
+        );
       }
 
       console.error(type, errorText);

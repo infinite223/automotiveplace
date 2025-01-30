@@ -21,7 +21,9 @@ model Post {
   isBlockedByAdmin Boolean?
   reportId         String?
   imagesUrl        String?
+  isProblem        Boolean? // TODO - add all the fields for problem post (suggestions and comments)
   likes            Like[]
+  tags             Tag[]
   author           User?    @relation(fields: [authorId], references: [id])
   company          Company? @relation(fields: [companyId], references: [id])
 }
@@ -218,14 +220,17 @@ model Tag {
   updatedAt        DateTime @updatedAt @map("updated_at")
   authorId         String
   projectId        String?
+  postId           String?
   carItemId        String?
   companyId        String?
   isBlockedByAdmin Boolean?
   reportId         String?
+
   author           User     @relation(fields: [authorId], references: [id])
   carItem          CarItem? @relation(fields: [carItemId], references: [id])
   company          Company? @relation(fields: [companyId], references: [id])
   project          Project? @relation(fields: [projectId], references: [id])
+  post             Post? @relation(fields: [postId], references: [id])
 }
 
 model CarItem {

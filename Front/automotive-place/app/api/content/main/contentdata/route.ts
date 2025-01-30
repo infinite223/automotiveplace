@@ -57,7 +57,13 @@ export async function GET(request: NextRequest) {
   const allProjects = await prisma.project.findMany({
     include: {
       tags: true,
-      author: true,
+      author: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
       likes: true,
       stages: {
         orderBy: {
@@ -70,7 +76,14 @@ export async function GET(request: NextRequest) {
 
   const allPosts = await prisma.post.findMany({
     include: {
-      author: true,
+      author: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+      tags: true,
       likes: true,
     },
   });
@@ -132,6 +145,12 @@ export async function GET(request: NextRequest) {
     isLikedByAuthUser: !!post.likes.find((l) => l.userId === userData.user.$id),
     likesCount: post.likes.length,
     title: post.title,
+    author: {
+      id: post.author?.id ?? "",
+      name: post.author?.name ?? "",
+      email: post.author?.email ?? "",
+    },
+    tags: post.tags,
   }));
 
   const combinedContent = [

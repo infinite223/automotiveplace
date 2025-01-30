@@ -1,10 +1,9 @@
 "use client";
 
 import { TTableView } from "@/app/utils/types";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import { IconFromItemType } from "./IconFromItemType";
 import { AMPMenu, TMenuItem } from "../shared/AMPMenu";
-import { BiEdit } from "react-icons/bi";
 import { removeCarItem } from "@/app/services/carItem";
 import { ItemTypes } from "@/app/utils/types/carItem";
 import { useDispatch } from "react-redux";

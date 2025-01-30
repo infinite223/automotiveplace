@@ -1,3 +1,6 @@
+import { TBasicTag } from "./tag";
+import { TBasicUser } from "./user";
+
 type TPost = {
   id: string;
   title: string;
@@ -22,6 +25,8 @@ type TBasicPost = {
   isLikedByAuthUser: boolean;
   likesCount: number;
   lastUpdateAt: Date;
+  author: TBasicUser;
+  tags: TBasicTag[];
 };
 
 function isTBasicPost(data: any): data is TBasicPost {
