@@ -12,6 +12,7 @@ import { IoPersonCircle } from "react-icons/io5";
 import { iconSizes } from "@/app/utils/constants";
 import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
+import { clearContentData } from "@/lib/features/content/contentSlice";
 
 export default function UserSidebarContent({
   tailwindContainer,
@@ -25,7 +26,13 @@ export default function UserSidebarContent({
 
   const handleOnCLickSignOut = async () => {
     const result = await signOut();
+
+    dispatch(clearContentData());
     dispatch(addNotification(JSON.stringify(result.notification)));
+
+    if (result.notification.log.status !== "Success") {
+      router.push("/");
+    }
   };
 
   const handleOnCLick = () => {};

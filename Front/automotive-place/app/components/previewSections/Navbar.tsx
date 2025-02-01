@@ -64,11 +64,11 @@ export default function CustomNavbar({
   return (
     <Navbar
       shouldHideOnScroll
-      className="p-2 fixed z-20 shadow-sm"
+      className="p-2 px-0 fixed z-20 shadow-sm"
       style={{ backgroundColor: navbarBg, transition: "background-color 0.3s" }}
     >
       <NavbarBrand>
-        {/* <p
+        {/* <pa
           className={` font-extrabold ${navbarBg === "transparent" ? "text-amp-900" : "text-amp-300"}`}
         >
           A|M|P
@@ -77,18 +77,18 @@ export default function CustomNavbar({
           <Image
             src={Logo}
             alt="logo"
-            width={30}
-            height={30}
-            className="rounded-lg"
+            width={35}
+            height={35}
+            className="rounded-lg ml-[-5px]"
           />
           <span
             className={
-              `text-md uppercase` +
+              `text-md hidden sm:flex ` +
               Yant.className +
               (navbarBg === "transparent" ? " text-amp-700" : " text-amp-100")
             }
           >
-            Automotiveplace
+            AMP
           </span>
         </div>{" "}
       </NavbarBrand>

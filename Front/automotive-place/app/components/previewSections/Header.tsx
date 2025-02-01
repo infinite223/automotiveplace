@@ -9,7 +9,8 @@ const Header = ({ isLogged = false }: { isLogged: boolean }) => {
     <section className="bg-amp-50 flex h-screen flex-col items-center gap-4 justify-center relative">
       <h1
         className={
-          `text-center text-7xl font-extrabold z-[2] ` + AllanBold.className
+          `text-center text-4xl sm:text-7xl font-extrabold z-[2] ` +
+          AllanBold.className
         }
       >
         <span className="text-white ">Automotive</span>{" "}
@@ -17,25 +18,25 @@ const Header = ({ isLogged = false }: { isLogged: boolean }) => {
       </h1>
       <p
         className={
-          `text-3xl max-w-[85%] text-center z-[2] mt-4 text-white/85 ` +
+          `text-2xl sm:text-3xl max-w-[85%] text-center z-[2] mt-4 text-white/85 ` +
           KalamBold.className
         }
       >
         {t("Preview.title")}
       </p>
 
-      <div className="flex items-center gap-4 text-lg mt-4">
-        <Link
-          href={isLogged ? `./app` : `./sign-in`}
-          className="text-white py-2 font-semibold px-6 rounded-sm border-amp-700 border-1"
-        >
-          {t(isLogged ? "Core.GoToApp" : "Core.SignIn")}
-        </Link>
+      <div className="flex items-center justify-center flex-wrap max-w-[60vw] gap-4 text-lg mt-4">
         <Link
           href={`./sign-in`}
-          className="bg-amp-500 text-white py-2 font-semibold px-6 rounded-sm"
+          className="text-white py-2 font-semibold px-6 rounded-sm border-amp-700 border-1"
         >
           {t("Preview.SeeDemoVesion")}
+        </Link>
+        <Link
+          href={isLogged ? `./app` : `./sign-in`}
+          className="bg-amp-500 text-white py-2 font-semibold px-6 rounded-sm"
+        >
+          {t(isLogged ? "Core.GoToApp" : "Core.SignIn")}
         </Link>
       </div>
 

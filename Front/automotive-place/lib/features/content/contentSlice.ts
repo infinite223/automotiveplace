@@ -35,6 +35,11 @@ const contentDataSlice = createSlice({
     setPage(state, action: PayloadAction<number>) {
       state.page = action.payload;
     },
+    clearContentData(state) {
+      state.contentData = [];
+      state.page = 1;
+      state.isLoading = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -54,6 +59,6 @@ const contentDataSlice = createSlice({
   },
 });
 
-export const { setContentData, addContentData, setPage } =
+export const { setContentData, addContentData, setPage, clearContentData } =
   contentDataSlice.actions;
 export default contentDataSlice.reducer;

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
-import { generateRandomProjects } from "@/app/utils/data/project";
 import prisma from "@/lib/prisma";
 
 export async function GET(request: NextRequest) {
