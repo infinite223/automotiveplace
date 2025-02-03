@@ -36,6 +36,9 @@ export const ProjectMiniView = ({
     ? data.nm + " (+" + (data.nm - data.engineStockNm) + ") "
     : data.engineStockNm;
 
+  const currentStage =
+    data.stageNumber !== 0 ? "STAGE " + data.stageNumber : "STOCK";
+
   return (
     <>
       {isClient ? (
@@ -61,7 +64,10 @@ export const ProjectMiniView = ({
             <div
               className={`flex gap-5 w-full ${data.acc_0_100 && " justify-between"}`}
             >
-              <StatisticMiniItem title="Etap modyfikacji" value="STAGE 1" />
+              <StatisticMiniItem
+                title="Etap modyfikacji"
+                value={currentStage}
+              />
               <StatisticMiniItem
                 title="Moc"
                 value={statisticCurrentHp}

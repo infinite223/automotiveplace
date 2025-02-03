@@ -17,11 +17,14 @@ const projectImage3 =
 const projectImage4 =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSdZIVym1fnqh7TWirmnbWEhUy0oJgEsQmCQ&s";
 
+const projectImage5 =
+  "https://cloud.appwrite.io/v1/storage/buckets/671a638d00369a634162/files/67a12ab00028f1f22d8e/view?project=66b72b780006144f8424&mode=admin";
 const projectImages = [
   projectImage,
   projectImage2,
   projectImage3,
   projectImage4,
+  projectImage5,
 ];
 
 export async function GET(request: NextRequest) {
@@ -125,6 +128,7 @@ export async function GET(request: NextRequest) {
         id: tag.id,
         name: tag.name,
       })),
+      stageNumber: project.stages.length,
       author: {
         id: project.author.id,
         name: project.author.name,

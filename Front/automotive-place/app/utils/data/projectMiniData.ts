@@ -19,6 +19,7 @@ const projectMiniData: TBasicProject = {
   acc_100_200: 7.2,
   hp: 150,
   nm: 250,
+  stageNumber: 2,
   engineStockHp: 120,
   engineStockNm: 200,
   description: "Audi A3 8V 1.4 TFSI 150KM",
