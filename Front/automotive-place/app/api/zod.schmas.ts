@@ -59,12 +59,15 @@ export const createProjectSchema = z.object({
 });
 
 export const userRegistrationSchema = z.object({
-  name: z.string().min(1, "Name is required").max(100, "Name is too long"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters long"),
+  name: z
+    .string()
+    .min(1, { message: "Core.Errors.Name.Required" })
+    .max(100, { message: "Core.Errors.Name.TooLong" }),
+  email: z.string().email({ message: "Core.Errors.Email.Invalid" }),
+  password: z.string().min(6, { message: "Core.Errors.Password.TooShort" }),
 });
 
 export const userLoginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters long"),
+  email: z.string().email({ message: "Core.Errors.Email.Invalid" }),
+  password: z.string().min(6, { message: "Core.Errors.Password.TooShort" }),
 });
