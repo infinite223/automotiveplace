@@ -1,6 +1,6 @@
 import { TValidResult } from "@/app/utils/types";
 import { useTranslations } from "next-intl";
-import React, { CSSProperties, FC, useEffect, useState } from "react";
+import React, { CSSProperties, FC, useState } from "react";
 
 interface IAMPInput<TValue> {
   value: TValue;

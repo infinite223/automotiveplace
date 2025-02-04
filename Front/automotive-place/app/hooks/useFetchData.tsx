@@ -4,10 +4,9 @@ function useFetchData<T>(fetchFunction: () => Promise<T>) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-  const fetchedOnce = useRef(false); // Zmienna, która zapobiega wielokrotnemu wywołaniu
+  const fetchedOnce = useRef(false);
 
   useEffect(() => {
-    // Sprawdzamy, czy funkcja już się wykonała
     if (fetchedOnce.current) return;
 
     const fetchData = async () => {
@@ -16,7 +15,7 @@ function useFetchData<T>(fetchFunction: () => Promise<T>) {
       try {
         const result = await fetchFunction();
         setData(result);
-        fetchedOnce.current = true; // Ustawiamy, że dane zostały pobrane
+        fetchedOnce.current = true;
       } catch (err: any) {
         setError(err);
       } finally {
@@ -25,7 +24,7 @@ function useFetchData<T>(fetchFunction: () => Promise<T>) {
     };
 
     fetchData();
-  }, [fetchFunction]); // Dobrą praktyką jest tutaj podać fetchFunction w zależnościach
+  }, [fetchFunction]);
 
   return { data, loading, error };
 }
