@@ -74,6 +74,7 @@ export async function GET(request: NextRequest) {
         },
         take: 1,
       },
+      media: true,
     },
   });
 
@@ -88,6 +89,7 @@ export async function GET(request: NextRequest) {
       },
       tags: true,
       likes: true,
+      media: true,
     },
   });
 

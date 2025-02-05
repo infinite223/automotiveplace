@@ -40,7 +40,6 @@ export default function Page() {
     const validation = userLoginSchema.safeParse(userLoginData);
 
     if (!validation.success) {
-      console.log(validation.error.errors);
       setErrors(validation.error.errors);
 
       return;

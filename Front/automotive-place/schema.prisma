@@ -26,6 +26,65 @@ model Post {
   author           User?    @relation(fields: [authorId], references: [id])
   company          Company? @relation(fields: [companyId], references: [id])
   tags             Tag[]
+  media            Media[]  
+}
+
+model Project {
+  id                          String                       @id @default(cuid())
+  createdAt                   DateTime                     @default(now()) @map("created_at")
+  updatedAt                   DateTime                     @updatedAt @map("updated_at")
+  name                        String?
+  carMake                     String
+  carModel                    String
+  description                 String?
+  isVerified                  Boolean
+  isVisible                   Boolean
+  imagesUrl                   String
+  carItemsCount               Int
+  imagesCount                 Int
+  forSell                     Boolean
+  garageId                    String
+  projectPrice                Decimal
+  engineName                  String
+  engineStockHp               Int
+  engineStockNm               Int
+  engineDescription           String?
+  engineCapacity              Decimal
+  engineWasSwapped            Boolean?
+  transmissionName            String
+  transmissionGears           Int
+  transmissionDescription     String?
+  transmissionWasSwapped      Boolean?
+  authorId                    String
+  companyId                   String?
+  isBlockedByAdmin            Boolean?
+  reportId                    String?
+  topSpeedStock               Decimal?
+  transmissionType            Int
+  weightStock                 Decimal?
+  carItems                    CarItem[]
+  likes                       Like[]
+  location                    Location?
+  pickedProjectsOnEventOrSpot PickedProjectOnEventOrSpot[]
+  author                      User                         @relation(fields: [authorId], references: [id])
+  company                     Company?                     @relation(fields: [companyId], references: [id])
+  garage                      Garage                       @relation(fields: [garageId], references: [id])
+  stages                      Stage[]
+  tags                        Tag[]
+  media                       Media[]                      
+}
+
+model Media {
+  id            String   @id @default(cuid())
+  fileName      String
+  fileLocation  String
+  isVerified    Boolean  @default(false)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  projectId     String?
+  postId        String?
+  project       Project? @relation(fields: [projectId], references: [id])
+  post          Post?    @relation(fields: [postId], references: [id])
 }
 
 model User {
@@ -97,50 +156,6 @@ model Garage {
   author           User      @relation(fields: [authorId], references: [id])
   company          Company?  @relation(fields: [companyId], references: [id])
   projects         Project[]
-}
-
-model Project {
-  id                          String                       @id @default(cuid())
-  createdAt                   DateTime                     @default(now()) @map("created_at")
-  updatedAt                   DateTime                     @updatedAt @map("updated_at")
-  name                        String?
-  carMake                     String
-  carModel                    String
-  description                 String?
-  isVerified                  Boolean
-  isVisible                   Boolean
-  imagesUrl                   String
-  carItemsCount               Int
-  imagesCount                 Int
-  forSell                     Boolean
-  garageId                    String
-  projectPrice                Decimal
-  engineName                  String
-  engineStockHp               Int
-  engineStockNm               Int
-  engineDescription           String?
-  engineCapacity              Decimal
-  engineWasSwapped            Boolean?
-  transmissionName            String
-  transmissionGears           Int
-  transmissionDescription     String?
-  transmissionWasSwapped      Boolean?
-  authorId                    String
-  companyId                   String?
-  isBlockedByAdmin            Boolean?
-  reportId                    String?
-  topSpeedStock               Decimal?
-  transmissionType            Int
-  weightStock                 Decimal?
-  carItems                    CarItem[]
-  likes                       Like[]
-  location                    Location?
-  pickedProjectsOnEventOrSpot PickedProjectOnEventOrSpot[]
-  author                      User                         @relation(fields: [authorId], references: [id])
-  company                     Company?                     @relation(fields: [companyId], references: [id])
-  garage                      Garage                       @relation(fields: [garageId], references: [id])
-  stages                      Stage[]
-  tags                        Tag[]
 }
 
 model Spot {
