@@ -1,5 +1,6 @@
 import { TValidResult } from "@/app/utils/types";
-import React, { CSSProperties, FC, useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
+import React, { CSSProperties, FC, useState } from "react";
 
 interface IAMPInput<TValue> {
   value: TValue;
@@ -15,6 +16,7 @@ interface IAMPInput<TValue> {
   marginBotton?: string;
   validFunction?: (value: string | number) => TValidResult[];
   themeOption?: "auto" | "dark" | "white";
+  error?: string | null;
 }
 
 export const AMPInput: FC<IAMPInput<string | number>> = ({
@@ -33,8 +35,10 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
   validFunction = () => {
     return [];
   },
+  error,
 }) => {
   const [localErrorText, setLocalErrorText] = useState("");
+  const t = useTranslations();
 
   const themeAMPButtonStyles = () => {
     if (themeOption === "auto") {
@@ -67,6 +71,12 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
       {localErrorText && (
         <span className="mt-2 text-[11px] text-red-400 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
           {localErrorText}
+        </span>
+      )}
+
+      {error && (
+        <span className="mt-2 text-[11px] text-red-400 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+          {t(error)}
         </span>
       )}
     </label>

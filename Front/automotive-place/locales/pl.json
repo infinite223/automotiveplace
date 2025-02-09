@@ -15,7 +15,7 @@
     "Groups": "Grupy",
     "Spots": "Spoty",
     "Events": "Wydażenia",
-    "Problems": "Problemu",
+    "Problems": "Problemy",
     "Company": "Firmy",
     "Settings": "Ustawienia",
     "Hp": "Km",
@@ -47,7 +47,19 @@
     "LogOut": "Wyloguj się",
     "LoggedOutSuccessfully": "Wylogowano pomyślnie",
     "Loading": "Ładowanie",
-    "GiveFeedback": "Przekaż opinie"
+    "GiveFeedback": "Przekaż opinie",
+    "Errors": {
+      "Name": {
+        "Required": "Imię jest wymagane",
+        "TooLong": "Imię jest za długie"
+      },
+      "Email": {
+        "Invalid": "Nieprawidłowy adres e-mail"
+      },
+      "Password": {
+        "TooShort": "Hasło musi mieć co najmniej 6 znaków"
+      }
+    }
   },
   "Preview": {
     "title": "Aplikacja stworzona w celu połączenia motoryzacyjnej społeczności do jednego wspólnego miejsca.",

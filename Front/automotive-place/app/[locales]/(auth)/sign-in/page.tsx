@@ -10,6 +10,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { setIsLoading } from "@/lib/features/loading/globalLoadingSlice";
+import { userLoginSchema } from "@/app/api/zod.schmas";
+import { ZodIssue } from "zod";
 
 export default function Page() {
   const router = useRouter();
@@ -19,6 +21,7 @@ export default function Page() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState<null | ZodIssue[]>(null);
 
   useEffect(() => {
     const chekUserLoggedIn = async () => {
@@ -31,9 +34,20 @@ export default function Page() {
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
+
+    const userLoginData = { email, password };
+    const validation = userLoginSchema.safeParse(userLoginData);
+
+    if (!validation.success) {
+      setErrors(validation.error.errors);
+
+      return;
+    }
+
     dispatch(setIsLoading(true));
 
-    const result = await signIn({ email, password });
+    const result = await signIn(userLoginData);
+    setErrors(null);
     dispatch(addNotification(JSON.stringify(result.notification)));
     dispatch(setIsLoading(false));
     if (result.notification.log.status === "Success") router.push("./app");
@@ -56,6 +70,7 @@ export default function Page() {
             type="email"
             themeOption="white"
             placeholder="Podaj email"
+            error={errors?.find((e) => e.path.includes("email"))?.message}
             setValue={(text) => setEmail(text.toString())}
           />
           <AMPInput
@@ -64,6 +79,7 @@ export default function Page() {
             type="password"
             name="Hasło"
             themeOption="white"
+            error={errors?.find((e) => e.path.includes("password"))?.message}
             setValue={(text) => setPassword(text.toString())}
           />
         </div>

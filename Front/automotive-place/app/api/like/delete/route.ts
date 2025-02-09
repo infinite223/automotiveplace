@@ -23,15 +23,13 @@ export async function DELETE(request: NextRequest) {
         { status: 400 }
       );
     }
-    console.log(likeableId, userData.user.$id, "id");
+
     const deletedLike = await prisma.like.deleteMany({
       where: {
         userId: userData.user.$id,
         likeableId,
       },
     });
-
-    console.log(deletedLike, "del");
 
     if (deletedLike.count === 0) {
       return NextResponse.json(

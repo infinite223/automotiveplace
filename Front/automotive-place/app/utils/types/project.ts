@@ -70,6 +70,7 @@ type TBasicProject = {
   engineStockNm: number;
   acc_0_100: number | null;
   acc_100_200: number | null;
+  stageNumber: number;
 
   engineNameAndCapacity: string;
   isLikedByAuthUser: boolean;
@@ -97,6 +98,7 @@ function isTBasicProject(data: any): data is TBasicProject {
       typeof data.hp === "number" &&
       typeof data.nm === "number" &&
       typeof data.engineStockHp === "number" &&
+      typeof data.stageNumber === "number" &&
       typeof data.engineStockNm === "number" &&
       typeof data.acc_0_100 === "number") ||
     (data.acc_0_100 === null && typeof data.acc_100_200 === "number") ||

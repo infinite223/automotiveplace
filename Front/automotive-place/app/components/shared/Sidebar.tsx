@@ -19,7 +19,7 @@ import { iconSizes } from "@/app/utils/constants";
 import { SlMenu } from "react-icons/sl";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { KalamBold, Yant } from "@/app/utils/helpers";
+import { Yant } from "@/app/utils/helpers";
 import { CreateProblemView } from "../createProblem";
 import { RootState } from "@/lib/store";
 import { setShowCreateProject } from "@/lib/features/actions/actionsSlice";
@@ -44,7 +44,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
     <div className="flex min-w-[85px] bg-amp-0 2xl:w-[240px] lg:h-full scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
       <div className="flex flex-col gap-1 h-[100%] 2xl:ml-4 justify-between py-2 pb-2">
         <div className="flex lg:flex-col justify-evenly lg:justify-center items-start max-2xl:items-center max-2xl:pr-0 max-2xl:min-w-0">
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2 mb-2 max-lg:hidden">
             <div className="px-4 2xl:hidden mt-4">
               <SlMenu size={iconSizes.base} />
             </div>

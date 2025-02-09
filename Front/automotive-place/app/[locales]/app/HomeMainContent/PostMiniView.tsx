@@ -17,7 +17,7 @@ export const PostMiniView = ({
         title={data.title}
         typeName="Post"
         isUserContent={isUserContent}
-        // author={data.}
+        author={data.author}
       />
       <p className="mt-1 opacity-80">{data.content}</p>
       {data.imagesUrl && <AMPSlider images={[data.imagesUrl]} />}

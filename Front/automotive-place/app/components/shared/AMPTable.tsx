@@ -1,7 +1,6 @@
 import { TSearchOptions } from "@/app/utils/types";
-import React, { FC, RefObject, useRef } from "react";
+import React, { FC, RefObject } from "react";
 import { AMPSearch } from "./AMPSearch";
-import useOnScreen from "@/app/hooks/useOnScreen";
 
 interface AMPTableProps {
   items: JSX.Element[];
