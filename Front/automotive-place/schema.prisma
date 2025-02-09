@@ -114,13 +114,15 @@ model User {
 }
 
 model UserActivity {
-  id           String       @id @default(cuid())
+  id           String            @id @default(cuid())
   userId       String
   activityType ActivityType
   entityId     String
   entityType   EntityType
-  createdAt    DateTime     @default(now())
-  user         User         @relation(fields: [userId], references: [id])
+  createdAt    DateTime          @default(now())
+  user         User              @relation(fields: [userId], references: [id])
+  tags         Tag[]             @relation("TagUserActivities")
+  TagUserActivity TagUserActivity[]
 }
 
 model Company {
@@ -229,10 +231,10 @@ model Stage {
 }
 
 model Tag {
-  id               String   @id @default(cuid())
+  id               String         @id @default(cuid())
   name             String
-  createdAt        DateTime @default(now()) @map("created_at")
-  updatedAt        DateTime @updatedAt @map("updated_at")
+  createdAt        DateTime       @default(now()) @map("created_at")
+  updatedAt        DateTime       @updatedAt @map("updated_at")
   authorId         String
   projectId        String?
   carItemId        String?
@@ -240,11 +242,22 @@ model Tag {
   isBlockedByAdmin Boolean?
   reportId         String?
   postId           String?
-  author           User     @relation(fields: [authorId], references: [id])
-  carItem          CarItem? @relation(fields: [carItemId], references: [id])
-  company          Company? @relation(fields: [companyId], references: [id])
-  post             Post?    @relation(fields: [postId], references: [id])
-  project          Project? @relation(fields: [projectId], references: [id])
+  author           User           @relation(fields: [authorId], references: [id])
+  carItem          CarItem?       @relation(fields: [carItemId], references: [id])
+  company          Company?       @relation(fields: [companyId], references: [id])
+  post             Post?          @relation(fields: [postId], references: [id])
+  project          Project?       @relation(fields: [projectId], references: [id])
+  userActivities   UserActivity[] @relation("TagUserActivities")
+  TagUserActivity  TagUserActivity[]
+}
+
+model TagUserActivity {
+  tagId          String
+  userActivityId String
+  tag            Tag            @relation(fields: [tagId], references: [id])
+  userActivity   UserActivity   @relation(fields: [userActivityId], references: [id])
+
+  @@id([tagId, userActivityId])
 }
 
 model CarItem {
@@ -324,6 +337,7 @@ enum ActivityType {
   VIEW
   LIKE
   COMMENT
+  CREATE
 }
 
 enum EntityType {

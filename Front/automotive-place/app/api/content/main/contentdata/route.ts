@@ -10,13 +10,10 @@ const projectImage =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS68Gy62kKm-z60Pe_y32-kfkuaEmprwzvfKXfM_zhLiiC4ulIna5DlScrbubsjMtfzA9w&usqp=CAU";
 const projectImage2 =
   "https://media.drive.com.au/obj/tx_q:70,rs:auto:1200:675:1/driveau/upload/cms/uploads/bi36meqa62rhbghgdrkh";
-
 const projectImage3 =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAForxurppxANqMjH2I1CjPPg79vtTEN71FQ&s";
-
 const projectImage4 =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSdZIVym1fnqh7TWirmnbWEhUy0oJgEsQmCQ&s";
-
 const projectImage5 =
   "https://cloud.appwrite.io/v1/storage/buckets/671a638d00369a634162/files/67a12ab00028f1f22d8e/view?project=66b72b780006144f8424&mode=admin";
 const projectImages = [
@@ -44,19 +41,74 @@ export async function GET(request: NextRequest) {
   const limit = parseInt(searchParams.get("limit")) || 10;
   const page = parseInt(searchParams.get("page") || "1", 10);
 
-  const userInterests = await prisma.userActivity.groupBy({
-    by: ["entityType"],
+  // Pobierz UserActivity z tagami
+  const userActivities = await prisma.userActivity.findMany({
     where: { userId: userData.user.$id },
-    _count: {
-      entityId: true,
-    },
-    orderBy: {
-      _count: {
-        entityId: "desc",
-      },
+    include: {
+      tags: true,
     },
   });
 
+  const userTags = userActivities.flatMap((activity) =>
+    activity.tags.map((tag) => tag.name)
+  );
+
+  // Pobierz projekty i posty na podstawie tagów użytkownika
+  const taggedProjects = await prisma.project.findMany({
+    where: {
+      tags: {
+        some: {
+          name: {
+            in: userTags,
+          },
+        },
+      },
+    },
+    include: {
+      tags: true,
+      author: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+      likes: true,
+      stages: {
+        orderBy: {
+          stageNumber: "desc",
+        },
+        take: 1,
+      },
+      media: true,
+    },
+  });
+
+  const taggedPosts = await prisma.post.findMany({
+    where: {
+      tags: {
+        some: {
+          name: {
+            in: userTags,
+          },
+        },
+      },
+    },
+    include: {
+      author: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+      tags: true,
+      likes: true,
+      media: true,
+    },
+  });
+
+  // Pobierz wszystkie projekty i posty
   const allProjects = await prisma.project.findMany({
     include: {
       tags: true,
@@ -93,18 +145,11 @@ export async function GET(request: NextRequest) {
     },
   });
 
-  // Sort projects based on matching tags
-  const sortedProjects = allProjects.sort((a, b) => {
-    const aMatches = a.tags.filter((tag) =>
-      userInterests.some((interest) => interest.entityType === tag.name)
-    ).length;
-    const bMatches = b.tags.filter((tag) =>
-      userInterests.some((interest) => interest.entityType === tag.name)
-    ).length;
-    return bMatches - aMatches;
-  });
+  // Połącz i posortuj treści
+  const combinedProjects = [...taggedProjects, ...allProjects];
+  const combinedPosts = [...taggedPosts, ...allPosts];
 
-  const basicProjects: TBasicProject[] = sortedProjects.map((project) => {
+  const basicProjects: TBasicProject[] = combinedProjects.map((project) => {
     const stage = project.stages[0];
 
     return {
@@ -143,7 +188,7 @@ export async function GET(request: NextRequest) {
     };
   });
 
-  const basicPosts: TBasicPost[] = allPosts.map((post) => ({
+  const basicPosts: TBasicPost[] = combinedPosts.map((post) => ({
     content: post.content ?? "",
     id: post.id,
     imagesUrl: post.imagesUrl,
