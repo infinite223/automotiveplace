@@ -2,6 +2,7 @@ import { TBasicPost } from "@/app/utils/types/post";
 import { ContentMiniFooter } from "./ContentMiniFooter";
 import { ContentMiniNav } from "./ContentMiniNav";
 import AMPSlider from "@/app/components/shared/AMPSlider";
+import { useLike } from "@/app/hooks/useLike";
 
 export const PostMiniView = ({
   data,
@@ -10,6 +11,13 @@ export const PostMiniView = ({
   data: TBasicPost;
   isUserContent: boolean;
 }) => {
+  const { currentIsLiked, currentLikesCount, handleClickLike } = useLike(
+    data.likesCount,
+    data.isLikedByAuthUser,
+    data.id,
+    "Post"
+  );
+
   return (
     <div className="flex flex-col w-full gap-1">
       <ContentMiniNav
@@ -23,9 +31,9 @@ export const PostMiniView = ({
       {data.imagesUrl && <AMPSlider images={[data.imagesUrl]} />}
 
       <ContentMiniFooter
-        contentId={data.id}
-        isLikedByAuthUser={data.isLikedByAuthUser}
-        likesCount={data.likesCount}
+        currentIsLiked={currentIsLiked}
+        currentLikesCount={currentLikesCount}
+        handleClickLike={handleClickLike}
         type="Post"
       />
     </div>

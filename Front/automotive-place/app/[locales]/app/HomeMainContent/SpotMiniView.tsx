@@ -1,6 +1,7 @@
 import { TSpot } from "@/app/utils/types/spot";
 import { ContentMiniFooter } from "./ContentMiniFooter";
 import { ContentMiniNav } from "./ContentMiniNav";
+import { useLike } from "@/app/hooks/useLike";
 
 export const SpotMiniView = ({
   data,
@@ -9,6 +10,12 @@ export const SpotMiniView = ({
   data: TSpot;
   isUserContent: boolean;
 }) => {
+  const { currentIsLiked, currentLikesCount, handleClickLike } = useLike(
+    2,
+    false,
+    data.id,
+    "Spot"
+  );
   return (
     <div className="flex flex-col items-center h-[550px] w-full gap-1">
       <ContentMiniNav
@@ -20,9 +27,9 @@ export const SpotMiniView = ({
       />
       <h2 className="h-full">Spot</h2>
       <ContentMiniFooter
-        contentId={data.id}
-        isLikedByAuthUser={false}
-        likesCount={12}
+        currentIsLiked={currentIsLiked}
+        currentLikesCount={currentLikesCount}
+        handleClickLike={handleClickLike}
         type="Spot"
       />
     </div>

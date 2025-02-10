@@ -11,56 +11,20 @@ import { useState } from "react";
 
 interface IContentMiniFooter {
   type: TContentTypes;
-  likesCount: number;
-  isLikedByAuthUser: boolean;
   actions?: JSX.Element;
   tags?: TBasicTag[];
-  contentId: string;
+  currentIsLiked: boolean;
+  currentLikesCount: number;
+  handleClickLike: () => void;
 }
 
 export const ContentMiniFooter = ({
-  contentId,
-  type,
-  likesCount,
-  isLikedByAuthUser,
+  currentIsLiked,
   actions,
+  currentLikesCount,
   tags,
+  handleClickLike,
 }: IContentMiniFooter) => {
-  const [currentLikesCount, setCurrentLikesCount] = useState(likesCount);
-  const [currentIsLiked, setCurrentIsLiked] = useState(isLikedByAuthUser);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleClickLike = async () => {
-    if (isLoading) return;
-
-    setIsLoading(true);
-    if (currentIsLiked) {
-      setCurrentLikesCount((prev) => prev - 1);
-      setCurrentIsLiked(false);
-
-      try {
-        await deleteLike(contentId);
-      } catch (error) {
-        console.error("Error while deleting like", error);
-        setCurrentLikesCount((prev) => prev + 1);
-        setCurrentIsLiked(true);
-      }
-    } else {
-      setCurrentLikesCount((prev) => prev + 1);
-      setCurrentIsLiked(true);
-
-      try {
-        await createLike(contentId, type);
-      } catch (error) {
-        console.error("Error while creating like", error);
-        setCurrentLikesCount((prev) => prev - 1);
-        setCurrentIsLiked(false);
-      }
-    }
-
-    setIsLoading(false);
-  };
-
   return (
     <nav className="flex flex-col items-center justify-between w-full">
       <AMPSeparator />

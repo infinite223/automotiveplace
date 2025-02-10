@@ -83,6 +83,8 @@ model Media {
   updatedAt     DateTime @updatedAt @map("updated_at")
   projectId     String?
   postId        String?
+
+  location      Location?
   project       Project? @relation(fields: [projectId], references: [id])
   post          Post?    @relation(fields: [postId], references: [id])
 }
@@ -314,10 +316,12 @@ model Location {
   companyId   String?  @unique
   spotId      String?  @unique
   eventId     String?  @unique
+  mediaId     String?  @unique
   company     Company? @relation(fields: [companyId], references: [id])
   spot        Spot?    @relation(fields: [eventId], references: [id])
   project     Project? @relation(fields: [projectId], references: [id])
   event       Event?   @relation(fields: [spotId], references: [id])
+  media       Media?   @relation(fields: [mediaId], references: [id])
 }
 
 enum ActivityType {

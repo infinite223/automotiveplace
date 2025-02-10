@@ -19,6 +19,7 @@ const projectImage4 =
 
 const projectImage5 =
   "https://cloud.appwrite.io/v1/storage/buckets/671a638d00369a634162/files/67a12ab00028f1f22d8e/view?project=66b72b780006144f8424&mode=admin";
+
 const projectImages = [
   projectImage,
   projectImage2,
@@ -125,7 +126,7 @@ export async function GET(request: NextRequest) {
       acc_0_100: stage ? stage.acc_0_100?.toNumber() || null : null,
       acc_100_200: stage ? stage.acc_100_200?.toNumber() || null : null,
       engineNameAndCapacity: project.engineName + " " + project.engineCapacity,
-      images: projectImages, // change to images from db
+      images: project.media.map((m) => m.fileLocation),
       tags: project.tags.map((tag) => ({
         id: tag.id,
         name: tag.name,

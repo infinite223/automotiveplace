@@ -8,6 +8,8 @@ import { IoIosArrowForward } from "react-icons/io";
 import { iconSizes } from "@/app/utils/constants";
 import Link from "next/link";
 import AMPSlider from "@/app/components/shared/AMPSlider";
+import { createLike, deleteLike } from "@/app/services/like";
+import { useLike } from "@/app/hooks/useLike";
 
 export const ProjectMiniView = ({
   data,
@@ -17,6 +19,12 @@ export const ProjectMiniView = ({
   isUserContent: boolean;
 }) => {
   const [isClient, setIsClient] = useState(false);
+  const { currentIsLiked, currentLikesCount, handleClickLike } = useLike(
+    data.likesCount,
+    data.isLikedByAuthUser,
+    data.id,
+    "Project"
+  );
 
   useEffect(() => {
     setIsClient(true);
@@ -24,6 +32,7 @@ export const ProjectMiniView = ({
   if (!data) {
     return null;
   }
+
   const handleLinkClick = () => {
     sessionStorage.setItem("lastClickedId", data.id);
   };
@@ -93,9 +102,9 @@ export const ProjectMiniView = ({
 
           <ContentMiniFooter
             tags={data.tags}
-            contentId={data.id}
-            isLikedByAuthUser={data.isLikedByAuthUser}
-            likesCount={data.likesCount}
+            currentIsLiked={currentIsLiked}
+            currentLikesCount={currentLikesCount}
+            handleClickLike={handleClickLike}
             type="Project"
             actions={
               <Link
