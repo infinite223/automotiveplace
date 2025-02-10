@@ -102,46 +102,39 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
       </div>
 
       <AMPModal onClose={closeModal} visible={isModalOpen} withHeader={false}>
-        <div className="flex justify-center items-center w-screen h-screen">
-          <div
-            className="relative max-w-[95vw] max-h-[95vh] overflow-hidden w-full h-full flex justify-center items-center"
-            style={{ backgroundColor: dominantColor }}
-          >
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-            >
-              {images.map((image, index) => (
-                <img
-                  key={`${currentIndex}-${index}`}
-                  src={image}
-                  alt={`slide-${index}`}
-                  className="flex-shrink-0 object-contain max-w-[95vw] max-h-[95vh] w-full h-full my-auto"
-                />
-              ))}
-            </div>
-            {images.length > 1 && (
-              <>
-                <button
-                  className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full cursor-pointer left-2"
-                  onClick={handlePrevClick}
-                >
-                  <FaAngleLeft size={iconSizes.base} />
-                </button>
-                <button
-                  className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:opacity-70 text-white p-2 rounded-full cursor-pointer right-2"
-                  onClick={handleNextClick}
-                >
-                  <FaAngleRight size={iconSizes.base} />
-                </button>
-              </>
-            )}
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-90">
+          <div className="relative w-screen h-screen flex justify-center items-center">
             <button
-              className="absolute top-2 right-2 bg-black bg-opacity-50 text-white p-2 rounded-full cursor-pointer hover:opacity-70"
+              className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 text-white p-2 rounded-full cursor-pointer hover:opacity-70"
               onClick={closeModal}
             >
               <MdClose size={iconSizes.base} />
             </button>
+
+            {images.length > 1 && (
+              <>
+                <button
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full cursor-pointer"
+                  onClick={handlePrevClick}
+                >
+                  <FaAngleLeft size={iconSizes.large} />
+                </button>
+                <button
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full cursor-pointer"
+                  onClick={handleNextClick}
+                >
+                  <FaAngleRight size={iconSizes.large} />
+                </button>
+              </>
+            )}
+
+            <div className="relative w-full h-full flex justify-center items-center">
+              <img
+                src={images[currentIndex]}
+                alt={`slide-${currentIndex}`}
+                className="object-contain w-full h-full max-w-screen max-h-screen"
+              />
+            </div>
           </div>
         </div>
       </AMPModal>

@@ -55,6 +55,7 @@ export const ProjectMiniView = ({
           <ContentMiniNav
             isUserContent={isUserContent}
             createdAt={data.createdAt}
+            handleClickLike={handleClickLike}
             title={
               data.carMake +
               " " +

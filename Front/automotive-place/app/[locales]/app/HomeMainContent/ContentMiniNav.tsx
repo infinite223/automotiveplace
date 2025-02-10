@@ -17,6 +17,7 @@ interface IContentMiniNav {
   createdAt: Date;
   typeName: string;
   isUserContent?: boolean;
+  handleClickLike?: () => void;
 }
 
 enum Visibility {
@@ -91,13 +92,21 @@ export const ContentMiniNav = ({
   title,
   typeName,
   isUserContent = false,
+  handleClickLike,
 }: IContentMiniNav) => {
-  const filteredMenuItems = menuItems.filter((item) => {
-    if (item.visibility === Visibility.ALL) return true;
-    if (item.visibility === Visibility.AUTHOR && isUserContent) return true;
-    if (item.visibility === Visibility.USER && !isUserContent) return true;
-    return false;
-  });
+  const filteredMenuItems = menuItems
+    .map((item) => {
+      if (item.name === "Polub") {
+        return { ...item, handleClick: handleClickLike };
+      }
+      return item;
+    })
+    .filter((item) => {
+      if (item.visibility === Visibility.ALL) return true;
+      if (item.visibility === Visibility.AUTHOR && isUserContent) return true;
+      if (item.visibility === Visibility.USER && !isUserContent) return true;
+      return false;
+    });
 
   return (
     <nav className="flex items-center w-full justify-between">
