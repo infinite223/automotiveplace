@@ -13,8 +13,6 @@ export default function useKeyboardShortcut(
   config: ShortcutConfig
 ) {
   useEffect(() => {
-    const targetElement = config.shortcutTarget || document;
-
     const keyCombo = config.code;
 
     const handler = (e: KeyboardEvent) => {

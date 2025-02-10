@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { ICreateNotification } from "@/app/utils/types";
 import { log } from "console";
 import { createNewUser, validUserIfExistInDatabse } from "./Validation";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
