@@ -23,10 +23,12 @@ export const SpotMiniView = ({
         title={data.title}
         typeName="Spot"
         isUserContent={isUserContent}
+        handleClickLike={handleClickLike}
         // author={data.}
       />
       <h2 className="h-full">Spot</h2>
       <ContentMiniFooter
+        isUserContent={isUserContent}
         currentIsLiked={currentIsLiked}
         currentLikesCount={currentLikesCount}
         handleClickLike={handleClickLike}

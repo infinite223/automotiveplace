@@ -16,6 +16,8 @@ interface IContentMiniFooter {
   currentIsLiked: boolean;
   currentLikesCount: number;
   handleClickLike: () => void;
+  handleClickShare?: () => void;
+  isUserContent?: boolean;
 }
 
 export const ContentMiniFooter = ({
@@ -24,6 +26,8 @@ export const ContentMiniFooter = ({
   currentLikesCount,
   tags,
   handleClickLike,
+  handleClickShare,
+  isUserContent,
 }: IContentMiniFooter) => {
   return (
     <nav className="flex flex-col items-center justify-between w-full">
@@ -45,8 +49,9 @@ export const ContentMiniFooter = ({
               <span className="text-sm">{currentLikesCount}</span>
             </div>
           </div>
-          <CgShare size={iconSizes.base} />
-          <TbMessageCircleUp size={iconSizes.base} />
+
+          <CgShare size={iconSizes.base} onClick={handleClickShare} />
+          {!isUserContent && <TbMessageCircleUp size={iconSizes.base} />}
         </div>
 
         {actions}

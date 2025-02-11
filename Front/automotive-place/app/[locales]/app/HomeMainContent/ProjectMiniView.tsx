@@ -8,7 +8,6 @@ import { IoIosArrowForward } from "react-icons/io";
 import { iconSizes } from "@/app/utils/constants";
 import Link from "next/link";
 import AMPSlider from "@/app/components/shared/AMPSlider";
-import { createLike, deleteLike } from "@/app/services/like";
 import { useLike } from "@/app/hooks/useLike";
 
 export const ProjectMiniView = ({
@@ -37,6 +36,10 @@ export const ProjectMiniView = ({
     sessionStorage.setItem("lastClickedId", data.id);
   };
 
+  const handleClickShare = () => {
+    console.log("Share");
+  };
+
   const statisticCurrentHp = data.hp
     ? data.hp + " (+" + (data.hp - data.engineStockHp) + ") "
     : data.engineStockHp;
@@ -56,6 +59,7 @@ export const ProjectMiniView = ({
             isUserContent={isUserContent}
             createdAt={data.createdAt}
             handleClickLike={handleClickLike}
+            handleClickShare={handleClickShare}
             title={
               data.carMake +
               " " +
@@ -104,8 +108,10 @@ export const ProjectMiniView = ({
           <ContentMiniFooter
             tags={data.tags}
             currentIsLiked={currentIsLiked}
+            isUserContent={isUserContent}
             currentLikesCount={currentLikesCount}
             handleClickLike={handleClickLike}
+            handleClickShare={handleClickShare}
             type="Project"
             actions={
               <Link

@@ -32,6 +32,7 @@ export const PostMiniView = ({
       {data.imagesUrl && <AMPSlider images={[data.imagesUrl]} />}
 
       <ContentMiniFooter
+        isUserContent={isUserContent}
         currentIsLiked={currentIsLiked}
         currentLikesCount={currentLikesCount}
         handleClickLike={handleClickLike}

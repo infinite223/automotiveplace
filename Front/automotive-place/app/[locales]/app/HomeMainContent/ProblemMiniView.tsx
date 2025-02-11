@@ -29,6 +29,7 @@ export const ProblemMiniView = ({
       <h2 className="h-full">Problem</h2>
 
       <ContentMiniFooter
+        isUserContent={isUserContent}
         currentIsLiked={currentIsLiked}
         currentLikesCount={currentLikesCount}
         handleClickLike={handleClickLike}

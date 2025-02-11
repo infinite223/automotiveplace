@@ -42,7 +42,6 @@ export async function GET(request: NextRequest) {
   const limit = parseInt(searchParams.get("limit")) || 10;
   const page = parseInt(searchParams.get("page") || "1", 10);
 
-  // Pobierz UserActivity z tagami
   const userActivities = await prisma.userActivity.findMany({
     where: { userId: userData.user.$id },
     include: {
@@ -54,7 +53,6 @@ export async function GET(request: NextRequest) {
     activity.tags.map((tag) => tag.name)
   );
 
-  // Pobierz projekty i posty na podstawie tagów użytkownika
   const taggedProjects = await prisma.project.findMany({
     where: {
       tags: {
@@ -64,6 +62,11 @@ export async function GET(request: NextRequest) {
           },
         },
       },
+      media: {
+        some: {},
+      },
+      isBlockedByAdmin: false,
+      isVisible: true,
     },
     include: {
       tags: true,
@@ -94,6 +97,7 @@ export async function GET(request: NextRequest) {
           },
         },
       },
+      isBlockedByAdmin: false,
     },
     include: {
       author: {
@@ -111,6 +115,13 @@ export async function GET(request: NextRequest) {
 
   // Pobierz wszystkie projekty i posty
   const allProjects = await prisma.project.findMany({
+    where: {
+      media: {
+        some: {},
+      },
+      isBlockedByAdmin: false,
+      isVisible: true,
+    },
     include: {
       tags: true,
       author: {
@@ -146,7 +157,6 @@ export async function GET(request: NextRequest) {
     },
   });
 
-  // Połącz i posortuj treści
   const combinedProjects = [...taggedProjects, ...allProjects];
   const combinedPosts = [...taggedPosts, ...allPosts];
 
