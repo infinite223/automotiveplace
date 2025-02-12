@@ -18,7 +18,6 @@ export async function GET() {
 
   const projects = await prisma.project.findMany({
     include: {
-      tags: { select: { name: true, id: true } },
       author: {
         select: {
           id: true,
@@ -49,13 +48,13 @@ export async function GET() {
       : null;
 
     return {
+      id: project.id,
       carMake: project.carMake,
       carModel: project.carModel,
       stageNumber: project.stages.length,
       currentHp: lastStage ? lastStage.hp : project.engineStockHp,
       currentNm: lastStage ? lastStage.nm : project.engineStockNm,
       author: project.author,
-      tags: project.tags,
       likesCount: project._count.likes,
       images: project.media.map((m) => m.fileLocation),
     };

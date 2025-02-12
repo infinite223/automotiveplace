@@ -23,7 +23,7 @@ export const RightSidebar = () => {
   });
 
   return (
-    <div className="h-full px-4 w-[280px] pt-4 fixed right-0 hidden lg:block bg-amp-0 text-amp-300 dark:text-amp-700/80">
+    <div className="h-full px-4 w-[320px] pt-4 fixed right-0 hidden lg:block bg-amp-0 text-amp-300 dark:text-amp-700/80">
       <div className="text-md flex items-center w-full justify-end gap-3">
         <OptionItem
           selected={selectedContent === "chat"}

@@ -140,12 +140,12 @@ type TProjectCreate = {
 };
 
 type TBasicPopularProject = {
+  id: string;
   carMake: string;
   carModel: string;
   stageNumber: number;
   currentHp: number;
   currentNm: number;
-  tags: TBasicTag[];
   author: TBasicUser;
   likesCount: number;
   images: string[];
