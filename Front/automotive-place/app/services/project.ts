@@ -1,4 +1,8 @@
-import { TProject, TProjectCreate } from "../utils/types/project";
+import {
+  TBasicPopularProject,
+  TProject,
+  TProjectCreate,
+} from "../utils/types/project";
 
 export const createProject = async (
   carItem: TProjectCreate,
@@ -24,6 +28,17 @@ export const getProject = async (id: string) => {
   }
 
   const result: TProject = await response.json();
-  console.log(result, "result");
+  console.log(result, "result getProject");
+  return result;
+};
+
+export const getPopularProjects = async () => {
+  const response = await fetch(`/api/project/get-popular-projects`);
+  if (!response.ok) {
+    throw new Error("Failed to get data");
+  }
+
+  const result: TBasicPopularProject[] = await response.json();
+  console.log(result, "result getPopularProjects");
   return result;
 };

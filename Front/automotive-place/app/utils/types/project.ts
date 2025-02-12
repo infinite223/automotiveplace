@@ -139,5 +139,17 @@ type TProjectCreate = {
   tags?: TTagCreate[];
 };
 
-export type { TProject, TBasicProject, TProjectCreate };
+type TBasicPopularProject = {
+  carMake: string;
+  carModel: string;
+  stageNumber: number;
+  currentHp: number;
+  currentNm: number;
+  tags: TBasicTag[];
+  author: TBasicUser;
+  likesCount: number;
+  images: string[];
+};
+
+export type { TProject, TBasicProject, TProjectCreate, TBasicPopularProject };
 export { isTBasicProject };

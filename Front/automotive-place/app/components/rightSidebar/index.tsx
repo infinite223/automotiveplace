@@ -7,6 +7,7 @@ import { RightSidebarModal, TContentType } from "./RightSidebarModal";
 import useKeyboardShortcut from "@/app/hooks/useKeydown";
 import { iconSizes, shortcutConfigs } from "@/app/utils/constants";
 import { useClickOutside } from "@/app/hooks/useClickOutside";
+import AMPPopularProjects from "../shared/AMPPopularProjects";
 
 export const RightSidebar = () => {
   const [selectedContent, setSelectedContent] = useState<TContentType>(null);
@@ -41,7 +42,7 @@ export const RightSidebar = () => {
         />
       </div>
       <div className="my-4">
-        <h2 className="">Popularne projekty</h2>
+        <AMPPopularProjects />
       </div>
 
       <div ref={modalRef}>
