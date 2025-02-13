@@ -6,25 +6,6 @@ import { TBasicProject } from "@/app/utils/types/project";
 import { ContentType } from "@/app/utils/enums";
 import { TBasicPost } from "@/app/utils/types/post";
 
-const projectImage =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS68Gy62kKm-z60Pe_y32-kfkuaEmprwzvfKXfM_zhLiiC4ulIna5DlScrbubsjMtfzA9w&usqp=CAU";
-const projectImage2 =
-  "https://media.drive.com.au/obj/tx_q:70,rs:auto:1200:675:1/driveau/upload/cms/uploads/bi36meqa62rhbghgdrkh";
-const projectImage3 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAForxurppxANqMjH2I1CjPPg79vtTEN71FQ&s";
-const projectImage4 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSdZIVym1fnqh7TWirmnbWEhUy0oJgEsQmCQ&s";
-const projectImage5 =
-  "https://cloud.appwrite.io/v1/storage/buckets/671a638d00369a634162/files/67a12ab00028f1f22d8e/view?project=66b72b780006144f8424&mode=admin";
-
-const projectImages = [
-  projectImage,
-  projectImage2,
-  projectImage3,
-  projectImage4,
-  projectImage5,
-];
-
 export async function GET(request: NextRequest) {
   const userData = await getLoggedInUser();
 
