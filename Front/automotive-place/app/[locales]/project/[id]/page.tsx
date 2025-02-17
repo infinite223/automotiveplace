@@ -1,6 +1,7 @@
 "use client";
 
 import { AMPCarStatsItem } from "@/app/components/shared/AMPCarStatsItem";
+import { AMPSeparator } from "@/app/components/shared/AMPSeparator";
 import useFetchData from "@/app/hooks/useFetchData";
 import { getProject } from "@/app/services/project";
 import { getCurrentStage } from "@/app/utils/helpers";
@@ -52,23 +53,28 @@ export default function Project({ params }: { params: { id: string } }) {
           {displayData?.images?.[0] && (
             <img
               src={displayData.images?.[0]}
-              className="w-full h-full object-cover rounded-b-lg blur-sm opacity-80"
+              className="w-full h-full object-cover blur-sm opacity-60"
               alt="car-image"
             />
           )}
 
-          <nav className="flex flex-col gap-2 justify-between w-full top-[-60px] relative px-4">
-            <h1 className="text-3xl font-semibold gap-2 flex items-center">
-              {displayData?.images?.[0] && (
+          <nav className="flex flex-col gap-2 justify-between w-full top-[-40px] relative px-4">
+            <h1 className="text-3xl font-semibold gap-2 flex items-end">
+              {/* {displayData?.images?.[0] && (
                 <img
                   src={displayData.images?.[0]}
                   className="w-20 h-20 object-cover rounded-full mr-4"
                   alt="car-image"
                 />
-              )}
-              <span>{displayData?.carMake}</span>
-              <span>{displayData?.carModel}</span>
-              <span className="">- {lastStage?.name || "N/A"}</span>
+              )} */}
+              <div className="flex flex-col w-full">
+                <div>
+                  <span>{displayData?.carMake}</span>
+                  <span>{displayData?.carModel}</span>
+                  <span className="">- {lastStage?.name || "N/A"}</span>
+                </div>
+                <div className="text-sm opacity-65">2,5k polubień</div>
+              </div>
             </h1>
 
             {lastStage && (
@@ -120,6 +126,27 @@ export default function Project({ params }: { params: { id: string } }) {
               </div>
             )}
           </nav>
+
+          <AMPSeparator />
+
+          <div className="flex gap-3 mx-4">
+            <div>
+              Informacje
+              {/* Wszystkie informacje o mocy, o przyśpieszeniach, przyrostach, opis, linki, zdjęcia, */}
+            </div>
+            <div>
+              Etapy modyfikacji
+              {/* dokładne opisy etapów modyfikacji, jakie zmiany, zdjęcia (wykres, jaka firma itp */}
+            </div>
+            <div>
+              Wzmianki
+              {/* To gdzie mona zobaczyć  projekt,tzn eventy, spoty na których był , problemy*/}
+            </div>
+          </div>
+
+          {/* Podobne projekty.... */}
+
+          {/* Footer */}
         </div>
       </div>
     </main>
