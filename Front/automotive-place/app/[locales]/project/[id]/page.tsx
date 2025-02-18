@@ -1,14 +1,20 @@
 "use client";
 
+import { AMPButton } from "@/app/components/shared/AMPButton";
 import { AMPCarStatsItem } from "@/app/components/shared/AMPCarStatsItem";
 import { AMPSeparator } from "@/app/components/shared/AMPSeparator";
 import useFetchData from "@/app/hooks/useFetchData";
 import { getProject } from "@/app/services/project";
+import { iconSizes } from "@/app/utils/constants";
 import { getCurrentStage } from "@/app/utils/helpers";
 import { TBasicProject, TProject } from "@/app/utils/types/project";
 import { RootState } from "@/lib/store";
+import moment from "moment";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import { CgShare } from "react-icons/cg";
+import { FaHeart } from "react-icons/fa";
+import { TbMessageCircleUp } from "react-icons/tb";
 import { useSelector } from "react-redux";
 
 export default function Project({ params }: { params: { id: string } }) {
@@ -58,8 +64,8 @@ export default function Project({ params }: { params: { id: string } }) {
             />
           )}
 
-          <nav className="flex flex-col gap-2 justify-between w-full top-[-40px] relative px-4">
-            <h1 className="text-3xl font-semibold gap-2 flex items-end">
+          <nav className="flex flex-col justify-between w-full top-[0px] relative py-4 px-4">
+            <header className="text-3xl font-semibold gap-1 flex flex-col flex-wrap">
               {/* {displayData?.images?.[0] && (
                 <img
                   src={displayData.images?.[0]}
@@ -67,15 +73,50 @@ export default function Project({ params }: { params: { id: string } }) {
                   alt="car-image"
                 />
               )} */}
-              <div className="flex flex-col w-full">
-                <div>
-                  <span>{displayData?.carMake}</span>
-                  <span>{displayData?.carModel}</span>
-                  <span className="">- {lastStage?.name || "N/A"}</span>
+              <div className="flex w-full items-start justify-between">
+                <div className="flex flex-col w-full">
+                  <div>
+                    <span>{displayData?.carMake}</span>
+                    <span>{displayData?.carModel}</span>
+                    <span className="">- {lastStage?.name || "N/A"}</span>
+                  </div>
+                  <div className="text-medium opacity-85">2,5k polubień</div>
                 </div>
-                <div className="text-sm opacity-65">2,5k polubień</div>
+                <div className="gap-2 flex w-full justify-end flex-wrap">
+                  <AMPButton
+                    name="Udostępnij"
+                    additionalTailwindCss="text-sm"
+                    type="none"
+                    icon={<CgShare size={iconSizes.small} />}
+                  />
+                  <AMPButton
+                    name="Nawiąz kontakt"
+                    additionalTailwindCss="text-sm "
+                    type="secondary"
+                    icon={<TbMessageCircleUp size={iconSizes.small} />}
+                  />
+                  <AMPButton
+                    name="Polub projekt"
+                    additionalTailwindCss="text-sm"
+                    type="secondary"
+                    icon={<FaHeart size={iconSizes.small - 2} />}
+                  />
+                </div>
               </div>
-            </h1>
+              <div className="flex items-center gap-x-4 text-xs opacity-65 flex-wrap">
+                <div>
+                  Projekt dodany przez: {data?.author?.name}{" "}
+                  {moment(data?.createdAt, "YYYYMMDD").fromNow()}
+                </div>
+                {lastStage && (
+                  <div>
+                    Ostatnia modyfikacja: {lastStage?.createdAt?.toDateString()}
+                  </div>
+                )}
+
+                <div>Ostatnia modyfikacja: 5 dni temu</div>
+              </div>
+            </header>
 
             {lastStage && (
               <div className="flex flex-wrap gap-4 w-full">
@@ -129,7 +170,7 @@ export default function Project({ params }: { params: { id: string } }) {
 
           <AMPSeparator />
 
-          <div className="flex gap-3 mx-4">
+          <div className="flex gap-3 mx-4 mt-5">
             <div>
               Informacje
               {/* Wszystkie informacje o mocy, o przyśpieszeniach, przyrostach, opis, linki, zdjęcia, */}
