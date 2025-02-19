@@ -20,7 +20,7 @@ const Yant = Yantramanav({
 });
 
 export const getCurrentStage = (project: TProject) => {
-  if (project.stages) {
+  if (project.stages?.length && project.stages?.length > 0) {
     return project.stages[project.stages.length - 1];
   }
 

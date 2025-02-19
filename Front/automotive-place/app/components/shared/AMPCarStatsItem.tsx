@@ -13,8 +13,10 @@ export const AMPCarStatsItem: FC<IAMPCarStatsItem> = ({
   typeValue,
   value,
 }) => {
+  if (value === "0") return;
+
   return (
-    <main className="flex flex-1 min-w-[200px] p-2 px-4 bg-amp-50 rounded-sm flex-col border-2 border-amp-700/50 dark:border-amp-300/40">
+    <main className="flex flex-1 min-w-[200px] p-2 px-4 bg-amp-50 rounded-sm flex-col ">
       <h1 className="font-semibold text-lg">
         {value}
 

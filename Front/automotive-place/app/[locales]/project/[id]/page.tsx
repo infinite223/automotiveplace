@@ -16,12 +16,14 @@ import { CgShare } from "react-icons/cg";
 import { FaHeart } from "react-icons/fa";
 import { TbMessageCircleUp } from "react-icons/tb";
 import { useSelector } from "react-redux";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Project({ params }: { params: { id: string } }) {
   const t = useTranslations();
   const contentData = useSelector(
     (state: RootState) => state.contentData.contentData
   );
+  const [activeTab, setActiveTab] = useState("informacje");
 
   const [tempData, setTempData] = useState<TBasicProject | null>(null);
   const { data, loading, error } = useFetchData<TProject>(() =>
@@ -39,10 +41,11 @@ export default function Project({ params }: { params: { id: string } }) {
 
   const displayData = loading ? tempData : data;
 
-  const lastStage =
-    displayData && "stages" in displayData
-      ? getCurrentStage(displayData as TProject)
-      : undefined;
+  const lastStage = displayData
+    ? getCurrentStage(displayData as TProject)
+    : undefined;
+
+  console.log(lastStage, "lastStage");
 
   if (loading && !tempData)
     return (
@@ -51,6 +54,12 @@ export default function Project({ params }: { params: { id: string } }) {
       </div>
     );
   if (error) return <div>Error: {error.message}</div>;
+
+  const tabs = [
+    { id: "informacje", label: "Informacje" },
+    { id: "etapy", label: "Etapy modyfikacji" },
+    { id: "wzmianki", label: "Wzmianki" },
+  ];
 
   return (
     <main className="flex w-full min-h-screen bg-amp-900 dark:bg-amp-0 flex-col items-center gap-2 text-black dark:text-white">
@@ -117,72 +126,120 @@ export default function Project({ params }: { params: { id: string } }) {
                 <div>Ostatnia modyfikacja: 5 dni temu</div>
               </div>
             </header>
-
-            {lastStage && (
-              <div className="flex flex-wrap gap-4 w-full">
-                <AMPCarStatsItem
-                  typeValue={t("Core.Hp").toUpperCase()}
-                  value={lastStage.hp.toString()}
-                  title="Moc silnika"
-                />
-                <AMPCarStatsItem
-                  typeValue="NM"
-                  value={lastStage.nm.toString()}
-                  title="Moment obrotowy"
-                />
-                <AMPCarStatsItem
-                  typeValue="s"
-                  subTitle={"0-100km/h"}
-                  value={lastStage.acc_0_100.toString()}
-                  title="Przyśpieszenie"
-                />
-                <AMPCarStatsItem
-                  typeValue="s"
-                  subTitle={"100-200km/h"}
-                  value={lastStage.acc_100_200.toString()}
-                  title="Przyśpieszenie"
-                />
-                <AMPCarStatsItem
-                  typeValue="s"
-                  subTitle={"50-150km/h"}
-                  value={lastStage.acc_50_150.toString()}
-                  title="Przyśpieszenie"
-                />
-                {lastStage.sl_100_0 && (
-                  <AMPCarStatsItem
-                    typeValue="s"
-                    subTitle={"100-0km/h"}
-                    value={lastStage.sl_100_0.toString()}
-                    title="Droga hamowania"
-                  />
-                )}
-                {lastStage.sl_150_50 && (
-                  <AMPCarStatsItem
-                    typeValue="s"
-                    subTitle={"150-50km/h"}
-                    value={lastStage.sl_150_50.toString()}
-                    title="Droga hamowania"
-                  />
-                )}
-              </div>
-            )}
           </nav>
 
           <AMPSeparator />
 
-          <div className="flex gap-3 mx-4 mt-5">
-            <div>
-              Informacje
-              {/* Wszystkie informacje o mocy, o przyśpieszeniach, przyrostach, opis, linki, zdjęcia, */}
-            </div>
-            <div>
-              Etapy modyfikacji
-              {/* dokładne opisy etapów modyfikacji, jakie zmiany, zdjęcia (wykres, jaka firma itp */}
-            </div>
-            <div>
-              Wzmianki
-              {/* To gdzie mona zobaczyć  projekt,tzn eventy, spoty na których był , problemy*/}
-            </div>
+          <nav className="flex gap-3 mt-5 border-b border-amp-700 dark:border-amp-200 relative">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`relative px-4 py-2 transition-all text-white ${
+                  activeTab === tab.id ? "font-bold" : "opacity-60"
+                }`}
+              >
+                {tab.label}
+                {activeTab === tab.id && (
+                  <motion.div
+                    layoutId="underline"
+                    className="absolute left-0 bottom-0 w-full h-[2px] bg-amp-500"
+                  />
+                )}
+              </button>
+            ))}
+          </nav>
+
+          <div className="p-4 overflow-hidden">
+            <AnimatePresence mode="wait">
+              {activeTab === "informacje" && (
+                <motion.div
+                  key="informacje"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-white"
+                >
+                  {lastStage && (
+                    <div className="flex flex-wrap gap-4 w-full">
+                      <AMPCarStatsItem
+                        typeValue={t("Core.Hp").toUpperCase()}
+                        value={lastStage.hp.toString()}
+                        title="Moc silnika"
+                      />
+                      <AMPCarStatsItem
+                        typeValue="NM"
+                        value={lastStage.nm.toString()}
+                        title="Moment obrotowy"
+                      />
+                      <AMPCarStatsItem
+                        typeValue="s"
+                        subTitle={"0-100km/h"}
+                        value={lastStage.acc_0_100.toString()}
+                        title="Przyśpieszenie"
+                      />
+                      <AMPCarStatsItem
+                        typeValue="s"
+                        subTitle={"100-200km/h"}
+                        value={lastStage.acc_100_200.toString()}
+                        title="Przyśpieszenie"
+                      />
+                      <AMPCarStatsItem
+                        typeValue="s"
+                        subTitle={"50-150km/h"}
+                        value={lastStage.acc_50_150.toString()}
+                        title="Przyśpieszenie"
+                      />
+                      {lastStage.sl_100_0 && (
+                        <AMPCarStatsItem
+                          typeValue="s"
+                          subTitle={"100-0km/h"}
+                          value={lastStage.sl_100_0.toString()}
+                          title="Droga hamowania"
+                        />
+                      )}
+                      {lastStage.sl_150_50 && (
+                        <AMPCarStatsItem
+                          typeValue="s"
+                          subTitle={"150-50km/h"}
+                          value={lastStage.sl_150_50.toString()}
+                          title="Droga hamowania"
+                        />
+                      )}
+                    </div>
+                  )}
+                </motion.div>
+              )}
+
+              {activeTab === "etapy" && (
+                <motion.div
+                  key="etapy"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-white"
+                >
+                  <h2 className="text-xl font-semibold">Etapy modyfikacji</h2>
+                  <p>Dokładne opisy etapów modyfikacji, zdjęcia, firmy itp.</p>
+                </motion.div>
+              )}
+
+              {activeTab === "wzmianki" && (
+                <motion.div
+                  key="wzmianki"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-white"
+                >
+                  <h2 className="text-xl font-semibold">Wzmianki</h2>
+                  <p>Gdzie można zobaczyć projekt: eventy, spoty, problemy.</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Podobne projekty.... */}
