@@ -8,11 +8,13 @@ import { useTranslations } from "next-intl";
 import { useLoggedInUser } from "@/app/hooks/useLoggedInUser";
 import { useRouter } from "next/navigation";
 import { AMPSeparator } from "../shared/AMPSeparator";
-import { IoPersonCircle } from "react-icons/io5";
+import { IoPersonCircle, IoSettings, IoSettingsOutline } from "react-icons/io5";
 import { iconSizes } from "@/app/utils/constants";
 import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { clearContentData } from "@/lib/features/content/contentSlice";
+import { MdMessage } from "react-icons/md";
+import { BiMessageAdd, BiLogOut } from "react-icons/bi";
 
 export default function UserSidebarContent({
   tailwindContainer,
@@ -64,9 +66,28 @@ export default function UserSidebarContent({
         <AMPSeparator />
 
         <div className="flex gap-2 w-full flex-col items-start">
-          <AMPButton name={t("Core.Settings")} onClick={handleOnCLick} />
-          <AMPButton name={t("Core.GiveFeedback")} onClick={handleOnCLick} />
-          <AMPButton name={t("Core.LogOut")} onClick={handleOnCLickSignOut} />
+          <AMPButton
+            icon={<IoSettingsOutline size={iconSizes.base} />}
+            additionalTailwindCss="py-1"
+            name={t("Core.Settings")}
+            onClick={handleOnCLick}
+            type="none"
+          />
+          <AMPButton
+            icon={<BiMessageAdd size={iconSizes.base} />}
+            additionalTailwindCss="py-1"
+            name={t("Core.GiveFeedback")}
+            onClick={handleOnCLick}
+            type="none"
+          />
+          <AMPSeparator />
+          <AMPButton
+            icon={<BiLogOut size={iconSizes.base} />}
+            additionalTailwindCss="py-1"
+            name={t("Core.LogOut")}
+            onClick={handleOnCLickSignOut}
+            type="none"
+          />
         </div>
       </div>
     </motion.div>

@@ -12,7 +12,7 @@ interface IAMPButton {
 }
 
 const buttonTypeClasses = {
-  primary: "bg-amp-500 text-white p-1.5 rounded-sm",
+  primary: "bg-amp-500 text-white p-1.5 px-3 rounded-sm",
   secondary: "bg-amp-300 text-white p-1.5 px-3 rounded-sm",
   tertiary: "bg-green-500 text-white p-1.5 px-3 rounded-sm",
   none: "p-1.5 px-3",
