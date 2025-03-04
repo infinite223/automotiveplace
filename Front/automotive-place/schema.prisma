@@ -27,6 +27,7 @@ model Post {
   company          Company? @relation(fields: [companyId], references: [id])
   tags             Tag[]
   media            Media[]  
+  contents         Content[]
 }
 
 model Project {
@@ -72,7 +73,7 @@ model Project {
   stages                      Stage[]
   tags                        Tag[]
   media                       Media[]             
-  // contents                    Content[]           
+  contents                    Content[]           
 }
 
 // model Content {
@@ -85,6 +86,31 @@ model Project {
 //   user          User[]
 // }
 
+model Content {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  projectId  String?
+  postId     String?
+  isVerified Boolean  @default(false)
+
+  project    Project? @relation(fields: [projectId], references: [id])
+  post       Post?    @relation(fields: [postId], references: [id])
+  users      UserContent[]
+}
+
+model UserContent {
+  id        String   @id @default(cuid())
+  userId    String
+  contentId String
+  isViewed  Boolean  @default(false)
+  isSaved   Boolean  @default(false)
+
+  user      User     @relation(fields: [userId], references: [id])
+  content   Content  @relation(fields: [contentId], references: [id])
+
+  @@unique([userId, contentId])
+}
 
 model Media {
   id            String   @id @default(cuid())
@@ -123,6 +149,7 @@ model User {
   tags                       Tag[]
   userActivity               UserActivity[]
   company                    Company?                     @relation(fields: [companyId], references: [id])
+  userContent                UserContent[]
 
   @@map("users")
 }
