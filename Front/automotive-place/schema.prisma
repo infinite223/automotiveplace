@@ -76,16 +76,6 @@ model Project {
   contents                    Content[]           
 }
 
-// model Content {
-//   id            String    @id @default(cuid())
-//   isVerified    Boolean   @default(false)
-//   createdAt     DateTime  @default(now()) @map("created_at")
-//   updatedAt     DateTime  @updatedAt @map("updated_at")
-//   projectId     String?
-//   project       Project? @relation(fields: [projectId], references: [id])
-//   user          User[]
-// }
-
 model Content {
   id         String   @id @default(cuid())
   createdAt  DateTime @default(now())

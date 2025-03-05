@@ -90,7 +90,12 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
             {items.map(({ name, handleClick, icon, isDisable }, i) => (
               <li
                 key={i}
-                onClick={!isDisable ? handleClick : () => {}}
+                onClick={() => {
+                  if (!isDisable) {
+                    handleClick?.();
+                    setShowMenu(false);
+                  }
+                }}
                 role="menuitem"
                 className={`w-full flex items-center gap-2 px-3 py-2 rounded-md ${
                   isDisable

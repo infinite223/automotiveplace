@@ -21,19 +21,17 @@ export async function GET(request: NextRequest) {
   const page = parseInt(searchParams.get("page") || "1", 10);
 
   try {
-    // Pobranie ID przypisanych contentów dla użytkownika
     const userContent = await prisma.userContent.findMany({
       where: { userId: userData.user.$id },
       select: { contentId: true },
     });
 
     const contentIds = userContent.map((uc) => uc.contentId);
-    console.log(contentIds, "contentIds");
+    
     if (contentIds.length === 0) {
       return NextResponse.json({ data: [], hasMore: false });
     }
 
-    // Pobieranie powiązanych treści (Posty i Projekty)
     const content = await prisma.content.findMany({
       where: { id: { in: contentIds } },
       include: {
@@ -60,7 +58,6 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    // Formatowanie projektów do podstawowej struktury
     const basicProjects: TBasicProject[] = content
       .filter((c) => c.project)
       .map(({ project }) => {
@@ -103,7 +100,6 @@ export async function GET(request: NextRequest) {
         };
       });
 
-    // Formatowanie postów do podstawowej struktury
     const basicPosts: TBasicPost[] = content
       .filter((c) => c.post)
       .map(({ post }) => ({
@@ -124,7 +120,6 @@ export async function GET(request: NextRequest) {
         tags: post!.tags,
       }));
 
-    // Łączenie contentu (projekty + posty)
     const combinedContent = [
       ...basicProjects.map((project) => ({
         type: ContentType.Project,
@@ -136,7 +131,6 @@ export async function GET(request: NextRequest) {
       })),
     ];
 
-    // Tasowanie i paginacja
     const shuffledContent = combinedContent.sort(() => Math.random() - 0.5);
     const paginatedContent = shuffledContent.slice(
       (page - 1) * limit,

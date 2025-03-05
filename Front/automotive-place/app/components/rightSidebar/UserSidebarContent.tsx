@@ -13,7 +13,6 @@ import { iconSizes } from "@/app/utils/constants";
 import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { clearContentData } from "@/lib/features/content/contentSlice";
-import { MdMessage } from "react-icons/md";
 import { BiMessageAdd, BiLogOut } from "react-icons/bi";
 
 export default function UserSidebarContent({
@@ -65,17 +64,17 @@ export default function UserSidebarContent({
 
         <AMPSeparator />
 
-        <div className="flex gap-2 w-full flex-col items-start">
+        <div className="flex gap-2 w-full flex-col items-start text-sm">
           <AMPButton
             icon={<IoSettingsOutline size={iconSizes.base} />}
-            additionalTailwindCss="py-1"
+            additionalTailwindCss="py-1 gap-2"
             name={t("Core.Settings")}
             onClick={handleOnCLick}
             type="none"
           />
           <AMPButton
             icon={<BiMessageAdd size={iconSizes.base} />}
-            additionalTailwindCss="py-1"
+            additionalTailwindCss="py-1 gap-2"
             name={t("Core.GiveFeedback")}
             onClick={handleOnCLick}
             type="none"
@@ -83,7 +82,7 @@ export default function UserSidebarContent({
           <AMPSeparator />
           <AMPButton
             icon={<BiLogOut size={iconSizes.base} />}
-            additionalTailwindCss="py-1"
+            additionalTailwindCss="py-1 gap-2"
             name={t("Core.LogOut")}
             onClick={handleOnCLickSignOut}
             type="none"
