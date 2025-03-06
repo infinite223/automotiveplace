@@ -102,6 +102,17 @@ model UserContent {
   @@unique([userId, contentId])
 }
 
+model Job {
+  id         String   @id @default(cuid())
+  userId     String   @unique
+  isRunning  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  lastStatus String
+
+  user       User     @relation(fields: [userId], references: [id])
+}
+
 model Media {
   id            String   @id @default(cuid())
   fileName      String
@@ -140,6 +151,7 @@ model User {
   userActivity               UserActivity[]
   company                    Company?                     @relation(fields: [companyId], references: [id])
   userContent                UserContent[]
+  job                        Job?
 
   @@map("users")
 }

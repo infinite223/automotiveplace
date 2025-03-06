@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
     await prisma.like.create({
       data,
     });
-
+    // run job to create new content
     logger.info(
       `User ${userData.user.$id} liked ${likeableType} with ID ${likeableId}`
     );

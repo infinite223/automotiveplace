@@ -17,14 +17,16 @@ export const AMPCarStatsItem: FC<IAMPCarStatsItem> = ({
 
   return (
     <main className="flex flex-1 min-w-[200px] p-2 px-4 bg-amp-50 rounded-sm flex-col ">
-      <h1 className="font-semibold text-lg">
+      <h1 className="font-semibold text-md">
         {value}
 
         <span className="text-xs font-normal ml-1">{typeValue}</span>
       </h1>
 
       <div className="flex flex-col">
-        <h2 className="text-sm mb-[-1px] uppercase font-semibold">{title}</h2>
+        <h2 className="text-sm mb-[-1px] uppercase font-semibold opacity-80">
+          {title}
+        </h2>
 
         {subTitle && <p className="text-xs opacity-70">{subTitle}</p>}
       </div>
