@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import prisma from "@/lib/prisma";
 import { logger } from "@/app/api/logger.config";
-import { LikeableType } from "@prisma/client";
+import { ActivityType, EntityType, LikeableType } from "@prisma/client";
 
 export async function POST(request: NextRequest) {
   try {
@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
     const { likeableId, likeableType } = body;
+    const tags = body.tags || [];
 
     if (!likeableId || !likeableType) {
       return NextResponse.json(
@@ -87,6 +88,17 @@ export async function POST(request: NextRequest) {
     await prisma.like.create({
       data,
     });
+
+    await prisma.userActivity.create({
+      data: {
+        userId: userData.user.$id,
+        activityType: ActivityType.LIKE,
+        entityId: likeableId,
+        entityType: likeableType as EntityType,
+        tags: { connect: tags.map((tag: { id: string }) => ({ id: tag })) },
+      },
+    });
+
     // run job to create new content
     logger.info(
       `User ${userData.user.$id} liked ${likeableType} with ID ${likeableId}`

@@ -14,7 +14,8 @@ export const SpotMiniView = ({
     2,
     false,
     data.id,
-    "Spot"
+    "Spot",
+    []
   );
   return (
     <div className="flex flex-col items-center h-[550px] w-full gap-1">

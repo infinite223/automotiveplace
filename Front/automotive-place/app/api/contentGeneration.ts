@@ -1,71 +1,87 @@
 import prisma from "@/lib/prisma";
-import { Job, Post, Project, UserActivity } from "@prisma/client";
+import {
+  Job,
+  Post,
+  Project,
+  UserActivity,
+  Tag,
+  UserContent,
+} from "@prisma/client";
+import { TBasicPost } from "../utils/types/post";
+import { TBasicProject } from "../utils/types/project";
+import { TBasicTag } from "../utils/types/tag";
+
+type ContentItem = {
+  id: string; // id projektu lub posta
+  type: "Post" | "Project"; // tylko te dwie wartości
+  data: TBasicPost | TBasicProject; // dane posta lub projektu
+  tags: TBasicTag[]; // tagi o prostszym typie
+};
 
 export const generateContentForUser = async (userId: string) => {
   const currentJob = await prisma.job.findUnique({ where: { userId } });
 
   const valid = await validJobByUserId(currentJob);
-
   if (!valid) return;
 
-  createOrUpdateJob(currentJob, userId, true, "Generating content");
+  await createOrUpdateJob(currentJob, userId, true, "Generating content");
 
-  const userActivity = await prisma.userActivity.findMany({
-    where: { userId },
-    include: { tags: true },
-  });
+  const [userActivity, allPosts, allProjects, userContent] = await Promise.all([
+    prisma.userActivity.findMany({
+      where: { userId },
+      include: { tags: true }, // dodano include, aby pobrać tagi
+    }),
+    prisma.post.findMany({
+      where: { published: true },
+      select: { id: true, tags: true },
+    }),
+    prisma.project.findMany({
+      where: { isVisible: true },
+      select: { id: true, tags: true },
+    }),
+    prisma.content.findMany({
+      where: { users: { some: { userId } } },
+    }),
+  ]);
 
-  // Pobieramy wszystkie posty i projekty
-  const allPosts = await prisma.post.findMany({ where: { published: true } });
-  const allProjects = await prisma.project.findMany({
-    where: { isVisible: true },
-  });
+  const combinedContent: any[] = [
+    ...allPosts.map((post) => ({ ...post, type: "post" as const })),
+    ...allProjects.map((project) => ({ ...project, type: "project" as const })),
+  ];
 
-  // Sortujemy na podstawie aktywności użytkownika
   const sortedContent = sortContentByUserActivity(
-    allPosts,
-    allProjects,
+    combinedContent,
     userActivity
   );
 
-  // Sprawdzamy, czy użytkownik ma już content
-  let userContent = await prisma.content.findMany({
-    where: { users: { some: { userId } } },
+  const existingContentIds = new Set(
+    userContent.map((uc) => uc.postId || uc.projectId)
+  );
+  const newContent = sortedContent.filter(
+    (item) => !existingContentIds.has(item.id)
+  );
+
+  await prisma.$transaction(async (tx) => {
+    if (newContent.length > 0) {
+      await tx.userContent.createMany({
+        data: newContent.map((item) => ({
+          userId,
+          contentId: item.id,
+        })),
+      });
+    }
+
+    if (userContent.length === 0 && sortedContent.length > 0) {
+      await tx.content.createMany({
+        data: sortedContent.map((item) => ({
+          postId: item.type === "Post" ? item.id : null,
+          projectId: item.type === "Project" ? item.id : null,
+        })),
+      });
+    }
   });
 
-  if (userContent.length > 0) {
-    // Jeśli istnieje, dodajemy brakujące posty/projekty i sortujemy ponownie
-    const newContent = sortedContent.filter(
-      (item) =>
-        !userContent.some(
-          (uc) => uc.postId === item.id || uc.projectId === item.id
-        )
-    );
-
-    await prisma.userContent.createMany({
-      data: newContent.map((item) => ({
-        userId,
-        contentId: item.id,
-      })),
-    });
-  } else {
-    // Tworzymy nowy content
-    await prisma.content.createMany({
-      data: sortedContent.map((item) => ({
-        postId: "title" in item ? item.id : null,
-        projectId: "carMake" in item ? item.id : null,
-      })),
-    });
-  }
-
-  // Generate content for user
-  // doppasuj content dla usera poprzez tabele userActivity, czyli przez to co lajkuje, to co ogląda itp, czyli
-  // trzeba pobrać dane z tabeli userActivity, a potem na podstawie tego wygenerować content z projects i posts
-  // ilośc contentu ma być maksymalna, czyli w contetn mają się znaleźć wszystkie posty i projekty które istnieją w bazie kednak mają one być posortowane
-  // w taki sposób aby były jak najbardziej dopasowane do usera ------ jeeli konent juz istnieje to tylko dodaj do niego brakujące posty,
-  // projekty które mogły dojść w czasie a następnie posortuj według userActivity
-
-  createOrUpdateJob(currentJob, userId, false, "content was generated");
+  await createOrUpdateJob(currentJob, userId, false, "Content was generated");
 };
 
 const createOrUpdateJob = async (
@@ -74,60 +90,35 @@ const createOrUpdateJob = async (
   isRunning: boolean,
   lastStatus: string = ""
 ) => {
-  if (currentJob) {
-    await prisma.job.update({
-      where: { userId: currentJob.userId },
-      data: {
-        isRunning,
-        lastStatus,
-      },
-    });
-  } else {
-    await prisma.job.create({
-      data: {
-        userId,
-        isRunning,
-        lastStatus,
-      },
-    });
-  }
+  const data = { isRunning, lastStatus, updatedAt: new Date() };
+  currentJob
+    ? await prisma.job.update({ where: { userId }, data })
+    : await prisma.job.create({ data: { userId, ...data } });
 };
 
 const validJobByUserId = async (currentJob: Job | null) => {
   if (!currentJob) return true;
-
-  if (currentJob?.isRunning) return false;
-
-  if (currentJob?.updatedAt) {
-    const diff = new Date().getTime() - currentJob.updatedAt.getTime();
-    if (diff < 3600000) return false;
-  }
-
-  return true;
+  if (currentJob.isRunning) return false;
+  const diff = new Date().getTime() - currentJob.updatedAt.getTime();
+  return diff >= 3600000;
 };
 
-const sortContentByUserActivity = (
-  posts: Post[],
-  projects: Project[],
-  activity: any[]
+export const sortContentByUserActivity = (
+  content: ContentItem[], // Zaktualizowany typ z data, id, tags, type
+  activity: (UserActivity & { tags: Tag[] })[] // Aktywność użytkownika z tagami
 ) => {
   const tagCounts = activity
     .flatMap((a) => a.tags)
-    .reduce((acc, tag) => {
-      acc[tag.id] = (acc[tag.id] || 0) + 1;
-      return acc;
-    }, {});
+    .reduce(
+      (acc, tag) => {
+        acc[tag.id] = (acc[tag.id] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
-  const scoreContent = (item: any) => {
-    const tagMatches =
-      item.tags?.reduce(
-        (sum: any, tag: any) => sum + (tagCounts[tag.id] || 0),
-        0
-      ) || 0;
-    return tagMatches;
-  };
+  const scoreContent = (item: ContentItem) =>
+    item.tags?.reduce((sum, tag) => sum + (tagCounts[tag.id] || 0), 0) || 0;
 
-  return [...posts, ...projects].sort(
-    (a, b) => scoreContent(b) - scoreContent(a)
-  );
+  return content.sort((a, b) => scoreContent(b) - scoreContent(a));
 };

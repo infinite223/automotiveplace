@@ -15,7 +15,8 @@ export const PostMiniView = ({
     data.likesCount,
     data.isLikedByAuthUser,
     data.id,
-    "Post"
+    "Post",
+    data.tags
   );
 
   return (

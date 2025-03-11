@@ -22,7 +22,8 @@ export const ProjectMiniView = ({
     data.likesCount,
     data.isLikedByAuthUser,
     data.id,
-    "Project"
+    "Project",
+    data.tags
   );
 
   useEffect(() => {

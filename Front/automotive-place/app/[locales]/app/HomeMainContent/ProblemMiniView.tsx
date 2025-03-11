@@ -14,7 +14,8 @@ export const ProblemMiniView = ({
     2,
     false,
     data.id,
-    "Problem"
+    "Problem",
+    []
   );
 
   return (
