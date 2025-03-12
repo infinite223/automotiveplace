@@ -1,21 +1,11 @@
 import prisma from "@/lib/prisma";
-import {
-  Job,
-  Post,
-  Project,
-  UserActivity,
-  Tag,
-  UserContent,
-} from "@prisma/client";
-import { TBasicPost } from "../utils/types/post";
-import { TBasicProject } from "../utils/types/project";
+import { Job, UserActivity, Tag, UserContent } from "@prisma/client";
 import { TBasicTag } from "../utils/types/tag";
 
 type ContentItem = {
-  id: string; // id projektu lub posta
-  type: "Post" | "Project"; // tylko te dwie wartości
-  data: TBasicPost | TBasicProject; // dane posta lub projektu
-  tags: TBasicTag[]; // tagi o prostszym typie
+  id: string;
+  type: "Post" | "Project";
+  tags: TBasicTag[];
 };
 
 export const generateContentForUser = async (userId: string) => {
@@ -26,27 +16,37 @@ export const generateContentForUser = async (userId: string) => {
 
   await createOrUpdateJob(currentJob, userId, true, "Generating content");
 
-  const [userActivity, allPosts, allProjects, userContent] = await Promise.all([
-    prisma.userActivity.findMany({
-      where: { userId },
-      include: { tags: true }, // dodano include, aby pobrać tagi
-    }),
-    prisma.post.findMany({
-      where: { published: true },
-      select: { id: true, tags: true },
-    }),
-    prisma.project.findMany({
-      where: { isVisible: true },
-      select: { id: true, tags: true },
-    }),
-    prisma.content.findMany({
-      where: { users: { some: { userId } } },
-    }),
-  ]);
-
-  const combinedContent: any[] = [
-    ...allPosts.map((post) => ({ ...post, type: "post" as const })),
-    ...allProjects.map((project) => ({ ...project, type: "project" as const })),
+  const [userActivity, allPosts, allProjects, existingUserContent] =
+    await Promise.all([
+      prisma.userActivity.findMany({
+        where: { userId },
+        include: { tags: true },
+      }),
+      prisma.post.findMany({
+        where: { published: true },
+        include: { tags: true },
+      }),
+      prisma.project.findMany({
+        where: { isVisible: true },
+        include: { tags: true },
+      }),
+      prisma.userContent.findMany({
+        where: { userId },
+        include: { content: { include: { project: {} } } },
+      }),
+    ]);
+  // TODO - refactor this
+  const combinedContent: ContentItem[] = [
+    ...allPosts.map((post) => ({
+      id: post.id,
+      type: "Post" as const,
+      tags: post.tags,
+    })),
+    ...allProjects.map((project) => ({
+      id: project.id,
+      type: "Project" as const,
+      tags: project.tags,
+    })),
   ];
 
   const sortedContent = sortContentByUserActivity(
@@ -54,32 +54,41 @@ export const generateContentForUser = async (userId: string) => {
     userActivity
   );
 
-  const existingContentIds = new Set(
-    userContent.map((uc) => uc.postId || uc.projectId)
-  );
-  const newContent = sortedContent.filter(
-    (item) => !existingContentIds.has(item.id)
-  );
-
-  await prisma.$transaction(async (tx) => {
-    if (newContent.length > 0) {
-      await tx.userContent.createMany({
-        data: newContent.map((item) => ({
-          userId,
-          contentId: item.id,
-        })),
-      });
-    }
-
-    if (userContent.length === 0 && sortedContent.length > 0) {
-      await tx.content.createMany({
-        data: sortedContent.map((item) => ({
-          postId: item.type === "Post" ? item.id : null,
-          projectId: item.type === "Project" ? item.id : null,
-        })),
+  const updates: any = [];
+  const creates: any = [];
+  console.log(sortedContent, "sortedContent");
+  sortedContent.forEach((item, index) => {
+    const existingContent = existingUserContent.find(
+      (content) => content.contentId === item.id
+    );
+    console.log(existingContent, "existingContent");
+    if (existingContent) {
+      // Aktualizacja prio, jeśli jest inny
+      if (existingContent.prio !== index) {
+        updates.push(
+          prisma.userContent.update({
+            where: { id: existingContent.id },
+            data: { prio: index },
+          })
+        );
+      }
+    } else {
+      // Dodanie nowego wpisu
+      creates.push({
+        userId,
+        contentId: item.id,
+        prio: index,
       });
     }
   });
+
+  // Wykonanie aktualizacji i tworzenia
+  await prisma.$transaction([
+    ...updates,
+    ...(creates.length > 0
+      ? [prisma.userContent.createMany({ data: creates })]
+      : []),
+  ]);
 
   await createOrUpdateJob(currentJob, userId, false, "Content was generated");
 };
@@ -104,8 +113,8 @@ const validJobByUserId = async (currentJob: Job | null) => {
 };
 
 export const sortContentByUserActivity = (
-  content: ContentItem[], // Zaktualizowany typ z data, id, tags, type
-  activity: (UserActivity & { tags: Tag[] })[] // Aktywność użytkownika z tagami
+  content: ContentItem[],
+  activity: (UserActivity & { tags: Tag[] })[]
 ) => {
   const tagCounts = activity
     .flatMap((a) => a.tags)

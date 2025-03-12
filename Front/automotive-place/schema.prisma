@@ -95,6 +95,7 @@ model UserContent {
   contentId String
   isViewed  Boolean  @default(false)
   isSaved   Boolean  @default(false)
+  prio      Int
 
   user      User     @relation(fields: [userId], references: [id])
   content   Content  @relation(fields: [contentId], references: [id])

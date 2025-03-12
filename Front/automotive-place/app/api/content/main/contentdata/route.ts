@@ -5,7 +5,6 @@ import prisma from "@/lib/prisma";
 import { ContentType } from "@/app/utils/enums";
 import { TBasicProject } from "@/app/utils/types/project";
 import { TBasicPost } from "@/app/utils/types/post";
-import { sortContentByUserActivity } from "@/app/api/contentGeneration";
 
 export async function GET(request: NextRequest) {
   const userData = await getLoggedInUser();
@@ -59,15 +58,6 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    // Pobierz aktywność użytkownika
-    const userActivity = await prisma.userActivity.findMany({
-      where: { userId: userData.user.$id },
-      include: {
-        tags: true, // Dołącz tagi aktywności użytkownika
-      },
-    });
-
-    // Przekształć dane w odpowiednią strukturę do sortowania
     const basicProjects: TBasicProject[] = content
       .filter((c) => c.project)
       .map(({ project }) => {
@@ -130,40 +120,29 @@ export async function GET(request: NextRequest) {
         tags: post!.tags,
       }));
 
-    // Połącz projekty i posty
     const combinedContent = [
       ...basicProjects.map((project) => ({
-        id: project.id,
-        type: "Project" as const, // Upewnij się, że jest to "project"
+        type: ContentType.Project,
         data: project,
-        tags: project.tags,
       })),
       ...basicPosts.map((post) => ({
-        id: post.id,
-        type: "Post" as const, // Upewnij się, że jest to "post"
+        type: ContentType.Post,
         data: post,
-        tags: post.tags,
       })),
     ];
 
-    // Sortuj treści na podstawie aktywności użytkownika
-    const sortedContent = sortContentByUserActivity(
-      combinedContent,
-      userActivity
-    );
-    console.log(userActivity, "userActivity");
-    // Paginowanie
-    const shuffledContent = sortedContent.slice(
+    const shuffledContent = combinedContent.sort(() => Math.random() - 0.5);
+    const paginatedContent = shuffledContent.slice(
       (page - 1) * limit,
       page * limit
     );
 
-    const hasMore = page * limit < sortedContent.length;
+    const hasMore = page * limit < combinedContent.length;
 
     logger.info("Content was generated successfully");
 
     return NextResponse.json({
-      data: shuffledContent,
+      data: paginatedContent,
       hasMore,
     });
   } catch (error) {

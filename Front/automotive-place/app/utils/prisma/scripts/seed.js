@@ -84,6 +84,7 @@ async function main() {
       authorId: "66df5830003491f4e7c4",
       transmissionType: 1,
       garageId: "garage2",
+      tags: { connect: { id: tag1.id } },
     },
   });
 
@@ -109,6 +110,7 @@ async function main() {
       authorId: "user2",
       transmissionType: 1,
       garageId: "garage2",
+      tags: { connect: { id: tag2.id } },
     },
   });
 
@@ -134,6 +136,7 @@ async function main() {
       authorId: "user2",
       transmissionType: 0,
       garageId: "garage2",
+      tags: { connect: { id: tag3.id } },
     },
   });
 
@@ -171,6 +174,7 @@ async function main() {
       content: "This is the first post",
       authorId: "user2",
       title: "Post 1",
+      tags: { connect: { id: tag2.id } },
     },
   });
 
@@ -180,6 +184,7 @@ async function main() {
       content: "This is the second post",
       authorId: "user2",
       title: "Post 2",
+      tags: { connect: { id: tag2.id } },
     },
   });
 
@@ -189,6 +194,7 @@ async function main() {
       content: "This is the third post",
       authorId: "66df5830003491f4e7c4",
       title: "Post 3",
+      tags: { connect: { id: tag2.id } },
     },
   });
 
@@ -198,6 +204,83 @@ async function main() {
       content: "This is the fourth post",
       authorId: "user2",
       title: "Post 4",
+      tags: { connect: { id: tag2.id } },
+    },
+  });
+
+  const contentPost1 = await prisma.content.create({
+    data: {
+      postId: post1.id,
+      isVerified: true,
+    },
+  });
+
+  const contentPost2 = await prisma.content.create({
+    data: {
+      postId: post2.id,
+      isVerified: true,
+    },
+  });
+
+  const contentPost3 = await prisma.content.create({
+    data: {
+      postId: post3.id,
+      isVerified: true,
+    },
+  });
+
+  // Tworzymy Content dla Projektów
+  const contentProject1 = await prisma.content.create({
+    data: {
+      projectId: project1.id,
+      isVerified: true,
+    },
+  });
+
+  const contentProject2 = await prisma.content.create({
+    data: {
+      projectId: project2.id,
+      isVerified: true,
+    },
+  });
+
+  await prisma.userContent.create({
+    data: {
+      userId: "66df5830003491f4e7c4",
+      contentId: contentPost1.id,
+      prio: 5,
+    },
+  });
+
+  await prisma.userContent.create({
+    data: {
+      userId: "66df5830003491f4e7c4",
+      contentId: contentPost2.id,
+      prio: 4,
+    },
+  });
+
+  await prisma.userContent.create({
+    data: {
+      userId: "66df5830003491f4e7c4",
+      contentId: contentPost3.id,
+      prio: 2,
+    },
+  });
+
+  await prisma.userContent.create({
+    data: {
+      userId: "66df5830003491f4e7c4",
+      contentId: contentProject1.id,
+      prio: 1,
+    },
+  });
+
+  await prisma.userContent.create({
+    data: {
+      userId: "66df5830003491f4e7c4",
+      contentId: contentProject2.id,
+      prio: 0,
     },
   });
 

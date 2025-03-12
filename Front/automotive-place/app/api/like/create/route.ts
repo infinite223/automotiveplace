@@ -3,6 +3,7 @@ import { getLoggedInUser } from "@/lib/actions/user.actions";
 import prisma from "@/lib/prisma";
 import { logger } from "@/app/api/logger.config";
 import { ActivityType, EntityType, LikeableType } from "@prisma/client";
+import { generateContentForUser } from "../../contentGeneration";
 
 export async function POST(request: NextRequest) {
   try {
@@ -98,6 +99,8 @@ export async function POST(request: NextRequest) {
         tags: { connect: tags.map((tag: { id: string }) => ({ id: tag })) },
       },
     });
+
+    await generateContentForUser(userData.user.$id);
 
     // run job to create new content
     logger.info(
