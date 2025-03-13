@@ -32,7 +32,14 @@ export const generateContentForUser = async (userId: string) => {
       }),
       prisma.userContent.findMany({
         where: { userId },
-        include: { content: { include: { project: {} } } },
+        include: {
+          content: {
+            include: {
+              project: { select: { id: true } },
+              post: { select: { id: true } },
+            },
+          },
+        },
       }),
     ]);
   // TODO - refactor this
@@ -56,11 +63,16 @@ export const generateContentForUser = async (userId: string) => {
 
   const updates: any = [];
   const creates: any = [];
+  const missingContents: any = [];
+
   console.log(sortedContent, "sortedContent");
   sortedContent.forEach((item, index) => {
     const existingContent = existingUserContent.find(
-      (content) => content.contentId === item.id
+      (content) =>
+        content.content.project?.id === item.id ||
+        content.content.post?.id === item.id
     );
+
     console.log(existingContent, "existingContent");
     if (existingContent) {
       // Aktualizacja prio, jeśli jest inny
@@ -73,21 +85,47 @@ export const generateContentForUser = async (userId: string) => {
         );
       }
     } else {
-      // Dodanie nowego wpisu
+      // trzeba oprócz userContent dodać jeszcze content
+      if (item.type === "Post") {
+        missingContents.push({
+          id: item.id,
+          postId: item.id,
+        });
+      }
+      if (item.type === "Project") {
+        missingContents.push({
+          id: item.id,
+          projectId: item.id,
+        });
+      }
+
       creates.push({
-        userId,
         contentId: item.id,
         prio: index,
+        userId,
       });
     }
   });
 
   // Wykonanie aktualizacji i tworzenia
+
+  console.log(updates, creates, "c");
+  // Wyszukiwanie brakujących Content do utworzenia
+
   await prisma.$transaction([
+    // Najpierw utwórz brakujące rekordy Content
+    prisma.content.createMany({
+      data: missingContents,
+      skipDuplicates: true, // Pomija duplikaty, jeśli Content już istnieje
+    }),
+
+    // Następnie dodaj UserContent
+    prisma.userContent.createMany({
+      data: creates,
+    }),
+
+    // Wykonaj aktualizacje istniejących UserContent
     ...updates,
-    ...(creates.length > 0
-      ? [prisma.userContent.createMany({ data: creates })]
-      : []),
   ]);
 
   await createOrUpdateJob(currentJob, userId, false, "Content was generated");

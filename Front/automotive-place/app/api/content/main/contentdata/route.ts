@@ -23,40 +23,66 @@ export async function GET(request: NextRequest) {
   try {
     const userContent = await prisma.userContent.findMany({
       where: { userId: userData.user.$id },
-      select: { contentId: true },
-    });
-
-    const contentIds = userContent.map((uc) => uc.contentId);
-
-    if (contentIds.length === 0) {
-      return NextResponse.json({ data: [], hasMore: false });
-    }
-
-    const content = await prisma.content.findMany({
-      where: { id: { in: contentIds } },
       include: {
-        post: {
+        content: {
           include: {
-            author: { select: { id: true, name: true, email: true } },
-            tags: true,
-            likes: true,
-            media: true,
-          },
-        },
-        project: {
-          include: {
-            author: { select: { id: true, name: true, email: true } },
-            tags: true,
-            likes: true,
-            stages: {
-              orderBy: { stageNumber: "desc" },
-              take: 1,
+            post: {
+              include: {
+                author: { select: { id: true, name: true, email: true } },
+                tags: true,
+                likes: true,
+                media: true,
+              },
             },
-            media: true,
+            project: {
+              include: {
+                author: { select: { id: true, name: true, email: true } },
+                tags: true,
+                likes: true,
+                stages: {
+                  orderBy: { stageNumber: "desc" },
+                  take: 1,
+                },
+                media: true,
+              },
+            },
           },
         },
       },
+      orderBy: { prio: "asc" },
     });
+
+    const content = userContent.map((uc) => uc.content);
+
+    if (userContent.length === 0) {
+      return NextResponse.json({ data: [], hasMore: false });
+    }
+
+    // const content = await prisma.content.findMany({
+    //   where: { id: { in: contentIds } },
+    //   include: {
+    //     post: {
+    //       include: {
+    //         author: { select: { id: true, name: true, email: true } },
+    //         tags: true,
+    //         likes: true,
+    //         media: true,
+    //       },
+    //     },
+    //     project: {
+    //       include: {
+    //         author: { select: { id: true, name: true, email: true } },
+    //         tags: true,
+    //         likes: true,
+    //         stages: {
+    //           orderBy: { stageNumber: "desc" },
+    //           take: 1,
+    //         },
+    //         media: true,
+    //       },
+    //     },
+    //   },
+    // });
 
     const basicProjects: TBasicProject[] = content
       .filter((c) => c.project)
