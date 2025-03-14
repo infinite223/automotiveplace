@@ -31,11 +31,11 @@ export async function GET() {
       },
       media: { select: { fileLocation: true } },
       _count: {
-        select: { likes: true },
+        select: { userActivity: true },
       },
     },
     orderBy: {
-      likes: {
+      userActivity: {
         _count: "desc",
       },
     },
@@ -55,7 +55,7 @@ export async function GET() {
       currentHp: lastStage ? lastStage.hp : project.engineStockHp,
       currentNm: lastStage ? lastStage.nm : project.engineStockNm,
       author: project.author,
-      likesCount: project._count.likes,
+      likesCount: project._count.userActivity,
       images: project.media.map((m) => m.fileLocation),
     };
   });

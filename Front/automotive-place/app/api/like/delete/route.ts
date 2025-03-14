@@ -25,10 +25,10 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const deletedLike = await prisma.like.deleteMany({
+    const deletedLike = await prisma.userActivity.deleteMany({
       where: {
         userId: userData.user.$id,
-        likeableId,
+        entityId: likeableId,
       },
     });
 

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import prisma from "@/lib/prisma";
 import { logger } from "@/app/api/logger.config";
-import { ActivityType, EntityType, LikeableType } from "@prisma/client";
+import { ActivityType, EntityType } from "@prisma/client";
 import { generateContentForUser } from "../../contentGeneration";
 
 export async function POST(request: NextRequest) {
@@ -35,18 +35,16 @@ export async function POST(request: NextRequest) {
       "COMPANY",
     ];
 
-    if (!validLikeableTypes.includes(likeableType as LikeableType)) {
+    if (!validLikeableTypes.includes(likeableType as EntityType)) {
       return NextResponse.json(
         { message: "Invalid likeableType" },
         { status: 400 }
       );
     }
 
-    const existingLike = await prisma.like.findFirst({
+    const existingLike = await prisma.userActivity.findFirst({
       where: {
         userId: userData.user.$id,
-        likeableId,
-        likeableType: likeableType as LikeableType,
       },
     });
 
@@ -59,8 +57,11 @@ export async function POST(request: NextRequest) {
 
     const data: any = {
       userId: userData.user.$id,
-      likeableId,
-      likeableType,
+      activityType: ActivityType.LIKE,
+      entityId: likeableId,
+      entityType: likeableType as EntityType,
+
+      tags: { connect: tags.map((tag: { id: string }) => ({ id: tag })) },
     };
 
     switch (likeableType) {
@@ -86,18 +87,8 @@ export async function POST(request: NextRequest) {
         );
     }
 
-    await prisma.like.create({
-      data,
-    });
-
     await prisma.userActivity.create({
-      data: {
-        userId: userData.user.$id,
-        activityType: ActivityType.LIKE,
-        entityId: likeableId,
-        entityType: likeableType as EntityType,
-        tags: { connect: tags.map((tag: { id: string }) => ({ id: tag })) },
-      },
+      data,
     });
 
     await generateContentForUser(userData.user.$id);

@@ -22,7 +22,7 @@ model Post {
   reportId         String?
   imagesUrl        String?
   isProblem        Boolean?
-  likes            Like[]
+  userActivity     UserActivity[]
   author           User?    @relation(fields: [authorId], references: [id])
   company          Company? @relation(fields: [companyId], references: [id])
   tags             Tag[]
@@ -64,7 +64,7 @@ model Project {
   transmissionType            Int
   weightStock                 Decimal?
   carItems                    CarItem[]
-  likes                       Like[]
+  userActivity                UserActivity[]
   location                    Location?
   pickedProjectsOnEventOrSpot PickedProjectOnEventOrSpot[]
   author                      User                         @relation(fields: [authorId], references: [id])
@@ -142,7 +142,6 @@ model User {
   suggestedContentModel      String?
   carItems                   CarItem[]
   garage                     Garage?
-  likes                      Like[]
   pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
   posts                      Post[]
   projects                   Project[]
@@ -164,6 +163,13 @@ model UserActivity {
   entityId     String
   entityType   EntityType
   createdAt    DateTime          @default(now())
+  carItemId    String?
+  projectId    String?
+  postId       String?
+
+  carItem      CarItem?          @relation(fields: [carItemId], references: [id])
+  post         Post?             @relation(fields: [postId], references: [id])
+  project      Project?          @relation(fields: [projectId], references: [id])
   user         User              @relation(fields: [userId], references: [id])
   tags         Tag[]             @relation("TagUserActivities")
   TagUserActivity TagUserActivity[]
@@ -327,7 +333,7 @@ model CarItem {
   garage           Garage?  @relation(fields: [garageId], references: [id])
   project          Project  @relation(fields: [projectId], references: [id])
   stage            Stage?   @relation(fields: [stageId], references: [id])
-  likes            Like[]
+  userActivity     UserActivity[]
   tags             Tag[]
 }
 
@@ -343,22 +349,22 @@ model Report {
   author          User     @relation(fields: [userId], references: [id])
 }
 
-model Like {
-  id           String       @id @default(cuid())
-  userId       String
-  likeableId   String
-  likeableType LikeableType
-  createdAt    DateTime     @default(now()) @map("created_at")
-  carItemId    String?
-  projectId    String?
-  postId       String?
-  carItem      CarItem?     @relation(fields: [carItemId], references: [id])
-  post         Post?        @relation(fields: [postId], references: [id])
-  project      Project?     @relation(fields: [projectId], references: [id])
-  author       User         @relation(fields: [userId], references: [id])
+// model Like {
+//   id           String       @id @default(cuid())
+//   userId       String
+//   likeableId   String
+//   likeableType LikeableType
+//   createdAt    DateTime     @default(now()) @map("created_at")
+//   carItemId    String?
+//   projectId    String?
+//   postId       String?
+//   carItem      CarItem?     @relation(fields: [carItemId], references: [id])
+//   post         Post?        @relation(fields: [postId], references: [id])
+//   project      Project?     @relation(fields: [projectId], references: [id])
+//   author       User         @relation(fields: [userId], references: [id])
 
-  @@index([likeableId, likeableType], map: "likeable_index")
-}
+//   @@index([likeableId, likeableType], map: "likeable_index")
+// }
 
 model Location {
   id          String   @id @default(cuid())

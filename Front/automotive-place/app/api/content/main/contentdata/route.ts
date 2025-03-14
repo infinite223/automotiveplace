@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
               include: {
                 author: { select: { id: true, name: true, email: true } },
                 tags: true,
-                likes: true,
+                userActivity: true,
                 media: true,
               },
             },
@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
               include: {
                 author: { select: { id: true, name: true, email: true } },
                 tags: true,
-                likes: true,
+                userActivity: true,
                 stages: {
                   orderBy: { stageNumber: "desc" },
                   take: 1,
@@ -119,9 +119,9 @@ export async function GET(request: NextRequest) {
             name: project!.author.name,
             email: project!.author.email,
           },
-          likesCount: project!.likes.length,
-          isLikedByAuthUser: !!project!.likes.find(
-            (l) => l.userId === userData.user.$id
+          likesCount: project!.userActivity.length,
+          isLikedByAuthUser: !!project!.userActivity.find(
+            (l) => l.userId === userData.user.$id && l.activityType === "LIKE"
           ),
         };
       });
@@ -133,10 +133,10 @@ export async function GET(request: NextRequest) {
         id: post!.id,
         imagesUrl: post!.imagesUrl,
         lastUpdateAt: new Date(),
-        isLikedByAuthUser: !!post!.likes.find(
-          (l) => l.userId === userData.user.$id
+        isLikedByAuthUser: !!post!.userActivity.find(
+          (l) => l.userId === userData.user.$id && l.activityType === "LIKE"
         ),
-        likesCount: post!.likes.length,
+        likesCount: post!.userActivity.length,
         title: post!.title,
         author: {
           id: post!.author?.id ?? "",
