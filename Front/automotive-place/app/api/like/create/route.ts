@@ -17,12 +17,12 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { likeableId, likeableType } = body;
+    const { likeableId, entityType } = body;
     const tags = body.tags || [];
 
-    if (!likeableId || !likeableType) {
+    if (!likeableId || !entityType) {
       return NextResponse.json(
-        { message: "Invalid request. Missing likeableId or likeableType" },
+        { message: "Invalid request. Missing likeableId or entityType" },
         { status: 400 }
       );
     }
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
       "COMPANY",
     ];
 
-    if (!validLikeableTypes.includes(likeableType as EntityType)) {
+    if (!validLikeableTypes.includes(entityType as EntityType)) {
       return NextResponse.json(
         { message: "Invalid likeableType" },
         { status: 400 }
@@ -45,6 +45,7 @@ export async function POST(request: NextRequest) {
     const existingLike = await prisma.userActivity.findFirst({
       where: {
         userId: userData.user.$id,
+        entityId: likeableId,
       },
     });
 
@@ -59,27 +60,25 @@ export async function POST(request: NextRequest) {
       userId: userData.user.$id,
       activityType: ActivityType.LIKE,
       entityId: likeableId,
-      entityType: likeableType as EntityType,
+      entityType: entityType as EntityType,
 
       tags: { connect: tags.map((tag: { id: string }) => ({ id: tag })) },
     };
 
-    switch (likeableType) {
-      case "POST":
+    switch (entityType) {
+      case EntityType.POST:
         data.postId = likeableId;
         break;
-      case "PROJECT":
+      case EntityType.PROJECT:
         data.projectId = likeableId;
         break;
-      case "CARITEM":
+      case EntityType.CARITEM:
         data.carItemId = likeableId;
         break;
-      case "SPOT":
+      case EntityType.SPOT:
         data.spotId = likeableId;
         break;
-      case "COMPANY":
-        data.companyId = likeableId;
-        break;
+      // TODO: maybe we need company like
       default:
         return NextResponse.json(
           { message: "Invalid likeableType" },
@@ -95,7 +94,7 @@ export async function POST(request: NextRequest) {
 
     // run job to create new content
     logger.info(
-      `User ${userData.user.$id} liked ${likeableType} with ID ${likeableId}`
+      `User ${userData.user.$id} liked ${entityType} with ID ${likeableId}`
     );
 
     return NextResponse.json(

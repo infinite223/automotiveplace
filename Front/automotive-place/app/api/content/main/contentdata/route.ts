@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
     });
 
     const content = userContent.map((uc) => uc.content);
-
+    console.log(content, "content");
     if (userContent.length === 0) {
       return NextResponse.json({ data: [], hasMore: false });
     }
@@ -157,7 +157,7 @@ export async function GET(request: NextRequest) {
       })),
     ];
 
-    const shuffledContent = combinedContent.sort(() => Math.random() - 0.5);
+    const shuffledContent = combinedContent;
     const paginatedContent = shuffledContent.slice(
       (page - 1) * limit,
       page * limit

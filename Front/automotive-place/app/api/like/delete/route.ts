@@ -2,12 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import prisma from "@/lib/prisma";
 import { logger } from "@/app/api/logger.config";
-import { ActivityType, EntityType } from "@prisma/client";
 
 export async function DELETE(request: NextRequest) {
   try {
     const userData = await getLoggedInUser();
-
     if (!userData) {
       return NextResponse.json(
         { message: "You must be logged in to use this functionality" },
@@ -31,13 +29,6 @@ export async function DELETE(request: NextRequest) {
         entityId: likeableId,
       },
     });
-
-    // await prisma.userActivity.delete({
-    //   where: {
-    //     id: "",
-
-    //   },
-    // });
 
     if (deletedLike.count === 0) {
       return NextResponse.json(

@@ -14,7 +14,7 @@ export const createLike = async (
       },
       body: JSON.stringify({
         likeableId: contentId,
-        likeableType: type.toUpperCase(),
+        entityType: type.toUpperCase(),
         tags: tags.map((tag) => tag.id),
       }),
     });
