@@ -27,15 +27,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const validLikeableTypes = [
-      "POST",
-      "PROJECT",
-      "CARITEM",
-      "SPOT",
-      "COMPANY",
-    ];
+    const likeableTypes = ["POST", "PROJECT", "CARITEM", "SPOT", "COMPANY"];
 
-    if (!validLikeableTypes.includes(entityType as EntityType)) {
+    if (!likeableTypes.includes(entityType as EntityType)) {
       return NextResponse.json(
         { message: "Invalid likeableType" },
         { status: 400 }

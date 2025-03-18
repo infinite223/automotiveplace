@@ -84,85 +84,86 @@ export async function GET(request: NextRequest) {
     //   },
     // });
 
-    const basicProjects: TBasicProject[] = content
-      .filter((c) => c.project)
-      .map(({ project }) => {
-        const stage = project!.stages[0];
+    const combinedContent = content
+      .map((c) => {
+        if (c.project) {
+          const project = c.project;
+          const stage = project.stages[0];
 
-        return {
-          id: project!.id,
-          createdAt: project!.createdAt,
-          updatedAt: project!.updatedAt,
-          forSell: project!.forSell,
-          isVisible: project!.isVisible,
-          name: project!.name,
-          carMake: project!.carMake,
-          carModel: project!.carModel,
-          description: project!.description,
-          isVerified: project!.isVerified,
-          hp: stage ? stage.hp : 0,
-          nm: stage ? stage.nm : 0,
-          engineStockHp: project!.engineStockHp,
-          engineStockNm: project!.engineStockNm,
-          acc_0_100: stage ? stage.acc_0_100?.toNumber() || null : null,
-          acc_100_200: stage ? stage.acc_100_200?.toNumber() || null : null,
-          engineNameAndCapacity:
-            project!.engineName + " " + project!.engineCapacity,
-          images: project!.media.map((m) => m.fileLocation),
-          tags: project!.tags.map((tag) => ({
-            id: tag.id,
-            name: tag.name,
-          })),
-          stageNumber: project!.stages.length,
-          author: {
-            id: project!.author.id,
-            name: project!.author.name,
-            email: project!.author.email,
-          },
-          likesCount: project!.userActivity.length,
-          isLikedByAuthUser: !!project!.userActivity.find(
-            (l) => l.userId === userData.user.$id && l.activityType === "LIKE"
-          ),
-        };
-      });
+          return {
+            type: ContentType.Project,
+            data: {
+              id: project.id,
+              createdAt: project.createdAt,
+              updatedAt: project.updatedAt,
+              forSell: project.forSell,
+              isVisible: project.isVisible,
+              name: project.name,
+              carMake: project.carMake,
+              carModel: project.carModel,
+              description: project.description,
+              isVerified: project.isVerified,
+              hp: stage ? stage.hp : 0,
+              nm: stage ? stage.nm : 0,
+              engineStockHp: project.engineStockHp,
+              engineStockNm: project.engineStockNm,
+              acc_0_100: stage ? stage.acc_0_100?.toNumber() || null : null,
+              acc_100_200: stage ? stage.acc_100_200?.toNumber() || null : null,
+              engineNameAndCapacity:
+                project.engineName + " " + project.engineCapacity,
+              images: project.media.map((m) => m.fileLocation),
+              tags: project.tags.map((tag) => ({
+                id: tag.id,
+                name: tag.name,
+              })),
+              stageNumber: project.stages.length,
+              author: {
+                id: project.author.id,
+                name: project.author.name,
+                email: project.author.email,
+              },
+              likesCount: project.userActivity.length,
+              isLikedByAuthUser: !!project.userActivity.find(
+                (l) =>
+                  l.userId === userData.user.$id && l.activityType === "LIKE"
+              ),
+            },
+          };
+        } else if (c.post) {
+          const post = c.post;
 
-    const basicPosts: TBasicPost[] = content
-      .filter((c) => c.post)
-      .map(({ post }) => ({
-        content: post!.content ?? "",
-        id: post!.id,
-        imagesUrl: post!.imagesUrl,
-        lastUpdateAt: new Date(),
-        isLikedByAuthUser: !!post!.userActivity.find(
-          (l) => l.userId === userData.user.$id && l.activityType === "LIKE"
-        ),
-        likesCount: post!.userActivity.length,
-        title: post!.title,
-        author: {
-          id: post!.author?.id ?? "",
-          name: post!.author?.name ?? "",
-          email: post!.author?.email ?? "",
-        },
-        tags: post!.tags,
-      }));
+          return {
+            type: ContentType.Post,
+            data: {
+              content: post.content ?? "",
+              id: post.id,
+              imagesUrl: post.imagesUrl,
+              lastUpdateAt: new Date(),
+              isLikedByAuthUser: !!post.userActivity.find(
+                (l) =>
+                  l.userId === userData.user.$id && l.activityType === "LIKE"
+              ),
+              likesCount: post.userActivity.length,
+              title: post.title,
+              author: {
+                id: post.author?.id ?? "",
+                name: post.author?.name ?? "",
+                email: post.author?.email ?? "",
+              },
+              tags: post.tags,
+            },
+          };
+        }
 
-    const combinedContent = [
-      ...basicProjects.map((project) => ({
-        type: ContentType.Project,
-        data: project,
-      })),
-      ...basicPosts.map((post) => ({
-        type: ContentType.Post,
-        data: post,
-      })),
-    ];
+        return null;
+      })
+      .filter(Boolean); // Usuwa ewentualne `null` z listy
 
-    const shuffledContent = combinedContent;
-    const paginatedContent = shuffledContent.slice(
+    // Paginacja
+    const paginatedContent = combinedContent.slice(
       (page - 1) * limit,
       page * limit
     );
-
     const hasMore = page * limit < combinedContent.length;
 
     logger.info("Content was generated successfully");
