@@ -20,15 +20,15 @@ export const generateContentForUser = async (userId: string) => {
     await Promise.all([
       prisma.userActivity.findMany({
         where: { userId },
-        include: { tags: true },
+        include: { tagAssignments: { include: { tag: true } } },
       }),
       prisma.post.findMany({
         where: { published: true },
-        include: { tags: true },
+        include: { tagAssignments: { include: { tag: true } } },
       }),
       prisma.project.findMany({
         where: { isVisible: true },
-        include: { tags: true },
+        include: { tagAssignments: { include: { tag: true } } },
       }),
       prisma.userContent.findMany({
         where: { userId },
@@ -47,18 +47,22 @@ export const generateContentForUser = async (userId: string) => {
     ...allPosts.map((post) => ({
       id: post.id,
       type: "Post" as const,
-      tags: post.tags,
+      tags: post.tagAssignments.map((t) => t.tag),
     })),
     ...allProjects.map((project) => ({
       id: project.id,
       type: "Project" as const,
-      tags: project.tags,
+      tags: project.tagAssignments.map((t) => t.tag),
     })),
   ];
+  const transformedUserActivity = userActivity.map((activity) => ({
+    ...activity,
+    tags: activity.tagAssignments.map((t) => t.tag),
+  }));
 
   const sortedContent = sortContentByUserActivity(
     combinedContent,
-    userActivity
+    transformedUserActivity
   );
 
   const updates: any = [];

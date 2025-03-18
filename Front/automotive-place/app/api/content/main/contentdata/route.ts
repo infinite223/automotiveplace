@@ -3,8 +3,6 @@ import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { logger } from "@/app/api/logger.config";
 import prisma from "@/lib/prisma";
 import { ContentType } from "@/app/utils/enums";
-import { TBasicProject } from "@/app/utils/types/project";
-import { TBasicPost } from "@/app/utils/types/post";
 
 export async function GET(request: NextRequest) {
   const userData = await getLoggedInUser();
@@ -29,7 +27,7 @@ export async function GET(request: NextRequest) {
             post: {
               include: {
                 author: { select: { id: true, name: true, email: true } },
-                tags: true,
+                tagAssignments: { include: { tag: true } },
                 userActivity: true,
                 media: true,
               },
@@ -37,7 +35,7 @@ export async function GET(request: NextRequest) {
             project: {
               include: {
                 author: { select: { id: true, name: true, email: true } },
-                tags: true,
+                tagAssignments: { include: { tag: true } },
                 userActivity: true,
                 stages: {
                   orderBy: { stageNumber: "desc" },
@@ -112,9 +110,9 @@ export async function GET(request: NextRequest) {
               engineNameAndCapacity:
                 project.engineName + " " + project.engineCapacity,
               images: project.media.map((m) => m.fileLocation),
-              tags: project.tags.map((tag) => ({
-                id: tag.id,
-                name: tag.name,
+              tags: project.tagAssignments.map((i) => ({
+                id: i.id,
+                name: i.tag.name,
               })),
               stageNumber: project.stages.length,
               author: {
@@ -150,7 +148,7 @@ export async function GET(request: NextRequest) {
                 name: post.author?.name ?? "",
                 email: post.author?.email ?? "",
               },
-              tags: post.tags,
+              tags: post.tagAssignments ?? [],
             },
           };
         }

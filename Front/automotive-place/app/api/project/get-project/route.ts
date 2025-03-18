@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
   const project = await prisma.project.findFirst({
     where: { id: projectId.toString() },
     include: {
-      tags: true,
+      tagAssignments: { include: { tag: true } },
       author: true,
       media: {
         select: { fileLocation: true },
@@ -37,6 +37,7 @@ export async function GET(request: NextRequest) {
 
   const projectWithImages = {
     images: project?.media.map((m) => m.fileLocation),
+    tags: project?.tagAssignments.map((ta) => ta.tag),
     ...project,
   };
 

@@ -73,16 +73,17 @@ async function createCarItem(
 ) {
   const { tags, ...restCarItemData } = carItem;
 
-  const tagData: Prisma.TagUncheckedCreateWithoutCarItemInput[] =
-    tags?.map((tag) => ({
-      id: tag?.localId,
-      name: tag.name,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      authorId: tag.authorId,
-      projectId: tag.projectId || "",
-      carItemId: tag.carItemId || "",
-    })) || [];
+  // const tagData: Prisma.TagAssignmentUncheckedCreateWithoutCarItemInput[] =
+  //   tags?.map((tag) => ({
+  //     id: tag?.localId,
+  //     name: tag.name,
+
+  //     createdAt: new Date(),
+  //     updatedAt: new Date(),
+  //     authorId: tag.authorId,
+  //     projectId: tag.projectId || "",
+  //     carItemId: tag.carItemId || "",
+  //   })) || [];
 
   let newCarItem;
   try {
@@ -91,9 +92,9 @@ async function createCarItem(
         ...restCarItemData,
         authorId,
         projectId: projectId || "",
-        tags: {
-          create: tagData,
-        },
+        // tags: {
+        //   create: tagData,
+        // },
       },
     });
   } catch (error) {
