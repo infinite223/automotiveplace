@@ -55,6 +55,7 @@ export const generateContentForUser = async (userId: string) => {
       tags: project.tagAssignments.map((t) => t.tag),
     })),
   ];
+  
   const transformedUserActivity = userActivity.map((activity) => ({
     ...activity,
     tags: activity.tagAssignments.map((t) => t.tag),

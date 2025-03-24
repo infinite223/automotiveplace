@@ -56,7 +56,9 @@ export async function POST(request: NextRequest) {
       entityId: likeableId,
       entityType: entityType as EntityType,
 
-      tags: { connect: tags.map((tag: { id: string }) => ({ id: tag })) },
+      tagAssignments: {
+        connect: tags.map((tag: { id: string }) => ({ id: tag })),
+      },
     };
 
     switch (entityType) {

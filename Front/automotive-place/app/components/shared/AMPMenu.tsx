@@ -56,6 +56,18 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
     }
   }, [showMenu]);
 
+  useEffect(() => {
+    const handleHideMenu = () => {
+      setShowMenu(false);
+    };
+
+    window.addEventListener("wheel", handleHideMenu, { passive: true });
+
+    return () => {
+      window.removeEventListener("wheel", handleHideMenu);
+    };
+  }, [showMenu]);
+
   return (
     <main className="relative" ref={buttonRef}>
       <div
