@@ -45,8 +45,6 @@ export default function Project({ params }: { params: { id: string } }) {
     ? getCurrentStage(displayData as TProject)
     : undefined;
 
-  console.log(lastStage, "lastStage");
-
   if (loading && !tempData)
     return (
       <div className="flex w-full min-h-screen bg-black justify-center items-center text-white text-lg">
