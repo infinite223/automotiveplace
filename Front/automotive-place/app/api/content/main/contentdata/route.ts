@@ -5,6 +5,12 @@ import prisma from "@/lib/prisma";
 import { ContentType } from "@/app/utils/enums";
 import redis from "@/lib/redis";
 
+async function getUserSeenContentIds(userId: string) {
+  const redisKey = `user:seenContent:${userId}`;
+  const seenContentIds = await redis.sMembers(redisKey);
+  return seenContentIds;
+}
+
 export async function GET(request: NextRequest) {
   const userData = await getLoggedInUser();
 
@@ -14,15 +20,23 @@ export async function GET(request: NextRequest) {
       { status: 404, statusText: "Unauthorized" }
     );
   }
-  await redis.set("key1", 2);
-  // const test = await redis.keys("user:*:viewed");
+
   const { searchParams }: any = new URL(request.url!);
   const limit = parseInt(searchParams.get("limit")) || 10;
   const page = parseInt(searchParams.get("page") || "1", 10);
 
   try {
+    const seenContentIds = await getUserSeenContentIds(userData.user.$id);
+
     const userContent = await prisma.userContent.findMany({
-      where: { userId: userData.user.$id },
+      where: {
+        userId: userData.user.$id,
+        content: {
+          id: {
+            notIn: seenContentIds,
+          },
+        },
+      },
       include: {
         content: {
           include: {

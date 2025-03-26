@@ -6,7 +6,6 @@ export async function GET(request: NextRequest) {
   const userData = await getLoggedInUser();
 
   if (!userData) {
-    // return NextResponse.redirect(new URL("/", request.url));
     return NextResponse.json(
       { message: "Core.YouMustBeLoggedInToUseThisFunctionality" },
       {

@@ -8,7 +8,7 @@ export async function DELETE(request: NextRequest) {
     const userData = await getLoggedInUser();
     if (!userData) {
       return NextResponse.json(
-        { message: "You must be logged in to use this functionality" },
+        { message: "Core.YouMustBeLoggedInToUseThisFunctionality" },
         { status: 401 }
       );
     }

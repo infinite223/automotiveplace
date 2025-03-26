@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
 
     if (!userData) {
       return NextResponse.json(
-        { message: "You must be logged in to use this functionality" },
+        { message: "Core.YouMustBeLoggedInToUseThisFunctionality" },
         { status: 401 }
       );
     }

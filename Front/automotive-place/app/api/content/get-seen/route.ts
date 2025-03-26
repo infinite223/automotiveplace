@@ -7,27 +7,38 @@ export async function POST(req: NextRequest) {
     const userData = await getLoggedInUser();
     if (!userData) {
       return NextResponse.json(
-        { message: "You must be logged in to use this functionality" },
+        { message: "Core.YouMustBeLoggedInToUseThisFunctionality" },
         { status: 401 }
       );
     }
 
     const body = await req.json();
-    const { userId, seenPostIds } = body;
+    const { userId, contentIds } = body;
 
-    if (!userId || !Array.isArray(seenPostIds)) {
+    if (!userId || !Array.isArray(contentIds)) {
       return NextResponse.json(
-        { message: "UserId and seenPostIds are required and should be valid" },
+        { message: "UserId and contentIds are required and should be valid" },
         { status: 400 }
       );
     }
 
     const redisKey = `user:seenContent:${userId}`;
 
-    await redis.sAdd(redisKey, seenPostIds);
-    await redis.expire(redisKey, 86400);
+    const existingContentIds = await redis.sMembers(redisKey);
 
-    return NextResponse.json({ message: "Seen content updated successfully" });
+    const newContentIds = contentIds.filter(
+      (id) => !existingContentIds.includes(id)
+    );
+
+    if (newContentIds.length > 0) {
+      await redis.sAdd(redisKey, newContentIds);
+      await redis.expire(redisKey, 86400);
+    }
+
+    return NextResponse.json({
+      message: "Seen content updated successfully",
+      added: newContentIds,
+    });
   } catch (error) {
     console.error("Error updating seen content:", error);
     return NextResponse.json(
