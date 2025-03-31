@@ -10,7 +10,7 @@ interface ContentState {
 
 const initialState: ContentState = {
   contentData: [],
-  page: 1,
+  page: 0,
   isLoading: false,
 };
 

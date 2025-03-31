@@ -23,12 +23,14 @@ export async function GET(request: NextRequest) {
 
   const { searchParams }: any = new URL(request.url!);
   const limit = parseInt(searchParams.get("limit")) || 10;
-  const page = parseInt(searchParams.get("page") || "1", 10);
-
+  const page = parseInt(searchParams.get("page") || 0, 10);
+  const seenPage = parseInt(searchParams.get("seenPage") || 0, 10);
+  console.log(seenPage, "seenPage");
   try {
     const seenContentIds = await getUserSeenContentIds(userData.user.$id);
-
     const userContent = await prisma.userContent.findMany({
+      take: limit,
+      skip: limit * page,
       where: {
         userId: userData.user.$id,
         content: {
@@ -66,37 +68,56 @@ export async function GET(request: NextRequest) {
       orderBy: { prio: "asc" },
     });
 
+    if (userContent.length < 10) {
+      const take = limit - userContent.length;
+      const seenContent = await prisma.userContent.findMany({
+        take,
+        skip: take * seenPage,
+        where: {
+          userId: userData.user.$id,
+          content: {
+            id: {
+              in: seenContentIds,
+            },
+          },
+        },
+        include: {
+          content: {
+            include: {
+              post: {
+                include: {
+                  author: { select: { id: true, name: true, email: true } },
+                  tagAssignments: { include: { tag: true } },
+                  userActivity: true,
+                  media: true,
+                },
+              },
+              project: {
+                include: {
+                  author: { select: { id: true, name: true, email: true } },
+                  tagAssignments: { include: { tag: true } },
+                  userActivity: true,
+                  stages: {
+                    orderBy: { stageNumber: "desc" },
+                    take: 1,
+                  },
+                  media: true,
+                },
+              },
+            },
+          },
+        },
+        orderBy: { prio: "asc" },
+      });
+
+      console.log(seenContent, "seenContent");
+    }
+
     const content = userContent.map((uc) => uc.content);
-    console.log(content, "content");
+
     if (userContent.length === 0) {
       return NextResponse.json({ data: [], hasMore: false });
     }
-
-    // const content = await prisma.content.findMany({
-    //   where: { id: { in: contentIds } },
-    //   include: {
-    //     post: {
-    //       include: {
-    //         author: { select: { id: true, name: true, email: true } },
-    //         tags: true,
-    //         likes: true,
-    //         media: true,
-    //       },
-    //     },
-    //     project: {
-    //       include: {
-    //         author: { select: { id: true, name: true, email: true } },
-    //         tags: true,
-    //         likes: true,
-    //         stages: {
-    //           orderBy: { stageNumber: "desc" },
-    //           take: 1,
-    //         },
-    //         media: true,
-    //       },
-    //     },
-    //   },
-    // });
 
     const combinedContent = content
       .map((c) => {
@@ -171,19 +192,14 @@ export async function GET(request: NextRequest) {
 
         return null;
       })
-      .filter(Boolean); // Usuwa ewentualne `null` z listy
+      .filter(Boolean);
 
-    // Paginacja
-    const paginatedContent = combinedContent.slice(
-      (page - 1) * limit,
-      page * limit
-    );
     const hasMore = page * limit < combinedContent.length;
 
     logger.info("Content was generated successfully");
 
     return NextResponse.json({
-      data: paginatedContent,
+      data: combinedContent,
       hasMore,
     });
   } catch (error) {
