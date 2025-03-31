@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
   const limit = parseInt(searchParams.get("limit")) || 10;
   const page = parseInt(searchParams.get("page") || 0, 10);
   const seenPage = parseInt(searchParams.get("seenPage") || 0, 10);
-  console.log(seenPage, "seenPage");
+
   try {
     const seenContentIds = await getUserSeenContentIds(userData.user.$id);
     const userContent = await prisma.userContent.findMany({
@@ -67,6 +67,9 @@ export async function GET(request: NextRequest) {
       },
       orderBy: { prio: "asc" },
     });
+
+    let content;
+    content = userContent.map((uc) => uc.content);
 
     if (userContent.length < 10) {
       const take = limit - userContent.length;
@@ -110,12 +113,11 @@ export async function GET(request: NextRequest) {
         orderBy: { prio: "asc" },
       });
 
-      console.log(seenContent, "seenContent");
+      const seenUserContent = seenContent.map((uc) => uc.content);
+      content = [...content, ...seenUserContent];
     }
 
-    const content = userContent.map((uc) => uc.content);
-
-    if (userContent.length === 0) {
+    if (content.length === 0) {
       return NextResponse.json({ data: [], hasMore: false });
     }
 
@@ -166,7 +168,7 @@ export async function GET(request: NextRequest) {
           };
         } else if (c.post) {
           const post = c.post;
-
+          console.log(post, "post");
           return {
             type: ContentType.Post,
             data: {
@@ -197,7 +199,6 @@ export async function GET(request: NextRequest) {
     const hasMore = page * limit < combinedContent.length;
 
     logger.info("Content was generated successfully");
-
     return NextResponse.json({
       data: combinedContent,
       hasMore,
