@@ -21,7 +21,7 @@ import useOnScreen from "@/app/hooks/useOnScreen";
 
 export const HomeMainContent = () => {
   const lastElementRef = useRef<HTMLDivElement>(null);
-
+  const [lastSeenId, setLastSeenId] = useState<string | null>(null);
   const isLastElementVisible = useOnScreen(lastElementRef);
   const [userId, setUserId] = useState<string | null>(null);
   const dispatch = useDispatch<AppDispatch>();
@@ -32,13 +32,22 @@ export const HomeMainContent = () => {
     (state: RootState) => state.contentData.isLoading
   );
   const page = useSelector((state: RootState) => state.contentData.page);
+  const hasMore = useSelector((state: RootState) => state.contentData.hasMore);
 
   useEffect(() => {
-    setTimeout(() => {
-      if (isLastElementVisible && !isLoading && _content.length > 0) {
-        console.log("Ostatni element widoczny, ładuję więcej...");
-      }
-    }, 10);
+    const lastContentIsSeen =
+      _content?.[_content.length - 1]?.data.id === lastSeenId;
+    if (
+      isLastElementVisible &&
+      !isLoading &&
+      hasMore &&
+      _content.length > 0 &&
+      !lastContentIsSeen
+    ) {
+      console.log("Ostatni element widoczny, ładuję więcej...");
+      setLastSeenId(_content[_content.length - 1].data.id);
+      loadMoreProjects();
+    }
   }, [isLastElementVisible]);
 
   useEffect(() => {
@@ -96,7 +105,11 @@ export const HomeMainContent = () => {
           })}
 
         <div ref={lastElementRef} className="py-2"></div>
-
+        {!isLoading && !hasMore && (
+          <div className="text-center text-sm text-gray-500 pb-4">
+            Brak więcej wyników
+          </div>
+        )}
         {isLoading && (
           <>
             <LoadingMiniView />
