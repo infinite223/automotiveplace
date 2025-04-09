@@ -18,6 +18,7 @@ import { AppDispatch, RootState } from "@/lib/store";
 import { fetchProjects, setPage } from "@/lib/features/content/contentSlice";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import useOnScreen from "@/app/hooks/useOnScreen";
+import { ContentType } from "@/app/utils/enums";
 
 export const HomeMainContent = () => {
   const lastElementRef = useRef<HTMLDivElement>(null);
@@ -88,21 +89,19 @@ export const HomeMainContent = () => {
   return (
     <div className="flex w-full items-center lg:pr-[150px] h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth">
       <div className="flex flex-col text-[12px] w-full lg:w-[570px]">
-        {!isLoading &&
-          _content.map((content, index) => {
-            const isLastElement = index === _content.length - 1;
-            return (
-              <div
-                key={content.data.id}
-                className="flex w-full items-center justify-center py-1"
-                id={`content-${content.data.id}`}
-              >
-                <div className="flex w-full bg-amp-50 p-2 rounded-md">
-                  <ContentSelect content={content} userId={userId} />
-                </div>
+        {_content.map((content) => {
+          return (
+            <div
+              key={content.data.id}
+              className="flex w-full items-center justify-center py-1"
+              id={`content-${content.data.id}`}
+            >
+              <div className="flex w-full bg-amp-50 p-2 rounded-md">
+                <ContentSelect content={content} userId={userId} />
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
 
         <div ref={lastElementRef} className="py-2"></div>
         {!isLoading && !hasMore && (
@@ -110,6 +109,7 @@ export const HomeMainContent = () => {
             Brak więcej wyników
           </div>
         )}
+
         {isLoading && (
           <>
             <LoadingMiniView />
@@ -133,7 +133,7 @@ export const ContentSelect = ({
 }) => {
   const errorText = " data is not valid";
   switch (type) {
-    case "Project":
+    case ContentType.Project:
       const contentDataIsProject = isTBasicProject(data);
 
       if (contentDataIsProject) {
@@ -147,7 +147,7 @@ export const ContentSelect = ({
 
       console.error(type, errorText);
       return null;
-    case "Problem":
+    case ContentType.Problem:
       const contentDataIsProblem = isTProblem(data);
 
       if (contentDataIsProblem) {
@@ -156,7 +156,7 @@ export const ContentSelect = ({
 
       console.error(type, errorText);
       return null;
-    case "Post":
+    case ContentType.Post:
       const contentDataIsPost = isTBasicPost(data);
 
       if (contentDataIsPost) {
@@ -167,7 +167,7 @@ export const ContentSelect = ({
 
       console.error(type, errorText);
       return null;
-    case "Spot":
+    case ContentType.Spot:
       const contentDataIsSpot = isTSpot(data);
 
       if (contentDataIsSpot) {
@@ -177,6 +177,7 @@ export const ContentSelect = ({
       console.error(type, errorText);
       return null;
     case "CarItem":
+      // TODO  analyse if this is correct
       const contentDataIsCarItem = isTCarItem(data);
 
       if (contentDataIsCarItem) {

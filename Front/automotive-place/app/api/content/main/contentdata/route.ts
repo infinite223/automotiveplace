@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
     });
 
     content = userContent.map((uc) => uc.content);
-    console.log(content, "content");
+
     if (userContent.length < 10) {
       const take = limit - userContent.length;
       const seenContent = await prisma.userContent.findMany({
@@ -175,7 +175,6 @@ export async function GET(request: NextRequest) {
           };
         } else if (c.post) {
           const post = c.post;
-          console.log(post, "post");
           return {
             type: ContentType.Post,
             data: {

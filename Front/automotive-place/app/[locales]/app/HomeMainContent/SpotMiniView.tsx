@@ -2,6 +2,7 @@ import { TSpot } from "@/app/utils/types/spot";
 import { ContentMiniFooter } from "./ContentMiniFooter";
 import { ContentMiniNav } from "./ContentMiniNav";
 import { useLike } from "@/app/hooks/useLike";
+import { ContentType } from "@/app/utils/enums";
 
 export const SpotMiniView = ({
   data,
@@ -14,7 +15,7 @@ export const SpotMiniView = ({
     2,
     false,
     data.id,
-    "Spot",
+    ContentType.Spot,
     []
   );
   return (

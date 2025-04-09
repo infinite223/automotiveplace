@@ -3,6 +3,7 @@ import { ContentMiniFooter } from "./ContentMiniFooter";
 import { ContentMiniNav } from "./ContentMiniNav";
 import AMPSlider from "@/app/components/shared/AMPSlider";
 import { useLike } from "@/app/hooks/useLike";
+import { ContentType } from "@/app/utils/enums";
 
 export const PostMiniView = ({
   data,
@@ -15,7 +16,7 @@ export const PostMiniView = ({
     data.likesCount,
     data.isLikedByAuthUser,
     data.id,
-    "Post",
+    ContentType.Post,
     data.tags
   );
 
@@ -25,7 +26,7 @@ export const PostMiniView = ({
         createdAt={data.lastUpdateAt}
         handleClickLike={handleClickLike}
         title={data.title}
-        typeName="Post"
+        typeName={ContentType.Post}
         isUserContent={isUserContent}
         author={data.author}
       />
@@ -37,7 +38,7 @@ export const PostMiniView = ({
         currentIsLiked={currentIsLiked}
         currentLikesCount={currentLikesCount}
         handleClickLike={handleClickLike}
-        type="Post"
+        type={ContentType.Post}
       />
     </div>
   );
