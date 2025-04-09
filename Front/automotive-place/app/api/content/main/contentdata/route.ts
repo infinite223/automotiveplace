@@ -27,7 +27,9 @@ export async function GET(request: NextRequest) {
   const seenPage = parseInt(searchParams.get("seenPage") || 0, 10);
 
   try {
+    let content;
     const seenContentIds = await getUserSeenContentIds(userData.user.$id);
+
     const userContent = await prisma.userContent.findMany({
       take: limit,
       skip: limit * page,
@@ -68,7 +70,6 @@ export async function GET(request: NextRequest) {
       orderBy: { prio: "asc" },
     });
 
-    let content;
     content = userContent.map((uc) => uc.content);
 
     if (userContent.length < 10) {

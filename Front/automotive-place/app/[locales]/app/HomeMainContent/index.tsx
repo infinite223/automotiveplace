@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TContentData } from "../../../utils/types";
 import { isTBasicProject } from "../../../utils/types/project";
 import { ProjectMiniView } from "./ProjectMiniView";
@@ -17,8 +17,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/store";
 import { fetchProjects, setPage } from "@/lib/features/content/contentSlice";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
+import useOnScreen from "@/app/hooks/useOnScreen";
 
 export const HomeMainContent = () => {
+  const lastElementRef = useRef<HTMLDivElement>(null);
+
+  const isLastElementVisible = useOnScreen(lastElementRef);
   const [userId, setUserId] = useState<string | null>(null);
   const dispatch = useDispatch<AppDispatch>();
   const _content = useSelector(
@@ -28,6 +32,14 @@ export const HomeMainContent = () => {
     (state: RootState) => state.contentData.isLoading
   );
   const page = useSelector((state: RootState) => state.contentData.page);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (isLastElementVisible && !isLoading && _content.length > 0) {
+        console.log("Ostatni element widoczny, ładuję więcej...");
+      }
+    }, 10);
+  }, [isLastElementVisible]);
 
   useEffect(() => {
     if (_content.length === 0) {
@@ -68,11 +80,12 @@ export const HomeMainContent = () => {
     <div className="flex w-full items-center lg:pr-[150px] h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth">
       <div className="flex flex-col text-[12px] w-full lg:w-[570px]">
         {!isLoading &&
-          _content.map((content) => {
+          _content.map((content, index) => {
+            const isLastElement = index === _content.length - 1;
             return (
               <div
                 key={content.data.id}
-                className="flex w-full items-center justify-center py-1 "
+                className="flex w-full items-center justify-center py-1"
                 id={`content-${content.data.id}`}
               >
                 <div className="flex w-full bg-amp-50 p-2 rounded-md">
@@ -81,6 +94,8 @@ export const HomeMainContent = () => {
               </div>
             );
           })}
+
+        <div ref={lastElementRef} className="py-2"></div>
 
         {isLoading && (
           <>
