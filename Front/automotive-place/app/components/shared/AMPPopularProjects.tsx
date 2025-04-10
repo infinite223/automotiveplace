@@ -1,27 +1,34 @@
-import useFetchData from "@/app/hooks/useFetchData";
-import { getPopularProjects } from "@/app/services/project";
-import { TBasicPopularProject } from "@/app/utils/types/project";
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { getPopularProjects } from "@/app/services/project";
+import { TBasicPopularProject } from "@/app/utils/types/project";
+import { useQuery } from "@tanstack/react-query";
 
 function AMPPopularProjects() {
-  const { data, loading, error } = useFetchData<TBasicPopularProject[]>(() =>
-    getPopularProjects()
-  );
+  const {
+    data: projects,
+    isLoading,
+    isError,
+  } = useQuery<TBasicPopularProject[]>({
+    queryKey: ["popular-projects"],
+    queryFn: getPopularProjects,
+  });
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error loading projects</div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading projects</div>;
 
   return (
-    <div className="">
+    <div>
       <h2 className="px-2">Popularne projekty</h2>
       <div className="max-h-[85vh] overflow-y-auto custom-scrollbar flex flex-col mt-4 ">
-        {data?.map((project) => (
+        {projects?.map((project) => (
           <Link
             href={`../project/${project.id}`}
             key={project.carMake + project.carModel}
           >
-            <div className="text-sm flex flex-wrap p-2 hover:bg-amp-100 rounded-sm cursor-pointer ">
+            <div className="text-sm flex flex-wrap p-2 hover:bg-amp-100 rounded-sm cursor-pointer">
               <div className="flex gap-3 items-start">
                 <div className="rounded-md w-[90px] h-full bg-amp-50 flex items-center justify-center">
                   <img
@@ -35,8 +42,8 @@ function AMPPopularProjects() {
                     {project.carMake} {project.carModel}
                   </div>
                   <div>Stage: {project.stageNumber}</div>
-                  <div> HP: {project.currentHp}</div>
-                  <div> NM: {project.currentNm}</div>
+                  <div>HP: {project.currentHp}</div>
+                  <div>NM: {project.currentNm}</div>
                 </div>
               </div>
             </div>

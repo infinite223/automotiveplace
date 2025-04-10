@@ -4,6 +4,7 @@ import { Providers } from "../StoreProvider";
 import { Notification } from "../components/logger/Notification";
 import { DevLogin } from "../components/devLogin";
 import { GlobalLoadingView } from "../components/loading/GlobalLoadingView";
+import { ReactQueryProvider } from "./app/providers";
 
 export default async function LocaleLayout({
   children,
@@ -21,10 +22,12 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider messages={messages}>
           <Providers>
-            <Notification />
-            <GlobalLoadingView />
-            <DevLogin />
-            {children}
+            <ReactQueryProvider>
+              <Notification />
+              <GlobalLoadingView />
+              <DevLogin />
+              {children}
+            </ReactQueryProvider>
           </Providers>
         </NextIntlClientProvider>
       </body>

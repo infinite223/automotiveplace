@@ -16,7 +16,7 @@ const initialState: ContentState = {
   hasMore: true,
 };
 
-export const fetchProjects = createAsyncThunk<
+export const fetchContent = createAsyncThunk<
   { data: TContentData[]; hasMore: boolean },
   number
 >("projects/fetchProjects", async (page) => {
@@ -47,11 +47,11 @@ const contentDataSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProjects.pending, (state) => {
+      .addCase(fetchContent.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(
-        fetchProjects.fulfilled,
+        fetchContent.fulfilled,
         (
           state,
           action: PayloadAction<{ data: TContentData[]; hasMore: boolean }>
@@ -61,7 +61,7 @@ const contentDataSlice = createSlice({
           state.hasMore = action.payload.hasMore;
         }
       )
-      .addCase(fetchProjects.rejected, (state) => {
+      .addCase(fetchContent.rejected, (state) => {
         state.isLoading = false;
       });
   },
