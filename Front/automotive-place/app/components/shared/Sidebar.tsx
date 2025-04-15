@@ -22,9 +22,14 @@ import { useTranslations } from "next-intl";
 import { Yant } from "@/app/utils/helpers";
 import { CreateProblemView } from "../createProblem";
 import { RootState } from "@/lib/store";
-import { setShowCreateProject } from "@/lib/features/actions/actionsSlice";
+import {
+  setShowCreatePost,
+  setShowCreateProject,
+} from "@/lib/features/actions/actionsSlice";
 import Logo from "../../../asets/logo_2.png";
 import Image from "next/image";
+import { CreatePostView } from "../createPost";
+import { CreateProjectView } from "../createProject";
 
 interface ISideBar {}
 
@@ -36,6 +41,10 @@ export const SideBar: FC<ISideBar> = ({}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showCreateProject = useSelector(
     (state: RootState) => state.actions.showCreateProject
+  );
+
+  const showCreatePost = useSelector(
+    (state: RootState) => state.actions.showCreatePost
   );
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -141,7 +150,18 @@ export const SideBar: FC<ISideBar> = ({}) => {
         additionalTailwindCss="relative bottom-40 bg-zinc-900"
         defoultBG={false}
       >
-        <CreateProblemView />
+        <CreateProjectView />
+      </AMPModal>
+
+      <AMPModal
+        onClose={() => dispatch(setShowCreatePost(false))}
+        withHeader={true}
+        visible={showCreatePost}
+        title="Dodawanie postu"
+        additionalTailwindCss="relative bottom-40 bg-zinc-900"
+        defoultBG={false}
+      >
+        <CreatePostView />
       </AMPModal>
     </div>
   );
