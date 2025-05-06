@@ -36,7 +36,7 @@ export const AMPTextarea: FC<IAMPTextarea<string | number>> = ({
         onChange={(text) => setValue(text.target.value)}
         id={id}
         style={inputStyles}
-        className={`${additionalTailwindCss} ${resize} w-full bg-amp-900 dark:bg-amp-0rounded border-b outline-none border-gray-300 bg-amp-800 dark:bg-amp-100 text-sm focus:ring-teal-500 focus:border-teal-500 block dark:border-gray-800 dark:placeholder-gray-500 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-800bg-inherit p-3 shadow mt-2 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer`}
+        className={`${additionalTailwindCss} ${resize} w-full border-b outline-none border-gray-300 text-sm focus:ring-teal-500 focus:border-teal-500 block dark:border-gray-800 dark:placeholder-gray-500 dark:text-white/80 dark:focus:ring-teal-500 dark:focus:border-teal-800 bg-inherit py-3 shadow mt-2 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer`}
         placeholder={placeholder}
         required={required}
       />

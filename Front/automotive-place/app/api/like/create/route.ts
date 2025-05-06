@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import prisma from "@/lib/prisma";
 import { logger } from "@/app/api/logger.config";
-import { LikeableType } from "@prisma/client";
+import { ActivityType, EntityType } from "@prisma/client";
+import { generateContentForUser } from "../../contentGeneration";
 
 export async function POST(request: NextRequest) {
   try {
@@ -10,41 +11,35 @@ export async function POST(request: NextRequest) {
 
     if (!userData) {
       return NextResponse.json(
-        { message: "You must be logged in to use this functionality" },
+        { message: "Core.YouMustBeLoggedInToUseThisFunctionality" },
         { status: 401 }
       );
     }
 
     const body = await request.json();
-    const { likeableId, likeableType } = body;
+    const { likeableId, entityType } = body;
+    const tags = body.tags || [];
 
-    if (!likeableId || !likeableType) {
+    if (!likeableId || !entityType) {
       return NextResponse.json(
-        { message: "Invalid request. Missing likeableId or likeableType" },
+        { message: "Invalid request. Missing likeableId or entityType" },
         { status: 400 }
       );
     }
 
-    const validLikeableTypes = [
-      "POST",
-      "PROJECT",
-      "CARITEM",
-      "SPOT",
-      "COMPANY",
-    ];
+    const likeableTypes = ["POST", "PROJECT", "CARITEM", "SPOT", "COMPANY"];
 
-    if (!validLikeableTypes.includes(likeableType as LikeableType)) {
+    if (!likeableTypes.includes(entityType as EntityType)) {
       return NextResponse.json(
         { message: "Invalid likeableType" },
         { status: 400 }
       );
     }
 
-    const existingLike = await prisma.like.findFirst({
+    const existingLike = await prisma.userActivity.findFirst({
       where: {
         userId: userData.user.$id,
-        likeableId,
-        likeableType: likeableType as LikeableType,
+        entityId: likeableId,
       },
     });
 
@@ -57,26 +52,29 @@ export async function POST(request: NextRequest) {
 
     const data: any = {
       userId: userData.user.$id,
-      likeableId,
-      likeableType,
+      activityType: ActivityType.LIKE,
+      entityId: likeableId,
+      entityType: entityType as EntityType,
+
+      tagAssignments: {
+        connect: tags.map((tag: { id: string }) => ({ id: tag })),
+      },
     };
 
-    switch (likeableType) {
-      case "POST":
+    switch (entityType) {
+      case EntityType.POST:
         data.postId = likeableId;
         break;
-      case "PROJECT":
+      case EntityType.PROJECT:
         data.projectId = likeableId;
         break;
-      case "CARITEM":
+      case EntityType.CARITEM:
         data.carItemId = likeableId;
         break;
-      case "SPOT":
+      case EntityType.SPOT:
         data.spotId = likeableId;
         break;
-      case "COMPANY":
-        data.companyId = likeableId;
-        break;
+      // TODO: maybe we need company like
       default:
         return NextResponse.json(
           { message: "Invalid likeableType" },
@@ -84,12 +82,15 @@ export async function POST(request: NextRequest) {
         );
     }
 
-    await prisma.like.create({
+    await prisma.userActivity.create({
       data,
     });
 
+    await generateContentForUser(userData.user.$id);
+
+    // run job to create new content
     logger.info(
-      `User ${userData.user.$id} liked ${likeableType} with ID ${likeableId}`
+      `User ${userData.user.$id} liked ${entityType} with ID ${likeableId}`
     );
 
     return NextResponse.json(

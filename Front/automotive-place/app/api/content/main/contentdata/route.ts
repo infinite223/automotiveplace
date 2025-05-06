@@ -2,9 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { logger } from "@/app/api/logger.config";
 import prisma from "@/lib/prisma";
-import { TBasicProject } from "@/app/utils/types/project";
 import { ContentType } from "@/app/utils/enums";
-import { TBasicPost } from "@/app/utils/types/post";
+// import redis from "@/lib/redis";
+
+// async function getUserSeenContentIds(userId: string) {
+//   const redisKey = `user:seenContent:${userId}`;
+//   const seenContentIds = await redis.sMembers(redisKey);
+//   return seenContentIds;
+// }
 
 export async function GET(request: NextRequest) {
   const userData = await getLoggedInUser();
@@ -12,211 +17,201 @@ export async function GET(request: NextRequest) {
   if (!userData) {
     return NextResponse.json(
       { message: "YouMustBeLoggedInToUseThisFunctionality" },
-      {
-        status: 404,
-        statusText: "Unauthorized",
-      }
+      { status: 404, statusText: "Unauthorized" }
     );
   }
 
   const { searchParams }: any = new URL(request.url!);
-  const limit = parseInt(searchParams.get("limit")) || 10;
-  const page = parseInt(searchParams.get("page") || "1", 10);
-
-  const userActivities = await prisma.userActivity.findMany({
-    where: { userId: userData.user.$id },
-    include: {
-      tags: true,
-    },
-  });
-
-  const userTags = userActivities.flatMap((activity) =>
-    activity.tags.map((tag) => tag.name)
-  );
-
-  const taggedProjects = await prisma.project.findMany({
-    where: {
-      tags: {
-        some: {
-          name: {
-            in: userTags,
+  const limit = parseInt(searchParams.get("limit")) || 4;
+  const page = parseInt(searchParams.get("page") || 0, 10);
+  const seenPage = parseInt(searchParams.get("seenPage") || 0, 10);
+  console.log(limit, page, seenPage, "limit, page, seenPage");
+  try {
+    let content;
+    // const seenContentIds = await getUserSeenContentIds(userData.user.$id);
+    const seenContentIds: string[] = [];
+    const userContent = await prisma.userContent.findMany({
+      take: limit + 1,
+      skip: limit * page,
+      where: {
+        userId: userData.user.$id,
+        content: {
+          id: {
+            notIn: seenContentIds,
           },
         },
       },
-      media: {
-        some: {},
-      },
-      isBlockedByAdmin: false,
-      isVisible: true,
-    },
-    include: {
-      tags: true,
-      author: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
-        },
-      },
-      likes: true,
-      stages: {
-        orderBy: {
-          stageNumber: "desc",
-        },
-        take: 1,
-      },
-      media: true,
-    },
-  });
-
-  const taggedPosts = await prisma.post.findMany({
-    where: {
-      tags: {
-        some: {
-          name: {
-            in: userTags,
+      include: {
+        content: {
+          include: {
+            post: {
+              include: {
+                author: { select: { id: true, name: true, email: true } },
+                tagAssignments: { include: { tag: true } },
+                userActivity: true,
+                media: true,
+              },
+            },
+            project: {
+              include: {
+                author: { select: { id: true, name: true, email: true } },
+                tagAssignments: { include: { tag: true } },
+                userActivity: true,
+                stages: {
+                  orderBy: { stageNumber: "desc" },
+                  take: 1,
+                },
+                media: true,
+              },
+            },
           },
         },
       },
-      isBlockedByAdmin: false,
-    },
-    include: {
-      author: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
+      orderBy: { prio: "asc" },
+    });
+
+    content = userContent.map((uc) => uc.content);
+
+    if (userContent.length < 10) {
+      const take = limit - userContent.length;
+      const seenContent = await prisma.userContent.findMany({
+        take,
+        skip: take * seenPage,
+        where: {
+          userId: userData.user.$id,
+          content: {
+            id: {
+              in: seenContentIds,
+            },
+          },
         },
-      },
-      tags: true,
-      likes: true,
-      media: true,
-    },
-  });
-
-  // Pobierz wszystkie projekty i posty
-  const allProjects = await prisma.project.findMany({
-    where: {
-      media: {
-        some: {},
-      },
-      isBlockedByAdmin: false,
-      isVisible: true,
-    },
-    include: {
-      tags: true,
-      author: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
+        include: {
+          content: {
+            include: {
+              post: {
+                include: {
+                  author: { select: { id: true, name: true, email: true } },
+                  tagAssignments: { include: { tag: true } },
+                  userActivity: true,
+                  media: true,
+                },
+              },
+              project: {
+                include: {
+                  author: { select: { id: true, name: true, email: true } },
+                  tagAssignments: { include: { tag: true } },
+                  userActivity: true,
+                  stages: {
+                    orderBy: { stageNumber: "desc" },
+                    take: 1,
+                  },
+                  media: true,
+                },
+              },
+            },
+          },
         },
-      },
-      likes: true,
-      stages: {
-        orderBy: {
-          stageNumber: "desc",
-        },
-        take: 1,
-      },
-      media: true,
-    },
-  });
+        orderBy: { prio: "asc" },
+      });
 
-  const allPosts = await prisma.post.findMany({
-    include: {
-      author: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
-        },
-      },
-      tags: true,
-      likes: true,
-      media: true,
-    },
-  });
+      const seenUserContent = seenContent.map((uc) => uc.content);
+      // content = [...content, ...seenUserContent];
+    }
 
-  const combinedProjects = [...taggedProjects, ...allProjects];
-  const combinedPosts = [...taggedPosts, ...allPosts];
+    if (content.length === 0) {
+      return NextResponse.json({ data: [], hasMore: false });
+    }
 
-  const basicProjects: TBasicProject[] = combinedProjects.map((project) => {
-    const stage = project.stages[0];
+    let hasMore = false;
+    if (content.length > limit) {
+      hasMore = true;
+      content.pop();
+    }
 
-    return {
-      id: project.id,
-      createdAt: project.createdAt,
-      updatedAt: project.updatedAt,
-      forSell: project.forSell,
-      isVisible: project.isVisible,
-      name: project.name,
-      carMake: project.carMake,
-      carModel: project.carModel,
-      description: project.description,
-      isVerified: project.isVerified,
-      hp: stage ? stage.hp : 0,
-      nm: stage ? stage.nm : 0,
-      engineStockHp: project.engineStockHp,
-      engineStockNm: project.engineStockNm,
-      acc_0_100: stage ? stage.acc_0_100?.toNumber() || null : null,
-      acc_100_200: stage ? stage.acc_100_200?.toNumber() || null : null,
-      engineNameAndCapacity: project.engineName + " " + project.engineCapacity,
-      images: project.media.map((m) => m.fileLocation),
-      tags: project.tags.map((tag) => ({
-        id: tag.id,
-        name: tag.name,
-      })),
-      stageNumber: project.stages.length,
-      author: {
-        id: project.author.id,
-        name: project.author.name,
-        email: project.author.email,
-      },
-      likesCount: project.likes.length,
-      isLikedByAuthUser: !!project.likes.find(
-        (l) => l.userId === userData.user.$id
-      ),
-    };
-  });
+    const combinedContent = content
+      .map((c) => {
+        if (c.project) {
+          const project = c.project;
+          const stage = project.stages[0];
 
-  const basicPosts: TBasicPost[] = combinedPosts.map((post) => ({
-    content: post.content ?? "",
-    id: post.id,
-    imagesUrl: post.imagesUrl,
-    lastUpdateAt: new Date(),
-    isLikedByAuthUser: !!post.likes.find((l) => l.userId === userData.user.$id),
-    likesCount: post.likes.length,
-    title: post.title,
-    author: {
-      id: post.author?.id ?? "",
-      name: post.author?.name ?? "",
-      email: post.author?.email ?? "",
-    },
-    tags: post.tags,
-  }));
+          return {
+            type: ContentType.Project,
+            data: {
+              id: project.id,
+              createdAt: project.createdAt,
+              updatedAt: project.updatedAt,
+              forSell: project.forSell,
+              isVisible: project.isVisible,
+              name: project.name,
+              carMake: project.carMake,
+              carModel: project.carModel,
+              description: project.description,
+              isVerified: project.isVerified,
+              hp: stage ? stage.hp : 0,
+              nm: stage ? stage.nm : 0,
+              engineStockHp: project.engineStockHp,
+              engineStockNm: project.engineStockNm,
+              acc_0_100: stage ? stage.acc_0_100?.toNumber() || null : null,
+              acc_100_200: stage ? stage.acc_100_200?.toNumber() || null : null,
+              engineNameAndCapacity:
+                project.engineName + " " + project.engineCapacity,
+              images: project.media.map((m) => m.fileLocation),
+              tags: project.tagAssignments.map((i) => ({
+                id: i.id,
+                name: i.tag.name,
+              })),
+              stageNumber: project.stages.length,
+              author: {
+                id: project.author.id,
+                name: project.author.name,
+                email: project.author.email,
+              },
+              likesCount: project.userActivity.length,
+              isLikedByAuthUser: !!project.userActivity.find(
+                (l) =>
+                  l.userId === userData.user.$id && l.activityType === "LIKE"
+              ),
+            },
+          };
+        } else if (c.post) {
+          const post = c.post;
+          return {
+            type: ContentType.Post,
+            data: {
+              content: post.content ?? "",
+              id: post.id,
+              imagesUrl: post.imagesUrl,
+              lastUpdateAt: new Date(),
+              isLikedByAuthUser: !!post.userActivity.find(
+                (l) =>
+                  l.userId === userData.user.$id && l.activityType === "LIKE"
+              ),
+              likesCount: post.userActivity.length,
+              title: post.title,
+              author: {
+                id: post.author?.id ?? "",
+                name: post.author?.name ?? "",
+                email: post.author?.email ?? "",
+              },
+              tags: post.tagAssignments ?? [],
+            },
+          };
+        }
 
-  const combinedContent = [
-    ...basicProjects.map((project) => ({
-      type: ContentType.Project,
-      data: project,
-    })),
-    ...basicPosts.map((post) => ({ type: ContentType.Post, data: post })),
-  ];
+        return null;
+      })
+      .filter(Boolean);
 
-  const shuffledContent = combinedContent.sort(() => Math.random() - 0.5);
-
-  const paginatedContent = shuffledContent.slice(
-    (page - 1) * limit,
-    page * limit
-  );
-
-  const hasMore = page * limit < combinedContent.length;
-
-  logger.info("Content was generated successfully");
-
-  return NextResponse.json({
-    data: paginatedContent,
-    hasMore,
-  });
+    logger.info("Content was generated successfully");
+    return NextResponse.json({
+      data: combinedContent,
+      hasMore,
+    });
+  } catch (error) {
+    console.error("Error fetching user content:", error);
+    return NextResponse.json(
+      { message: "Error fetching content" },
+      { status: 500 }
+    );
+  }
 }

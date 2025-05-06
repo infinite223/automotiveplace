@@ -2,6 +2,7 @@ import { TProblem } from "@/app/utils/types/problem";
 import { ContentMiniFooter } from "./ContentMiniFooter";
 import { ContentMiniNav } from "./ContentMiniNav";
 import { useLike } from "@/app/hooks/useLike";
+import { ContentType } from "@/app/utils/enums";
 
 export const ProblemMiniView = ({
   data,
@@ -14,7 +15,8 @@ export const ProblemMiniView = ({
     2,
     false,
     data.id,
-    "Problem"
+    ContentType.Problem,
+    []
   );
 
   return (

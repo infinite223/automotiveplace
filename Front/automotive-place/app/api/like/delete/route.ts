@@ -6,10 +6,9 @@ import { logger } from "@/app/api/logger.config";
 export async function DELETE(request: NextRequest) {
   try {
     const userData = await getLoggedInUser();
-
     if (!userData) {
       return NextResponse.json(
-        { message: "You must be logged in to use this functionality" },
+        { message: "Core.YouMustBeLoggedInToUseThisFunctionality" },
         { status: 401 }
       );
     }
@@ -24,10 +23,10 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const deletedLike = await prisma.like.deleteMany({
+    const deletedLike = await prisma.userActivity.deleteMany({
       where: {
         userId: userData.user.$id,
-        likeableId,
+        entityId: likeableId,
       },
     });
 

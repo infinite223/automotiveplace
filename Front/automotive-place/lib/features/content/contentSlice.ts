@@ -6,21 +6,25 @@ interface ContentState {
   contentData: TContentData[];
   page: number;
   isLoading: boolean;
+  hasMore: boolean;
 }
 
 const initialState: ContentState = {
   contentData: [],
-  page: 1,
+  page: 0,
   isLoading: false,
+  hasMore: true,
 };
 
-export const fetchProjects = createAsyncThunk(
-  "projects/fetchProjects",
-  async (page: number) => {
-    const content = await getMainContentDataForUser(page);
-    return content.data;
-  }
-);
+export const fetchContent = createAsyncThunk<
+  { data: TContentData[]; hasMore: boolean },
+  number
+>("projects/fetchProjects", async (page) => {
+  console.log("page", page);
+  const content = await getMainContentDataForUser(page);
+  console.log("content", content);
+  return content;
+});
 
 const contentDataSlice = createSlice({
   name: "projects",
@@ -43,17 +47,21 @@ const contentDataSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProjects.pending, (state) => {
+      .addCase(fetchContent.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(
-        fetchProjects.fulfilled,
-        (state, action: PayloadAction<TContentData[]>) => {
+        fetchContent.fulfilled,
+        (
+          state,
+          action: PayloadAction<{ data: TContentData[]; hasMore: boolean }>
+        ) => {
           state.isLoading = false;
-          state.contentData = [...state.contentData, ...action.payload];
+          state.contentData = [...state.contentData, ...action.payload.data];
+          state.hasMore = action.payload.hasMore;
         }
       )
-      .addCase(fetchProjects.rejected, (state) => {
+      .addCase(fetchContent.rejected, (state) => {
         state.isLoading = false;
       });
   },

@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { TContentData } from "../../../utils/types";
-import { isTBasicProject } from "../../../utils/types/project";
+import React, { useEffect, useRef, useState } from "react";
+import { TContentData } from "@/app/utils/types";
+import { isTBasicProject } from "@/app/utils/types/project";
 import { ProjectMiniView } from "./ProjectMiniView";
 import { isTBasicPost } from "@/app/utils/types/post";
 import { PostMiniView } from "./PostMiniView";
@@ -13,27 +13,40 @@ import { SpotMiniView } from "./SpotMiniView";
 import { CarItemMiniView } from "./CarItemMiniView";
 import { isTCarItem } from "@/app/utils/types/carItem";
 import { LoadingMiniView } from "./LoadingMiniView";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/lib/store";
-import { fetchProjects, setPage } from "@/lib/features/content/contentSlice";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
+import useOnScreen from "@/app/hooks/useOnScreen";
+import { ContentType } from "@/app/utils/enums";
+import { useTranslations } from "next-intl";
+import { useMainContent } from "@/app/hooks/useMainContent";
 
 export const HomeMainContent = () => {
+  const lastElementRef = useRef<HTMLDivElement>(null);
+  const [lastSeenId, setLastSeenId] = useState<string | null>(null);
+  const isLastElementVisible = useOnScreen(lastElementRef);
   const [userId, setUserId] = useState<string | null>(null);
-  const dispatch = useDispatch<AppDispatch>();
-  const _content = useSelector(
-    (state: RootState) => state.contentData.contentData
-  );
-  const isLoading = useSelector(
-    (state: RootState) => state.contentData.isLoading
-  );
-  const page = useSelector((state: RootState) => state.contentData.page);
+  const t = useTranslations();
+
+  const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
+    useMainContent();
+
+  const pages = (data as any)?.pages ?? [];
+  const content = pages.flatMap((page: any) => page.data);
 
   useEffect(() => {
-    if (_content.length === 0) {
-      dispatch(fetchProjects(page));
-    }
-  }, [dispatch, page, _content.length]);
+    if (
+      !hasNextPage ||
+      isLoading ||
+      !isLastElementVisible ||
+      content.length === 0
+    )
+      return;
+
+    const lastContentId = content[content.length - 1].id;
+    if (lastSeenId === lastContentId) return;
+
+    setLastSeenId(lastContentId);
+    fetchNextPage();
+  }, [isLastElementVisible]);
 
   useEffect(() => {
     const lastClickedId = sessionStorage.getItem("lastClickedId");
@@ -41,14 +54,16 @@ export const HomeMainContent = () => {
     if (lastClickedId) {
       const scrollToElement = () => {
         const element = document.getElementById(`content-${lastClickedId}`);
+        console.log(lastClickedId, element, "element");
         if (element) {
           element.scrollIntoView({ behavior: "smooth" });
+          sessionStorage.removeItem("lastClickedId");
         }
       };
 
       setTimeout(scrollToElement, 300);
     }
-  }, []);
+  }, [isLoading, data]);
 
   useEffect(() => {
     const getUser = async () => {
@@ -58,31 +73,30 @@ export const HomeMainContent = () => {
     getUser();
   }, []);
 
-  const loadMoreProjects = () => {
-    dispatch(setPage(page + 1));
-    dispatch(fetchProjects(page + 1));
-  };
-
-  // mr-[140px] max-lg:mr-0 max-2xl:mr-[80px] max-xl:mr-[75px]
   return (
     <div className="flex w-full items-center lg:pr-[150px] h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth">
       <div className="flex flex-col text-[12px] w-full lg:w-[570px]">
-        {!isLoading &&
-          _content.map((content) => {
-            return (
-              <div
-                key={content.data.id}
-                className="flex w-full items-center justify-center py-1 "
-                id={`content-${content.data.id}`}
-              >
-                <div className="flex w-full bg-amp-50 p-2 rounded-md">
-                  <ContentSelect content={content} userId={userId} />
-                </div>
-              </div>
-            );
-          })}
+        {content.map((item: any) => (
+          <div
+            key={item.id}
+            className="flex w-full items-center justify-center py-1"
+            id={`content-${item.data.id}`}
+          >
+            <div className="flex w-full bg-amp-50 p-2 rounded-md">
+              <ContentSelect content={item} userId={userId} />
+            </div>
+          </div>
+        ))}
 
-        {isLoading && (
+        <div ref={lastElementRef} className="py-2" />
+
+        {!isLoading && !hasNextPage && (
+          <div className="text-center text-sm text-gray-500 pb-4">
+            {t("Core.NoMoreResults")}
+          </div>
+        )}
+
+        {(isLoading || isFetchingNextPage) && (
           <>
             <LoadingMiniView />
             <LoadingMiniView />
@@ -105,10 +119,8 @@ export const ContentSelect = ({
 }) => {
   const errorText = " data is not valid";
   switch (type) {
-    case "Project":
-      const contentDataIsProject = isTBasicProject(data);
-
-      if (contentDataIsProject) {
+    case ContentType.Project:
+      if (isTBasicProject(data)) {
         return (
           <ProjectMiniView
             data={data}
@@ -116,45 +128,32 @@ export const ContentSelect = ({
           />
         );
       }
-
       console.error(type, errorText);
       return null;
-    case "Problem":
-      const contentDataIsProblem = isTProblem(data);
-
-      if (contentDataIsProblem) {
+    case ContentType.Problem:
+      if (isTProblem(data)) {
         return <ProblemMiniView data={data} isUserContent={false} />;
       }
-
       console.error(type, errorText);
       return null;
-    case "Post":
-      const contentDataIsPost = isTBasicPost(data);
-
-      if (contentDataIsPost) {
+    case ContentType.Post:
+      if (isTBasicPost(data)) {
         return (
           <PostMiniView data={data} isUserContent={userId === data.author.id} />
         );
       }
-
       console.error(type, errorText);
       return null;
-    case "Spot":
-      const contentDataIsSpot = isTSpot(data);
-
-      if (contentDataIsSpot) {
+    case ContentType.Spot:
+      if (isTSpot(data)) {
         return <SpotMiniView data={data} isUserContent={false} />;
       }
-
       console.error(type, errorText);
       return null;
     case "CarItem":
-      const contentDataIsCarItem = isTCarItem(data);
-
-      if (contentDataIsCarItem) {
+      if (isTCarItem(data)) {
         return <CarItemMiniView data={data} isUserContent={false} />;
       }
-
       console.error(type, errorText);
       return null;
     default:

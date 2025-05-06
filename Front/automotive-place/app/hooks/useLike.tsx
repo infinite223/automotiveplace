@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { createLike, deleteLike } from "@/app/services/like";
 import { TContentTypes } from "../utils/types";
+import { TBasicTag } from "../utils/types/tag";
 
 export const useLike = (
   initialLikesCount: number,
   initialIsLiked: boolean,
   id: string,
-  type: TContentTypes
+  type: TContentTypes,
+  tags: TBasicTag[]
 ) => {
   const [currentLikesCount, setCurrentLikesCount] = useState(initialLikesCount);
   const [currentIsLiked, setCurrentIsLiked] = useState(initialIsLiked);
@@ -30,7 +32,7 @@ export const useLike = (
       setCurrentLikesCount((prev) => prev + 1);
       setCurrentIsLiked(true);
       try {
-        await createLike(id, type);
+        await createLike(id, type, tags);
       } catch (error) {
         console.error("Error while creating like", error);
         setCurrentLikesCount((prev) => prev - 1);

@@ -22,11 +22,12 @@ model Post {
   reportId         String?
   imagesUrl        String?
   isProblem        Boolean?
-  likes            Like[]
+  userActivity     UserActivity[]
   author           User?    @relation(fields: [authorId], references: [id])
   company          Company? @relation(fields: [companyId], references: [id])
-  tags             Tag[]
+  tagAssignments   TagAssignment[]
   media            Media[]  
+  contents         Content[]
 }
 
 model Project {
@@ -63,15 +64,54 @@ model Project {
   transmissionType            Int
   weightStock                 Decimal?
   carItems                    CarItem[]
-  likes                       Like[]
+  userActivity                UserActivity[]
   location                    Location?
   pickedProjectsOnEventOrSpot PickedProjectOnEventOrSpot[]
   author                      User                         @relation(fields: [authorId], references: [id])
   company                     Company?                     @relation(fields: [companyId], references: [id])
   garage                      Garage                       @relation(fields: [garageId], references: [id])
   stages                      Stage[]
-  tags                        Tag[]
-  media                       Media[]                      
+  tagAssignments              TagAssignment[]
+  media                       Media[]             
+  contents                    Content[]           
+}
+
+model Content {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  projectId  String?
+  postId     String?
+  isVerified Boolean  @default(false)
+
+  project    Project? @relation(fields: [projectId], references: [id])
+  post       Post?    @relation(fields: [postId], references: [id])
+  users      UserContent[]
+}
+
+model UserContent {
+  id        String   @id @default(cuid())
+  userId    String
+  contentId String
+  isViewed  Boolean  @default(false)
+  isSaved   Boolean  @default(false)
+  prio      Int
+
+  user      User     @relation(fields: [userId], references: [id])
+  content   Content  @relation(fields: [contentId], references: [id])
+
+  @@unique([userId, contentId])
+}
+
+model Job {
+  id         String   @id @default(cuid())
+  userId     String   @unique
+  isRunning  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  lastStatus String
+
+  user       User     @relation(fields: [userId], references: [id])
 }
 
 model Media {
@@ -102,15 +142,17 @@ model User {
   suggestedContentModel      String?
   carItems                   CarItem[]
   garage                     Garage?
-  likes                      Like[]
   pickedProjectOnEventOrSpot PickedProjectOnEventOrSpot[]
   posts                      Post[]
   projects                   Project[]
   reports                    Report[]
   createdStages              Stage[]
-  tags                       Tag[]
+  tagAssignments             TagAssignment[]
   userActivity               UserActivity[]
   company                    Company?                     @relation(fields: [companyId], references: [id])
+  userContent                UserContent[]
+  job                        Job?
+  tags Tag[]
 
   @@map("users")
 }
@@ -122,8 +164,15 @@ model UserActivity {
   entityId     String
   entityType   EntityType
   createdAt    DateTime          @default(now())
+  carItemId    String?
+  projectId    String?
+  postId       String?
+
+  carItem      CarItem?          @relation(fields: [carItemId], references: [id])
+  post         Post?             @relation(fields: [postId], references: [id])
+  project      Project?          @relation(fields: [projectId], references: [id])
   user         User              @relation(fields: [userId], references: [id])
-  tags         Tag[]             @relation("TagUserActivities")
+  tagAssignments   TagAssignment[]             @relation("TagUserActivities")
   TagUserActivity TagUserActivity[]
 }
 
@@ -141,7 +190,7 @@ model Company {
   location         Location?
   posts            Post[]
   projects         Project[]
-  tags             Tag[]
+  tagAssignments   TagAssignment[]
   users            User[]
 }
 
@@ -238,25 +287,56 @@ model Tag {
   createdAt        DateTime       @default(now()) @map("created_at")
   updatedAt        DateTime       @updatedAt @map("updated_at")
   authorId         String
-  projectId        String?
-  carItemId        String?
-  companyId        String?
   isBlockedByAdmin Boolean?
   reportId         String?
-  postId           String?
+  
   author           User           @relation(fields: [authorId], references: [id])
-  carItem          CarItem?       @relation(fields: [carItemId], references: [id])
-  company          Company?       @relation(fields: [companyId], references: [id])
-  post             Post?          @relation(fields: [postId], references: [id])
-  project          Project?       @relation(fields: [projectId], references: [id])
-  userActivities   UserActivity[] @relation("TagUserActivities")
-  TagUserActivity  TagUserActivity[]
+  tagAssignments   TagAssignment[]
 }
+
+model TagAssignment {
+  id        String  @id @default(cuid())
+  tagId     String
+  postId    String?  
+  projectId String?  
+  companyId String?  
+  carItemId String?  
+  userId    String?  
+  userActivityId String? // Dodaj to pole
+
+  tag       Tag      @relation(fields: [tagId], references: [id])
+  post      Post?    @relation(fields: [postId], references: [id])
+  project   Project? @relation(fields: [projectId], references: [id])
+  company   Company? @relation(fields: [companyId], references: [id])
+  carItem   CarItem? @relation(fields: [carItemId], references: [id])
+  user      User?    @relation(fields: [userId], references: [id])
+  userActivity UserActivity? @relation("TagUserActivities", fields: [userActivityId], references: [id])
+}
+
+// model Tag {
+//   id               String         @id @default(cuid())
+//   name             String
+//   createdAt        DateTime       @default(now()) @map("created_at")
+//   updatedAt        DateTime       @updatedAt @map("updated_at")
+//   authorId         String
+//   projectId        String?
+//   carItemId        String?
+//   companyId        String?
+//   isBlockedByAdmin Boolean?
+//   reportId         String?
+//   postId           String?
+//   author           User           @relation(fields: [authorId], references: [id])
+//   carItem          CarItem?       @relation(fields: [carItemId], references: [id])
+//   company          Company?       @relation(fields: [companyId], references: [id])
+//   post             Post?          @relation(fields: [postId], references: [id])
+//   project          Project?       @relation(fields: [projectId], references: [id])
+//   userActivities   UserActivity[] @relation("TagUserActivities")
+//   TagUserActivity  TagUserActivity[]
+// }
 
 model TagUserActivity {
   tagId          String
   userActivityId String
-  tag            Tag            @relation(fields: [tagId], references: [id])
   userActivity   UserActivity   @relation(fields: [userActivityId], references: [id])
 
   @@id([tagId, userActivityId])
@@ -285,8 +365,8 @@ model CarItem {
   garage           Garage?  @relation(fields: [garageId], references: [id])
   project          Project  @relation(fields: [projectId], references: [id])
   stage            Stage?   @relation(fields: [stageId], references: [id])
-  likes            Like[]
-  tags             Tag[]
+  userActivity     UserActivity[]
+  tagAssignments   TagAssignment[]
 }
 
 model Report {
@@ -301,22 +381,22 @@ model Report {
   author          User     @relation(fields: [userId], references: [id])
 }
 
-model Like {
-  id           String       @id @default(cuid())
-  userId       String
-  likeableId   String
-  likeableType LikeableType
-  createdAt    DateTime     @default(now()) @map("created_at")
-  carItemId    String?
-  projectId    String?
-  postId       String?
-  carItem      CarItem?     @relation(fields: [carItemId], references: [id])
-  post         Post?        @relation(fields: [postId], references: [id])
-  project      Project?     @relation(fields: [projectId], references: [id])
-  author       User         @relation(fields: [userId], references: [id])
+// model Like {
+//   id           String       @id @default(cuid())
+//   userId       String
+//   likeableId   String
+//   likeableType LikeableType
+//   createdAt    DateTime     @default(now()) @map("created_at")
+//   carItemId    String?
+//   projectId    String?
+//   postId       String?
+//   carItem      CarItem?     @relation(fields: [carItemId], references: [id])
+//   post         Post?        @relation(fields: [postId], references: [id])
+//   project      Project?     @relation(fields: [projectId], references: [id])
+//   author       User         @relation(fields: [userId], references: [id])
 
-  @@index([likeableId, likeableType], map: "likeable_index")
-}
+//   @@index([likeableId, likeableType], map: "likeable_index")
+// }
 
 model Location {
   id          String   @id @default(cuid())

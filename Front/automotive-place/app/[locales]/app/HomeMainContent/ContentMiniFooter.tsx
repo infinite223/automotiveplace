@@ -6,8 +6,6 @@ import { iconSizes } from "@/app/utils/constants";
 import { AMPTag } from "@/app/components/shared/AMPTag";
 import { TbMessageCircleUp } from "react-icons/tb";
 import { AMPSeparator } from "@/app/components/shared/AMPSeparator";
-import { createLike, deleteLike } from "@/app/services/like";
-import { useState } from "react";
 
 interface IContentMiniFooter {
   type: TContentTypes;

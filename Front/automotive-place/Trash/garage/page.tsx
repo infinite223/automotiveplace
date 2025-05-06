@@ -13,7 +13,6 @@ import AMPModal from "../../app/components/shared/AMPModal";
 import { CreateCarItemView } from "../../app/components/createCarItem";
 import { getAllCarItems } from "../../app/services/carItem";
 import { TCarItem } from "../../app/utils/types/carItem";
-import { Notification } from "../../app/components/logger/Notification";
 
 export default function Garage() {
   const [isLoading, setIsLoading] = useState(true);

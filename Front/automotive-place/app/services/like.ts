@@ -1,6 +1,11 @@
 import { ICreateNotification, TContentTypes } from "../utils/types";
+import { TBasicTag } from "../utils/types/tag";
 
-export const createLike = async (contentId: string, type: TContentTypes) => {
+export const createLike = async (
+  contentId: string,
+  type: TContentTypes,
+  tags: TBasicTag[]
+) => {
   try {
     const response = await fetch(`/api/like/create`, {
       method: "POST",
@@ -9,7 +14,8 @@ export const createLike = async (contentId: string, type: TContentTypes) => {
       },
       body: JSON.stringify({
         likeableId: contentId,
-        likeableType: type.toUpperCase(),
+        entityType: type.toUpperCase(),
+        tags: tags.map((tag) => tag.id),
       }),
     });
 

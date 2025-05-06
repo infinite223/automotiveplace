@@ -9,6 +9,7 @@ import { iconSizes } from "@/app/utils/constants";
 import Link from "next/link";
 import AMPSlider from "@/app/components/shared/AMPSlider";
 import { useLike } from "@/app/hooks/useLike";
+import { ContentType } from "@/app/utils/enums";
 
 export const ProjectMiniView = ({
   data,
@@ -22,7 +23,8 @@ export const ProjectMiniView = ({
     data.likesCount,
     data.isLikedByAuthUser,
     data.id,
-    "Project"
+    ContentType.Project,
+    data.tags
   );
 
   useEffect(() => {
@@ -112,7 +114,7 @@ export const ProjectMiniView = ({
             currentLikesCount={currentLikesCount}
             handleClickLike={handleClickLike}
             handleClickShare={handleClickShare}
-            type="Project"
+            type={ContentType.Project}
             actions={
               <Link
                 href={`../project/${data.id}`}

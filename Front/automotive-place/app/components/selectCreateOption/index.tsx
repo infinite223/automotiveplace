@@ -7,7 +7,10 @@ import { BsPostcardFill } from "react-icons/bs";
 import { iconSizes } from "@/app/utils/constants";
 import { AMPSeparator } from "../shared/AMPSeparator";
 import { useDispatch } from "react-redux";
-import { setShowCreateProject } from "@/lib/features/actions/actionsSlice";
+import {
+  setShowCreatePost,
+  setShowCreateProject,
+} from "@/lib/features/actions/actionsSlice";
 const iconSize = iconSizes.small;
 
 export const SelectCreateOption: FC = () => {
@@ -22,7 +25,7 @@ export const SelectCreateOption: FC = () => {
       />
       <OptionItem
         name="Dodaj post"
-        onClick={() => {}}
+        onClick={() => dispatch(setShowCreatePost(true))}
         icon={<BsPostcardFill size={iconSize} />}
       />
       <OptionItem
@@ -64,7 +67,7 @@ const OptionItem = ({
   return (
     <motion.div
       onClick={onClick}
-      className="w-full rounded-sm flex flex-co gap-4 px-4 items-center p-2 cursor-pointer hover:bg-amp-700 dark:hover:bg-amp-300"
+      className="w-full rounded-sm flex flex-co gap-4 px-4 text-white/80 items-center p-2 cursor-pointer hover:bg-amp-700 dark:hover:bg-amp-300/50"
     >
       <AnimatePresence>
         <motion.div
