@@ -67,7 +67,7 @@ const OptionItem = ({
   return (
     <motion.div
       onClick={onClick}
-      className="w-full rounded-sm flex flex-co gap-4 px-4 items-center p-2 cursor-pointer hover:bg-amp-700 dark:hover:bg-amp-300"
+      className="w-full rounded-sm flex flex-co gap-4 px-4 text-white/80 items-center p-2 cursor-pointer hover:bg-amp-700 dark:hover:bg-amp-300/50"
     >
       <AnimatePresence>
         <motion.div

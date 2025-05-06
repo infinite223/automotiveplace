@@ -37,13 +37,15 @@ function AMPPopularProjects() {
                     alt={`Project image 1`}
                   />
                 </div>
-                <div>
+                <div className="leading-4">
                   <div className="font-semibold">
                     {project.carMake} {project.carModel}
                   </div>
-                  <div>Stage: {project.stageNumber}</div>
-                  <div>HP: {project.currentHp}</div>
-                  <div>NM: {project.currentNm}</div>
+                  <div className="text-xs leading-[15px]">
+                    <div>Stage: {project.stageNumber}</div>
+                    <div>HP: {project.currentHp}</div>
+                    <div>NM: {project.currentNm}</div>
+                  </div>
                 </div>
               </div>
             </div>

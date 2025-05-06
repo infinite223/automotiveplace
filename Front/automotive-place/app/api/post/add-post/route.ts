@@ -87,6 +87,21 @@ async function createPost(post: TPostCreate, authorId: string) {
         published: true,
       },
     });
+
+    const content = await prisma.content.create({
+      data: {
+        id: newPost.id,
+        postId: newPost.id,
+      },
+    });
+
+    await prisma.userContent.create({
+      data: {
+        userId: authorId,
+        contentId: content.id,
+        prio: 0,
+      },
+    });
   } catch (error) {
     console.error("Error creating post", error);
     throw error;

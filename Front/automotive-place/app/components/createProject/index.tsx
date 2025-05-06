@@ -122,10 +122,10 @@ export const CreateProjectView = () => {
 
   return (
     <main
-      className="flex justify-center bg-amp-000 dark:bg-amp-900 text-sm rounded-md"
+      className="flex justify-center text-sm rounded-md"
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="w-[200px] h-[11/12] p-3 mr-0 rounded-sm border-r border-zinc-700 ml-2">
+      <div className="w-[300px] h-[11/12] p-3 mr-0 rounded-sm border-r border-zinc-700 ml-2">
         <div className="flex flex-col gap-2 mt-3">
           <AMPSwitch
             name="Element w użyciu?"
@@ -138,7 +138,7 @@ export const CreateProjectView = () => {
             value={forSell}
           />
 
-          <p className="bg-amp-800 dark:bg-amp-100 leading-3 text-[11px] mt-2">
+          <p className="leading-3 text-[11px] mt-2">
             Po utworzeniu projektu można go edytować.
           </p>
         </div>

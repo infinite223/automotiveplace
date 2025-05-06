@@ -21,9 +21,7 @@ export const AMPSwitch: FC<IAMPSwitch> = ({
 }) => {
   return (
     <label className="inline-flex items-center justify-between cursor-pointer gap-2 w-full">
-      <span className="text-[13px] font-medium bg-amp-000 dark:bg-amp-900 leading-4">
-        {name}
-      </span>
+      <span className="text-[13px] font-medium leading-4">{name}</span>
       <input
         type="checkbox"
         onChange={() => setValue(!value)}
