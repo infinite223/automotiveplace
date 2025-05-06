@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     },
     timer: 3000,
   };
-  let newCarItem = null;
+  let newPost = null;
 
   const author = await prisma.user.findFirst();
   // TODO - change validation in all routes to zod
@@ -52,18 +52,18 @@ export async function POST(request: NextRequest) {
   //   }
 
   if (author?.id) {
-    newCarItem = await createPost(post, author.id);
+    newPost = await createPost(post, author.id);
 
-    if (newCarItem) {
+    if (newPost) {
       notification.log = {
         status: "Success",
         date: new Date(),
-        title: "Element został dodany pomyślnie",
+        title: "Post został dodany pomyślnie",
       };
     }
   }
 
-  return NextResponse.json({ carItem: newCarItem, notification });
+  return NextResponse.json({ post: newPost, notification });
 }
 
 async function createPost(post: TPostCreate, authorId: string) {
@@ -88,7 +88,7 @@ async function createPost(post: TPostCreate, authorId: string) {
       },
     });
   } catch (error) {
-    console.error("Error creating car item:", error);
+    console.error("Error creating post", error);
     throw error;
   }
 

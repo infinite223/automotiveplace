@@ -3,13 +3,13 @@ import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { logger } from "@/app/api/logger.config";
 import prisma from "@/lib/prisma";
 import { ContentType } from "@/app/utils/enums";
-import redis from "@/lib/redis";
+// import redis from "@/lib/redis";
 
-async function getUserSeenContentIds(userId: string) {
-  const redisKey = `user:seenContent:${userId}`;
-  const seenContentIds = await redis.sMembers(redisKey);
-  return seenContentIds;
-}
+// async function getUserSeenContentIds(userId: string) {
+//   const redisKey = `user:seenContent:${userId}`;
+//   const seenContentIds = await redis.sMembers(redisKey);
+//   return seenContentIds;
+// }
 
 export async function GET(request: NextRequest) {
   const userData = await getLoggedInUser();
@@ -28,8 +28,8 @@ export async function GET(request: NextRequest) {
   console.log(limit, page, seenPage, "limit, page, seenPage");
   try {
     let content;
-    const seenContentIds = await getUserSeenContentIds(userData.user.$id);
-
+    // const seenContentIds = await getUserSeenContentIds(userData.user.$id);
+    const seenContentIds: string[] = [];
     const userContent = await prisma.userContent.findMany({
       take: limit + 1,
       skip: limit * page,

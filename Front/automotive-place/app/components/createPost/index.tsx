@@ -8,11 +8,17 @@ import { validPost } from "./Validation";
 import { TPostCreate } from "@/app/utils/types/post";
 import { createPost } from "@/app/services/post";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
+import { CreateNotification } from "../logger/NotificationHelper";
+import { ErrorStatus } from "@/app/utils/enums";
+import { setShowCreatePost } from "@/lib/features/actions/actionsSlice";
 
 export const CreatePostView = () => {
   const dispatch = useDispatch();
   const [post, setPost] = useState<TPostCreate>(postData);
+  const [loading, setLoading] = useState(false);
+
   const onSubmit = async () => {
+    setLoading(true);
     const validResults = validPost(post);
 
     if (validResults.length == 0) {
@@ -21,13 +27,21 @@ export const CreatePostView = () => {
       if (result) {
         if (result.notification) {
           dispatch(addNotification(JSON.stringify(result.notification)));
+          dispatch(setShowCreatePost(false));
         }
       }
     } else {
-      // if (notification) {
-      //   dispatch(addNotification(JSON.stringify(notification)));
-      // }
+      dispatch(
+        addNotification(
+          JSON.stringify(
+            // TODO - update message
+            CreateNotification(ErrorStatus.Medium, "Coś poszło nie tak")
+          )
+        )
+      );
     }
+
+    setLoading(false);
   };
 
   //   const handleCarItemVallue = (value: string | number) => {
@@ -47,15 +61,14 @@ export const CreatePostView = () => {
         action={onSubmit}
       >
         <AMPInput
-          name="Tytuł postu"
+          name="Tytuł"
           setValue={(value) => setPost({ ...post, title: value.toString() })}
           value={post.title}
           placeholder="Np. Zrobiłem swapa z 1.9TDI na 2.0TFSI"
           inputStyles={{ fontSize: 12 }}
-          //   validFunction={validCarNameValue}
         />
         <AMPTextarea
-          name="Opis postu"
+          name="Opis"
           setValue={(value) =>
             setPost({ ...post, description: value.toString() })
           }
@@ -66,6 +79,7 @@ export const CreatePostView = () => {
         <button
           type="submit"
           className="mt-4 bg-teal-800 py-2 rounded-md text-white group-invalid:pointer-events-none group-invalid:opacity-50"
+          disabled={loading}
         >
           Dodaj post
         </button>
