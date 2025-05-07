@@ -54,9 +54,9 @@ export const CreatePostView = () => {
       className="flex justify-center text-sm rounded-md"
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="w-[250px] h-[11/12] p-3 pr-4 rounded-sm border-r border-zinc-700 ml-2"></div>
+      <div className="w-[250px] h-[11/12] p-3 pr-4 rounded-sm border-r border-zinc-700 ml-2 hidden"></div>
       <form
-        className="rounded-md p-2 pr-4 pl-4 flex flex-col max-w-lg group w-[300px]"
+        className="rounded-md p-2 pr-4 pl-4 flex flex-col max-w-lg group w-[95vw] md:w-[760px]"
         noValidate
         action={onSubmit}
       >

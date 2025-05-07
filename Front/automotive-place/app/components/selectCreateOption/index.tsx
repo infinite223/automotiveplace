@@ -17,7 +17,7 @@ export const SelectCreateOption: FC = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex flex-col min-w-20 min-h-10 w-[400px]">
+    <div className="flex flex-col min-w-20 min-h-10 sm:w-[640px] w-[95vw]">
       <OptionItem
         name="Dodaj projekt"
         onClick={() => dispatch(setShowCreateProject(true))}
