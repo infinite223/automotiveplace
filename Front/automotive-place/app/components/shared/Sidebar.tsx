@@ -20,7 +20,6 @@ import { SlMenu } from "react-icons/sl";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Yant } from "@/app/utils/helpers";
-import { CreateProblemView } from "../createProblem";
 import { RootState } from "@/lib/store";
 import {
   setShowCreatePost,
@@ -37,18 +36,75 @@ export const SideBar: FC<ISideBar> = ({}) => {
   const dispatch = useDispatch();
   const t = useTranslations();
   const router = useRouter();
-  const smallScreenHiddenItem = "max-2xl:hidden";
+
+  // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showCreateProject = useSelector(
     (state: RootState) => state.actions.showCreateProject
   );
-
   const showCreatePost = useSelector(
     (state: RootState) => state.actions.showCreatePost
   );
+
+  // Modal handlers
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-  // TODO - zmiana wyświetlania się sidebara dla mobilnej wersji lub implementacja nowego
+
+  return (
+    <>
+      {/* Desktop Sidebar */}
+      <div className="hidden lg:block">
+        <SideBarDesktop openModal={openModal} />
+      </div>
+
+      {/* Mobile Sidebar */}
+      <div className="block lg:hidden">
+        <SideBarMobile openModal={openModal} />
+      </div>
+
+      {/* Modals */}
+      <AMPModal
+        onClose={closeModal}
+        withHeader={true}
+        visible={isModalOpen}
+        title="Wybierz opcje"
+        additionalTailwindCss="relative bottom-[15vh] bg-amp-100"
+        defoultBG={false}
+      >
+        <SelectCreateOption />
+      </AMPModal>
+
+      <AMPModal
+        onClose={() => dispatch(setShowCreateProject(false))}
+        withHeader={true}
+        visible={showCreateProject}
+        title="Dodawanie projektu"
+        additionalTailwindCss="relative bottom-40 bg-amp-100"
+        defoultBG={false}
+      >
+        <CreateProjectView />
+      </AMPModal>
+
+      <AMPModal
+        onClose={() => dispatch(setShowCreatePost(false))}
+        withHeader={true}
+        visible={showCreatePost}
+        title="Dodawanie postu"
+        additionalTailwindCss="relative bottom-40 bg-amp-100"
+        defoultBG={false}
+      >
+        <CreatePostView />
+      </AMPModal>
+    </>
+  );
+};
+
+const SideBarDesktop: FC<{ openModal: () => void }> = ({ openModal }) => {
+  const dispatch = useDispatch();
+  const t = useTranslations();
+  const router = useRouter();
+  const smallScreenHiddenItem = "max-2xl:hidden";
+
   return (
     <div className="flex min-w-[85px] bg-amp-0 2xl:w-[240px] lg:h-full scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
       <div className="flex flex-col gap-1 h-[100%] 2xl:ml-4 justify-between py-2 pb-2">
@@ -82,7 +138,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
           <OptionItem
             icon={<RiPlayListAddLine size={iconSizes.base} />}
             name={t("Core.Add")}
-            onClick={() => openModal()}
+            onClick={openModal}
           />
           <OptionItem
             icon={<BiSolidCarGarage size={iconSizes.base} />}
@@ -130,39 +186,55 @@ export const SideBar: FC<ISideBar> = ({}) => {
           />
         </div>
       </div>
+    </div>
+  );
+};
 
-      <AMPModal
-        onClose={closeModal}
-        withHeader={true}
-        visible={isModalOpen}
-        title="Wybierz opcje"
-        additionalTailwindCss="relative bottom-[15vh] bg-amp-100"
-        defoultBG={false}
-      >
-        <SelectCreateOption />
-      </AMPModal>
+const SideBarMobile: FC<{ openModal: () => void }> = ({ openModal }) => {
+  const t = useTranslations();
+  const router = useRouter();
 
-      <AMPModal
-        onClose={() => dispatch(setShowCreateProject(false))}
-        withHeader={true}
-        visible={showCreateProject}
-        title="Dodawanie projektu"
-        additionalTailwindCss="relative bottom-40 bg-amp-100"
-        defoultBG={false}
-      >
-        <CreateProjectView />
-      </AMPModal>
+  return (
+    <div className="flex bg-amp-0 w-full h-full p-4 px-6 flex-col">
+      <div className="gap-4 pb-2 p-1 items-center flex">
+        <Image src={Logo} alt="logo" width={25} height={25} />
+        <span className={`text-md uppercase` + Yant.className}>
+          Automotiveplace
+        </span>
+      </div>
+      <div className="flex w-full justify-between">
+        <OptionItem
+          icon={<MdHome size={iconSizes.base} />}
+          name={t("Core.Home")}
+          onClick={() => router.push("home")}
+          showName={false}
+        />
+        <OptionItem
+          icon={<LuSearch size={iconSizes.base} />}
+          name={t("Core.Search")}
+          onClick={() => {}}
+          showName={false}
+        />
+        <OptionItem
+          icon={<RiPlayListAddLine size={iconSizes.base} />}
+          name={t("Core.Add")}
+          onClick={openModal}
+          showName={false}
+        />
+        <OptionItem
+          icon={<BiSolidCarGarage size={iconSizes.base} />}
+          name={t("Core.Garage")}
+          onClick={() => router.push("garage")}
+          showName={false}
+        />
 
-      <AMPModal
-        onClose={() => dispatch(setShowCreatePost(false))}
-        withHeader={true}
-        visible={showCreatePost}
-        title="Dodawanie postu"
-        additionalTailwindCss="relative bottom-40 bg-amp-100"
-        defoultBG={false}
-      >
-        <CreatePostView />
-      </AMPModal>
+        <OptionItem
+          icon={<SlMenu size={iconSizes.base} />}
+          name={t("Core.Menu")}
+          onClick={() => {}}
+          showName={false}
+        />
+      </div>
     </div>
   );
 };
@@ -172,16 +244,19 @@ const OptionItem: FC<{
   icon: any;
   onClick: () => void;
   additionalTailwindCss?: string;
-}> = ({ icon, name, onClick, additionalTailwindCss }) => {
+  showName?: boolean;
+}> = ({ icon, name, onClick, additionalTailwindCss, showName = true }) => {
   return (
     <div
       className={`${additionalTailwindCss} flex-row gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 pl-1 hover:opacity-70 cursor-pointer flex items-center justify-center`}
       onClick={onClick}
     >
       {icon}
-      <div className="text-md max-2xl:text-[12px] text-center leading-4">
-        {name}
-      </div>
+      {showName && (
+        <div className="text-md max-2xl:text-[12px] text-center leading-4">
+          {name}
+        </div>
+      )}
     </div>
   );
 };

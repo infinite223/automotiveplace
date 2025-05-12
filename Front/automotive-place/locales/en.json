@@ -18,7 +18,8 @@
     "Problems": "Problems",
     "Company": "Company",
     "Settings": "Settings",
-    "": "No more results",
+    "Menu": "Menu",
+    "NoMoreResults": "No more results",
     "Hp": "Hp",
     "YouAreAlreadyLoggedInAsAdmin": "You are already logged in as admin",
     "CarItemTypes": {
