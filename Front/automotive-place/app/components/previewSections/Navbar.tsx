@@ -62,18 +62,14 @@ export default function CustomNavbar({
   }, []);
 
   return (
-    <Navbar
-      shouldHideOnScroll
-      className="p-2 px-0 fixed z-20 shadow-sm"
-      style={{ backgroundColor: navbarBg, transition: "background-color 0.3s" }}
-    >
+    <Navbar shouldHideOnScroll className="p-2 px-0 fixed z-20 shadow-sm">
       <NavbarBrand>
         {/* <pa
           className={` font-extrabold ${navbarBg === "transparent" ? "text-amp-900" : "text-amp-300"}`}
         >
           A|M|P
         </p> */}
-        <div className="flex gap-4 items-center ">
+        <div className="flex gap-4 items-center ml-[-7px]">
           <Image
             src={Logo}
             alt="logo"
@@ -106,7 +102,7 @@ export default function CustomNavbar({
         ))}
       </NavbarContent>
       <NavbarContent justify="end">
-        <div className="flex gap-2">
+        <div className="flex gap-2 mr-[-10px]">
           <Link
             href={"./sign-up"}
             className={`border-1.5 py-1.5 px-4 font-semibold rounded-sm text-sm ${navbarBg === "transparent" ? "text-amp-700 hover:text-amp-900 border-amp-700" : "text-amp-100 hover:text-amp-300 border-amp-300"}`}
