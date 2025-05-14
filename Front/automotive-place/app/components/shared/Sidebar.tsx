@@ -17,7 +17,7 @@ import AMPModal from "./AMPModal";
 import { SelectCreateOption } from "../selectCreateOption";
 import { iconSizes } from "@/app/utils/constants";
 import { SlMenu } from "react-icons/sl";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Yant } from "@/app/utils/helpers";
 import { RootState } from "@/lib/store";
@@ -29,6 +29,7 @@ import Logo from "../../../asets/logo_2.png";
 import Image from "next/image";
 import { CreatePostView } from "../createPost";
 import { CreateProjectView } from "../createProject";
+import { IoNotifications } from "react-icons/io5";
 
 interface ISideBar {}
 
@@ -36,8 +37,8 @@ export const SideBar: FC<ISideBar> = ({}) => {
   const dispatch = useDispatch();
   const t = useTranslations();
   const router = useRouter();
+  const pathname = usePathname();
 
-  // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showCreateProject = useSelector(
     (state: RootState) => state.actions.showCreateProject
@@ -46,7 +47,6 @@ export const SideBar: FC<ISideBar> = ({}) => {
     (state: RootState) => state.actions.showCreatePost
   );
 
-  // Modal handlers
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -54,15 +54,14 @@ export const SideBar: FC<ISideBar> = ({}) => {
     <>
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">
-        <SideBarDesktop openModal={openModal} />
+        <SideBarDesktop openModal={openModal} pathname={pathname} />
       </div>
 
       {/* Mobile Sidebar */}
       <div className="block lg:hidden">
-        <SideBarMobile openModal={openModal} />
+        <SideBarMobile openModal={openModal} pathname={pathname} />
       </div>
 
-      {/* Modals */}
       <AMPModal
         onClose={closeModal}
         withHeader={true}
@@ -99,10 +98,14 @@ export const SideBar: FC<ISideBar> = ({}) => {
   );
 };
 
-const SideBarDesktop: FC<{ openModal: () => void }> = ({ openModal }) => {
+const SideBarDesktop: FC<{ openModal: () => void; pathname: string }> = ({
+  openModal,
+  pathname,
+}) => {
   const dispatch = useDispatch();
   const t = useTranslations();
   const router = useRouter();
+
   const smallScreenHiddenItem = "max-2xl:hidden";
 
   return (
@@ -126,24 +129,28 @@ const SideBarDesktop: FC<{ openModal: () => void }> = ({ openModal }) => {
           <OptionItem
             icon={<MdHome size={iconSizes.base} />}
             name={t("Core.Home")}
-            onClick={() => router.push("home")}
+            onClick={() => router.push("/home")}
+            isActive={pathname.includes("/home")}
           />
           <OptionItem
             icon={<LuSearch size={iconSizes.base} />}
             name={t("Core.Search")}
             additionalTailwindCss={smallScreenHiddenItem}
             onClick={() => dispatch(setIsSearchBarOpen(true))}
+            isActive={pathname === "/search"}
           />
 
           <OptionItem
             icon={<RiPlayListAddLine size={iconSizes.base} />}
             name={t("Core.Add")}
             onClick={openModal}
+            isActive={pathname === "/add"}
           />
           <OptionItem
             icon={<BiSolidCarGarage size={iconSizes.base} />}
             name={t("Core.Garage")}
-            onClick={() => router.push("garage")}
+            onClick={() => router.push("/garage")}
+            isActive={pathname === "/garage"}
           />
           <AMPSeparator additionalTailwindCss={smallScreenHiddenItem} />
 
@@ -152,30 +159,35 @@ const SideBarDesktop: FC<{ openModal: () => void }> = ({ openModal }) => {
             name={t("Core.Groups")}
             additionalTailwindCss={smallScreenHiddenItem}
             onClick={() => {}}
+            isActive={pathname === "/groups"}
           />
           <OptionItem
             icon={<MdOutlineLocationOn size={iconSizes.base} />}
             name={t("Core.Spots")}
             additionalTailwindCss={smallScreenHiddenItem}
             onClick={() => {}}
+            isActive={pathname === "/spots"}
           />
           <OptionItem
             icon={<MdEventNote size={iconSizes.base} />}
             name={t("Core.Events")}
             additionalTailwindCss={smallScreenHiddenItem}
             onClick={() => {}}
+            isActive={pathname === "/events"}
           />
           <OptionItem
             icon={<MdLiveHelp size={iconSizes.base} />}
             name={t("Core.Problems")}
             additionalTailwindCss={smallScreenHiddenItem}
             onClick={() => {}}
+            isActive={pathname === "/problems"}
           />
           <OptionItem
             icon={<RiBuildingFill size={iconSizes.base} />}
             name={t("Core.Company")}
             additionalTailwindCss={smallScreenHiddenItem}
             onClick={() => {}}
+            isActive={pathname === "/company"}
           />
         </div>
         <div className="hidden lg:flex flex-col pr-3 max-2xl:pr-0 items-start max-2xl:items-center">
@@ -183,6 +195,7 @@ const SideBarDesktop: FC<{ openModal: () => void }> = ({ openModal }) => {
             icon={<FiSettings size={iconSizes.base} />}
             name={t("Core.Settings")}
             onClick={() => {}}
+            isActive={pathname === "/settings"}
           />
         </div>
       </div>
@@ -190,48 +203,62 @@ const SideBarDesktop: FC<{ openModal: () => void }> = ({ openModal }) => {
   );
 };
 
-const SideBarMobile: FC<{ openModal: () => void }> = ({ openModal }) => {
+const SideBarMobile: FC<{ openModal: () => void; pathname: string }> = ({
+  openModal,
+  pathname,
+}) => {
   const t = useTranslations();
   const router = useRouter();
 
   return (
-    <div className="flex bg-amp-0 w-full h-full p-4 px-6 flex-col">
-      <div className="gap-4 pb-2 p-1 items-center flex">
-        <Image src={Logo} alt="logo" width={25} height={25} />
-        <span className={`text-md uppercase` + Yant.className}>
+    <div className="flex bg-amp-100 w-full h-full p-2 px-3 flex-col">
+      <div className="gap-4 pb-2 p-1 ml-0 items-center flex">
+        <Image src={Logo} alt="logo" width={20} height={20} />
+        <span className={`text-sm uppercase` + Yant.className}>
           Automotiveplace
         </span>
       </div>
       <div className="flex w-full justify-between">
         <OptionItem
-          icon={<MdHome size={iconSizes.base} />}
+          icon={<MdHome size={iconSizes.large} />}
           name={t("Core.Home")}
-          onClick={() => router.push("home")}
+          onClick={() => router.push("/home")}
+          isActive={pathname === "/home"}
           showName={false}
         />
         <OptionItem
           icon={<LuSearch size={iconSizes.base} />}
           name={t("Core.Search")}
           onClick={() => {}}
+          isActive={pathname === "/search"}
           showName={false}
         />
         <OptionItem
           icon={<RiPlayListAddLine size={iconSizes.base} />}
           name={t("Core.Add")}
           onClick={openModal}
+          isActive={pathname === "/add"}
           showName={false}
         />
         <OptionItem
           icon={<BiSolidCarGarage size={iconSizes.base} />}
           name={t("Core.Garage")}
-          onClick={() => router.push("garage")}
+          onClick={() => router.push("/garage")}
+          isActive={pathname === "/garage"}
           showName={false}
         />
-
+        <OptionItem
+          icon={<IoNotifications size={iconSizes.base} />}
+          name={"Notifications"}
+          onClick={() => {}}
+          isActive={pathname === "/Notifications"}
+          showName={false}
+        />
         <OptionItem
           icon={<SlMenu size={iconSizes.base} />}
           name={t("Core.Menu")}
           onClick={() => {}}
+          isActive={pathname === "/menu"}
           showName={false}
         />
       </div>
@@ -244,11 +271,21 @@ const OptionItem: FC<{
   icon: any;
   onClick: () => void;
   additionalTailwindCss?: string;
+  isActive?: boolean;
   showName?: boolean;
-}> = ({ icon, name, onClick, additionalTailwindCss, showName = true }) => {
+}> = ({
+  icon,
+  name,
+  onClick,
+  additionalTailwindCss,
+  isActive = false,
+  showName = true,
+}) => {
   return (
     <div
-      className={`${additionalTailwindCss} flex-row gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 pl-1 hover:opacity-70 cursor-pointer flex items-center justify-center`}
+      className={`${additionalTailwindCss} flex-row ${
+        isActive ? "opacity-90 font-bold" : "opacity-75"
+      } gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 pl-1 hover:opacity-70 cursor-pointer flex items-center justify-center`}
       onClick={onClick}
     >
       {icon}
