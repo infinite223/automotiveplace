@@ -71,7 +71,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
   return (
     <main className="relative" ref={buttonRef}>
       <div
-        className={`${isLoading && "bg-amp-800 dark:bg-amp-100 w-7 h-7 rounded-md"}`}
+        className={`${isLoading && "bg-amp-800 opacity-80 dark:bg-amp-100 w-7 h-7 rounded-md"}`}
       >
         {!isLoading && (
           <BsThreeDotsVertical

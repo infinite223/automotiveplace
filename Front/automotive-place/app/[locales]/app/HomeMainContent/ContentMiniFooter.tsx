@@ -28,8 +28,8 @@ export const ContentMiniFooter = ({
   isUserContent,
 }: IContentMiniFooter) => {
   return (
-    <nav className="flex flex-col items-center justify-between w-full">
-      <AMPSeparator />
+    <nav className="flex flex-col items-center justify-between w-full mt-1">
+      {/* <AMPSeparator /> */}
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-3">
           <div className="flex flex-col gap-2">
@@ -55,9 +55,11 @@ export const ContentMiniFooter = ({
         {actions}
       </div>
 
-      <div className="flex flex-wrap gap-2 w-full mt-2">
-        {tags?.map((tag) => <AMPTag name={tag.name} key={tag.id} />)}
-      </div>
+      {tags?.length !== 0 && tags?.[0].name && (
+        <div className="flex flex-wrap gap-2 w-full mt-2">
+          {tags?.map((tag) => <AMPTag name={tag.name} key={tag.id} />)}
+        </div>
+      )}
     </nav>
   );
 };

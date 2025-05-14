@@ -218,7 +218,7 @@ const SideBarMobile: FC<{ openModal: () => void; pathname: string }> = ({
           Automotiveplace
         </span>
       </div>
-      <AMPSeparator />
+      {/* <AMPSeparator /> */}
 
       <div className="flex w-full justify-between">
         <OptionItem

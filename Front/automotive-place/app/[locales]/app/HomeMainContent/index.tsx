@@ -82,7 +82,7 @@ export const HomeMainContent = () => {
             className="flex w-full items-center justify-center py-1"
             id={`content-${item.data.id}`}
           >
-            <div className="flex w-full bg-amp-50 p-2 rounded-md">
+            <div className="flex w-full bg-amp-50 p-2 pl-4 rounded-md">
               <ContentSelect content={item} userId={userId} />
             </div>
           </div>
