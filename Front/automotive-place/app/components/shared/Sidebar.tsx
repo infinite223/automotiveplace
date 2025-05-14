@@ -211,12 +211,13 @@ const SideBarMobile: FC<{ openModal: () => void; pathname: string }> = ({
   const router = useRouter();
 
   return (
-    <div className="flex bg-amp-100 w-full h-full p-2 px-3 flex-col">
+    <div className="flex bg-amp-50 w-full h-full p-2 px-3 flex-col">
       <div className="gap-4 pb-2 p-1 ml-0 items-center flex">
-        <Image src={Logo} alt="logo" width={20} height={20} />
-        <span className={`text-sm uppercase` + Yant.className}>
+        <Image src={Logo} alt="logo" width={17} height={17} />
+        <span className={`text-xs uppercase` + Yant.className}>
           Automotiveplace
         </span>
+        <AMPSeparator />
       </div>
       <div className="flex w-full justify-between">
         <OptionItem
