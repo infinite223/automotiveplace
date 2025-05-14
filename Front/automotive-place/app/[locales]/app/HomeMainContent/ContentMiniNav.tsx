@@ -114,7 +114,7 @@ export const ContentMiniNav = ({
     });
 
   return (
-    <nav className="flex items-center w-full justify-between">
+    <nav className="flex items-center w-full justify-between pt-2 pl-3 pr-1">
       <div className="flex flex-col gap-2">
         <p className="text-[11px] bg-amp-800 dark:bg-amp-100 opacity-65">
           {typeName} dodany: {moment(createdAt, "YYYYMMDD").fromNow()}

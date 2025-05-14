@@ -30,7 +30,7 @@ export const PostMiniView = ({
         isUserContent={isUserContent}
         author={data.author}
       />
-      <p className="mt-1 opacity-80">{data.content}</p>
+      <p className="mt-1 opacity-80 px-3">{data.content}</p>
       {data.imagesUrl && <AMPSlider images={[data.imagesUrl]} />}
 
       <ContentMiniFooter

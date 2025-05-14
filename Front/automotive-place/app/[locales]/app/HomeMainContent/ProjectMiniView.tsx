@@ -78,7 +78,7 @@ export const ProjectMiniView = ({
             {data.images && <AMPSlider images={data.images} />}
 
             <div
-              className={`flex gap-5 w-full ${data.acc_0_100 && " justify-between"}`}
+              className={`flex px-3 gap-5 w-full ${data.acc_0_100 && " justify-between"}`}
             >
               <StatisticMiniItem
                 title="Etap modyfikacji"
