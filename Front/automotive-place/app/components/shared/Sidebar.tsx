@@ -217,8 +217,9 @@ const SideBarMobile: FC<{ openModal: () => void; pathname: string }> = ({
         <span className={`text-xs uppercase` + Yant.className}>
           Automotiveplace
         </span>
-        <AMPSeparator />
       </div>
+      <AMPSeparator />
+
       <div className="flex w-full justify-between">
         <OptionItem
           icon={<MdHome size={iconSizes.large} />}

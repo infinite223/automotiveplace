@@ -21,9 +21,9 @@ export default async function Layout({
   if (!user) return redirect(`/${locale}/sign-in`);
 
   return (
-    <div className="flex h-screen flex-col bg-amp-900 dark:bg-amp-0 text-black dark:text-white">
+    <div className="flex h-[100dvh] flex-col bg-amp-900 dark:bg-amp-0 text-black dark:text-white">
       {/* <HomeHeader /> */}
-      <div className="flex lg:h-[calc(100%-0px)] h-[100svh] w-full justify-between flex-col lg:flex-row">
+      <div className="flex lg:h-[calc(100%-0px)] h-[100dvh] w-full justify-between flex-col lg:flex-row">
         <SideBar />
         {/* Botton naviagtion */}
         {children}
