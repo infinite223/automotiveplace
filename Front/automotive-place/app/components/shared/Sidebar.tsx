@@ -67,7 +67,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         withHeader={true}
         visible={isModalOpen}
         title="Wybierz opcje"
-        additionalTailwindCss="relative bg-amp-100"
+        additionalTailwindCss="relative bottom-[15ch] bg-amp-100"
         defoultBG={false}
       >
         <SelectCreateOption />
