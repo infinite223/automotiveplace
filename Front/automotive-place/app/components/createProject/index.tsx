@@ -122,10 +122,10 @@ export const CreateProjectView = () => {
 
   return (
     <main
-      className="flex justify-center text-sm rounded-md flex-col-reverse md:flex-row"
+      className="flex justify-end text-sm relative top-0 flex-col-reverse md:flex-row w-[95vw] max-md:w-[100vw] max-md:h-dvh max-w-lg h-[11/12] p-3 mr-0 rounded-sm border-r border-zinc-700"
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="w-[95vw] md:w-[760px] max-w-lg h-[11/12] p-3 mr-0 rounded-sm border-r border-zinc-700 ml-2">
+      <div className=" ml-2">
         <div className="flex flex-col gap-2 mt-3">
           <AMPSwitch
             name="Element w użyciu?"
@@ -144,7 +144,7 @@ export const CreateProjectView = () => {
         </div>
       </div>
       <form
-        className="rounded-md p-2 pr-4 pl-4 flex flex-col max-w-lg group w-[300px]"
+        className="rounded-md p-2 pr-4 pl-4 flex flex-col max-w-lg group w-[300px] max-md:w-[100%]"
         noValidate
         action={onSubmit}
       >

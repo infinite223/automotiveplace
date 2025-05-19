@@ -67,7 +67,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         withHeader={true}
         visible={isModalOpen}
         title="Wybierz opcje"
-        additionalTailwindCss="relative bottom-[15vh] bg-amp-100"
+        additionalTailwindCss="relative bg-amp-100"
         defoultBG={false}
       >
         <SelectCreateOption />
@@ -78,7 +78,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         withHeader={true}
         visible={showCreateProject}
         title="Dodawanie projektu"
-        additionalTailwindCss="relative bottom-40 bg-amp-100"
+        additionalTailwindCss="relative bg-amp-100 "
         defoultBG={false}
       >
         <CreateProjectView />
@@ -89,7 +89,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         withHeader={true}
         visible={showCreatePost}
         title="Dodawanie postu"
-        additionalTailwindCss="relative bottom-40 bg-amp-100"
+        additionalTailwindCss="relative bg-amp-100"
         defoultBG={false}
       >
         <CreatePostView />

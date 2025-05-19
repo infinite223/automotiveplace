@@ -66,9 +66,10 @@ export default function Page() {
         <div className="flex flex-col bordre-2">
           <AMPInput
             value={email}
-            name="Email"
+            name="Email:"
             type="email"
             themeOption="white"
+            additionalTailwindCss="px-4"
             placeholder="Podaj email"
             error={errors?.find((e) => e.path.includes("email"))?.message}
             setValue={(text) => setEmail(text.toString())}
@@ -77,8 +78,9 @@ export default function Page() {
             placeholder="Podaj hasło"
             value={password}
             type="password"
-            name="Hasło"
+            name="Hasło:"
             themeOption="white"
+            additionalTailwindCss="px-4"
             error={errors?.find((e) => e.path.includes("password"))?.message}
             setValue={(text) => setPassword(text.toString())}
           />

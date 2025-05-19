@@ -42,7 +42,7 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
 
   const themeAMPButtonStyles = () => {
     if (themeOption === "auto") {
-      return "bg-amp-900 dark:bg-amp-0border-gray-300 focus:ring-teal-500 focus:border-teal-500 dark:border-amp-200 dark:placeholder-gray-500 dark:text-white/80";
+      return "bg-amp-900 dark:bg-amp-0 border-gray-300 focus:ring-teal-500 focus:border-teal-500/70 dark:border-amp-200/70 dark:placeholder-gray-500 dark:text-white/80";
     } else if (themeOption === "white") {
       return "bg-white border-gray-300 text-black/80";
     } else {
@@ -63,7 +63,7 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
         }}
         id={id}
         style={inputStyles}
-        className={`${additionalTailwindCss} ${themeAMPButtonStyles()} w-full border-b outline-none text-sm block dark:focus:ring-teal-500 dark:focus:border-teal-800 bg-inherit py-3 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer`}
+        className={`${additionalTailwindCss} ${themeAMPButtonStyles()} w-full border-b mt-1 outline-none text-sm block dark:focus:ring-teal-500 dark:focus:border-teal-800/50 bg-inherit py-2 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer`}
         placeholder={placeholder}
         required={required}
         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
