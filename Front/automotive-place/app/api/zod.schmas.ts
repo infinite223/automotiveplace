@@ -71,3 +71,9 @@ export const userLoginSchema = z.object({
   email: z.string().email({ message: "Core.Errors.Email.Invalid" }),
   password: z.string().min(6, { message: "Core.Errors.Password.TooShort" }),
 });
+
+export const createPostSchema = z.object({
+  title: z.string().min(3).max(50).optional(),
+  description: z.string().min(3).max(500).optional(),
+  isVisible: z.boolean().optional(),
+});

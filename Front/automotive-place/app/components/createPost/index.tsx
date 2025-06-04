@@ -11,15 +11,27 @@ import { addNotification } from "@/lib/features/notifications/notificationsSlice
 import { CreateNotification } from "../logger/NotificationHelper";
 import { ErrorStatus } from "@/app/utils/enums";
 import { setShowCreatePost } from "@/lib/features/actions/actionsSlice";
+import { ZodIssue } from "zod";
+import { createPostSchema } from "@/app/api/zod.schmas";
 
 export const CreatePostView = () => {
   const dispatch = useDispatch();
   const [post, setPost] = useState<TPostCreate>(postData);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<null | ZodIssue[]>(null);
 
   const onSubmit = async () => {
+    setErrors(null);
     setLoading(true);
+
     const validResults = validPost(post);
+    const validation = createPostSchema.safeParse(post);
+    if (!validation.success) {
+      setErrors(validation.error.errors);
+      setLoading(false);
+
+      return;
+    }
 
     if (validResults.length == 0) {
       const result = await createPost(post);
@@ -44,11 +56,6 @@ export const CreatePostView = () => {
     setLoading(false);
   };
 
-  //   const handleCarItemVallue = (value: string | number) => {
-  //     const _carItemType: any = value;
-  //     setCarItem({ ...carItem, itemType: _carItemType });
-  //   };
-
   return (
     <main
       className="flex justify-center text-sm rounded-md max-md:h-screen max-md:w-screen"
@@ -66,6 +73,7 @@ export const CreatePostView = () => {
           value={post.title}
           placeholder="Np. Zrobiłem swapa z 1.9TDI na 2.0TFSI"
           inputStyles={{ fontSize: 12 }}
+          error={errors?.find((e) => e.path.includes("title"))?.message}
         />
         <AMPTextarea
           name="Opis"
@@ -75,6 +83,7 @@ export const CreatePostView = () => {
           value={post.description}
           placeholder="Np. Zrobiłem swapa z 1.9TDI na 2.0TFSI w sowim Audi A3 8L. Wymieniłem wszystkie uszczelki, wtryski i pompę. Silnik chodzi jak nowy."
           inputStyles={{ fontSize: 12, height: "150px" }}
+          error={errors?.find((e) => e.path.includes("description"))?.message}
         />
         <button
           type="submit"

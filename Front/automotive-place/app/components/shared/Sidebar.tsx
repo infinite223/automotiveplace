@@ -78,7 +78,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         withHeader={true}
         visible={showCreateProject}
         title="Dodawanie projektu"
-        additionalTailwindCss="relative bg-amp-100 "
+        additionalTailwindCss="relative bg-amp-100"
         defoultBG={false}
       >
         <CreateProjectView />

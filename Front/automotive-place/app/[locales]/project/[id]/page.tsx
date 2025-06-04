@@ -60,7 +60,7 @@ export default function Project({ params }: { params: { id: string } }) {
   ];
 
   return (
-    <main className="flex w-full min-h-screen bg-amp-900 dark:bg-amp-0 flex-col items-center gap-2 text-black dark:text-white">
+    <main className="flex w-full min-h-dvh bg-amp-900 dark:bg-amp-0 flex-col items-center gap-2 text-black dark:text-white">
       <div className="w-full bg-amp-700 dark:bg-amp-0 pb-32 flex justify-center">
         <div className="max-w-screen-2xl w-full h-[250px]">
           {displayData?.images?.[0] && (

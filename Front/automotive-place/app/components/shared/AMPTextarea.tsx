@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import React, { CSSProperties, FC } from "react";
 
 interface IAMPTextarea<TValue> {
@@ -12,6 +13,7 @@ interface IAMPTextarea<TValue> {
   additionalTailwindCss?: string;
   inputStyles?: CSSProperties;
   resize?: "resize-y" | "resize-none";
+  error?: string | null;
 }
 
 export const AMPTextarea: FC<IAMPTextarea<string | number>> = ({
@@ -26,7 +28,10 @@ export const AMPTextarea: FC<IAMPTextarea<string | number>> = ({
   additionalTailwindCss,
   inputStyles,
   resize = "resize-none",
+  error = null,
 }) => {
+  const t = useTranslations();
+
   return (
     <label htmlFor={htmlFor} className="mb-5">
       <span>{name}</span>
@@ -43,6 +48,12 @@ export const AMPTextarea: FC<IAMPTextarea<string | number>> = ({
       {errorText && (
         <span className="mt-2 text-[11px] text-red-600 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
           {errorText}
+        </span>
+      )}
+
+      {error && (
+        <span className="mt-2 text-[11px] text-red-400 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+          {t(error)}
         </span>
       )}
     </label>

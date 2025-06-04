@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { ICreateNotification } from "@/app/utils/types";
-import { TProjectCreate } from "@/app/utils/types/project";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { ErrorStatus } from "@/app/utils/enums";
-import { createProjectSchema } from "../../zod.schmas";
-import { CreateNotification } from "@/app/components/logger/NotificationHelper";
 import { TPostCreate } from "@/app/utils/types/post";
+import { createPostSchema } from "../../zod.schmas";
+import { CreateNotification } from "@/app/components/logger/NotificationHelper";
 
 export async function POST(request: NextRequest) {
   const user = await getLoggedInUser();
@@ -34,22 +33,16 @@ export async function POST(request: NextRequest) {
   let newPost = null;
 
   const author = await prisma.user.findFirst();
-  // TODO - change validation in all routes to zod
-  //   const validProject = createProjectSchema.safeParse(project);
-  // const result = validProject(project);
-  // const findInValidResult = result.validResults.find(
-  //   (result) => result.valid == false
-  // );
-
-  //   if (!validProject.success) {
-  //     return NextResponse.json({
-  //       carItem: newCarItem,
-  //       notification: CreateNotification(
-  //         ErrorStatus.Medium,
-  //         validProject.error.message
-  //       ),
-  //     });
-  //   }
+  const validProject = createPostSchema.safeParse(post);
+  if (!validProject.success) {
+    return NextResponse.json({
+      post: post,
+      notification: CreateNotification(
+        ErrorStatus.Medium,
+        validProject.error.message
+      ),
+    });
+  }
 
   if (author?.id) {
     newPost = await createPost(post, author.id);
