@@ -1,4 +1,5 @@
 import { ICreateNotification, TContentTypes } from "../utils/types";
+import { TBasicTag } from "../utils/types/tag";
 import { apiEndpoints } from "./api.endpoints";
 
 export const createLike = async (

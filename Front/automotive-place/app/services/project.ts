@@ -1,4 +1,8 @@
-import { TProject, TProjectCreate } from "../utils/types/project";
+import {
+  TBasicPopularProject,
+  TProject,
+  TProjectCreate,
+} from "../utils/types/project";
 import { apiEndpoints } from "./api.endpoints";
 
 export const createProject = async (
