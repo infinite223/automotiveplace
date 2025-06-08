@@ -1,7 +1,8 @@
 import { TStageCreate } from "../utils/types/stage";
+import { apiEndpoints } from "./api.endpoints";
 
 export const createStage = async (stage: TStageCreate) => {
-  const response = await fetch(`/api/project/add-stage`, {
+  const response = await fetch(apiEndpoints.createStage, {
     method: "POST",
     body: JSON.stringify(stage),
     headers: { "Content-Type": "application/json" },

@@ -1,5 +1,6 @@
 import { ICreateNotification } from "../utils/types";
 import { TCarItemCreate } from "../utils/types/carItem";
+import { apiEndpoints } from "./api.endpoints";
 
 export const getAllCarItems = async (locale: string = "en", limit = 10) => {
   const response = await fetch(`/api/carItem/get-carItem?limit=${limit}`, {
@@ -39,7 +40,7 @@ export interface ICreateCarItemResponse {
 export const createCarItem = async (
   carItem: TCarItemCreate
 ): Promise<ICreateCarItemResponse> => {
-  const response = await fetch(`/api/carItem/add-carItem`, {
+  const response = await fetch(apiEndpoints.createCarItem, {
     method: "POST",
     body: JSON.stringify(carItem),
     headers: { "Content-Type": "application/json" },

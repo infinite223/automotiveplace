@@ -1,12 +1,16 @@
-import { ICreateNotification, TContentData } from "../utils/types";
+import { TContentData } from "../utils/types";
+import { apiEndpoints } from "./api.endpoints";
 
 export const getMainContentDataForUser = async (
   page: number,
   locale: string = "en"
 ) => {
-  const response = await fetch(`/api/content/main/contentdata/?page=${page}`, {
-    headers: { "Accept-Language": locale },
-  });
+  const response = await fetch(
+    `${apiEndpoints.getMainContentDataForUser}/?page=${page}`,
+    {
+      headers: { "Accept-Language": locale },
+    }
+  );
   if (!response.ok) {
     throw new Error("Failed to get data");
   }

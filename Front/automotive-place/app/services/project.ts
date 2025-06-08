@@ -1,14 +1,11 @@
-import {
-  TBasicPopularProject,
-  TProject,
-  TProjectCreate,
-} from "../utils/types/project";
+import { TProject, TProjectCreate } from "../utils/types/project";
+import { apiEndpoints } from "./api.endpoints";
 
 export const createProject = async (
   carItem: TProjectCreate,
   locale: string = "en"
 ) => {
-  const response = await fetch(`/api/project/add-project`, {
+  const response = await fetch(apiEndpoints.createProject, {
     method: "POST",
     body: JSON.stringify(carItem),
     headers: { "Content-Type": "application/json", "Accept-Language": locale },
@@ -22,7 +19,7 @@ export const createProject = async (
 };
 
 export const getProject = async (id: string) => {
-  const response = await fetch(`/api/project/get-project?id=${id}`);
+  const response = await fetch(`${apiEndpoints.getProjects}?id=${id}`);
   if (!response.ok) {
     throw new Error("Failed to get data");
   }

@@ -1,5 +1,5 @@
 import { ICreateNotification, TContentTypes } from "../utils/types";
-import { TBasicTag } from "../utils/types/tag";
+import { apiEndpoints } from "./api.endpoints";
 
 export const createLike = async (
   contentId: string,
@@ -7,7 +7,7 @@ export const createLike = async (
   tags: TBasicTag[]
 ) => {
   try {
-    const response = await fetch(`/api/like/create`, {
+    const response = await fetch(apiEndpoints.createLike, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +34,7 @@ export const createLike = async (
 
 export const deleteLike = async (likeableId: string) => {
   try {
-    const response = await fetch(`/api/like/delete`, {
+    const response = await fetch(apiEndpoints.deleteLike, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
