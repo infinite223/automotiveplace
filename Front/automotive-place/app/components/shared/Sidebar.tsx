@@ -213,7 +213,7 @@ const SideBarMobile: FC<{ openModal: () => void; pathname: string }> = ({
   return (
     <div className="flex bg-amp-50 w-full h-full p-2 px-3 flex-col">
       <div className="gap-4 pb-2 p-1 ml-0 items-center flex">
-        <Image src={Logo} alt="logo" width={17} height={17} />
+        {/* <Image src={Logo} alt="logo" width={17} height={17} /> */}
         <span className={`text-xs uppercase` + Yant.className}>
           Automotiveplace
         </span>
@@ -222,7 +222,7 @@ const SideBarMobile: FC<{ openModal: () => void; pathname: string }> = ({
 
       <div className="flex w-full justify-between">
         <OptionItem
-          icon={<MdHome size={iconSizes.large} />}
+          icon={<Image src={Logo} alt="logo" width={21} height={21} />}
           name={t("Core.Home")}
           onClick={() => router.push("/home")}
           isActive={pathname === "/home"}

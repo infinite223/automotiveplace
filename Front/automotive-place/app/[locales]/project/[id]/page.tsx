@@ -17,6 +17,9 @@ import { FaHeart } from "react-icons/fa";
 import { TbMessageCircleUp } from "react-icons/tb";
 import { useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
+import InfoTab from "./InfoTab";
+import StagesTab from "./StagesTab";
+import ReferencesTab from "./ReferencesTab";
 
 export default function Project({ params }: { params: { id: string } }) {
   const t = useTranslations();
@@ -61,15 +64,17 @@ export default function Project({ params }: { params: { id: string } }) {
 
   return (
     <main className="flex w-full min-h-dvh bg-amp-900 dark:bg-amp-0 flex-col items-center gap-2 text-black dark:text-white">
-      <div className="w-full bg-amp-700 dark:bg-amp-0 pb-32 flex justify-center">
-        <div className="max-w-screen-2xl w-full h-[250px]">
-          {displayData?.images?.[0] && (
-            <img
-              src={displayData.images?.[0]}
-              className="w-full h-full object-cover blur-sm opacity-60"
-              alt="car-image"
-            />
-          )}
+      <div className="w-full pb-32 flex justify-center">
+        <div className="max-w-screen-2xl w-full">
+          <div className="h-[250px] w-full">
+            {displayData?.images?.[0] && (
+              <img
+                src={displayData.images?.[0]}
+                className="w-full h-full object-cover blur-sm opacity-60"
+                alt="car-image"
+              />
+            )}
+          </div>
 
           <nav className="flex flex-col justify-between w-full top-[0px] relative py-4 px-4">
             <header className="text-3xl font-semibold gap-1 flex flex-col flex-wrap">
@@ -157,56 +162,11 @@ export default function Project({ params }: { params: { id: string } }) {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -50 }}
                   transition={{ duration: 0.3 }}
-                  className="text-white"
                 >
-                  {lastStage && (
-                    <div className="flex flex-wrap gap-2 w-full">
-                      <AMPCarStatsItem
-                        typeValue={t("Core.Hp").toUpperCase()}
-                        value={lastStage.hp.toString()}
-                        title="Moc silnika"
-                      />
-                      <AMPCarStatsItem
-                        typeValue="NM"
-                        value={lastStage.nm.toString()}
-                        title="Moment obrotowy"
-                      />
-                      <AMPCarStatsItem
-                        typeValue="s"
-                        subTitle={"0-100km/h"}
-                        value={lastStage.acc_0_100.toString()}
-                        title="Przyśpieszenie"
-                      />
-                      <AMPCarStatsItem
-                        typeValue="s"
-                        subTitle={"100-200km/h"}
-                        value={lastStage.acc_100_200.toString()}
-                        title="Przyśpieszenie"
-                      />
-                      <AMPCarStatsItem
-                        typeValue="s"
-                        subTitle={"50-150km/h"}
-                        value={lastStage.acc_50_150.toString()}
-                        title="Przyśpieszenie"
-                      />
-                      {lastStage.sl_100_0 && (
-                        <AMPCarStatsItem
-                          typeValue="s"
-                          subTitle={"100-0km/h"}
-                          value={lastStage.sl_100_0.toString()}
-                          title="Droga hamowania"
-                        />
-                      )}
-                      {lastStage.sl_150_50 && (
-                        <AMPCarStatsItem
-                          typeValue="s"
-                          subTitle={"150-50km/h"}
-                          value={lastStage.sl_150_50.toString()}
-                          title="Droga hamowania"
-                        />
-                      )}
-                    </div>
-                  )}
+                  <InfoTab
+                    lastStage={lastStage}
+                    images={!displayData ? [] : displayData.images}
+                  />
                 </motion.div>
               )}
 
@@ -217,10 +177,8 @@ export default function Project({ params }: { params: { id: string } }) {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -50 }}
                   transition={{ duration: 0.3 }}
-                  className="text-white"
                 >
-                  <h2 className="text-xl font-semibold">Etapy modyfikacji</h2>
-                  <p>Dokładne opisy etapów modyfikacji, zdjęcia, firmy itp.</p>
+                  <StagesTab />
                 </motion.div>
               )}
 
@@ -231,10 +189,8 @@ export default function Project({ params }: { params: { id: string } }) {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -50 }}
                   transition={{ duration: 0.3 }}
-                  className="text-white"
                 >
-                  <h2 className="text-xl font-semibold">Wzmianki</h2>
-                  <p>Gdzie można zobaczyć projekt: eventy, spoty, problemy.</p>
+                  <ReferencesTab />
                 </motion.div>
               )}
             </AnimatePresence>

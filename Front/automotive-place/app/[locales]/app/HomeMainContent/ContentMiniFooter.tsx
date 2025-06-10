@@ -28,7 +28,7 @@ export const ContentMiniFooter = ({
   isUserContent,
 }: IContentMiniFooter) => {
   return (
-    <nav className="flex flex-col items-center justify-between w-full mt-1 pb-2 pl-3 pr-1">
+    <nav className="flex flex-col items-center bg-amp-0 border-amp-50 pt-2 border-b-1 justify-between w-full mt-1 pb-2 pl-3 pr-1">
       {/* <AMPSeparator /> */}
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-3">
@@ -39,7 +39,7 @@ export const ContentMiniFooter = ({
             >
               <FaHeart
                 size={iconSizes.base}
-                color={currentIsLiked ? "#df1515" : "gray"}
+                color={currentIsLiked ? "#db1f48" : "gray"}
                 className={`cursor-pointer transition-colors duration-300 ease-in-out ${
                   currentIsLiked ? "transform scale-95" : ""
                 }`}
@@ -55,11 +55,11 @@ export const ContentMiniFooter = ({
         {actions}
       </div>
 
-      {tags?.length !== 0 && tags?.[0].name && (
+      {/* {tags?.length !== 0 && tags?.[0].name && (
         <div className="flex flex-wrap gap-2 w-full mt-2">
           {tags?.map((tag) => <AMPTag name={tag.name} key={tag.id} />)}
         </div>
-      )}
+      )} */}
     </nav>
   );
 };
