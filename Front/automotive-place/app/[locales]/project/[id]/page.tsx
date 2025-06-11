@@ -153,48 +153,60 @@ export default function Project({ params }: { params: { id: string } }) {
             ))}
           </nav>
 
-          <div className="p-4 overflow-hidden">
-            <AnimatePresence mode="wait">
-              {activeTab === "informacje" && (
-                <motion.div
-                  key="informacje"
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -50 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <InfoTab
-                    lastStage={lastStage}
-                    images={!displayData ? [] : displayData.images}
-                  />
-                </motion.div>
-              )}
+          {displayData && (
+            <div className="p-4 overflow-hidden">
+              <AnimatePresence mode="wait">
+                {activeTab === "informacje" && (
+                  <motion.div
+                    key="informacje"
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -50 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <InfoTab
+                      name={displayData.name}
+                      engine={{
+                        name: data?.engineName || "",
+                        capacity: 2,
+                        stockHp: 300,
+                        stockNm: 400,
+                        description: "",
+                        swapped: false,
+                      }}
+                      description={displayData.description}
+                      lastStage={lastStage}
+                      images={displayData.images}
+                    />
+                  </motion.div>
+                )}
 
-              {activeTab === "etapy" && (
-                <motion.div
-                  key="etapy"
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -50 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <StagesTab />
-                </motion.div>
-              )}
+                {activeTab === "etapy" && (
+                  <motion.div
+                    key="etapy"
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -50 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <StagesTab />
+                  </motion.div>
+                )}
 
-              {activeTab === "wzmianki" && (
-                <motion.div
-                  key="wzmianki"
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -50 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <ReferencesTab />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                {activeTab === "wzmianki" && (
+                  <motion.div
+                    key="wzmianki"
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -50 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <ReferencesTab />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          )}
 
           {/* Podobne projekty.... */}
 

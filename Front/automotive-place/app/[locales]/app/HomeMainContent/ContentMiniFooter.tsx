@@ -5,6 +5,7 @@ import { iconSizes } from "@/app/utils/constants";
 import { TbMessageCircleUp } from "react-icons/tb";
 
 import { FaRegHeart } from "react-icons/fa6";
+import { AMPTag } from "@/app/components/shared/AMPTag";
 
 interface IContentMiniFooter {
   type: TContentTypes;
@@ -54,11 +55,11 @@ export const ContentMiniFooter = ({
         {actions}
       </div>
 
-      {/* {tags?.length !== 0 && tags?.[0].name && (
+      {tags?.length !== 0 && tags?.[0].name && (
         <div className="flex flex-wrap gap-2 w-full mt-2">
           {tags?.map((tag) => <AMPTag name={tag.name} key={tag.id} />)}
         </div>
-      )} */}
+      )}
     </nav>
   );
 };

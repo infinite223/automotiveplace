@@ -79,7 +79,7 @@ export const ProjectMiniView = ({
           />
 
           <div className="flex flex-col my-1 gap-2">
-            <h2 className="text-md opacity-80">{data.description}</h2>
+            <h2 className="text-md opacity-80 mx-3">{data.description}</h2>
             {data.images && <AMPSlider images={data.images} />}
 
             <div
