@@ -38,7 +38,7 @@ export default function PhotoGallery({ images }: PhotoGalleryProps) {
         {images.map((src, index) => (
           <div
             key={index}
-            className="relative w-full aspect-[4/3] overflow-hidden rounded-lg bg-gray-200 cursor-pointer"
+            className="relative w-full aspect-[4/3] overflow-hidden rounded-sm bg-gray-200 cursor-pointer"
             onClick={() => openModal(index)}
           >
             <img

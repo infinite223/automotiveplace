@@ -11,6 +11,8 @@ interface InfoTabProps {
   description: string | undefined | null;
   name: string | undefined | null;
   engine: Engine;
+  transmission: Transmission;
+  globalInfo: GlobalInfo;
 }
 
 type Engine = {
@@ -42,6 +44,8 @@ export default function InfoTab({
   description,
   name,
   engine,
+  transmission,
+  globalInfo,
 }: InfoTabProps) {
   const t = useTranslations();
 
@@ -56,8 +60,8 @@ export default function InfoTab({
 
       <span className="mt-4 font-semibold">Parametry projektu</span>
 
-      <div className="flex w-full my-4 gap-2">
-        <div className="flex w-[30%] flex-col gap-2 h-min">
+      <div className="flex w-full max-md:flex-col my-4 gap-2">
+        <div className="flex lg:w-[30%] flex-col gap-2 h-min mb-2">
           <AMPCarStatsItem
             typeValue={t("Core.Hp").toUpperCase()}
             value={lastStage.hp.toString()}
@@ -104,32 +108,92 @@ export default function InfoTab({
           )}
         </div>
 
-        <div className="flex w-[70%] gap-3">
-          <div className="w-1/3 bg-amp-50 h-fit p-4">
-            <span className="">Silnik</span>
-            <div className="flex flex-col gap-1 text-sm opacity-85 mt-2">
-              <div>
-                Nazwa: <span>{engine.name}</span>
+        <div className="grid grid-cols-1 w-full lg:grid-cols-3 gap-4">
+          <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md">
+            <span className="text-lg font-semibold opacity-90">Silnik</span>
+            <div className="grid grid-cols-2 gap-y-2 text-sm mt-4">
+              <div className="opacity-75 text-left">Nazwa:</div>
+              <div className="opacity-85 font-medium text-right">
+                {engine.name}
               </div>
-              <div>
-                Opis: <span>{engine.description}</span>
+
+              {engine.description && (
+                <>
+                  <div className="opacity-75 text-left">Opis:</div>
+                  <div className="opacity-85 font-medium text-right">
+                    {engine.description}
+                  </div>
+                </>
+              )}
+
+              <div className="opacity-75 text-left">Pojemność:</div>
+              <div className="opacity-85 font-medium text-right">
+                {engine.capacity}l
               </div>
-              <div>
-                Pojemność: <span>{engine.capacity}l</span>
+
+              <div className="opacity-75 text-left">Moc/Moment obrotowy:</div>
+              <div className="opacity-85 font-medium text-right">
+                {engine.stockHp}HP/{engine.stockNm}NM
               </div>
-              <div>
-                HP/NM{" "}
-                <span>
-                  {engine.stockHp}/{engine.stockNm}
-                </span>
-              </div>
-              <div>
-                Swapped: <span>{engine.swapped ? "tak" : "nie"}</span>
+
+              <div className="opacity-75 text-left">Swap:</div>
+              <div className="opacity-85 font-medium text-right">
+                {engine.swapped ? "tak" : "nie"}
               </div>
             </div>
           </div>
-          <div className="w-1/3 bg-amp-50 h-[200px] p-4">Skrzynia</div>
-          <div className="w-1/3 bg-amp-50 h-[200px] p-4">Reszta</div>
+
+          <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md">
+            <span className="text-lg font-semibold opacity-90">
+              Skrzynia biegów
+            </span>
+            <div className="grid grid-cols-2 gap-y-2 text-sm mt-4">
+              <div className="opacity-75 text-left">Nazwa:</div>
+              <div className="opacity-85 font-medium text-right">
+                {transmission.name}
+              </div>
+
+              <div className="opacity-75 text-left">Opis:</div>
+              <div className="opacity-85 font-medium text-right">
+                {transmission.description}
+              </div>
+
+              <div className="opacity-75 text-left">Ilość biegów:</div>
+              <div className="opacity-85 font-medium text-right">
+                {transmission.gears}
+              </div>
+
+              <div className="opacity-75 text-left">Typ:</div>
+              <div className="opacity-85 font-medium text-right">
+                {transmission.transmissionType}
+              </div>
+
+              <div className="opacity-75 text-left">Swap:</div>
+              <div className="opacity-85 font-medium text-right">
+                {transmission.wasSwapped}
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md">
+            <span className="text-lg font-semibold opacity-90">Reszta</span>
+            <div className="grid grid-cols-2 gap-y-2 text-sm mt-4">
+              <div className="opacity-75 text-left">Waga:</div>
+              <div className="opacity-85 font-medium text-right">
+                {globalInfo.weightStock}
+              </div>
+
+              <div className="opacity-75 text-left">Prędkość maksymalna:</div>
+              <div className="opacity-85 font-medium text-right">
+                {globalInfo.topSpeedStock}
+              </div>
+
+              <div className="opacity-75 text-left">Cena projektu:</div>
+              <div className="opacity-85 font-medium text-right">
+                {globalInfo.projectPrice}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

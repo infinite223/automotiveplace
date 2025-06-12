@@ -174,6 +174,17 @@ export default function Project({ params }: { params: { id: string } }) {
                         description: "",
                         swapped: false,
                       }}
+                      transmission={{
+                        gears: 6,
+                        name: "ZF",
+                        transmissionType: 1,
+                        wasSwapped: true,
+                      }}
+                      globalInfo={{
+                        projectPrice: 43500,
+                        weightStock: 1559,
+                        topSpeedStock: 260,
+                      }}
                       description={displayData.description}
                       lastStage={lastStage}
                       images={displayData.images}

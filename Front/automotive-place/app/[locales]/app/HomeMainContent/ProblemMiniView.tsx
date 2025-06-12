@@ -24,7 +24,7 @@ export const ProblemMiniView = ({
       <ContentMiniNav
         createdAt={data.createdAt}
         title={data.title}
-        typeName="Problem"
+        typeName="Problem" 
         isUserContent={isUserContent}
         // author={data.}
       />
