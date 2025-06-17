@@ -85,7 +85,7 @@ export default function Project({ params }: { params: { id: string } }) {
                   alt="car-image"
                 />
               )} */}
-              <div className="flex w-full items-start justify-between">
+              <div className="flex w-full items-start justify-between max-md:flex-col">
                 <div className="flex flex-col w-full">
                   <div>
                     <span>{displayData?.carMake}</span>
@@ -97,25 +97,25 @@ export default function Project({ params }: { params: { id: string } }) {
                 <div className="gap-2 flex w-full justify-end flex-wrap">
                   <AMPButton
                     name="Udostępnij"
-                    additionalTailwindCss="text-sm"
+                    additionalTailwindCss="text-sm max-sm:flex-1 min-w-[150px] justify-center"
                     type="none"
                     icon={<CgShare size={iconSizes.small} />}
                   />
                   <AMPButton
-                    name="Nawiąz kontakt"
-                    additionalTailwindCss="text-sm "
-                    type="secondary"
+                    name="Nawiąż kontakt"
+                    additionalTailwindCss="text-sm max-sm:flex-1 min-w-[150px] justify-center"
+                    type="none"
                     icon={<TbMessageCircleUp size={iconSizes.small} />}
                   />
                   <AMPButton
                     name="Polub projekt"
-                    additionalTailwindCss="text-sm"
+                    additionalTailwindCss="text-sm max-sm:flex-1 min-w-[150px] justify-center"
                     type="secondary"
                     icon={<FaHeart size={iconSizes.small - 2} />}
                   />
                 </div>
               </div>
-              <div className="flex items-center gap-x-4 text-xs opacity-65 flex-wrap">
+              <div className="flex items-center gap-x-4 text-xs opacity-65 flex-wrap mt-2">
                 <div>
                   Projekt dodany przez: {data?.author?.name}{" "}
                   {moment(data?.createdAt, "YYYYMMDD").fromNow()}
@@ -165,30 +165,32 @@ export default function Project({ params }: { params: { id: string } }) {
                     exit={{ opacity: 0, x: -50 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <InfoTab
-                      name={displayData.name}
-                      location={data?.location}
-                      engine={{
-                        name: data?.engineName || "",
-                        capacity: 2,
-                        description: "",
-                        swapped: false,
-                      }}
-                      transmission={{
-                        gears: 6,
-                        name: "ZF",
-                        transmissionType: 1,
-                        wasSwapped: true,
-                      }}
-                      globalInfo={{
-                        projectPrice: 43500,
-                        weightStock: 1559,
-                        topSpeedStock: 260,
-                      }}
-                      description={displayData.description}
-                      lastStage={lastStage}
-                      images={displayData.images}
-                    />
+                    {data && (
+                      <InfoTab
+                        name={displayData.name}
+                        location={data?.location}
+                        engine={{
+                          name: data.engineName || "",
+                          capacity: data.engineCapacity || 0,
+                          description: data.engineDescription || undefined,
+                          swapped: data.engineWasSwapped || false,
+                        }}
+                        transmission={{
+                          gears: data.transmissionGears || 0,
+                          name: data.transmissionName || "",
+                          transmissionType: data.transmissionType || 1,
+                          wasSwapped: data.transmissionWasSwapped || false,
+                        }}
+                        globalInfo={{
+                          projectPrice: data.projectPrice || undefined,
+                          weightStock: data.weightStock || undefined,
+                          topSpeedStock: data.topSpeedStock || undefined,
+                        }}
+                        description={displayData.description}
+                        lastStage={lastStage}
+                        images={displayData.images}
+                      />
+                    )}
                   </motion.div>
                 )}
 

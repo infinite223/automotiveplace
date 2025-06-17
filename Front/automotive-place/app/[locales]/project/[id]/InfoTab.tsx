@@ -34,8 +34,8 @@ type Transmission = {
 
 type GlobalInfo = {
   topSpeedStock?: number;
-  projectPrice: number;
-  weightStock: number;
+  projectPrice?: number;
+  weightStock?: number;
 };
 
 export default function InfoTab({
@@ -59,7 +59,7 @@ export default function InfoTab({
         <span className="text-sm opacity-85 mt-1">{description}</span>
       )}
 
-      <span className="mt-4 font-semibold">Parametry projektu</span>
+      <span className="mt-4 font-semibold">Aktualne parametry projektu</span>
 
       <div className="flex w-full flex-col my-4 gap-2">
         <div className="flex w-full flex-wrap gap-2 h-min mb-2">
@@ -184,24 +184,32 @@ export default function InfoTab({
           <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md">
             <span className="text-lg font-semibold opacity-90">Reszta</span>
             <div className="flex flex-col gap-1 text-sm mt-4">
-              <div className="opacity-85">
-                <span className="opacity-75">Waga: </span>
-                <span className="font-medium">{globalInfo.weightStock} kg</span>
-              </div>
+              {globalInfo.weightStock && (
+                <div className="opacity-85">
+                  <span className="opacity-75">Waga: </span>
+                  <span className="font-medium">
+                    {globalInfo.weightStock} kg
+                  </span>
+                </div>
+              )}
 
-              <div className="opacity-85">
-                <span className="opacity-75">Prędkość maksymalna: </span>
-                <span className="font-medium">
-                  {globalInfo.topSpeedStock} km/h
-                </span>
-              </div>
+              {globalInfo.topSpeedStock && (
+                <div className="opacity-85">
+                  <span className="opacity-75">Prędkość maksymalna: </span>
+                  <span className="font-medium">
+                    {globalInfo.topSpeedStock} km/h
+                  </span>
+                </div>
+              )}
 
-              <div className="opacity-85">
-                <span className="opacity-75">Cena projektu: </span>
-                <span className="font-medium">
-                  {globalInfo.projectPrice} zł
-                </span>
-              </div>
+              {globalInfo.projectPrice && (
+                <div className="opacity-85">
+                  <span className="opacity-75">Cena projektu: </span>
+                  <span className="font-medium">
+                    {globalInfo.projectPrice} zł
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>

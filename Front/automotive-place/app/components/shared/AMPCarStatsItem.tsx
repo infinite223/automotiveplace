@@ -16,7 +16,7 @@ export const AMPCarStatsItem: FC<IAMPCarStatsItem> = ({
   if (value === "0") return;
 
   return (
-    <main className="flex flex-1 min-w-[165px] p-2 px-4 bg-amp-50 rounded-sm flex-col-reverse">
+    <main className="flex flex-1 min-w-[145px] p-2 px-2 bg-amp-50 rounded-sm flex-col-reverse">
       <h1 className="font-semibold text-md">
         {value}
 
@@ -24,7 +24,7 @@ export const AMPCarStatsItem: FC<IAMPCarStatsItem> = ({
       </h1>
 
       <div className="flex flex-col">
-        <h2 className="text-sm mb-[-1px] uppercase font-semibold opacity-80">
+        <h2 className="text-xs mb-[-1px] uppercase font-semibold opacity-85">
           {title}
         </h2>
 

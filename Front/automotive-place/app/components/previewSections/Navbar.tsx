@@ -46,7 +46,7 @@ export default function CustomNavbar({
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollThreshold = window.innerHeight / 4;
+      const scrollThreshold = window.innerHeight;
 
       if (window.scrollY > scrollThreshold) {
         setNavbarBg("white");
