@@ -31,6 +31,9 @@ export async function GET(request: NextRequest) {
           stageNumber: "desc",
         },
       },
+      location: {
+        select: { name: true, description: true, lat: true, lng: true },
+      },
     },
   });
 

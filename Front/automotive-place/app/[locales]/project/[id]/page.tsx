@@ -122,7 +122,8 @@ export default function Project({ params }: { params: { id: string } }) {
                 </div>
                 {lastStage && (
                   <div>
-                    Ostatnia modyfikacja: {lastStage?.createdAt?.toDateString()}
+                    Ostatnia modyfikacja:
+                    {moment(lastStage?.createdAt, "YYYYMMDD").fromNow()}
                   </div>
                 )}
 
@@ -166,11 +167,10 @@ export default function Project({ params }: { params: { id: string } }) {
                   >
                     <InfoTab
                       name={displayData.name}
+                      location={data?.location}
                       engine={{
                         name: data?.engineName || "",
                         capacity: 2,
-                        stockHp: 300,
-                        stockNm: 400,
                         description: "",
                         swapped: false,
                       }}

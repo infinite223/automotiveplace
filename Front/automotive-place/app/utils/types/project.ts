@@ -48,7 +48,14 @@ type TProject = {
   // tags:
   // authorId:
   // companyId:
-  // location:
+  location?: TLocation;
+};
+
+export type TLocation = {
+  name: string;
+  description: string;
+  lat: number;
+  lng: number;
 };
 
 type TBasicProject = {

@@ -4,6 +4,7 @@ import { AMPCarStatsItem } from "@/app/components/shared/AMPCarStatsItem";
 import { TStage } from "@/app/utils/types/stage";
 import { useTranslations } from "next-intl";
 import PhotoGallery from "./PhotoGallery";
+import { TLocation } from "@/app/utils/types/project";
 
 interface InfoTabProps {
   lastStage: TStage | undefined;
@@ -13,6 +14,7 @@ interface InfoTabProps {
   engine: Engine;
   transmission: Transmission;
   globalInfo: GlobalInfo;
+  location?: TLocation;
 }
 
 type Engine = {
@@ -20,8 +22,6 @@ type Engine = {
   description?: string;
   capacity: number;
   swapped?: boolean;
-  stockHp: number;
-  stockNm: number;
 };
 
 type Transmission = {
@@ -46,6 +46,7 @@ export default function InfoTab({
   engine,
   transmission,
   globalInfo,
+  location,
 }: InfoTabProps) {
   const t = useTranslations();
 
@@ -60,15 +61,17 @@ export default function InfoTab({
 
       <span className="mt-4 font-semibold">Parametry projektu</span>
 
-      <div className="flex w-full max-md:flex-col my-4 gap-2">
-        <div className="flex lg:w-[30%] flex-col gap-2 h-min mb-2">
+      <div className="flex w-full flex-col my-4 gap-2">
+        <div className="flex w-full flex-wrap gap-2 h-min mb-2">
           <AMPCarStatsItem
             typeValue={t("Core.Hp").toUpperCase()}
             value={lastStage.hp.toString()}
+            subTitle="Hamownia"
             title="Moc silnika"
           />
           <AMPCarStatsItem
             typeValue="NM"
+            subTitle="Hamownia"
             value={lastStage.nm.toString()}
             title="Moment obrotowy"
           />
@@ -111,34 +114,29 @@ export default function InfoTab({
         <div className="grid grid-cols-1 w-full lg:grid-cols-3 gap-4">
           <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md">
             <span className="text-lg font-semibold opacity-90">Silnik</span>
-            <div className="grid grid-cols-2 gap-y-2 text-sm mt-4">
-              <div className="opacity-75 text-left">Nazwa:</div>
-              <div className="opacity-85 font-medium text-right">
-                {engine.name}
+            <div className="flex flex-col gap-1 text-sm mt-4">
+              <div className="opacity-85">
+                <span className="opacity-75">Nazwa: </span>
+                <span className="font-medium">{engine.name}</span>
               </div>
 
               {engine.description && (
-                <>
-                  <div className="opacity-75 text-left">Opis:</div>
-                  <div className="opacity-85 font-medium text-right">
-                    {engine.description}
-                  </div>
-                </>
+                <div className="opacity-85">
+                  <span className="opacity-75">Opis: </span>
+                  <span className="font-medium">{engine.description}</span>
+                </div>
               )}
 
-              <div className="opacity-75 text-left">Pojemność:</div>
-              <div className="opacity-85 font-medium text-right">
-                {engine.capacity}l
+              <div className="opacity-85">
+                <span className="opacity-75">Pojemność: </span>
+                <span className="font-medium">{engine.capacity}l</span>
               </div>
 
-              <div className="opacity-75 text-left">Moc/Moment obrotowy:</div>
-              <div className="opacity-85 font-medium text-right">
-                {engine.stockHp}HP/{engine.stockNm}NM
-              </div>
-
-              <div className="opacity-75 text-left">Swap:</div>
-              <div className="opacity-85 font-medium text-right">
-                {engine.swapped ? "tak" : "nie"}
+              <div className="opacity-85">
+                <span className="opacity-75">Swap: </span>
+                <span className="font-medium">
+                  {engine.swapped ? "tak" : "nie"}
+                </span>
               </div>
             </div>
           </div>
@@ -147,50 +145,62 @@ export default function InfoTab({
             <span className="text-lg font-semibold opacity-90">
               Skrzynia biegów
             </span>
-            <div className="grid grid-cols-2 gap-y-2 text-sm mt-4">
-              <div className="opacity-75 text-left">Nazwa:</div>
-              <div className="opacity-85 font-medium text-right">
-                {transmission.name}
+            <div className="flex flex-col gap-1 text-sm mt-4">
+              <div className="opacity-85">
+                <span className="opacity-75">Nazwa: </span>
+                <span className="font-medium">{transmission.name}</span>
               </div>
 
-              <div className="opacity-75 text-left">Opis:</div>
-              <div className="opacity-85 font-medium text-right">
-                {transmission.description}
+              {transmission.description && (
+                <div className="opacity-85">
+                  <span className="opacity-75">Opis: </span>
+                  <span className="font-medium">
+                    {transmission.description}
+                  </span>
+                </div>
+              )}
+
+              <div className="opacity-85">
+                <span className="opacity-75">Ilość biegów: </span>
+                <span className="font-medium">{transmission.gears}</span>
               </div>
 
-              <div className="opacity-75 text-left">Ilość biegów:</div>
-              <div className="opacity-85 font-medium text-right">
-                {transmission.gears}
+              <div className="opacity-85">
+                <span className="opacity-75">Typ: </span>
+                <span className="font-medium">
+                  {transmission.transmissionType}
+                </span>
               </div>
 
-              <div className="opacity-75 text-left">Typ:</div>
-              <div className="opacity-85 font-medium text-right">
-                {transmission.transmissionType}
-              </div>
-
-              <div className="opacity-75 text-left">Swap:</div>
-              <div className="opacity-85 font-medium text-right">
-                {transmission.wasSwapped}
+              <div className="opacity-85">
+                <span className="opacity-75">Swap: </span>
+                <span className="font-medium">
+                  {transmission.wasSwapped ? "tak" : "nie"}
+                </span>
               </div>
             </div>
           </div>
 
           <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md">
             <span className="text-lg font-semibold opacity-90">Reszta</span>
-            <div className="grid grid-cols-2 gap-y-2 text-sm mt-4">
-              <div className="opacity-75 text-left">Waga:</div>
-              <div className="opacity-85 font-medium text-right">
-                {globalInfo.weightStock}
+            <div className="flex flex-col gap-1 text-sm mt-4">
+              <div className="opacity-85">
+                <span className="opacity-75">Waga: </span>
+                <span className="font-medium">{globalInfo.weightStock} kg</span>
               </div>
 
-              <div className="opacity-75 text-left">Prędkość maksymalna:</div>
-              <div className="opacity-85 font-medium text-right">
-                {globalInfo.topSpeedStock}
+              <div className="opacity-85">
+                <span className="opacity-75">Prędkość maksymalna: </span>
+                <span className="font-medium">
+                  {globalInfo.topSpeedStock} km/h
+                </span>
               </div>
 
-              <div className="opacity-75 text-left">Cena projektu:</div>
-              <div className="opacity-85 font-medium text-right">
-                {globalInfo.projectPrice}
+              <div className="opacity-85">
+                <span className="opacity-75">Cena projektu: </span>
+                <span className="font-medium">
+                  {globalInfo.projectPrice} zł
+                </span>
               </div>
             </div>
           </div>
@@ -200,6 +210,16 @@ export default function InfoTab({
       <span className="my-4 font-semibold">Zdjęcia</span>
       {images && <PhotoGallery images={images} />}
       {/* Zdjęcia */}
+      {location && (
+        <>
+          <span className="my-4 font-semibold">Najczęściej widziany</span>
+
+          <span>
+            {" "}
+            {location.name} {location.description}
+          </span>
+        </>
+      )}
       {/* Gdzie mozna go spotkać */}
     </div>
   );
