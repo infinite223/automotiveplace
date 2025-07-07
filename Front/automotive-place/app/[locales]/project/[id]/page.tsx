@@ -1,7 +1,6 @@
 "use client";
 
 import { AMPButton } from "@/app/components/shared/AMPButton";
-import { AMPCarStatsItem } from "@/app/components/shared/AMPCarStatsItem";
 import { AMPSeparator } from "@/app/components/shared/AMPSeparator";
 import useFetchData from "@/app/hooks/useFetchData";
 import { getProject } from "@/app/services/project";
@@ -17,9 +16,10 @@ import { FaHeart } from "react-icons/fa";
 import { TbMessageCircleUp } from "react-icons/tb";
 import { useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
-import InfoTab from "./InfoTab";
-import StagesTab from "./StagesTab";
-import ReferencesTab from "./ReferencesTab";
+import InfoTab from "./tabs/InfoTab";
+import StagesTab from "./tabs/StagesTab";
+import ReferencesTab from "./tabs/ReferencesTab";
+import { tabsConfig } from "./tabs/consts";
 
 export default function Project({ params }: { params: { id: string } }) {
   const t = useTranslations();
@@ -55,12 +55,6 @@ export default function Project({ params }: { params: { id: string } }) {
       </div>
     );
   if (error) return <div>Error: {error.message}</div>;
-
-  const tabs = [
-    { id: "informacje", label: "Informacje" },
-    { id: "etapy", label: "Etapy modyfikacji" },
-    { id: "wzmianki", label: "Wzmianki" },
-  ];
 
   return (
     <main className="flex w-full min-h-dvh bg-amp-900 dark:bg-amp-0 flex-col items-center gap-2 text-black dark:text-white">
@@ -135,7 +129,7 @@ export default function Project({ params }: { params: { id: string } }) {
           <AMPSeparator />
 
           <nav className="flex gap-3 mt-5 border-b border-amp-700 dark:border-amp-200 relative">
-            {tabs.map((tab) => (
+            {tabsConfig.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
@@ -202,7 +196,7 @@ export default function Project({ params }: { params: { id: string } }) {
                     exit={{ opacity: 0, x: -50 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <StagesTab />
+                    {data && <StagesTab stages={data?.stages || []} />}
                   </motion.div>
                 )}
 

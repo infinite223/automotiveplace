@@ -3,7 +3,7 @@
 import { AMPCarStatsItem } from "@/app/components/shared/AMPCarStatsItem";
 import { TStage } from "@/app/utils/types/stage";
 import { useTranslations } from "next-intl";
-import PhotoGallery from "./PhotoGallery";
+import PhotoGallery from "../PhotoGallery";
 import { TLocation } from "@/app/utils/types/project";
 
 interface InfoTabProps {
