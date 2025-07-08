@@ -18,8 +18,6 @@ import useOnScreen from "@/app/hooks/useOnScreen";
 import { ContentType } from "@/app/utils/enums";
 import { useTranslations } from "next-intl";
 import { useMainContent } from "@/app/hooks/useMainContent";
-import { useDispatch } from "react-redux";
-import { setIsLoading } from "@/lib/features/loading/globalLoadingSlice";
 
 export const HomeMainContent = () => {
   const lastElementRef = useRef<HTMLDivElement>(null);
@@ -33,7 +31,6 @@ export const HomeMainContent = () => {
 
   const pages = (data as any)?.pages ?? [];
   const content = pages.flatMap((page: any) => page.data);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (
@@ -101,11 +98,16 @@ export const HomeMainContent = () => {
 
         {(isLoading || isFetchingNextPage) && (
           <>
-            <LoadingMiniView />
-            <LoadingMiniView />
-            <LoadingMiniView />
-            <LoadingMiniView />
-            <LoadingMiniView />
+            {content.length > 3 ? (
+              <LoadingMiniView />
+            ) : (
+              <>
+                <LoadingMiniView />
+                <LoadingMiniView />
+                <LoadingMiniView />
+                <LoadingMiniView />
+              </>
+            )}
           </>
         )}
       </div>

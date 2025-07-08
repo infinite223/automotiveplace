@@ -41,6 +41,8 @@ input:-webkit-autofill:active {
 
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
+  background-color: black;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {

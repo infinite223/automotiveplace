@@ -19,9 +19,17 @@ const Yant = Yantramanav({
   weight: "900",
 });
 
+export const sortStagesByStageNumber = (stages: TStage[]) => {
+  return [...stages].sort((a, b) => {
+    const aNum = a.stageNumber ?? -Infinity;
+    const bNum = b.stageNumber ?? -Infinity;
+    return bNum - aNum;
+  });
+};
+
 export const getCurrentStage = (project: TProject) => {
   if (project.stages?.length && project.stages?.length > 0) {
-    return project.stages[project.stages.length - 1];
+    return sortStagesByStageNumber(project.stages)[0];
   }
 
   const currentStage: TStage = {
@@ -90,5 +98,15 @@ export const calculateDominantColor = (imageSrc: string): Promise<string> => {
     };
   });
 };
+
+export function formatNumber(
+  value: number | string,
+  decimals: number = 2
+): string {
+  const num = typeof value === "number" ? value : parseFloat(value);
+  if (isNaN(num)) return "-";
+  const fixed = num.toFixed(decimals);
+  return fixed.replace(/\.?0+$/, "");
+}
 
 export { AllanBold, KalamBold, Yant };
