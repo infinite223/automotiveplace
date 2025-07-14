@@ -20,6 +20,7 @@ import InfoTab from "./tabs/InfoTab";
 import StagesTab from "./tabs/StagesTab";
 import ReferencesTab from "./tabs/ReferencesTab";
 import { tabsConfig } from "./tabs/consts";
+import { LoadingSpinner } from "@/app/components/loading/LoadingSpinner";
 
 export default function Project({ params }: { params: { id: string } }) {
   const t = useTranslations();
@@ -51,7 +52,7 @@ export default function Project({ params }: { params: { id: string } }) {
   if (loading && !tempData)
     return (
       <div className="flex w-full min-h-screen bg-black justify-center items-center text-white text-lg">
-        Loading...
+        <LoadingSpinner />
       </div>
     );
   if (error) return <div>Error: {error.message}</div>;
@@ -88,7 +89,7 @@ export default function Project({ params }: { params: { id: string } }) {
                   </div>
                   <div className="text-medium opacity-85">2,5k polubień</div>
                 </div>
-                <div className="gap-2 flex w-full justify-end flex-wrap">
+                <div className="mt-2 gap-2 flex w-full justify-end flex-wrap flex-wrap-reverse">
                   <AMPButton
                     name="Udostępnij"
                     additionalTailwindCss="text-sm max-sm:flex-1 min-w-[150px] justify-center"

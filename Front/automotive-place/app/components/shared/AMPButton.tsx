@@ -9,12 +9,13 @@ interface IAMPButton {
   additionalTailwindCss?: string;
   type?: "primary" | "secondary" | "tertiary" | "none";
   icon?: React.ReactNode;
+  isSubmit?: boolean;
 }
 
 const buttonTypeClasses = {
   primary: "bg-amp-500 text-white p-1.5 px-3 rounded-sm",
   secondary: "bg-amp-300 text-white p-1.5 px-3 rounded-sm",
-  tertiary: "bg-green-500 text-white p-1.5 px-3 rounded-sm",
+  tertiary: " text-white p-1.5 px-3 rounded-sm",
   none: "p-1.5 px-3",
 };
 
@@ -24,6 +25,7 @@ export const AMPButton: FC<IAMPButton> = ({
   disabled,
   additionalTailwindCss,
   type = "primary",
+  isSubmit = false,
   icon,
 }) => {
   const typeClass = buttonTypeClasses[type];
@@ -31,8 +33,9 @@ export const AMPButton: FC<IAMPButton> = ({
   return (
     <button
       disabled={disabled}
+      type={isSubmit ? "submit" : "button"}
       onClick={onClick}
-      className={`${disabled ? "opacity-35" : ""} ${typeClass} ${additionalTailwindCss} hover:opacity-70 flex items-center`}
+      className={`${disabled ? "opacity-35" : ""} ${typeClass} ${additionalTailwindCss} hover:opacity-70 flex items-center rounded-sm`}
     >
       {icon && <span className="mr-2">{icon}</span>}
       {name}

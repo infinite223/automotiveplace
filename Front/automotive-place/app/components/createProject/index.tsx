@@ -9,6 +9,7 @@ import { ItemTypes, TCarItemCreate } from "@/app/utils/types/carItem";
 import { TProjectCreate } from "@/app/utils/types/project";
 import { TStageCreate } from "@/app/utils/types/stage";
 import { TTagCreate } from "@/app/utils/types/tag";
+import { AMPButton } from "../shared/AMPButton";
 
 interface IInputValue {
   value: string | number;
@@ -167,12 +168,13 @@ export const CreateProjectView = () => {
           placeholder="Np. Seryjna turbina, bez modyfikacji, orginalnie była w audi A3 8p "
           inputStyles={{ fontSize: 12, height: "150px" }}
         />
-        <button
-          type="submit"
-          className="mt-4 bg-teal-800 py-2 rounded-md text-white group-invalid:pointer-events-none group-invalid:opacity-50"
-        >
-          Dodaj projekt
-        </button>
+
+        <AMPButton
+          name="Dodaj projekt"
+          type="primary"
+          additionalTailwindCss="justify-center"
+          isSubmit
+        />
 
         <AMPHelpFooter footerText="Czym jest projekt?" />
       </form>

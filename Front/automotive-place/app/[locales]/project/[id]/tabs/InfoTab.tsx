@@ -54,7 +54,7 @@ export default function InfoTab({
 
   return (
     <div className="flex flex-col w-full">
-      {name && <span className="mt-2">{name}</span>}
+      {name && <span className="mt-2 font-semibold">{name}</span>}
       {description && (
         <span className="text-sm opacity-85 mt-1">{description}</span>
       )}

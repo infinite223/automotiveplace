@@ -89,9 +89,7 @@ const OptionItem = ({
           key="text"
           className="flex justify-center"
         >
-          <h3 className="uppercase text-[13px] text-center  font-semibold">
-            {name}
-          </h3>
+          <h3 className="text-[13px] text-center font-semibold">{name}</h3>
         </motion.div>
       </AnimatePresence>
     </motion.div>

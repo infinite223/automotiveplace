@@ -13,6 +13,7 @@ import { ErrorStatus } from "@/app/utils/enums";
 import { setShowCreatePost } from "@/lib/features/actions/actionsSlice";
 import { ZodIssue } from "zod";
 import { createPostSchema } from "@/app/api/zod.schmas";
+import { AMPButton } from "../shared/AMPButton";
 
 export const CreatePostView = () => {
   const dispatch = useDispatch();
@@ -85,13 +86,20 @@ export const CreatePostView = () => {
           inputStyles={{ fontSize: 12, height: "150px" }}
           error={errors?.find((e) => e.path.includes("description"))?.message}
         />
-        <button
+        {/* <button
           type="submit"
           className="mt-4 bg-teal-800 py-2 rounded-md text-white group-invalid:pointer-events-none group-invalid:opacity-50"
           disabled={loading}
         >
           Dodaj post
-        </button>
+        </button> */}
+
+        <AMPButton
+          name="Dodaj post"
+          type="primary"
+          additionalTailwindCss="justify-center"
+          isSubmit
+        />
 
         <AMPHelpFooter footerText="Czym jest post?" />
       </form>

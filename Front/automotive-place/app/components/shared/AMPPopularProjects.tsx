@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getPopularProjects } from "@/app/services/project";
 import { TBasicPopularProject } from "@/app/utils/types/project";
 import { useQuery } from "@tanstack/react-query";
+import { LoadingSpinner } from "../loading/LoadingSpinner";
 
 function AMPPopularProjects() {
   const {
@@ -16,7 +17,13 @@ function AMPPopularProjects() {
     queryFn: getPopularProjects,
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex w-full h-[200px] items-center justify-center opacity-75">
+        <LoadingSpinner />
+      </div>
+    );
+
   if (isError) return <div>Error loading projects</div>;
 
   return (
