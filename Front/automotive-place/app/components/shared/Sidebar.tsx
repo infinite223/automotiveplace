@@ -80,6 +80,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         title="Dodawanie projektu"
         additionalTailwindCss="relative bg-amp-100"
         defoultBG={false}
+        bgOnClickClose={false}
       >
         <CreateProjectView />
       </AMPModal>
@@ -91,6 +92,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         title="Dodawanie postu"
         additionalTailwindCss="relative bg-amp-100"
         defoultBG={false}
+        bgOnClickClose={false}
       >
         <CreatePostView />
       </AMPModal>

@@ -65,7 +65,7 @@ const menuItems: TMenuItem[] = [
     visibility: Visibility.AUTHOR,
   },
   {
-    icon: <IoMdClose size={iconSizes.small} />,
+    icon: <IoMdClose size={iconSizes.base} />,
     name: "Nie interesuje mnie",
     isDisable: false,
     handleClick: () => {},

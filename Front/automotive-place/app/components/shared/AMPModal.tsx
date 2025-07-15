@@ -12,6 +12,7 @@ interface IModalProps {
   visible: boolean;
   additionalTailwindCss?: string;
   defoultBG?: boolean;
+  bgOnClickClose?: boolean;
 }
 
 const AMPModal = ({
@@ -22,6 +23,7 @@ const AMPModal = ({
   additionalTailwindCss,
   visible,
   defoultBG = true,
+  bgOnClickClose = true,
 }: IModalProps) => {
   useKeyboardShortcut(onClose, shortcutConfigs.escape);
 
@@ -29,7 +31,7 @@ const AMPModal = ({
     <AnimatePresence>
       {visible && (
         <motion.div
-          onClick={onClose}
+          onClick={bgOnClickClose ? onClose : () => {}}
           className="fixed cursor-pointer top-0 left-0 w-full z-20 h-screen flex justify-center items-center bg-amp-900/25 dark:bg-amp-100/25 bg-opacity-50 custom-blur"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
