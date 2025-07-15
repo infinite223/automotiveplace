@@ -289,7 +289,7 @@ const OptionItem: FC<{
     <div
       className={`${additionalTailwindCss} flex-row ${
         isActive ? "opacity-90 font-bold" : "opacity-80"
-      } gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 pl-1 hover:opacity-70 cursor-pointer flex items-center justify-center`}
+      } gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 hover:bg-amp-300 rounded-md pl-1 2xl:pl-3 w-full hover:opacity-70 cursor-pointer flex items-center justify-start`}
       onClick={onClick}
     >
       {icon}
