@@ -3,7 +3,7 @@ import { TCarItem } from "./carItem";
 type TStage = {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   stageNumber: number;
   createdAt: Date;
   updatedAt: Date;

@@ -54,7 +54,6 @@ export const HomeMainContent = () => {
     if (lastClickedId) {
       const scrollToElement = () => {
         const element = document.getElementById(`content-${lastClickedId}`);
-        console.log(lastClickedId, element, "element");
         if (element) {
           element.scrollIntoView({ behavior: "smooth" });
           sessionStorage.removeItem("lastClickedId");

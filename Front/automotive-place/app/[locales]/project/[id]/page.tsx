@@ -14,13 +14,16 @@ import { useEffect, useState } from "react";
 import { CgShare } from "react-icons/cg";
 import { FaHeart } from "react-icons/fa";
 import { TbMessageCircleUp } from "react-icons/tb";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 import InfoTab from "./tabs/InfoTab";
 import StagesTab from "./tabs/StagesTab";
 import ReferencesTab from "./tabs/ReferencesTab";
 import { tabsConfig } from "./tabs/consts";
 import { LoadingSpinner } from "@/app/components/loading/LoadingSpinner";
+import { useLike } from "@/app/hooks/useLike";
+import { ContentType } from "@/app/utils/enums";
+import { TBasicTag } from "@/app/utils/types/tag";
 
 export default function Project({ params }: { params: { id: string } }) {
   const t = useTranslations();
@@ -28,7 +31,7 @@ export default function Project({ params }: { params: { id: string } }) {
     (state: RootState) => state.contentData.contentData
   );
   const [activeTab, setActiveTab] = useState("informacje");
-
+  const dispatch = useDispatch();
   const [tempData, setTempData] = useState<TBasicProject | null>(null);
   const { data, loading, error } = useFetchData<TProject>(() =>
     getProject(params.id)
@@ -89,7 +92,7 @@ export default function Project({ params }: { params: { id: string } }) {
                   </div>
                   <div className="text-medium opacity-85">2,5k polubień</div>
                 </div>
-                <div className="mt-2 gap-2 flex w-full justify-end flex-wrap flex-wrap-reverse">
+                <div className="mt-2 gap-2 flex w-full justify-end flex-wrap-reverse">
                   <AMPButton
                     name="Udostępnij"
                     additionalTailwindCss="text-sm max-sm:flex-1 min-w-[150px] justify-center"
@@ -102,12 +105,14 @@ export default function Project({ params }: { params: { id: string } }) {
                     type="none"
                     icon={<TbMessageCircleUp size={iconSizes.small} />}
                   />
-                  <AMPButton
-                    name="Polub projekt"
-                    additionalTailwindCss="text-sm max-sm:flex-1 min-w-[150px] justify-center"
-                    type="secondary"
-                    icon={<FaHeart size={iconSizes.small - 2} />}
-                  />
+                  {data && (
+                    <LikeButton
+                      id={data.id}
+                      isLikedByAuthUser={data.isLikedByAuthUser}
+                      likesCount={data.likesCount}
+                      tags={data.tags || []}
+                    />
+                  )}
                 </div>
               </div>
               <div className="flex items-center gap-x-4 text-xs opacity-65 flex-wrap mt-2">
@@ -224,3 +229,34 @@ export default function Project({ params }: { params: { id: string } }) {
     </main>
   );
 }
+
+interface LikeButtonProps {
+  likesCount: number;
+  isLikedByAuthUser: boolean;
+  id: string;
+  tags: TBasicTag[];
+}
+
+const LikeButton = ({
+  id,
+  isLikedByAuthUser,
+  likesCount,
+  tags,
+}: LikeButtonProps) => {
+  const { currentIsLiked, currentLikesCount, handleClickLike } = useLike(
+    likesCount,
+    isLikedByAuthUser,
+    id,
+    ContentType.Project,
+    tags
+  );
+  return (
+    <AMPButton
+      name={currentIsLiked ? "Lubisz projekt" : "Polub projekt"}
+      additionalTailwindCss="text-sm max-sm:flex-1 min-w-[150px] justify-center"
+      type="secondary"
+      icon={<FaHeart size={iconSizes.small - 2} />}
+      onClick={handleClickLike}
+    />
+  );
+};

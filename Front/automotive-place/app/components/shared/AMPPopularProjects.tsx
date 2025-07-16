@@ -28,8 +28,8 @@ function AMPPopularProjects() {
 
   return (
     <div>
-      <h2 className="px-2">Popularne projekty</h2>
-      <div className="max-h-[85vh] overflow-y-auto custom-scrollbar flex flex-col mt-4 ">
+      <h2 className="px-2 font-semibold">Popularne projekty</h2>
+      <div className="max-h-[85vh] overflow-y-auto custom-scrollbar flex flex-col mt-2">
         {projects?.map((project) => (
           <Link
             href={`../project/${project.id}`}

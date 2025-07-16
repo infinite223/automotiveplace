@@ -29,6 +29,7 @@ export const ProjectMiniView = ({
     ContentType.Project,
     data.tags
   );
+
   const dispatch = useDispatch();
   useEffect(() => {
     setIsClient(true);
@@ -42,7 +43,6 @@ export const ProjectMiniView = ({
   };
 
   const handleClickShare = () => {
-    console.log("Share");
     const newN = CreateNotification("Success", "Shared project");
     dispatch(addNotification(JSON.stringify(newN)));
   };

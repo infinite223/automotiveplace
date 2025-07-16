@@ -15,6 +15,7 @@ export const useLike = (
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClickLike = async () => {
+    console.log("test", initialLikesCount, initialIsLiked, id, tags);
     if (isLoading) return;
     setIsLoading(true);
 

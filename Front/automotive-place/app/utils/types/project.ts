@@ -24,7 +24,7 @@ type TProject = {
   userId: string;
   images?: string[];
   authorId: string;
-  author?: TUser;
+  author?: TBasicUser;
 
   engineName: string;
   engineStockHp: number;
@@ -44,7 +44,7 @@ type TProject = {
 
   carItems?: TCarItem[];
   stages?: TStage[];
-  tags?: TTag[];
+  tags?: TBasicTag[];
 
   // likes:
   // pickedProjectsOnEventOrSpot:
@@ -52,6 +52,8 @@ type TProject = {
   // authorId:
   // companyId:
   location?: TLocation;
+  isLikedByAuthUser: boolean;
+  likesCount: number;
 };
 
 export type TLocation = {
