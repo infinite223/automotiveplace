@@ -69,8 +69,6 @@ export function generateRandomProjects(count: number) {
         name: "Dawid",
         imageUrl:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeyk55eIDh4grMFV4505_KRgtOm7HTGbm_7Q&s",
-        description: "Car enthusiast and collector.",
-        email: "dawid@example.com",
       },
       stages: [
         {
@@ -92,6 +90,8 @@ export function generateRandomProjects(count: number) {
           stagePrice: 2330,
         },
       ],
+      isLikedByAuthUser: false,
+      likesCount: 0,
     };
 
     projects.push(project);
