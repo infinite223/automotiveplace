@@ -75,12 +75,16 @@ export default function StagesTab({ stages }: StagesTabProps) {
                   tip="zł"
                 />
 
-                {!isBase && (
-                  <span className="text-sm opacity-65 pt-2 mt-auto">
-                    Modyfikacje dodano:{" "}
-                    {moment(stage.createdAt, "YYYYMMDD").fromNow()}
-                  </span>
-                )}
+                <span className="text-sm opacity-65 pt-2 mt-auto">
+                  {!isBase ? (
+                    <>
+                      Modyfikacje dodano:{" "}
+                      {moment(stage.createdAt, "YYYYMMDD").fromNow()}
+                    </>
+                  ) : (
+                    <>Seryjne parametry pojazdu</>
+                  )}
+                </span>
               </div>
             );
           })}

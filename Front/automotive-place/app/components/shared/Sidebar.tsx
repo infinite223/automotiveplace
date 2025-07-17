@@ -109,6 +109,7 @@ const SideBarDesktop: FC<{ openModal: () => void; pathname: string }> = ({
   const router = useRouter();
 
   const smallScreenHiddenItem = "max-2xl:hidden";
+  const marginY = " my-2";
 
   return (
     <div className="flex min-w-[85px] bg-amp-0 2xl:w-[240px] lg:h-full scroll-smoot custom-scrollbar overflow-y-auto flex-col justify-between">
@@ -126,7 +127,10 @@ const SideBarDesktop: FC<{ openModal: () => void; pathname: string }> = ({
               </span>
             </div>
           </div>
-          <AMPSeparator additionalTailwindCss={smallScreenHiddenItem} />
+
+          <AMPSeparator
+            additionalTailwindCss={smallScreenHiddenItem + marginY}
+          />
 
           <OptionItem
             icon={<MdHome size={iconSizes.base} />}
@@ -154,7 +158,9 @@ const SideBarDesktop: FC<{ openModal: () => void; pathname: string }> = ({
             onClick={() => router.push("/garage")}
             isActive={pathname === "/garage"}
           />
-          <AMPSeparator additionalTailwindCss={smallScreenHiddenItem} />
+          <AMPSeparator
+            additionalTailwindCss={smallScreenHiddenItem + marginY}
+          />
 
           <OptionItem
             icon={<MdGroups size={iconSizes.base} />}
@@ -289,7 +295,7 @@ const OptionItem: FC<{
     <div
       className={`${additionalTailwindCss} flex-row ${
         isActive ? "opacity-90 font-bold" : "opacity-80"
-      } gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 hover:bg-amp-300 rounded-md pl-1 2xl:pl-3 w-full hover:opacity-70 cursor-pointer flex items-center justify-start`}
+      } gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 hover:bg-amp-200 rounded-md pl-1 2xl:pl-3 w-full cursor-pointer flex items-center justify-start`}
       onClick={onClick}
     >
       {icon}

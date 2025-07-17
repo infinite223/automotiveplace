@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import prisma from "@/lib/prisma";
 import { TProject } from "@/app/utils/types/project";
+import { ProjectWithIncludes } from "../../mappers/project";
 
 export async function GET(request: NextRequest) {
   const userData = await getLoggedInUser();
@@ -19,7 +20,7 @@ export async function GET(request: NextRequest) {
   const { searchParams }: any = new URL(request.url);
   const projectId = searchParams.get("id");
 
-  const project = await prisma.project.findFirst({
+  const project: ProjectWithIncludes | null = await prisma.project.findFirst({
     where: { id: projectId.toString() },
     include: {
       tagAssignments: { include: { tag: true } },
@@ -83,7 +84,7 @@ export async function GET(request: NextRequest) {
     }),
     location: project.location
       ? {
-          name: "Unknown", // Provide a default value for name
+          name: "Unknown",
           lat: project.location.lat.toNumber() || 0,
           lng: project.location.lng.toNumber() || 0,
           description: "",
