@@ -132,9 +132,7 @@ export default function Project({ params }: { params: { id: string } }) {
             </header>
           </nav>
 
-          <AMPSeparator />
-
-          <nav className="flex gap-3 mt-5 border-b border-amp-700 dark:border-amp-200 relative">
+          <nav className="flex w-full items-center max-sm:justify-between gap-3 mt-3 border-b border-amp-700 dark:border-amp-200 relative">
             {tabsConfig.map((tab) => (
               <button
                 key={tab.id}

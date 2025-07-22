@@ -81,7 +81,10 @@ export const ProjectMiniView = ({
           <div className="flex flex-col my-1 gap-2">
             <h2 className="text-md opacity-80 mx-3">{data.description}</h2>
             {data.images && <AMPSlider images={data.images} />}
-
+            <div className="px-3 placeholder:py-1 flex items-center justify-left">
+              <span>Etap modyfikacji: </span>
+              <span className="font-semibold">{currentStage}</span>
+            </div>
             <div
               className={`flex px-3 gap-5 w-full ${data.acc_0_100 && " justify-between"}`}
             >
@@ -105,10 +108,6 @@ export const ProjectMiniView = ({
                 value={data.acc_100_200}
                 type="s"
               />
-            </div>
-            <div className="px-3 bg-amp-200 py-1 flex items-center justify-center">
-              <span>Etap modyfikacji: </span>
-              <span className="font-semibold">{currentStage}</span>
             </div>
           </div>
 
