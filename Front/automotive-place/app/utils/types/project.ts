@@ -156,6 +156,7 @@ type TBasicPopularProject = {
   carMake: string;
   carModel: string;
   stageNumber: number;
+  stageName: string;
   currentHp: number;
   currentNm: number;
   author: TBasicUser;

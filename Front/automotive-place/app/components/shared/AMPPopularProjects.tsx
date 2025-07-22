@@ -35,7 +35,7 @@ function AMPPopularProjects() {
             href={`../project/${project.id}`}
             key={project.carMake + project.carModel}
           >
-            <div className="text-sm flex flex-wrap p-2 hover:bg-amp-100 rounded-sm cursor-pointer">
+            <div className="text-sm flex flex-wrap p-2 hover:bg-amp-200 rounded-sm cursor-pointer">
               <div className="flex gap-3 items-start">
                 <div className="rounded-md w-[90px] h-full bg-amp-50 flex items-center justify-center">
                   <img
@@ -49,7 +49,7 @@ function AMPPopularProjects() {
                     {project.carMake} {project.carModel}
                   </div>
                   <div className="text-xs leading-[15px]">
-                    <div>Stage: {project.stageNumber}</div>
+                    <div>{project.stageName}</div>
                     <div>HP: {project.currentHp}</div>
                     <div>NM: {project.currentNm}</div>
                   </div>

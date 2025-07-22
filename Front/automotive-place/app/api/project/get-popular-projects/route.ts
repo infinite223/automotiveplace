@@ -26,7 +26,7 @@ export async function GET() {
       },
       stages: {
         orderBy: {
-          stageNumber: "desc",
+          stageNumber: "asc",
         },
       },
       media: { select: { fileLocation: true } },
@@ -57,6 +57,7 @@ export async function GET() {
       author: project.author,
       likesCount: project._count.userActivity,
       images: project.media.map((m) => m.fileLocation),
+      stageName: lastStage ? lastStage.name : "Stock",
     };
   });
 

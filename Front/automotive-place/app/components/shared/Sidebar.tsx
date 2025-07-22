@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { LuSearch } from "react-icons/lu";
 import { BiSolidCarGarage } from "react-icons/bi";
 import { RiPlayListAddLine } from "react-icons/ri";
@@ -30,6 +30,7 @@ import Image from "next/image";
 import { CreatePostView } from "../createPost";
 import { CreateProjectView } from "../createProject";
 import { IoNotifications } from "react-icons/io5";
+import { useScrollDirection } from "@/app/hooks/useScrollDirection";
 
 interface ISideBar {}
 
@@ -211,67 +212,65 @@ const SideBarDesktop: FC<{ openModal: () => void; pathname: string }> = ({
   );
 };
 
-const SideBarMobile: FC<{ openModal: () => void; pathname: string }> = ({
-  openModal,
-  pathname,
-}) => {
+const SideBarMobile = ({ openModal, pathname }: any) => {
   const t = useTranslations();
   const router = useRouter();
+  const scrollDirection = useScrollDirection();
+
+  const isHidden = scrollDirection === "down";
 
   return (
-    <div className="flex bg-amp-50 w-full h-full p-2 px-3 flex-col">
-      <div className="gap-4 pb-2 p-1 ml-0 items-center flex">
-        {/* <Image src={Logo} alt="logo" width={17} height={17} /> */}
-        <span className={`text-xs uppercase` + Yant.className}>
-          Automotiveplace
-        </span>
-      </div>
-      {/* <AMPSeparator /> */}
-
-      <div className="flex w-full justify-between">
-        <OptionItem
-          icon={<Image src={Logo} alt="logo" width={21} height={21} />}
-          name={t("Core.Home")}
-          onClick={() => router.push("/home")}
-          isActive={pathname === "/home"}
-          showName={false}
-        />
-        <OptionItem
-          icon={<LuSearch size={iconSizes.base} />}
-          name={t("Core.Search")}
-          onClick={() => {}}
-          isActive={pathname === "/search"}
-          showName={false}
-        />
-        <OptionItem
-          icon={<RiPlayListAddLine size={iconSizes.base} />}
-          name={t("Core.Add")}
-          onClick={openModal}
-          isActive={pathname === "/add"}
-          showName={false}
-        />
-        <OptionItem
-          icon={<BiSolidCarGarage size={iconSizes.base} />}
-          name={t("Core.Garage")}
-          onClick={() => router.push("/garage")}
-          isActive={pathname === "/garage"}
-          showName={false}
-        />
-        <OptionItem
-          icon={<IoNotifications size={iconSizes.base} />}
-          name={"Notifications"}
-          onClick={() => {}}
-          isActive={pathname === "/Notifications"}
-          showName={false}
-        />
-        <OptionItem
-          icon={<SlMenu size={iconSizes.base} />}
-          name={t("Core.Menu")}
-          onClick={() => {}}
-          isActive={pathname === "/menu"}
-          showName={false}
-        />
-      </div>
+    <div
+      className={`
+        fixed bottom-0 left-0 right-0 z-50 bg-amp-50 h-16 flex items-center justify-around
+        transition-transform duration-300
+        ${isHidden ? "translate-y-full" : "translate-y-0"}
+        lg:hidden
+        shadow-md
+      `}
+    >
+      <OptionItem
+        icon={<Image src={Logo} alt="logo" width={21} height={21} />}
+        name={t("Core.Home")}
+        onClick={() => router.push("/home")}
+        isActive={pathname === "/home"}
+        showName={false}
+      />
+      <OptionItem
+        icon={<LuSearch size={iconSizes.base} />}
+        name={t("Core.Search")}
+        onClick={() => {}}
+        isActive={pathname === "/search"}
+        showName={false}
+      />
+      <OptionItem
+        icon={<RiPlayListAddLine size={iconSizes.base} />}
+        name={t("Core.Add")}
+        onClick={openModal}
+        isActive={pathname === "/add"}
+        showName={false}
+      />
+      <OptionItem
+        icon={<BiSolidCarGarage size={iconSizes.base} />}
+        name={t("Core.Garage")}
+        onClick={() => router.push("/garage")}
+        isActive={pathname === "/garage"}
+        showName={false}
+      />
+      <OptionItem
+        icon={<IoNotifications size={iconSizes.base} />}
+        name="Notifications"
+        onClick={() => {}}
+        isActive={pathname === "/notifications"}
+        showName={false}
+      />
+      <OptionItem
+        icon={<SlMenu size={iconSizes.base} />}
+        name={t("Core.Menu")}
+        onClick={() => {}}
+        isActive={pathname === "/menu"}
+        showName={false}
+      />
     </div>
   );
 };
@@ -294,7 +293,7 @@ const OptionItem: FC<{
   return (
     <div
       className={`${additionalTailwindCss} flex-row ${
-        isActive ? "opacity-90 font-bold" : "opacity-80"
+        isActive ? "font-bold" : "opacity-80"
       } gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 hover:bg-amp-200 rounded-md pl-1 2xl:pl-3 w-full cursor-pointer flex items-center justify-start`}
       onClick={onClick}
     >

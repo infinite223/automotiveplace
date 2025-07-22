@@ -86,10 +86,6 @@ export const ProjectMiniView = ({
               className={`flex px-3 gap-5 w-full ${data.acc_0_100 && " justify-between"}`}
             >
               <StatisticMiniItem
-                title="Etap modyfikacji"
-                value={currentStage}
-              />
-              <StatisticMiniItem
                 title="Moc"
                 value={statisticCurrentHp}
                 type="HP"
@@ -109,6 +105,10 @@ export const ProjectMiniView = ({
                 value={data.acc_100_200}
                 type="s"
               />
+            </div>
+            <div className="px-3 bg-amp-200 py-1 flex items-center justify-center">
+              <span>Etap modyfikacji: </span>
+              <span className="font-semibold">{currentStage}</span>
             </div>
           </div>
 

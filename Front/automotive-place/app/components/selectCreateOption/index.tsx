@@ -45,10 +45,6 @@ export const SelectCreateOption: FC = () => {
       />
 
       <AMPSeparator />
-
-      <footer className="text-sm opacity-75 p-2 px-4 leading-4">
-        Po najechaniu na wybraną opcje możesz zobaczyć dodatkowe informacje.
-      </footer>
     </div>
   );
 };

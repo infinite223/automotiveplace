@@ -65,14 +65,14 @@ export default function InfoTab({
         <div className="flex w-full flex-wrap gap-2 h-min mb-2">
           <AMPCarStatsItem
             typeValue={t("Core.Hp").toUpperCase()}
-            value={lastStage.hp.toString()}
+            value={lastStage.hp?.toString()}
             subTitle="Hamownia"
             title="Moc silnika"
           />
           <AMPCarStatsItem
             typeValue="NM"
             subTitle="Hamownia"
-            value={lastStage.nm.toString()}
+            value={lastStage.nm?.toString()}
             title="Moment obrotowy"
           />
           <AMPCarStatsItem
