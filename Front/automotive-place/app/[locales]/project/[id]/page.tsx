@@ -1,8 +1,6 @@
 "use client";
 
 import { AMPButton } from "@/app/components/shared/AMPButton";
-import { AMPSeparator } from "@/app/components/shared/AMPSeparator";
-import useFetchData from "@/app/hooks/useFetchData";
 import { getProject } from "@/app/services/project";
 import { iconSizes } from "@/app/utils/constants";
 import { getCurrentStage } from "@/app/utils/helpers";
@@ -24,6 +22,7 @@ import { LoadingSpinner } from "@/app/components/loading/LoadingSpinner";
 import { useLike } from "@/app/hooks/useLike";
 import { ContentType } from "@/app/utils/enums";
 import { TBasicTag } from "@/app/utils/types/tag";
+import { useFetchData } from "@/app/hooks/useFetchData";
 
 export default function Project({ params }: { params: { id: string } }) {
   const t = useTranslations();
@@ -33,8 +32,9 @@ export default function Project({ params }: { params: { id: string } }) {
   const [activeTab, setActiveTab] = useState("informacje");
   const dispatch = useDispatch();
   const [tempData, setTempData] = useState<TBasicProject | null>(null);
-  const { data, loading, error } = useFetchData<TProject>(() =>
-    getProject(params.id)
+  const { data, loading, error } = useFetchData<TProject>(
+    `project-${params.id}`,
+    () => getProject(params.id)
   );
 
   useEffect(() => {

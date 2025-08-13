@@ -15,6 +15,7 @@ function AMPPopularProjects() {
   } = useQuery<TBasicPopularProject[]>({
     queryKey: ["popular-projects"],
     queryFn: getPopularProjects,
+    staleTime: 1000 * 60 * 5,
   });
 
   if (isLoading)

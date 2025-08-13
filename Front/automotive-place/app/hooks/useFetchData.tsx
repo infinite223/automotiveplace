@@ -1,32 +1,12 @@
-import { useState, useEffect, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
 
-function useFetchData<T>(fetchFunction: () => Promise<T>) {
-  const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-  const fetchedOnce = useRef(false);
+export function useFetchData<T>(key: string, fetchFunction: () => Promise<T>) {
+  const { data, isLoading, error } = useQuery<T>({
+    queryKey: [key],
+    queryFn: fetchFunction,
+    staleTime: 1000 * 60 * 20,
+    refetchOnWindowFocus: false,
+  });
 
-  useEffect(() => {
-    if (fetchedOnce.current) return;
-
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const result = await fetchFunction();
-        setData(result);
-        fetchedOnce.current = true;
-      } catch (err: any) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [fetchFunction]);
-
-  return { data, loading, error };
+  return { data, loading: isLoading, error: error as Error | null };
 }
-
-export default useFetchData;
