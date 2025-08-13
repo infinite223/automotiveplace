@@ -5,6 +5,11 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
+  experimental: {
+    turbo: {
+      rules: {}, // tu możesz definiować dodatkowe reguły, ale pusty obiekt wystarczy
+    },
+  },
   images: {
     remotePatterns: [
       {

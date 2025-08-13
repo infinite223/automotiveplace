@@ -57,7 +57,7 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
         >
           {images.map((image, index) => (
             <img
-              key={`${currentIndex}-${index}`}
+              key={index}
               src={image}
               alt={`slide-${index}`}
               className="flex-shrink-0 object-contain w-full h-full my-auto"

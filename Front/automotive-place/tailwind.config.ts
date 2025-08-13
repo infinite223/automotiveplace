@@ -6,7 +6,7 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@nextui-org/theme/dist/components/[object Object].js",
+    // Node_modules z NextUI nie trzeba dodawać ręcznie
   ],
   theme: {
     extend: {
@@ -23,7 +23,6 @@ const config: Config = {
           200: "#333339",
           300: "#393939",
           500: "#db1f48",
-
           700: "#ededed",
           800: "#fefefe",
           900: "white",
@@ -33,4 +32,5 @@ const config: Config = {
   },
   plugins: [nextui()],
 };
+
 export default config;
