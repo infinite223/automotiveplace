@@ -81,8 +81,8 @@ export const ProjectMiniView = ({
           <div className="flex flex-col my-1 gap-2">
             <h2 className="text-md opacity-80 mx-3">{data.description}</h2>
             {data.images && <AMPSlider images={data.images} />}
-            <div className="px-3 placeholder:py-1 flex items-center justify-left">
-              <span>Etap modyfikacji: </span>
+            <div className="px-3 placeholder:py-1 flex items-center justify-left gap-1">
+              <span>Etap modyfikacji:</span>
               <span className="font-semibold">{currentStage}</span>
             </div>
             <div
@@ -121,7 +121,7 @@ export const ProjectMiniView = ({
             type={ContentType.Project}
             actions={
               <Link
-                href={`../project/${data.id}`}
+                href={`./project/${data.id}`}
                 onClick={handleLinkClick}
                 className="flex font-semibold items-center text-sm cursor-pointer transition ease-in-out gap-2 border-amp-200/50 hover:border-amp-200/70 dark:border-amp-800/40 dark:hover:border-amp-800/70 border-0 rounded-sm pl-2 pr-1 py-1 opacity-80 hover:opacity-50"
               >

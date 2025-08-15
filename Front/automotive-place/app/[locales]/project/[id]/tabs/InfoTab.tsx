@@ -5,6 +5,9 @@ import { TStage } from "@/app/utils/types/stage";
 import { useTranslations } from "next-intl";
 import PhotoGallery from "../PhotoGallery";
 import { TLocation } from "@/app/utils/types/project";
+import { PiEngineBold, PiInfo } from "react-icons/pi";
+import { GiGearStickPattern } from "react-icons/gi";
+import { iconSizes } from "@/app/utils/constants";
 
 interface InfoTabProps {
   lastStage: TStage | undefined;
@@ -112,7 +115,7 @@ export default function InfoTab({
         </div>
 
         <div className="grid grid-cols-1 w-full lg:grid-cols-3 gap-4">
-          <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md">
+          <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md relative">
             <span className="text-lg font-semibold opacity-90">Silnik</span>
             <div className="flex flex-col gap-1 text-sm mt-4">
               <div className="opacity-85">
@@ -139,9 +142,13 @@ export default function InfoTab({
                 </span>
               </div>
             </div>
+            <PiEngineBold
+              className="top-5 right-5 absolute text-amp-300 "
+              size={iconSizes.xlarge}
+            />
           </div>
 
-          <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md">
+          <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md relative">
             <span className="text-lg font-semibold opacity-90">
               Skrzynia biegów
             </span>
@@ -179,9 +186,13 @@ export default function InfoTab({
                 </span>
               </div>
             </div>
+            <GiGearStickPattern
+              className="top-5 right-5 absolute text-amp-300 "
+              size={iconSizes.xlarge}
+            />
           </div>
 
-          <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md">
+          <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md relative">
             <span className="text-lg font-semibold opacity-90">Reszta</span>
             <div className="flex flex-col gap-1 text-sm mt-4">
               {globalInfo.weightStock && (
@@ -211,6 +222,11 @@ export default function InfoTab({
                 </div>
               )}
             </div>
+
+            <PiInfo
+              className="top-5 right-5 absolute text-amp-300 "
+              size={iconSizes.xlarge}
+            />
           </div>
         </div>
       </div>

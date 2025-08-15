@@ -85,7 +85,7 @@ export default function Project({ params }: { params: { id: string } }) {
               )} */}
               <div className="flex w-full items-start justify-between max-md:flex-col">
                 <div className="flex flex-col w-full">
-                  <div>
+                  <div className="flex items-center gap-3">
                     <span>{displayData?.carMake}</span>
                     <span>{displayData?.carModel}</span>
                     <span className="">- {lastStage?.name || "N/A"}</span>

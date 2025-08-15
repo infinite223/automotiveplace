@@ -31,6 +31,7 @@ import { CreatePostView } from "../createPost";
 import { CreateProjectView } from "../createProject";
 import { IoNotifications } from "react-icons/io5";
 import { useScrollDirection } from "@/app/hooks/useScrollDirection";
+import Link from "next/link";
 
 interface ISideBar {}
 
@@ -136,8 +137,11 @@ const SideBarDesktop: FC<{ openModal: () => void; pathname: string }> = ({
           <OptionItem
             icon={<MdHome size={iconSizes.base} />}
             name={t("Core.Home")}
-            onClick={() => router.push("/home")}
-            isActive={pathname.includes("/home")}
+            onClick={() => {}}
+            route="./"
+            isActive={
+              pathname.includes("/app") && pathname.split("/").length === 3
+            }
           />
           <OptionItem
             icon={<LuSearch size={iconSizes.base} />}
@@ -156,8 +160,9 @@ const SideBarDesktop: FC<{ openModal: () => void; pathname: string }> = ({
           <OptionItem
             icon={<BiSolidCarGarage size={iconSizes.base} />}
             name={t("Core.Garage")}
-            onClick={() => router.push("/garage")}
-            isActive={pathname === "/garage"}
+            onClick={() => {}}
+            isActive={pathname.includes("/app/garage")}
+            route="./app//garage"
           />
           <AMPSeparator
             additionalTailwindCss={smallScreenHiddenItem + marginY}
@@ -232,8 +237,8 @@ const SideBarMobile = ({ openModal, pathname }: any) => {
       <OptionItem
         icon={<Image src={Logo} alt="logo" width={21} height={21} />}
         name={t("Core.Home")}
-        onClick={() => router.push("/home")}
-        isActive={pathname === "/home"}
+        onClick={() => {}}
+        isActive={pathname.includes("/app") && pathname.split("/").length === 3}
         showName={false}
       />
       <OptionItem
@@ -253,8 +258,9 @@ const SideBarMobile = ({ openModal, pathname }: any) => {
       <OptionItem
         icon={<BiSolidCarGarage size={iconSizes.base} />}
         name={t("Core.Garage")}
-        onClick={() => router.push("/garage")}
-        isActive={pathname === "/garage"}
+        onClick={() => {}}
+        isActive={pathname.includes("/app/garage")}
+        route="./app/garage"
         showName={false}
       />
       <OptionItem
@@ -278,10 +284,11 @@ const SideBarMobile = ({ openModal, pathname }: any) => {
 const OptionItem: FC<{
   name: string;
   icon: any;
-  onClick: () => void;
+  onClick?: () => void;
   additionalTailwindCss?: string;
   isActive?: boolean;
   showName?: boolean;
+  route?: string | null;
 }> = ({
   icon,
   name,
@@ -289,14 +296,27 @@ const OptionItem: FC<{
   additionalTailwindCss,
   isActive = false,
   showName = true,
+  route = null,
 }) => {
+  const classes = `${additionalTailwindCss || ""} flex-row ${
+    isActive ? "font-bold" : "opacity-80"
+  } gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 hover:bg-amp-200 rounded-md pl-1 2xl:pl-3 w-full cursor-pointer flex items-center justify-start`;
+
+  if (route) {
+    return (
+      <Link href={route} className={classes} onClick={onClick}>
+        {icon}
+        {showName && (
+          <div className="text-md max-2xl:text-[12px] text-center leading-4">
+            {name}
+          </div>
+        )}
+      </Link>
+    );
+  }
+
   return (
-    <div
-      className={`${additionalTailwindCss} flex-row ${
-        isActive ? "font-bold" : "opacity-80"
-      } gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 hover:bg-amp-200 rounded-md pl-1 2xl:pl-3 w-full cursor-pointer flex items-center justify-start`}
-      onClick={onClick}
-    >
+    <div className={classes} onClick={onClick}>
       {icon}
       {showName && (
         <div className="text-md max-2xl:text-[12px] text-center leading-4">
