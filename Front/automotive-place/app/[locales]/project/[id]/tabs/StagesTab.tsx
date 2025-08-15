@@ -24,7 +24,7 @@ export default function StagesTab({ stages }: StagesTabProps) {
             return (
               <div
                 key={stage.id}
-                className="bg-amp-50 w-[250px] flex-shrink-0 p-2 px-4 flex flex-col gap-1 mt-4 rounded-lg shadow-sm"
+                className="bg-amp-50 w-[270px] flex-shrink-0 p-2 px-4 flex flex-col gap-1 mt-4 rounded-lg shadow-sm"
               >
                 <h2 className="font-semibold text-lg mb-1">{stage.name}</h2>
 
@@ -75,7 +75,7 @@ export default function StagesTab({ stages }: StagesTabProps) {
                   tip="zł"
                 />
 
-                <span className="text-sm opacity-65 pt-2 mt-auto">
+                <span className="text-xs opacity-65 pt-2 mt-auto">
                   {!isBase ? (
                     <>
                       Modyfikacje dodano:{" "}

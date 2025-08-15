@@ -108,8 +108,6 @@ const SideBarDesktop: FC<{ openModal: () => void; pathname: string }> = ({
 }) => {
   const dispatch = useDispatch();
   const t = useTranslations();
-  const router = useRouter();
-
   const smallScreenHiddenItem = "max-2xl:hidden";
   const marginY = " my-2";
 
