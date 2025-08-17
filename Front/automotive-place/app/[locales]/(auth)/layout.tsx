@@ -1,8 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import Logo from "../../../asets/logo_2.png";
-
 export default function RootLayout({
   children,
 }: Readonly<{
