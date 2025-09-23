@@ -15,5 +15,6 @@ export function mapStages(
     createdById: stage.createdById || "",
     stagePrice: stage.stagePrice?.toNumber() || undefined,
     chartImageUrl: stage.chartImageUrl ?? undefined,
+    maxRPM: stage.maxRPM?.toNumber() || undefined,
   }));
 }
