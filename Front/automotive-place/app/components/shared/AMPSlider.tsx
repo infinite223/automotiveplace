@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import AMPModal from "./AMPModal";
-import { MdClose, MdOutlineZoomOutMap } from "react-icons/md";
+import { MdOutlineZoomOutMap } from "react-icons/md";
 import { calculateDominantColor } from "@/app/utils/helpers";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { iconSizes } from "@/app/utils/constants";
 import AMPImageZoomModal from "./AMPImageZoomModal";
+import Image from "next/image";
 
 interface AMPSliderProps {
   images: string[];
@@ -56,12 +56,22 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {images.map((image, index) => (
-            <img
+            // <img
+            //   key={index}
+            //   src={image}
+            //   alt={`slide-${index}`}
+            //   className="flex-shrink-0 object-contain w-full h-full my-auto"
+            //   onDoubleClick={openModal}
+            // />
+            <Image
               key={index}
               src={image}
               alt={`slide-${index}`}
+              width={1200}
+              height={800}
               className="flex-shrink-0 object-contain w-full h-full my-auto"
               onDoubleClick={openModal}
+              priority={index === 0}
             />
           ))}
         </div>

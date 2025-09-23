@@ -90,21 +90,8 @@ export default function Project({ params }: { params: { id: string } }) {
                     <span>{displayData?.carModel}</span>
                     <span className="">- {lastStage?.name || "N/A"}</span>
                   </div>
-                  <div className="text-medium opacity-85">2,5k polubień</div>
                 </div>
                 <div className="mt-2 gap-2 flex w-full justify-end flex-wrap-reverse">
-                  <AMPButton
-                    name="Udostępnij"
-                    additionalTailwindCss="text-sm max-sm:flex-1 min-w-[150px] justify-center"
-                    type="none"
-                    icon={<CgShare size={iconSizes.small} />}
-                  />
-                  <AMPButton
-                    name="Nawiąż kontakt"
-                    additionalTailwindCss="text-sm max-sm:flex-1 min-w-[150px] justify-center"
-                    type="none"
-                    icon={<TbMessageCircleUp size={iconSizes.small} />}
-                  />
                   {data && (
                     <LikeButton
                       id={data.id}
@@ -113,6 +100,20 @@ export default function Project({ params }: { params: { id: string } }) {
                       tags={data.tags || []}
                     />
                   )}
+
+                  <AMPButton
+                    name="Udostępnij"
+                    additionalTailwindCss="text-sm max-sm:flex-1 min-w-[150px] justify-center"
+                    type="secondary"
+                    icon={<CgShare size={iconSizes.small} />}
+                  />
+
+                  <AMPButton
+                    name="Nawiąż kontakt"
+                    additionalTailwindCss="text-sm max-sm:flex-1 min-w-[150px] justify-center"
+                    type="secondary"
+                    icon={<TbMessageCircleUp size={iconSizes.small} />}
+                  />
                 </div>
               </div>
               <div className="flex items-center gap-x-4 text-xs opacity-65 flex-wrap mt-2">
@@ -122,12 +123,10 @@ export default function Project({ params }: { params: { id: string } }) {
                 </div>
                 {lastStage && (
                   <div>
-                    Ostatnia modyfikacja:
+                    Ostatnia modyfikacja:{" "}
                     {moment(lastStage?.createdAt, "YYYYMMDD").fromNow()}
                   </div>
                 )}
-
-                <div>Ostatnia modyfikacja: 5 dni temu</div>
               </div>
             </header>
           </nav>
@@ -241,7 +240,7 @@ const LikeButton = ({
   likesCount,
   tags,
 }: LikeButtonProps) => {
-  const { currentIsLiked, currentLikesCount, handleClickLike } = useLike(
+  const { currentLikesCount, handleClickLike } = useLike(
     likesCount,
     isLikedByAuthUser,
     id,
@@ -250,8 +249,8 @@ const LikeButton = ({
   );
   return (
     <AMPButton
-      name={currentIsLiked ? "Lubisz projekt" : "Polub projekt"}
-      additionalTailwindCss="text-sm max-sm:flex-1 min-w-[150px] justify-center"
+      name={currentLikesCount.toString()}
+      additionalTailwindCss="text-sm max-sm:flex-1 justify-center"
       type="secondary"
       icon={<FaHeart size={iconSizes.small - 2} />}
       onClick={handleClickLike}

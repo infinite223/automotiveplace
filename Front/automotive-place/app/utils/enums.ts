@@ -24,4 +24,10 @@ enum ContentType {
   Event = "Event",
 }
 
+export const EngineParameter = {
+  TorqueNm: "NM",
+  PowerPs: "PS",
+  MaxRPM: "Max RPM",
+} as const;
+
 export { ErrorStatus, AccountTypes, TransmissionType, ContentType };

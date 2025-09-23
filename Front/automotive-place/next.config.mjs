@@ -22,6 +22,11 @@ const nextConfig = {
         hostname: "picsum.photos",
         pathname: "/id/237/200/300",
       },
+      {
+        protocol: "https",
+        hostname: "cloud.appwrite.io",
+        pathname: "/v1/storage/**",
+      },
     ],
   },
 };

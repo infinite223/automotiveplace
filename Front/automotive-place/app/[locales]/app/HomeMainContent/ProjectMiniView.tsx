@@ -9,7 +9,7 @@ import { iconSizes } from "@/app/utils/constants";
 import Link from "next/link";
 import AMPSlider from "@/app/components/shared/AMPSlider";
 import { useLike } from "@/app/hooks/useLike";
-import { ContentType } from "@/app/utils/enums";
+import { ContentType, EngineParameter } from "@/app/utils/enums";
 import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
@@ -91,12 +91,12 @@ export const ProjectMiniView = ({
               <StatisticMiniItem
                 title="Moc"
                 value={statisticCurrentHp}
-                type="HP"
+                type={EngineParameter.PowerPs}
               />
               <StatisticMiniItem
                 title="Moment obrotowy"
                 value={statisticCurrentNm}
-                type="NM"
+                type={EngineParameter.TorqueNm}
               />
               <StatisticMiniItem
                 title="0-100km/h"

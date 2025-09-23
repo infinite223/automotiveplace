@@ -6,6 +6,7 @@ import { getPopularProjects } from "@/app/services/project";
 import { TBasicPopularProject } from "@/app/utils/types/project";
 import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "../loading/LoadingSpinner";
+import { EngineParameter } from "@/app/utils/enums";
 
 function AMPPopularProjects() {
   const {
@@ -51,8 +52,12 @@ function AMPPopularProjects() {
                   </div>
                   <div className="text-xs leading-[15px]">
                     <div>{project.stageName}</div>
-                    <div>HP: {project.currentHp}</div>
-                    <div>NM: {project.currentNm}</div>
+                    <div>
+                      {EngineParameter.PowerPs}: {project.currentHp}
+                    </div>
+                    <div>
+                      {EngineParameter.TorqueNm}: {project.currentNm}
+                    </div>
                   </div>
                 </div>
               </div>

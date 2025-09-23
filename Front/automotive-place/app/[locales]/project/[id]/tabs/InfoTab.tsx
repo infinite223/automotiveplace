@@ -8,6 +8,7 @@ import { TLocation } from "@/app/utils/types/project";
 import { PiEngineBold, PiInfo } from "react-icons/pi";
 import { GiGearStickPattern } from "react-icons/gi";
 import { iconSizes } from "@/app/utils/constants";
+import { EngineParameter } from "@/app/utils/enums";
 
 interface InfoTabProps {
   lastStage: TStage | undefined;
@@ -67,7 +68,7 @@ export default function InfoTab({
       <div className="flex w-full flex-col my-4 gap-2">
         <div className="flex w-full flex-wrap gap-2 h-min mb-2">
           <AMPCarStatsItem
-            typeValue={t("Core.Hp").toUpperCase()}
+            typeValue={t("Core.Ps").toUpperCase()}
             value={lastStage.hp?.toString()}
             subTitle="Hamownia"
             title="Moc silnika"
@@ -96,6 +97,14 @@ export default function InfoTab({
             value={lastStage.acc_50_150.toString()}
             title="Przyśpieszenie"
           />
+          {lastStage.maxRPM && (
+            <AMPCarStatsItem
+              typeValue=""
+              subTitle={EngineParameter.MaxRPM}
+              value={lastStage.maxRPM.toString()}
+              title="Maksymalne obroty"
+            />
+          )}
           {lastStage.sl_100_0 && (
             <AMPCarStatsItem
               typeValue="s"

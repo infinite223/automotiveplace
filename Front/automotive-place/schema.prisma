@@ -263,6 +263,7 @@ model Stage {
   acc_50_150       Decimal?
   sl_150_50        Decimal?
   sl_100_0         Decimal?
+  maxRPM           Decimal?
   projectId        String
   createdById      String?
   stagePrice       Decimal?

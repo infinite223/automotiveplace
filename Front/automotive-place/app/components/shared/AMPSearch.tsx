@@ -28,7 +28,7 @@ export const AMPSearch: FC<AMPSearchProps> = ({
     <main
       className={`flex w-full mb-2 mt-2 ${
         isLoading &&
-        "animate-pulse bg-amp-800 dark:bg-amp-100 bg-amp-000 dark:bg-amp-900 w-full h-7 rounded-md"
+        "animate-pulse bg-amp-800 dark:bg-amp-100 bg-amp-000 w-full h-7 rounded-md"
       }`}
     >
       {!isLoading && (

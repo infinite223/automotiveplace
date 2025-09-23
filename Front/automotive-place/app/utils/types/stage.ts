@@ -16,6 +16,7 @@ type TStage = {
 
   sl_150_50?: number;
   sl_100_0?: number;
+  maxRPM?: number;
 
   projectId: string;
   createdById: string;

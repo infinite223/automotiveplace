@@ -1,5 +1,6 @@
 "use client";
 
+import { EngineParameter } from "@/app/utils/enums";
 import { formatNumber, sortStagesByStageNumber } from "@/app/utils/helpers";
 import { TStage } from "@/app/utils/types/stage";
 import moment from "moment";
@@ -32,13 +33,13 @@ export default function StagesTab({ stages }: StagesTabProps) {
                 <LabelValueRow
                   label="Moc silnika:"
                   value={stage.hp}
-                  tip="HP"
+                  tip={EngineParameter.PowerPs}
                   difference={!isBase ? stage.hp - baseStage.hp : undefined}
                 />
                 <LabelValueRow
                   label="Moment obrotowy:"
                   value={stage.nm}
-                  tip="Nm"
+                  tip={EngineParameter.TorqueNm}
                   difference={!isBase ? stage.nm - baseStage.nm : undefined}
                 />
                 <LabelValueRow
@@ -69,6 +70,18 @@ export default function StagesTab({ stages }: StagesTabProps) {
                       : undefined
                   }
                 />
+
+                {stage.maxRPM && baseStage.maxRPM && (
+                  <LabelValueRow
+                    label={EngineParameter.MaxRPM}
+                    value={formatNumber(stage.maxRPM)}
+                    tip="RPM"
+                    difference={
+                      !isBase ? stage.maxRPM - baseStage.maxRPM : undefined
+                    }
+                  />
+                )}
+
                 <LabelValueRow
                   label="Koszty modyfikacji:"
                   value={stage.stagePrice}
