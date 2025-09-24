@@ -4,10 +4,10 @@ import "moment/locale/pl";
 import Image from "next/image";
 import { MdSaveAlt, MdOutlineReport, MdOutlineEdit } from "react-icons/md";
 import { IoMdShare, IoMdClose } from "react-icons/io";
-import { FaHeart } from "react-icons/fa";
 import { CiTrash } from "react-icons/ci";
 import { AMPMenu } from "@/app/components/shared/AMPMenu";
 import { iconSizes } from "@/app/utils/constants";
+import { LuMinus, LuPlus } from "react-icons/lu";
 
 moment.locale("pl");
 
@@ -17,7 +17,7 @@ interface IContentMiniNav {
   createdAt: Date;
   typeName: string;
   isUserContent?: boolean;
-  handleClickLike?: () => void;
+  handleClickInterestingContent?: () => void;
   handleClickShare?: () => void;
 }
 
@@ -44,11 +44,18 @@ const menuItems: TMenuItem[] = [
     visibility: Visibility.ALL,
   },
   {
-    icon: <FaHeart size={iconSizes.small} className="opacity-60" />,
-    name: "Polub",
+    icon: <LuPlus size={iconSizes.small} />,
+    name: "Interesuje mnie",
     isDisable: false,
     handleClick: () => {},
-    visibility: Visibility.ALL,
+    visibility: Visibility.USER,
+  },
+  {
+    icon: <LuMinus size={iconSizes.small} />,
+    name: "Nie interesuje mnie",
+    isDisable: false,
+    handleClick: () => {},
+    visibility: Visibility.USER,
   },
   {
     icon: <IoMdShare size={iconSizes.small} />,
@@ -63,13 +70,6 @@ const menuItems: TMenuItem[] = [
     isDisable: false,
     handleClick: () => {},
     visibility: Visibility.AUTHOR,
-  },
-  {
-    icon: <IoMdClose size={iconSizes.base} />,
-    name: "Nie interesuje mnie",
-    isDisable: false,
-    handleClick: () => {},
-    visibility: Visibility.USER,
   },
   {
     icon: <CiTrash size={iconSizes.small} />,
@@ -93,13 +93,16 @@ export const ContentMiniNav = ({
   title,
   typeName,
   isUserContent = false,
-  handleClickLike,
+  handleClickInterestingContent,
   handleClickShare,
 }: IContentMiniNav) => {
   const filteredMenuItems = menuItems
     .map((item) => {
-      if (item.name === "Polub") {
-        return { ...item, handleClick: handleClickLike };
+      if (item.name === "Interesuje mnie") {
+        return { ...item, handleClick: handleClickInterestingContent };
+      }
+      if (item.name === "Nie nteresuje mnie") {
+        return { ...item, handleClick: handleClickInterestingContent };
       }
       if (item.name === "Udostępnij") {
         return { ...item, handleClick: handleClickShare };

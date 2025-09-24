@@ -58,6 +58,10 @@ export const ProjectMiniView = ({
   const currentStage =
     data.stageNumber !== 0 ? "STAGE " + data.stageNumber : "STOCK";
 
+  const handleClickInterestingContent = () => {
+    console.log("Add/remove content from intresting", data.id);
+  };
+
   return (
     <>
       {isClient ? (
@@ -65,7 +69,7 @@ export const ProjectMiniView = ({
           <ContentMiniNav
             isUserContent={isUserContent}
             createdAt={data.createdAt}
-            handleClickLike={handleClickLike}
+            handleClickInterestingContent={handleClickInterestingContent}
             handleClickShare={handleClickShare}
             title={
               data.carMake +

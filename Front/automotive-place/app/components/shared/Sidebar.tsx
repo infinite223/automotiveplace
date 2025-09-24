@@ -296,7 +296,7 @@ const OptionItem: FC<{
   route = null,
 }) => {
   const classes = `${additionalTailwindCss || ""} flex-row ${
-    isActive ? "font-bold" : "opacity-80"
+    isActive ? "font-semibold opacity-90" : "opacity-80"
   } gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 hover:bg-amp-200 rounded-md pl-1 2xl:pl-3 w-full cursor-pointer flex items-center justify-start`;
 
   if (route) {
