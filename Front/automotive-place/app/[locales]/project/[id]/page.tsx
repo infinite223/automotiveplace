@@ -3,7 +3,6 @@
 import { AMPButton } from "@/app/components/shared/AMPButton";
 import { getProject } from "@/app/services/project";
 import { iconSizes } from "@/app/utils/constants";
-import { getCurrentStage } from "@/app/utils/helpers";
 import { TBasicProject, TProject } from "@/app/utils/types/project";
 import { RootState } from "@/lib/store";
 import moment from "moment";
@@ -23,6 +22,7 @@ import { useLike } from "@/app/hooks/useLike";
 import { ContentType } from "@/app/utils/enums";
 import { TBasicTag } from "@/app/utils/types/tag";
 import { useFetchData } from "@/app/hooks/useFetchData";
+import { getCurrentStage } from "@/app/utils/helpers/stagesHelper";
 
 export default function Project({ params }: { params: { id: string } }) {
   const t = useTranslations();

@@ -1,7 +1,8 @@
 "use client";
 
 import { EngineParameter } from "@/app/utils/enums";
-import { formatNumber, sortStagesByStageNumber } from "@/app/utils/helpers";
+import { formatNumber } from "@/app/utils/helpers/numbersHelper";
+import { sortStagesByStageNumber } from "@/app/utils/helpers/stagesHelper";
 import { TStage } from "@/app/utils/types/stage";
 import moment from "moment";
 

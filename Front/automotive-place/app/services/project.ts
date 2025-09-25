@@ -23,7 +23,9 @@ export const createProject = async (
 };
 
 export const getProject = async (id: string) => {
-  const response = await fetch(`${apiEndpoints.getProjects}?id=${id}`);
+  const response = await fetch(`${apiEndpoints.getProjects}?id=${id}`, {
+    next: { revalidate: 60 },
+  });
   if (!response.ok) {
     throw new Error("Failed to get data");
   }
@@ -34,7 +36,9 @@ export const getProject = async (id: string) => {
 };
 
 export const getPopularProjects = async () => {
-  const response = await fetch(`/api/project/get-popular-projects`);
+  const response = await fetch(`/api/project/get-popular-projects`, {
+    next: { revalidate: 60 },
+  });
   if (!response.ok) {
     throw new Error("Failed to get data");
   }

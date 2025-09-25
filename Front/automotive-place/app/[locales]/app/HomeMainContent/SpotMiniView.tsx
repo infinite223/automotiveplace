@@ -18,6 +18,9 @@ export const SpotMiniView = ({
     ContentType.Spot,
     []
   );
+
+  const handleClickInterestingContent = () => {};
+
   return (
     <div className="flex flex-col items-center h-[550px] w-full gap-1">
       <ContentMiniNav
@@ -25,7 +28,7 @@ export const SpotMiniView = ({
         title={data.title}
         typeName="Spot"
         isUserContent={isUserContent}
-        handleClickLike={handleClickLike}
+        handleClickInterestingContent={handleClickInterestingContent}
         // author={data.}
       />
       <h2 className="h-full">Spot</h2>

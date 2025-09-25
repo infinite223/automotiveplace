@@ -20,11 +20,13 @@ export const PostMiniView = ({
     data.tags
   );
 
+  const handleClickInterestingContent = () => {};
+
   return (
     <div className="flex flex-col w-full gap-1">
       <ContentMiniNav
         createdAt={data.lastUpdateAt}
-        handleClickLike={handleClickLike}
+        handleClickInterestingContent={handleClickInterestingContent}
         title={data.title}
         typeName={ContentType.Post}
         isUserContent={isUserContent}

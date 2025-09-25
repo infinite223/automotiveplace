@@ -32,7 +32,7 @@ const AMPModal = ({
       {visible && (
         <motion.div
           onClick={bgOnClickClose ? onClose : () => {}}
-          className="fixed cursor-pointer top-0 left-0 w-full z-20 h-screen flex justify-center items-center bg-amp-900/25 dark:bg-amp-100/25 bg-opacity-50 custom-blur"
+          className="fixed cursor-pointer top-0 left-0 w-full z-20 h-screen flex justify-center items-center  custom-blur"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

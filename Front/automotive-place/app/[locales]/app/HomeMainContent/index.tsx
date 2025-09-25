@@ -73,7 +73,10 @@ export const HomeMainContent = () => {
   }, []);
 
   return (
-    <div className="flex w-full items-center lg:pr-[150px] h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth">
+    <div
+      id="content-container"
+      className="flex w-full items-center lg:pr-[150px] h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth"
+    >
       <div className="flex flex-col text-[12px] w-full lg:w-[570px]">
         {content.map((item: any) => (
           <div

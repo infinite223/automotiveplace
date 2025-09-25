@@ -18,8 +18,7 @@ import { SelectCreateOption } from "../selectCreateOption";
 import { iconSizes } from "@/app/utils/constants";
 import { SlMenu } from "react-icons/sl";
 import { usePathname, useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
-import { Yant } from "@/app/utils/helpers";
+import { useLocale, useTranslations } from "next-intl";
 import { RootState } from "@/lib/store";
 import {
   setShowCreatePost,
@@ -32,6 +31,8 @@ import { CreateProjectView } from "../createProject";
 import { IoNotifications } from "react-icons/io5";
 import { useScrollDirection } from "@/app/hooks/useScrollDirection";
 import Link from "next/link";
+import { Yant } from "@/app/utils/helpers/fontsHelper";
+import { scrollContainerToTop } from "@/app/utils/helpers/navigationHelper";
 
 interface ISideBar {}
 
@@ -69,7 +70,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         withHeader={true}
         visible={isModalOpen}
         title="Wybierz opcje"
-        additionalTailwindCss="relative bottom-[15ch] bg-amp-100"
+        additionalTailwindCss="relative bottom-[15ch] bg-amp-700 dark:bg-amp-50 rounded-md"
         defoultBG={false}
       >
         <SelectCreateOption />
@@ -110,6 +111,7 @@ const SideBarDesktop: FC<{ openModal: () => void; pathname: string }> = ({
   const t = useTranslations();
   const smallScreenHiddenItem = "max-2xl:hidden";
   const marginY = " my-2";
+  const locale = useLocale();
 
   return (
     <div className="flex min-w-[85px] bg-amp-0 2xl:w-[240px] lg:h-full flex-col justify-between ">
@@ -136,7 +138,7 @@ const SideBarDesktop: FC<{ openModal: () => void; pathname: string }> = ({
             icon={<MdHome size={iconSizes.base} />}
             name={t("Core.Home")}
             onClick={() => {}}
-            route="./"
+            route={`/${locale}/app`}
             isActive={
               pathname.includes("/app") && pathname.split("/").length === 3
             }
@@ -218,7 +220,7 @@ const SideBarDesktop: FC<{ openModal: () => void; pathname: string }> = ({
 const SideBarMobile = ({ openModal, pathname }: any) => {
   const t = useTranslations();
   const scrollDirection = useScrollDirection();
-
+  const locale = useLocale();
   const isHidden = scrollDirection === "down";
 
   return (
@@ -234,7 +236,7 @@ const SideBarMobile = ({ openModal, pathname }: any) => {
       <OptionItem
         icon={<Image src={Logo} alt="logo" width={21} height={21} />}
         name={t("Core.Home")}
-        onClick={() => {}}
+        route={`/${locale}/app`}
         isActive={pathname.includes("/app") && pathname.split("/").length === 3}
         showName={false}
       />
@@ -295,28 +297,35 @@ const OptionItem: FC<{
   showName = true,
   route = null,
 }) => {
+  const pathname = usePathname();
+
   const classes = `${additionalTailwindCss || ""} flex-row ${
     isActive ? "font-semibold opacity-90" : "opacity-80"
   } gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 hover:bg-amp-200 rounded-md pl-1 2xl:pl-3 w-full cursor-pointer flex items-center justify-start`;
-
   if (route) {
-    return (
-      <Link
-        href={route}
-        className={classes}
-        onClick={(e) => {
-          onClick?.();
-          e.currentTarget.blur();
-        }}
-      >
-        {icon}
-        {showName && (
-          <div className="text-md max-2xl:text-[12px] text-center leading-4">
-            {name}
-          </div>
-        )}
-      </Link>
-    );
+    const handleClick = (
+      e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+    ) => {
+      if (pathname === route) {
+        e.preventDefault();
+        scrollContainerToTop();
+      }
+      onClick?.();
+      e.currentTarget.blur();
+    };
+
+    if (route) {
+      return (
+        <Link href={route} className={classes} onClick={handleClick}>
+          {icon}
+          {showName && (
+            <div className="text-md max-2xl:text-[12px] text-center leading-4">
+              {name}
+            </div>
+          )}
+        </Link>
+      );
+    }
   }
 
   return (

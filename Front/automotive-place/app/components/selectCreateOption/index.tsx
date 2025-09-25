@@ -17,12 +17,13 @@ export const SelectCreateOption: FC = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex flex-col min-w-20 min-h-10 sm:w-[400px] w-[95vw]">
+    <div className="flex flex-col min-w-20 min-h-10 sm:w-[400px] w-[95vw] pb-4">
       <OptionItem
         name="Dodaj projekt"
         onClick={() => dispatch(setShowCreateProject(true))}
         icon={<FaCarRear size={iconSize} />}
       />
+
       <OptionItem
         name="Dodaj post"
         onClick={() => dispatch(setShowCreatePost(true))}
@@ -43,8 +44,6 @@ export const SelectCreateOption: FC = () => {
         onClick={() => {}}
         icon={<FaCalendarDay size={iconSize} />}
       />
-
-      <AMPSeparator />
     </div>
   );
 };

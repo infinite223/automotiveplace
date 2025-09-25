@@ -34,7 +34,7 @@ function AMPPopularProjects() {
       <div className="max-h-[85vh] overflow-y-auto custom-scrollbar flex flex-col mt-2">
         {projects?.map((project) => (
           <Link
-            href={`../project/${project.id}`}
+            href={`./project/${project.id}`}
             key={project.carMake + project.carModel}
           >
             <div className="text-sm flex flex-wrap p-2 hover:bg-amp-200 rounded-sm cursor-pointer">

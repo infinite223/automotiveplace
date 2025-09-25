@@ -11,7 +11,7 @@ import {
 import { useTranslations } from "next-intl";
 import Logo from "../../../asets/logo_2.png";
 import Image from "next/image";
-import { Yant } from "@/app/utils/helpers";
+import { Yant } from "@/app/utils/helpers/fontsHelper";
 
 const navOptions = [
   {

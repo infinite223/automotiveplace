@@ -9,6 +9,7 @@ export const getMainContentDataForUser = async (
     `${apiEndpoints.getMainContentDataForUser}/?page=${page}`,
     {
       headers: { "Accept-Language": locale },
+      next: { revalidate: 60 },
     }
   );
   if (!response.ok) {
@@ -27,6 +28,7 @@ export const updateSeenContent = async (
   const response = await fetch(`/api/content/get-seen`, {
     method: "POST",
     body: JSON.stringify({ userId, contentIds }),
+    next: { revalidate: 60 },
   });
 
   if (!response.ok) {

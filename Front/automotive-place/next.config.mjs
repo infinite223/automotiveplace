@@ -6,9 +6,7 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 const nextConfig = {
   reactStrictMode: false,
   experimental: {
-    turbo: {
-      rules: {}, // tu możesz definiować dodatkowe reguły, ale pusty obiekt wystarczy
-    },
+    turbo: {},
   },
   images: {
     remotePatterns: [

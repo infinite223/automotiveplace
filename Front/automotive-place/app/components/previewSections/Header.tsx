@@ -1,4 +1,4 @@
-import { AllanBold, KalamBold } from "@/app/utils/helpers";
+import { AllanBold, KalamBold } from "@/app/utils/helpers/fontsHelper";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 

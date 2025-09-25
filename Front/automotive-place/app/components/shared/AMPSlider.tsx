@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { MdOutlineZoomOutMap } from "react-icons/md";
-import { calculateDominantColor } from "@/app/utils/helpers";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { iconSizes } from "@/app/utils/constants";
 import AMPImageZoomModal from "./AMPImageZoomModal";
 import Image from "next/image";
+import { calculateDominantColor } from "@/app/utils/helpers/colorHelper";
 
 interface AMPSliderProps {
   images: string[];
