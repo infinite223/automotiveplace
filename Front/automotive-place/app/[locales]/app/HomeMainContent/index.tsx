@@ -32,6 +32,7 @@ export const HomeMainContent = () => {
   const pages = (data as any)?.pages ?? [];
   const content = pages.flatMap((page: any) => page.data);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (
       !hasNextPage ||

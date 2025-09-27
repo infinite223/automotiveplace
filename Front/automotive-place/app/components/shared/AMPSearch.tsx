@@ -18,11 +18,12 @@ export const AMPSearch: FC<AMPSearchProps> = ({
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearch = useDebounce(searchValue, 1000);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (debouncedSearch) {
       onSearch(searchValue);
     }
-  }, [debouncedSearch]);
+  }, [debouncedSearch, onSearch, searchValue]);
 
   return (
     <main

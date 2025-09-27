@@ -38,6 +38,7 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
     searchTypesOptions[1]
   );
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (isSearchBarOpen) {
       openSearchBar();
@@ -46,6 +47,7 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
     }
   }, [isSearchBarOpen]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {

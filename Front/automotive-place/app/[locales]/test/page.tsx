@@ -49,19 +49,22 @@ export default function Page() {
     // setIsLoading(false);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (carItemsData.length === 0 && hasMore === null) {
       loadMoreItems();
     }
-  }, [carItemsData]);
+  }, [carItemsData, hasMore]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     console.log("isVisible", isVisible);
     if (isVisible && hasMore === true) {
       loadMoreItems();
     }
-  }, [isVisible]);
+  }, [isVisible, hasMore]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const checkIfScreenIsFilled = () => {
       if (
@@ -73,7 +76,7 @@ export default function Page() {
     };
 
     checkIfScreenIsFilled();
-  }, [carItemsData]);
+  }, [carItemsData, hasMore]);
 
   const onSearch = (value: string) => {
     console.log("value", value);

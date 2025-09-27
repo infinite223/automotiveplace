@@ -1,6 +1,7 @@
 "use client";
 
 import AMPImageZoomModal from "@/app/components/shared/AMPImageZoomModal";
+import Image from "next/image";
 import { useState } from "react";
 
 interface PhotoGalleryProps {
@@ -41,10 +42,11 @@ export default function PhotoGallery({ images }: PhotoGalleryProps) {
             className="relative w-full aspect-[4/3] overflow-hidden rounded-sm bg-gray-200 cursor-pointer"
             onClick={() => openModal(index)}
           >
-            <img
+            <Image
               src={src}
               alt={`Image ${index}`}
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 object-cover"
+              fill
             />
           </div>
         ))}

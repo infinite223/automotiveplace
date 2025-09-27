@@ -3,6 +3,7 @@ import AMPModal from "./AMPModal";
 import { MdClose } from "react-icons/md";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { iconSizes } from "@/app/utils/constants";
+import Image from "next/image";
 
 interface AMPImageZoomModalProps {
   images: string[];
@@ -50,10 +51,11 @@ const AMPImageZoomModal: React.FC<AMPImageZoomModalProps> = ({
           )}
 
           <div className="relative w-full h-full flex justify-center items-center">
-            <img
+            <Image
               src={images[currentIndex]}
               alt={`slide-${currentIndex}`}
-              className="object-contain w-full h-full max-w-screen max-h-screen"
+              className="object-contain max-w-screen max-h-screen"
+              fill
             />
           </div>
         </div>

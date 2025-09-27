@@ -6,16 +6,15 @@ export default function useOnScreen(ref: RefObject<HTMLElement>) {
   useEffect(() => {
     if (!ref.current) return;
 
+    const element = ref.current;
     const observer = new IntersectionObserver(([entry]) => {
       setIntersecting(entry.isIntersecting);
     });
 
-    observer.observe(ref.current);
+    observer.observe(element);
 
     return () => {
-      if (observer && ref.current) {
-        observer.unobserve(ref.current);
-      }
+      observer.unobserve(element);
     };
   }, [ref]);
 

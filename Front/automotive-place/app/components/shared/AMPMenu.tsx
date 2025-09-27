@@ -32,11 +32,13 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
     setShowMenu(false);
   });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (showMenu && buttonRef.current) {
       const buttonRect = buttonRef.current.getBoundingClientRect();
-      const menuWidth = menuRef.current?.offsetWidth ?? 180;
-      const menuHeight = menuRef.current?.offsetHeight ?? 0;
+      const element = menuRef.current;
+      const menuWidth = element?.offsetWidth ?? 180;
+      const menuHeight = element?.offsetHeight ?? 0;
 
       let top = buttonRect.bottom + 5;
       let left = buttonRect.left;
@@ -56,6 +58,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
     }
   }, [showMenu]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const handleHideMenu = () => {
       setShowMenu(false);

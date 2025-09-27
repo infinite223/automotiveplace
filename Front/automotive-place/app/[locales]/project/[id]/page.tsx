@@ -23,6 +23,7 @@ import { ContentType } from "@/app/utils/enums";
 import { TBasicTag } from "@/app/utils/types/tag";
 import { useFetchData } from "@/app/hooks/useFetchData";
 import { getCurrentStage } from "@/app/utils/helpers/stagesHelper";
+import Image from "next/image";
 
 export default function Project({ params }: { params: { id: string } }) {
   const t = useTranslations();
@@ -66,10 +67,11 @@ export default function Project({ params }: { params: { id: string } }) {
         <div className="max-w-screen-2xl w-full">
           <div className="h-[250px] w-full">
             {displayData?.images?.[0] && (
-              <img
+              <Image
                 src={displayData.images?.[0]}
-                className="w-full h-full object-cover blur-sm opacity-60"
+                className=" object-cover blur-sm opacity-20"
                 alt="car-image"
+                fill
               />
             )}
           </div>
