@@ -4,6 +4,9 @@ import {
   generateRandomString,
   getRandomInt,
 } from "./randomData";
+import { generateRandomStagesToCreate } from "./stage";
+import { generateRandomCarItemsToCreate } from "./carItem";
+import { generateRandomTagsToCreate } from "./tags";
 
 const carMakes = [
   "BMW",
@@ -170,16 +173,26 @@ export function generateRandomBaseProjects(count: number) {
   return projects;
 }
 
-export function generateRandomProjectsToCreate(count: number) {
+export function generateRandomProjectsToCreate(
+  count: number,
+  generateStages: boolean = false,
+  generateCarItems: boolean = false,
+  generateTags: boolean = false
+) {
   const projects = [];
+
   for (let i = 0; i < count; i++) {
+    const stages = generateStages ? generateRandomStagesToCreate(1) : [];
+    const carItems = generateCarItems ? generateRandomCarItemsToCreate(1) : [];
+    const tags = generateTags ? generateRandomTagsToCreate(1) : [];
+
     const project: TProjectCreate = {
       forSell: Math.random() < 0.5,
       isVisible: Math.random() < 0.5,
       carMake: generateRandomString(5),
       carModel: generateRandomString(5),
       description: "",
-      authorId: "",
+      authorId: (i + 3).toString() + generateRandomString(2),
       engineCapacity: 2,
       engineName: "TSI",
       engineStockHp: 200,
@@ -193,6 +206,12 @@ export function generateRandomProjectsToCreate(count: number) {
       inUse: false,
       name: generateRandomString(5),
       projectPrice: getRandomInt(5000, 500000),
+      stages,
+      carItems,
+      engineDescription: generateRandomString(10),
+      transmissionDescription: generateRandomString(12),
+      transmissionWasSwapped: false,
+      tags,
     };
 
     projects.push(project);

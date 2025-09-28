@@ -1,6 +1,7 @@
 import { saveStepData } from "@/lib/features/stepData/stepDataSlice";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { AMPButton } from "../AMPButton";
 
 interface StepProps {
   onNext: (data: any) => void;
@@ -21,8 +22,10 @@ interface IStepsOptions {
 
 export const AMPStepper = ({
   stepsOptions,
+  hideHeader = false,
 }: {
   stepsOptions: IStepsOptions;
+  hideHeader?: boolean;
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const dispatch = useDispatch();
@@ -45,17 +48,17 @@ export const AMPStepper = ({
   const StepComponent = stepsOptions.items[currentStep].component;
 
   return (
-    <div className="flex w-full gap-8 border-1 p-4">
-      <div className="w-1/12">
-        <h2 className="text-lg font-bold">{stepsOptions.title}</h2>
-        <ul className="flex flex-col gap-2 mt-4">
+    <div className="flex w-full gap-8">
+      <div className="w-auto">
+        {!hideHeader && (
+          <h2 className="text-lg font-bold mb-2">{stepsOptions.title}</h2>
+        )}
+        <ul className="flex flex-col gap-2">
           {stepsOptions.items.map((step, index) => (
             <li key={index}>
               <button
-                className={`w-full text-left px-4 py-2 border-1 ${
-                  currentStep === index
-                    ? "font-bold text-redColor"
-                    : "text-gray-600"
+                className={`w-full text-left px-4 py-2 rounded-sm hover:bg-amp-200 ${
+                  currentStep === index ? "bg-amp-200" : "text-opacity-70"
                 }`}
                 onClick={() => goToStep(index)}
               >
@@ -67,16 +70,21 @@ export const AMPStepper = ({
         </ul>
       </div>
 
-      <div className="w-11/12">
-        <div className="flex flex-col mb-2">
+      <div className="w-11/12 flex flex-col justify-between h-full">
+        <div className="flex flex-col mb-2 flex-1">
           <h3 className="text-md font-semibold">
             {stepsOptions.items[currentStep].name}
           </h3>
           <p className="text-sm">
             {stepsOptions.items[currentStep].description}
           </p>
+          <StepComponent onNext={handleNext} onPrev={handlePrev} />
         </div>
-        <StepComponent onNext={handleNext} onPrev={handlePrev} />
+
+        <div className="flex gap-2 items-center ml-auto">
+          <AMPButton name="Cofnij" type="secondary" />
+          <AMPButton name="Dalej" />
+        </div>
       </div>
     </div>
   );

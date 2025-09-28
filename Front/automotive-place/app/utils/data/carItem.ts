@@ -341,7 +341,7 @@ export function generateRandomCarItems(count: number) {
       description: generateRandomString(25),
       forSell: i % 2 === 0,
       likesCount: 4,
-      authorId: (i + 3).toString(),
+      authorId: (i + 3).toString() + generateRandomString(2),
       inUse: i % 3 === 0,
       isVisible: true,
       itemType: ItemTypes.Turbo,
@@ -360,7 +360,7 @@ export function generateRandomCarItemsToCreate(count: number) {
     carItemsToCreate.push({
       description: generateRandomString(25),
       forSell: i % 2 === 0,
-      authorId: (i + 3).toString(),
+      authorId: (i + 3).toString() + generateRandomString(2),
       inUse: i % 3 === 0,
       isVisible: true,
       itemType: ItemTypes.Turbo,

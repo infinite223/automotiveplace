@@ -10,6 +10,9 @@ import { TProjectCreate } from "@/app/utils/types/project";
 import { TStageCreate } from "@/app/utils/types/stage";
 import { TTagCreate } from "@/app/utils/types/tag";
 import { AMPButton } from "../shared/AMPButton";
+import { generateRandomProjectsToCreate } from "@/app/utils/data/project";
+import { AMPStepper } from "../shared/Stepper/AMPSteper";
+import { stepsOptions } from "./steps/config";
 
 interface IInputValue {
   value: string | number;
@@ -71,43 +74,46 @@ export const CreateProjectView = () => {
   const [images, setImages] = useState<TCarItemCreate[]>([]);
 
   const onSubmit = () => {
-    const newProject: TProjectCreate = {
-      authorId: "",
-      description: description.value.toString(),
-      name: nameElement.value.toString(),
-      forSell,
-      inUse,
-      carMake,
-      carModel,
-      isVisible,
-      engineName: engine.engineName,
-      engineStockHp: engine.engineStockHp,
-      engineStockNm: engine.engineStockNm,
-      engineDescription: engine.engineDescription,
-      engineCapacity: engine.engineCapacity,
-      transmissionGears: transmission.transmissionGears,
-      transmissionDescription: transmission.transmissionDescription,
-      transmissionName: transmission.transmissionName,
-      transmissionWasSwapped: transmission.transmissionWasSwapped,
+    const project = generateRandomProjectsToCreate(1, true, true, true)[0];
 
-      carItemsCount: carItems.length,
-      imagesCount: images.length,
-      engineWasSwapped,
-      carItems,
-      stages,
-      tags,
+    // const newProject: TProjectCreate = {
+    //   authorId: "",
+    //   description: description.value.toString(),
+    //   name: nameElement.value.toString(),
+    //   forSell,
+    //   inUse,
+    //   carMake,
+    //   carModel,
+    //   isVisible,
+    //   engineName: engine.engineName,
+    //   engineStockHp: engine.engineStockHp,
+    //   engineStockNm: engine.engineStockNm,
+    //   engineDescription: engine.engineDescription,
+    //   engineCapacity: engine.engineCapacity,
+    //   transmissionGears: transmission.transmissionGears,
+    //   transmissionDescription: transmission.transmissionDescription,
+    //   transmissionName: transmission.transmissionName,
+    //   transmissionWasSwapped: transmission.transmissionWasSwapped,
 
-      garageId: "",
-      projectPrice: 0,
-    };
+    //   carItemsCount: carItems.length,
+    //   imagesCount: images.length,
+    //   engineWasSwapped,
+    //   carItems,
+    //   stages,
+    //   tags,
 
-    const result = validProject(newProject);
+    //   garageId: "",
+    //   projectPrice: 0,
+    // };
+
+    console.log(project);
+    const result = validProject(project);
     const findInValidResult = result.validResults.find(
       (result) => result.valid == false
     );
 
     if (!findInValidResult) {
-      const result = createProject(newProject);
+      // const result = createProject(newProject);
       console.log(result);
     } else {
       result.validResults.map((res) => {
@@ -123,10 +129,12 @@ export const CreateProjectView = () => {
 
   return (
     <main
-      className="flex justify-end text-sm relative top-0 flex-col-reverse md:flex-row w-[95vw] max-md:w-[100vw] max-md:h-dvh max-w-lg h-[11/12] p-3 mr-0 rounded-sm border-r border-zinc-700"
+      className="flex text-sm relative top-0 flex-col-reverse md:flex-row w-[95vw] max-md:w-[100vw] max-md:h-dvh h-[11/12] p-3 mr-0 rounded-sm border-r border-zinc-700"
       onClick={(e) => e.stopPropagation()}
     >
-      <div className=" ml-2">
+      <AMPStepper stepsOptions={stepsOptions} hideHeader />
+
+      {/* <div className="ml-2">
         <div className="flex flex-col gap-2 mt-3">
           <AMPSwitch
             name="Element w użyciu?"
@@ -150,7 +158,7 @@ export const CreateProjectView = () => {
         action={onSubmit}
       >
         <AMPInput
-          name="Nazwa elementu"
+          name="Nazwa projektu"
           setValue={(text) =>
             setNameElement({
               value: text,
@@ -158,11 +166,11 @@ export const CreateProjectView = () => {
             })
           }
           value={nameElement.value}
-          placeholder="Np. Turbina K03s"
+          placeholder="Np. JDM GTR"
           inputStyles={{ fontSize: 12 }}
         />
         <AMPTextarea
-          name="Opis elementu"
+          name="Opis projekty"
           setValue={(text) => setDescription({ value: text, errorText: "" })}
           value={description.value}
           placeholder="Np. Seryjna turbina, bez modyfikacji, orginalnie była w audi A3 8p "
@@ -177,7 +185,7 @@ export const CreateProjectView = () => {
         />
 
         <AMPHelpFooter footerText="Czym jest projekt?" />
-      </form>
+      </form> */}
     </main>
   );
 };

@@ -15,7 +15,7 @@ export const validProject = (newProject: TProjectCreate) => {
 
   // TODO - valid tags, stages, carItems and all data if exists
 
-  if (!newProject.authorId && newProject.authorId.length < 2) {
+  if (!newProject.authorId && newProject.authorId.length < 1) {
     validResults.push({
       error: "Brak poprawnych danych o autorze. ",
       valid: false,
@@ -61,11 +61,13 @@ export const validCarMakeValue = (value: string | number) => {
 export const validStages = (stages: TStageCreate[] | undefined) => {
   let validResults: TValidResult[] = [];
 
-  validResults.push({
-    error:
-      " Do projektu musi być dodany jeden stage (np. stage 0 który przedstawia oraginalne dane)",
-    valid: false,
-  });
+  if (!stages?.length) {
+    validResults.push({
+      error:
+        " Do projektu musi być dodany jeden stage (np. stage 0 który przedstawia oraginalne dane)",
+      valid: false,
+    });
+  }
 
   stages?.forEach((stage) => {
     validResults = validResults.concat(performanceValidation(stage));
@@ -81,10 +83,6 @@ export const validStages = (stages: TStageCreate[] | undefined) => {
       validResults = validResults.concat(
         priceValidation(stage.stagePrice, "Stage")
       );
-      validResults.push({
-        error: " Długość nazwy etapu musi zawierać od 2 do 20 znaków",
-        valid: false,
-      });
     }
 
     // maybe valid all carItems

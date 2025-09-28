@@ -6,7 +6,7 @@ export const priceValidation = (
 ) => {
   let validResults: TValidResult[] = [];
 
-  if (typeof price === "number") {
+  if (typeof price !== "number") {
     validResults.push({
       error: " Błąd walidacji ceny, sporóbuj ponownie",
       valid: false,
@@ -87,14 +87,14 @@ export const performanceValidation = (data: TPerformanceType) => {
 
   if (data.sl_100_0 && (data.sl_100_0 > 300 || data.sl_100_0 < 10)) {
     validResults.push({
-      error: "Droga hamowania od 100 do 0 pojazdu nie jest poprawne",
+      error: "Droga hamowania od 100 do 0 pojazdu nie jest poprawna",
       valid: false,
     });
   }
 
   if (data.sl_150_50 && (data.sl_150_50 > 300 || data.sl_150_50 < 10)) {
     validResults.push({
-      error: "Droga hamowania od 150 do 50 pojazdu nie jest poprawne",
+      error: "Droga hamowania od 150 do 50 pojazdu nie jest poprawna",
       valid: false,
     });
   }

@@ -81,7 +81,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         withHeader={true}
         visible={showCreateProject}
         title="Dodawanie projektu"
-        additionalTailwindCss="relative bg-amp-100"
+        additionalTailwindCss="relative bg-amp-700 dark:bg-amp-50 rounded-md"
         defoultBG={false}
         bgOnClickClose={false}
       >
@@ -93,7 +93,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         withHeader={true}
         visible={showCreatePost}
         title="Dodawanie postu"
-        additionalTailwindCss="relative bg-amp-100"
+        additionalTailwindCss="relative bg-amp-700 dark:bg-amp-50 rounded-md"
         defoultBG={false}
         bgOnClickClose={false}
       >

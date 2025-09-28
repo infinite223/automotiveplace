@@ -8,7 +8,7 @@ export const validCarElement = (newElement: TCarItemCreate) => {
 
   validResults = validResults.concat(validCarNameValue(newElement.name));
 
-  if (newElement.authorId.length < 2) {
+  if (newElement.authorId.length < 1) {
     //maybe valid authorId?
     validResults.push({
       error: "Brak poprawnych danych o autorze. ",
