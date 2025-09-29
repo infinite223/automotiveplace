@@ -82,8 +82,12 @@ export const AMPStepper = ({
         </div>
 
         <div className="flex gap-2 items-center ml-auto">
-          <AMPButton name="Cofnij" type="secondary" />
-          <AMPButton name="Dalej" />
+          <AMPButton
+            name="Cofnij"
+            type="secondary"
+            onClick={() => handlePrev()}
+          />
+          <AMPButton name="Dalej" onClick={() => goToStep(currentStep + 1)} />
         </div>
       </div>
     </div>

@@ -60,27 +60,25 @@ export default function Page() {
         className="w-[300px] gap-2 bottom-1 flex flex-col"
       >
         <div className="flex flex-col mb-10">
-          <p className="text-xs font-thin">Witaj ponownie!</p>
+          <p className="text-xs font-thin">{t("Core.HelloAgain")}</p>
           <h1 className="text-2xl font-bold">{t("Core.SignIn")}</h1>
         </div>
         <div className="flex flex-col bordre-2">
           <AMPInput
             value={email}
-            name="Email:"
+            name={t("Core.EmailAddress") + ":"}
             type="email"
             themeOption="white"
-            additionalTailwindCss="px-4"
-            placeholder="Podaj email"
+            placeholder={t("Core.Placeholders.EnterEmail")}
             error={errors?.find((e) => e.path.includes("email"))?.message}
             setValue={(text) => setEmail(text.toString())}
           />
           <AMPInput
-            placeholder="Podaj hasło"
+            placeholder={t("Core.Placeholders.EnterPassword")}
             value={password}
             type="password"
-            name="Hasło:"
+            name={t("Core.Password") + ":"}
             themeOption="white"
-            additionalTailwindCss="px-4"
             error={errors?.find((e) => e.path.includes("password"))?.message}
             setValue={(text) => setPassword(text.toString())}
           />

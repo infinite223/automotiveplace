@@ -52,37 +52,34 @@ export default function Page() {
         className="w-[300px] gap-2 bottom-1 flex flex-col"
       >
         <div className="flex flex-col mb-10">
-          <p className="text-xs font-thin">Witaj!</p>
-          <h1 className="text-2xl font-bold">Utwórz konto</h1>
+          <p className="text-xs font-thin">{t("Core.Welcome")}</p>
+          <h1 className="text-2xl font-bold">{t("Core.CreateAccount")}</h1>
         </div>
         <div className="flex flex-col bordre-2">
           <AMPInput
             value={email}
-            name="Email:"
-            additionalTailwindCss="px-4"
+            name={t("Core.EmailAddress") + ":"}
             type="email"
-            placeholder="Podaj email"
+            placeholder={t("Core.Placeholders.EnterEmail")}
             setValue={(text) => setEmail(text.toString())}
             themeOption="white"
             error={errors?.find((e) => e.path.includes("email"))?.message}
           />
           <AMPInput
-            placeholder="Podaj hasło"
+            placeholder={t("Core.Placeholders.EnterPassword")}
             value={password}
             type="password"
-            name="Hasło:"
-            additionalTailwindCss="px-4"
+            name={t("Core.Password") + ":"}
             setValue={(text) => setPassword(text.toString())}
             themeOption="white"
             error={errors?.find((e) => e.path.includes("password"))?.message}
           />
           <AMPInput
-            placeholder="Podaj nazwę konta"
+            placeholder={t("Core.Placeholders.EnterAccountName")}
             value={name}
             type="text"
             themeOption="white"
-            additionalTailwindCss="px-4"
-            name="Nazwa:"
+            name={t("Core.AccountName") + ":"}
             setValue={(text) => setName(text.toString())}
             error={errors?.find((e) => e.path.includes("name"))?.message}
           />

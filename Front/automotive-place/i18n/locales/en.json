@@ -4,6 +4,16 @@
     "SignUp": "Sign Up",
     "GoToApp": "Go to app",
     "CreateAccount": "Create account",
+    "HelloAgain": "Hello again!",
+    "Password": "Password",
+    "EmailAddress": "Email address",
+    "AccountName": "Account name",
+    "Welcome": "Welcome!",
+    "Placeholders": {
+      "EnterEmail": "Enter your email",
+      "EnterPassword": "Enter your password",
+      "EnterAccountName": "Enter account name"
+    },
     "DoYouAlreadyHaveAnAccount": "Do you already have an account?",
     "DontHaveAnAccountYet": "Don't have an account yet?",
     "YouMustBeLoggedInToUseThisFunctionality": "You must be logged in to use this functionality",

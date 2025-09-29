@@ -4,6 +4,16 @@
     "SignUp": "Zarejestruj się",
     "GoToApp": "Przejdź do aplikacji",
     "CreateAccount": "Utwórz konto",
+    "HelloAgain": "Witaj ponownie!",
+    "Password": "Hasło",
+    "EmailAddress": "Adres email",
+    "AccountName": "Nazwa konta",
+    "Welcome": "Witaj!",
+    "Placeholders": {
+      "EnterEmail": "Podaj email",
+      "EnterPassword": "Podaj hasło",
+      "EnterAccountName": "Podaj nazwę konta"
+    },
     "DoYouAlreadyHaveAnAccount": "Masz już konto?",
     "DontHaveAnAccountYet": "Nie masz jeszcze konta?",
     "YouMustBeLoggedInToUseThisFunctionality": "Musisz być zalogowany aby korzystać z tej funkcjonalności",
