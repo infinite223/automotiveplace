@@ -41,6 +41,14 @@ export const AMPStepper = ({
     setCurrentStep((prevStep) => Math.max(prevStep - 1, 0));
   };
 
+  const handleNextStep = () => {
+    if (stepsOptions.items.length - 1 === currentStep) return;
+
+    setCurrentStep((prevStep) =>
+      Math.min(prevStep + 1, stepsOptions.items.length - 1)
+    );
+  };
+
   const goToStep = (stepIndex: number) => {
     setCurrentStep(stepIndex);
   };
@@ -87,7 +95,7 @@ export const AMPStepper = ({
             type="secondary"
             onClick={() => handlePrev()}
           />
-          <AMPButton name="Dalej" onClick={() => goToStep(currentStep + 1)} />
+          <AMPButton name="Dalej" onClick={handleNextStep} />
         </div>
       </div>
     </div>
