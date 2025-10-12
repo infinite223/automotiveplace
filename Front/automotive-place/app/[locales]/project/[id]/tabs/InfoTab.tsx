@@ -59,9 +59,7 @@ export default function InfoTab({
   return (
     <div className="flex flex-col w-full">
       {name && <span className="mt-2 font-semibold">{name}</span>}
-      {description && (
-        <span className="text-sm opacity-85 mt-1">{description}</span>
-      )}
+      {description && <span className="text-sm  mt-1">{description}</span>}
 
       <span className="mt-4 font-semibold">Aktualne parametry projektu</span>
 
@@ -126,7 +124,7 @@ export default function InfoTab({
         <div className="grid grid-cols-1 w-full lg:grid-cols-3 gap-4">
           <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md relative">
             <span className="text-lg font-semibold opacity-90">Silnik</span>
-            <div className="flex flex-col gap-1 text-sm mt-4">
+            <div className="flex flex-col gap-1 text-sm mt-1">
               <div className="opacity-85">
                 <span className="opacity-75">Nazwa: </span>
                 <span className="font-medium">{engine.name}</span>
@@ -152,7 +150,7 @@ export default function InfoTab({
               </div>
             </div>
             <PiEngineBold
-              className="top-5 right-5 absolute text-amp-300 "
+              className="top-5 right-5 absolute text-amp-700/80"
               size={iconSizes.xlarge}
             />
           </div>
@@ -161,7 +159,7 @@ export default function InfoTab({
             <span className="text-lg font-semibold opacity-90">
               Skrzynia biegów
             </span>
-            <div className="flex flex-col gap-1 text-sm mt-4">
+            <div className="flex flex-col gap-1 text-sm mt-1">
               <div className="opacity-85">
                 <span className="opacity-75">Nazwa: </span>
                 <span className="font-medium">{transmission.name}</span>
@@ -196,14 +194,14 @@ export default function InfoTab({
               </div>
             </div>
             <GiGearStickPattern
-              className="top-5 right-5 absolute text-amp-300 "
+              className="top-5 right-5 absolute  text-amp-700/80"
               size={iconSizes.xlarge}
             />
           </div>
 
           <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md relative">
             <span className="text-lg font-semibold opacity-90">Reszta</span>
-            <div className="flex flex-col gap-1 text-sm mt-4">
+            <div className="flex flex-col gap-1 text-sm mt-1">
               {globalInfo.weightStock && (
                 <div className="opacity-85">
                   <span className="opacity-75">Waga: </span>
@@ -233,7 +231,7 @@ export default function InfoTab({
             </div>
 
             <PiInfo
-              className="top-5 right-5 absolute text-amp-300 "
+              className="top-5 right-5 absolute text-amp-700/80"
               size={iconSizes.xlarge}
             />
           </div>
@@ -242,18 +240,16 @@ export default function InfoTab({
 
       <span className="my-4 font-semibold">Zdjęcia</span>
       {images && <PhotoGallery images={images} />}
-      {/* Zdjęcia */}
+
       {location && (
         <>
           <span className="my-4 font-semibold">Najczęściej widziany</span>
 
           <span>
-            {" "}
             {location.name} {location.description}
           </span>
         </>
       )}
-      {/* Gdzie mozna go spotkać */}
     </div>
   );
 }

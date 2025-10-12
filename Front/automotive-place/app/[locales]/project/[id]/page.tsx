@@ -69,7 +69,7 @@ export default function Project({ params }: { params: { id: string } }) {
             {displayData?.images?.[0] && (
               <Image
                 src={displayData.images?.[0]}
-                className=" object-cover blur-sm opacity-20"
+                className="max-h-[400px] object-cover blur-sm opacity-20"
                 alt="car-image"
                 fill
               />
