@@ -1,6 +1,5 @@
 "use client";
 
-import { AMPCarStatsItem } from "@/app/components/shared/AMPCarStatsItem";
 import { TStage } from "@/app/utils/types/stage";
 import { useTranslations } from "next-intl";
 import PhotoGallery from "../PhotoGallery";
@@ -53,203 +52,127 @@ export default function InfoTab({
   location,
 }: InfoTabProps) {
   const t = useTranslations();
-
   if (!lastStage) return null;
 
   return (
     <div className="flex flex-col w-full">
       {name && <span className="mt-2 font-semibold">{name}</span>}
-      {description && <span className="text-sm  mt-1">{description}</span>}
+      {description && <span className="text-sm mt-1">{description}</span>}
 
-      <span className="mt-4 font-semibold">Aktualne parametry projektu</span>
-
-      <div className="flex w-full flex-col my-4 gap-2">
-        <div className="flex w-full flex-wrap gap-2 h-min mb-2">
-          <AMPCarStatsItem
-            typeValue={t("Core.Ps").toUpperCase()}
-            value={lastStage.hp?.toString()}
-            subTitle="Hamownia"
-            title="Moc silnika"
-          />
-          <AMPCarStatsItem
-            typeValue="NM"
-            subTitle="Hamownia"
-            value={lastStage.nm?.toString()}
-            title="Moment obrotowy"
-          />
-          <AMPCarStatsItem
-            typeValue="s"
-            subTitle="0-100km/h"
-            value={lastStage.acc_0_100.toString()}
-            title="Przyśpieszenie"
-          />
-          <AMPCarStatsItem
-            typeValue="s"
-            subTitle="100-200km/h"
-            value={lastStage.acc_100_200.toString()}
-            title="Przyśpieszenie"
-          />
-          <AMPCarStatsItem
-            typeValue="s"
-            subTitle="50-150km/h"
-            value={lastStage.acc_50_150.toString()}
-            title="Przyśpieszenie"
-          />
+      <div className="space-y-4 mt-4">
+        <h3 className="text-lg font-bold text-text-light dark:text-text-dark">
+          Performance
+        </h3>
+        <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100 p-4 dark:divide-subtle-dark/20 dark:bg-surface-dark">
+          <Item label="Horsepower" value={`${lastStage.hp} hp`} />
+          <Item label="Torque" value={`${lastStage.nm} Nm`} />
+          {lastStage.acc_0_100 && (
+            <Item label="0–100 km/h" value={`${lastStage.acc_0_100}s`} />
+          )}
+          {lastStage.acc_100_200 && (
+            <Item label="100–200 km/h" value={`${lastStage.acc_100_200}s`} />
+          )}
+          {lastStage.acc_50_150 && (
+            <Item label="50–150 km/h" value={`${lastStage.acc_50_150}s`} />
+          )}
           {lastStage.maxRPM && (
-            <AMPCarStatsItem
-              typeValue=""
-              subTitle={EngineParameter.MaxRPM}
-              value={lastStage.maxRPM.toString()}
-              title="Maksymalne obroty"
+            <Item
+              label={EngineParameter.MaxRPM}
+              value={`${lastStage.maxRPM.toLocaleString()} rpm`}
             />
           )}
           {lastStage.sl_100_0 && (
-            <AMPCarStatsItem
-              typeValue="s"
-              subTitle="100-0km/h"
-              value={lastStage.sl_100_0.toString()}
-              title="Droga hamowania"
-            />
+            <Item label="100–0 km/h" value={`${lastStage.sl_100_0}s`} />
           )}
           {lastStage.sl_150_50 && (
-            <AMPCarStatsItem
-              typeValue="s"
-              subTitle="150-50km/h"
-              value={lastStage.sl_150_50.toString()}
-              title="Droga hamowania"
-            />
+            <Item label="150–50 km/h" value={`${lastStage.sl_150_50}s`} />
           )}
-        </div>
-
-        <div className="grid grid-cols-1 w-full lg:grid-cols-3 gap-4">
-          <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md relative">
-            <span className="text-lg font-semibold opacity-90">Silnik</span>
-            <div className="flex flex-col gap-1 text-sm mt-1">
-              <div className="opacity-85">
-                <span className="opacity-75">Nazwa: </span>
-                <span className="font-medium">{engine.name}</span>
-              </div>
-
-              {engine.description && (
-                <div className="opacity-85">
-                  <span className="opacity-75">Opis: </span>
-                  <span className="font-medium">{engine.description}</span>
-                </div>
-              )}
-
-              <div className="opacity-85">
-                <span className="opacity-75">Pojemność: </span>
-                <span className="font-medium">{engine.capacity}l</span>
-              </div>
-
-              <div className="opacity-85">
-                <span className="opacity-75">Swap: </span>
-                <span className="font-medium">
-                  {engine.swapped ? "tak" : "nie"}
-                </span>
-              </div>
-            </div>
-            <PiEngineBold
-              className="top-5 right-5 absolute text-amp-700/80"
-              size={iconSizes.xlarge}
-            />
-          </div>
-
-          <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md relative">
-            <span className="text-lg font-semibold opacity-90">
-              Skrzynia biegów
-            </span>
-            <div className="flex flex-col gap-1 text-sm mt-1">
-              <div className="opacity-85">
-                <span className="opacity-75">Nazwa: </span>
-                <span className="font-medium">{transmission.name}</span>
-              </div>
-
-              {transmission.description && (
-                <div className="opacity-85">
-                  <span className="opacity-75">Opis: </span>
-                  <span className="font-medium">
-                    {transmission.description}
-                  </span>
-                </div>
-              )}
-
-              <div className="opacity-85">
-                <span className="opacity-75">Ilość biegów: </span>
-                <span className="font-medium">{transmission.gears}</span>
-              </div>
-
-              <div className="opacity-85">
-                <span className="opacity-75">Typ: </span>
-                <span className="font-medium">
-                  {transmission.transmissionType}
-                </span>
-              </div>
-
-              <div className="opacity-85">
-                <span className="opacity-75">Swap: </span>
-                <span className="font-medium">
-                  {transmission.wasSwapped ? "tak" : "nie"}
-                </span>
-              </div>
-            </div>
-            <GiGearStickPattern
-              className="top-5 right-5 absolute  text-amp-700/80"
-              size={iconSizes.xlarge}
-            />
-          </div>
-
-          <div className="bg-amp-50 h-fit p-4 rounded-sm shadow-md relative">
-            <span className="text-lg font-semibold opacity-90">Reszta</span>
-            <div className="flex flex-col gap-1 text-sm mt-1">
-              {globalInfo.weightStock && (
-                <div className="opacity-85">
-                  <span className="opacity-75">Waga: </span>
-                  <span className="font-medium">
-                    {globalInfo.weightStock} kg
-                  </span>
-                </div>
-              )}
-
-              {globalInfo.topSpeedStock && (
-                <div className="opacity-85">
-                  <span className="opacity-75">Prędkość maksymalna: </span>
-                  <span className="font-medium">
-                    {globalInfo.topSpeedStock} km/h
-                  </span>
-                </div>
-              )}
-
-              {globalInfo.projectPrice && (
-                <div className="opacity-85">
-                  <span className="opacity-75">Cena projektu: </span>
-                  <span className="font-medium">
-                    {globalInfo.projectPrice} zł
-                  </span>
-                </div>
-              )}
-            </div>
-
-            <PiInfo
-              className="top-5 right-5 absolute text-amp-700/80"
-              size={iconSizes.xlarge}
-            />
-          </div>
         </div>
       </div>
 
-      <span className="my-4 font-semibold">Zdjęcia</span>
+      <div className="space-y-4 mt-8 relative">
+        <div className="flex items-center gap-3 px-2">
+          <PiEngineBold className="" size={iconSizes.base} />
+          <h3 className="text-lg font-bold text-text-light dark:text-text-dark">
+            Silnik
+          </h3>
+        </div>
+        <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100  p-4 dark:divide-subtle-dark/20 dark:bg-surface-dark">
+          <Item label="Nazwa" value={engine.name} />
+          {engine.description && (
+            <Item label="Opis" value={engine.description} />
+          )}
+          <Item label="Pojemność" value={`${engine.capacity}L`} />
+          <Item label="Swap" value={engine.swapped ? "Tak" : "Nie"} />
+        </div>
+      </div>
+
+      <div className="space-y-4 mt-8 relative">
+        <div className="flex items-center gap-3 px-2">
+          <GiGearStickPattern className="" size={iconSizes.base} />
+          <h3 className="text-lg font-bold text-text-light dark:text-text-dark">
+            Skrzynia biegów
+          </h3>
+        </div>
+        <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100 p-4 dark:divide-subtle-dark/20 dark:bg-surface-dark">
+          <Item label="Nazwa" value={transmission.name} />
+          {transmission.description && (
+            <Item label="Opis" value={transmission.description} />
+          )}
+          <Item label="Ilość biegów" value={`${transmission.gears}`} />
+          <Item label="Typ" value={`${transmission.transmissionType}`} />
+          <Item label="Swap" value={transmission.wasSwapped ? "Tak" : "Nie"} />
+        </div>
+      </div>
+
+      <div className="space-y-4 mt-8 relative">
+        <div className="flex items-center gap-3 px-2">
+          <PiInfo className="" size={iconSizes.base} />
+          <h3 className="text-lg font-bold text-text-light dark:text-text-dark">
+            Reszta
+          </h3>
+        </div>
+        <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100 p-4 dark:divide-subtle-dark/20 dark:bg-surface-dark">
+          {globalInfo.weightStock && (
+            <Item label="Waga" value={`${globalInfo.weightStock} kg`} />
+          )}
+          {globalInfo.topSpeedStock && (
+            <Item
+              label="Prędkość maksymalna"
+              value={`${globalInfo.topSpeedStock} km/h`}
+            />
+          )}
+          {globalInfo.projectPrice && (
+            <Item
+              label="Cena projektu"
+              value={`~${globalInfo.projectPrice.toLocaleString()} zł`}
+            />
+          )}
+        </div>
+      </div>
+
+      <span className="my-6 text-lg font-bold">Zdjęcia</span>
       {images && <PhotoGallery images={images} />}
 
       {location && (
         <>
           <span className="my-4 font-semibold">Najczęściej widziany</span>
-
           <span>
             {location.name} {location.description}
           </span>
         </>
       )}
+    </div>
+  );
+}
+
+function Item({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex justify-between py-3">
+      <p className="text-subtle-light dark:text-subtle-dark">{label}</p>
+      <p className="font-medium text-text-light dark:text-text-dark text-right">
+        {value}
+      </p>
     </div>
   );
 }

@@ -64,36 +64,52 @@ export default function Project({ params }: { params: { id: string } }) {
   return (
     <main className="flex w-full min-h-dvh bg-amp-900 dark:bg-amp-0 flex-col items-center gap-2 text-black dark:text-white">
       <div className="w-full pb-32 flex justify-center">
-        <div className="max-w-screen-2xl w-full">
+        <div className="max-w-screen-2xl w-full flex-col">
           <div className="h-[250px] w-full">
             {displayData?.images?.[0] && (
               <Image
                 src={displayData.images?.[0]}
-                className="max-h-[400px] object-cover blur-sm opacity-20"
+                className="max-h-[250px] object-cover"
                 alt="car-image"
                 fill
               />
             )}
           </div>
 
-          <nav className="flex flex-col justify-between w-full top-[0px] relative py-4 px-4">
+          <nav className="flex flex-col justify-between w-full py-4 px-4">
             <header className="text-3xl font-semibold gap-1 flex flex-col flex-wrap">
-              {/* {displayData?.images?.[0] && (
-                <img
-                  src={displayData.images?.[0]}
-                  className="w-20 h-20 object-cover rounded-full mr-4"
-                  alt="car-image"
-                />
-              )} */}
               <div className="flex w-full items-start justify-between max-md:flex-col">
                 <div className="flex flex-col w-full">
                   <div className="flex items-center gap-3">
                     <span>{displayData?.carMake}</span>
+                  </div>
+                  <div className="text-lg opacity-70">
                     <span>{displayData?.carModel}</span>
-                    <span className="">- {lastStage?.name || "N/A"}</span>
+                    <span className=""> {lastStage?.name || "N/A"}</span>
                   </div>
                 </div>
+                <div className="flex flex-col mt-2">
+                  <div className="text-medium mb-1">{data?.author?.name}</div>
+                  <div className="text-sm opacity-70">
+                    Opublikowany:{" "}
+                    {moment(data?.createdAt, "YYYYMMDD").fromNow()}
+                  </div>
+                  {lastStage && (
+                    <div className="text-sm opacity-70">
+                      Modyfikowany:{" "}
+                      {moment(lastStage?.createdAt, "YYYYMMDD").fromNow()}
+                    </div>
+                  )}
+                </div>
+
                 <div className="mt-2 gap-2 flex w-full justify-end flex-wrap-reverse">
+                  <AMPButton
+                    name="Nawiąż kontakt"
+                    additionalTailwindCss="text-sm py-2 max-sm:flex-1 w-full justify-center"
+                    type="primary"
+                    icon={<TbMessageCircleUp size={iconSizes.small} />}
+                  />
+
                   {data && (
                     <LikeButton
                       id={data.id}
@@ -104,36 +120,16 @@ export default function Project({ params }: { params: { id: string } }) {
                   )}
 
                   <AMPButton
-                    name="Udostępnij"
-                    additionalTailwindCss="text-sm max-sm:flex-1 min-w-[150px] justify-center"
+                    additionalTailwindCss="text-sm py-2"
                     type="secondary"
                     icon={<CgShare size={iconSizes.small} />}
                   />
-
-                  <AMPButton
-                    name="Nawiąż kontakt"
-                    additionalTailwindCss="text-sm max-sm:flex-1 min-w-[150px] justify-center"
-                    type="secondary"
-                    icon={<TbMessageCircleUp size={iconSizes.small} />}
-                  />
                 </div>
-              </div>
-              <div className="flex items-center gap-x-4 text-xs opacity-65 flex-wrap mt-2">
-                <div>
-                  Projekt dodany przez: {data?.author?.name}{" "}
-                  {moment(data?.createdAt, "YYYYMMDD").fromNow()}
-                </div>
-                {lastStage && (
-                  <div>
-                    Ostatnia modyfikacja:{" "}
-                    {moment(lastStage?.createdAt, "YYYYMMDD").fromNow()}
-                  </div>
-                )}
               </div>
             </header>
           </nav>
 
-          <nav className="flex w-full items-center max-sm:justify-between gap-3 mt-3 border-b border-amp-700 dark:border-amp-200 relative">
+          <nav className="flex w-full items-center gap-3 mt-3 border-b border-amp-700 dark:border-amp-200">
             {tabsConfig.map((tab) => (
               <button
                 key={tab.id}
@@ -146,7 +142,7 @@ export default function Project({ params }: { params: { id: string } }) {
                 {activeTab === tab.id && (
                   <motion.div
                     layoutId="underline"
-                    className="absolute left-0 bottom-0 w-full h-[2px] bg-amp-500"
+                    className="absolute left-0 bottom-0 w-[75%] h-[2px] mx-3 bg-amp-500"
                   />
                 )}
               </button>
@@ -252,7 +248,7 @@ const LikeButton = ({
   return (
     <AMPButton
       name={currentLikesCount.toString()}
-      additionalTailwindCss="text-sm max-sm:flex-1 justify-center"
+      additionalTailwindCss="text-sm rounded-lg  py-2"
       type="secondary"
       icon={<FaHeart size={iconSizes.small - 2} />}
       onClick={handleClickLike}
