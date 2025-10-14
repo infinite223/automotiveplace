@@ -7,12 +7,17 @@ import { TBasicProject, TProject } from "@/app/utils/types/project";
 import { RootState } from "@/lib/store";
 import moment from "moment";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CgShare } from "react-icons/cg";
 import { FaHeart } from "react-icons/fa";
 import { TbMessageCircleUp } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useTransform,
+  useScroll,
+} from "framer-motion";
 import InfoTab from "./tabs/InfoTab";
 import StagesTab from "./tabs/StagesTab";
 import ReferencesTab from "./tabs/ReferencesTab";
@@ -34,7 +39,10 @@ export default function Project({ params }: { params: { id: string } }) {
     (state: RootState) => state.contentData.contentData
   );
   const [activeTab, setActiveTab] = useState("informacje");
-
+  const imageRef = useRef<HTMLDivElement>(null);
+  const { scrollY } = useScroll();
+  const height = useTransform(scrollY, [0, 200], ["200px", "0px"]); // scroll 0→200px zmniejsza wysokość
+  const opacity = useTransform(scrollY, [0, 150], [1, 0]);
   const router = useRouter();
   const [tempData, setTempData] = useState<TBasicProject | null>(null);
   const { data, loading, error } = useFetchData<TProject>(
@@ -82,7 +90,7 @@ export default function Project({ params }: { params: { id: string } }) {
         <div className="max-w-screen-2xl w-full flex-col">
           <div
             className={`flex items-center justify-between sticky top-0 z-50 backdrop-blur-md bg-amp-900/80 dark:bg-amp-0/80 transition-all duration-300 ${
-              scrolled ? "shadow-md py-1" : "py-2"
+              scrolled ? "shadow-md py-0.5" : ""
             }`}
           >
             <div className="p-4" onClick={() => router.back()}>
@@ -112,16 +120,20 @@ export default function Project({ params }: { params: { id: string } }) {
             </div>
           </div>
 
-          <div className="relative h-[200px] w-full">
+          <motion.div
+            ref={imageRef}
+            style={{ height, opacity }}
+            className="relative w-full overflow-hidden"
+          >
             {displayData?.images?.[0] && (
               <Image
                 src={displayData.images?.[0]}
-                className="max-h-[200px] object-cover"
+                className="object-cover"
                 alt="car-image"
                 fill
               />
             )}
-          </div>
+          </motion.div>
 
           <nav className="flex flex-col justify-between w-full py-4 px-4">
             <header className="text-3xl font-semibold gap-1 flex flex-col flex-wrap">
