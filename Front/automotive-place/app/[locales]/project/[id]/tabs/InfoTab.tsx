@@ -63,7 +63,7 @@ export default function InfoTab({
         <h3 className="text-lg font-bold text-text-light dark:text-text-dark">
           Performance
         </h3>
-        <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100 p-4 dark:divide-subtle-dark/20 dark:bg-surface-dark">
+        <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100 px-4 py-2 dark:divide-subtle-dark/20 dark:bg-surface-dark">
           <Item label="Horsepower" value={`${lastStage.hp} hp`} />
           <Item label="Torque" value={`${lastStage.nm} Nm`} />
           {lastStage.acc_0_100 && (
@@ -97,7 +97,7 @@ export default function InfoTab({
             Silnik
           </h3>
         </div>
-        <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100  p-4 dark:divide-subtle-dark/20 dark:bg-surface-dark">
+        <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100 px-4 py-2 dark:divide-subtle-dark/20 dark:bg-surface-dark">
           <Item label="Nazwa" value={engine.name} />
           {engine.description && (
             <Item label="Opis" value={engine.description} />
@@ -114,7 +114,7 @@ export default function InfoTab({
             Skrzynia biegów
           </h3>
         </div>
-        <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100 p-4 dark:divide-subtle-dark/20 dark:bg-surface-dark">
+        <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100 px-4 py-2 dark:divide-subtle-dark/20 dark:bg-surface-dark">
           <Item label="Nazwa" value={transmission.name} />
           {transmission.description && (
             <Item label="Opis" value={transmission.description} />
@@ -132,7 +132,7 @@ export default function InfoTab({
             Reszta
           </h3>
         </div>
-        <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100 p-4 dark:divide-subtle-dark/20 dark:bg-surface-dark">
+        <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100 px-4 py-2 dark:divide-subtle-dark/20 dark:bg-surface-dark">
           {globalInfo.weightStock && (
             <Item label="Waga" value={`${globalInfo.weightStock} kg`} />
           )}

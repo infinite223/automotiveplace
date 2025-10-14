@@ -24,6 +24,9 @@ import { TBasicTag } from "@/app/utils/types/tag";
 import { useFetchData } from "@/app/hooks/useFetchData";
 import { getCurrentStage } from "@/app/utils/helpers/stagesHelper";
 import Image from "next/image";
+import { RiArrowLeftLine } from "react-icons/ri";
+import { RxDotsHorizontal } from "react-icons/rx";
+import { useRouter } from "next/navigation";
 
 export default function Project({ params }: { params: { id: string } }) {
   const t = useTranslations();
@@ -31,7 +34,8 @@ export default function Project({ params }: { params: { id: string } }) {
     (state: RootState) => state.contentData.contentData
   );
   const [activeTab, setActiveTab] = useState("informacje");
-  const dispatch = useDispatch();
+
+  const router = useRouter();
   const [tempData, setTempData] = useState<TBasicProject | null>(null);
   const { data, loading, error } = useFetchData<TProject>(
     `project-${params.id}`,
@@ -65,11 +69,20 @@ export default function Project({ params }: { params: { id: string } }) {
     <main className="flex w-full min-h-dvh bg-amp-900 dark:bg-amp-0 flex-col items-center gap-2 text-black dark:text-white">
       <div className="w-full pb-32 flex justify-center">
         <div className="max-w-screen-2xl w-full flex-col">
-          <div className="h-[250px] w-full">
+          <div className="flex items-center justify-between p-4 px-5">
+            <RiArrowLeftLine
+              size={iconSizes.base}
+              onClick={() => router.back()}
+            />
+            <span className="text-sm">Project details</span>
+            <RxDotsHorizontal size={iconSizes.base} />
+          </div>
+
+          <div className="relative h-[200px] w-full">
             {displayData?.images?.[0] && (
               <Image
                 src={displayData.images?.[0]}
-                className="max-h-[250px] object-cover"
+                className="max-h-[200px] object-cover"
                 alt="car-image"
                 fill
               />
@@ -78,7 +91,7 @@ export default function Project({ params }: { params: { id: string } }) {
 
           <nav className="flex flex-col justify-between w-full py-4 px-4">
             <header className="text-3xl font-semibold gap-1 flex flex-col flex-wrap">
-              <div className="flex w-full items-start justify-between max-md:flex-col">
+              <div className="flex w-full items-start justify-between flex-col">
                 <div className="flex flex-col w-full">
                   <div className="flex items-center gap-3">
                     <span>{displayData?.carMake}</span>
@@ -102,10 +115,10 @@ export default function Project({ params }: { params: { id: string } }) {
                   )}
                 </div>
 
-                <div className="mt-2 gap-2 flex w-full justify-end flex-wrap-reverse">
+                <div className="mt-4 gap-2 flex w-full justify-end flex-wrap-reverse">
                   <AMPButton
                     name="Nawiąż kontakt"
-                    additionalTailwindCss="text-sm py-2 max-sm:flex-1 w-full justify-center"
+                    additionalTailwindCss="text-sm py-2 max-w-[250px] flex-1 w-full justify-center"
                     type="primary"
                     icon={<TbMessageCircleUp size={iconSizes.small} />}
                   />
