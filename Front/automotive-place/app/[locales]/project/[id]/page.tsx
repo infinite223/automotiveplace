@@ -42,6 +42,17 @@ export default function Project({ params }: { params: { id: string } }) {
     () => getProject(params.id)
   );
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 80);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   useEffect(() => {
     if (loading) {
       const content = contentData.find((item) => item.data.id === params.id);
@@ -69,13 +80,36 @@ export default function Project({ params }: { params: { id: string } }) {
     <main className="flex w-full min-h-dvh bg-amp-900 dark:bg-amp-0 flex-col items-center gap-2 text-black dark:text-white">
       <div className="w-full pb-32 flex justify-center">
         <div className="max-w-screen-2xl w-full flex-col">
-          <div className="flex items-center justify-between p-4 px-5">
-            <RiArrowLeftLine
-              size={iconSizes.base}
-              onClick={() => router.back()}
-            />
-            <span className="text-sm">Project details</span>
-            <RxDotsHorizontal size={iconSizes.base} />
+          <div
+            className={`flex items-center justify-between sticky top-0 z-50 backdrop-blur-md bg-amp-900/80 dark:bg-amp-0/80 transition-all duration-300 ${
+              scrolled ? "shadow-md py-1" : "py-2"
+            }`}
+          >
+            <div className="p-4" onClick={() => router.back()}>
+              <RiArrowLeftLine size={iconSizes.base} />
+            </div>
+            <motion.span
+              className="text-xs font-semibold"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: scrolled ? 0 : 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              PROJECT
+            </motion.span>
+
+            <motion.span
+              className="text-sm font-semibold absolute left-1/2 -translate-x-1/2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: scrolled ? 1 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {(displayData?.carMake || "") +
+                " " +
+                (displayData?.carModel || "")}
+            </motion.span>
+            <div className="p-4">
+              <RxDotsHorizontal size={iconSizes.base} />
+            </div>
           </div>
 
           <div className="relative h-[200px] w-full">
@@ -118,7 +152,7 @@ export default function Project({ params }: { params: { id: string } }) {
                 <div className="mt-4 gap-2 flex w-full justify-end flex-wrap-reverse">
                   <AMPButton
                     name="Nawiąż kontakt"
-                    additionalTailwindCss="text-sm py-2 max-w-[250px] flex-1 w-full justify-center"
+                    additionalTailwindCss="text-sm py-2 max-w-[300px] flex-1 w-full justify-center"
                     type="primary"
                     icon={<TbMessageCircleUp size={iconSizes.small} />}
                   />
