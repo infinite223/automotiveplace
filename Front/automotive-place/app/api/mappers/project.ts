@@ -1,5 +1,5 @@
 import { TProject } from "@/app/utils/types/project";
-import { Project, TagAssignment, Stage, User } from "@prisma/client";
+import { Project, TagAssignment, Stage, User, CarItem } from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/library";
 import { mapTags } from "./tags";
 import { mapStages } from "./stages";
@@ -10,7 +10,9 @@ export type ProjectWithIncludes = Project & {
     fileLocation: string;
   }[];
   author: User;
-  stages: Stage[];
+  stages: (Stage & {
+    carItems: CarItem[];
+  })[];
   tagAssignments: (TagAssignment & {
     tag: {
       id: string;

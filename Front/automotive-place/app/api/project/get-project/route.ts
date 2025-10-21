@@ -3,6 +3,7 @@ import { getLoggedInUser } from "@/lib/actions/user.actions";
 import prisma from "@/lib/prisma";
 import { TProject } from "@/app/utils/types/project";
 import { ProjectWithIncludes } from "../../mappers/project";
+import { TCarItemBaseOnProject } from "@/app/utils/types/carItem";
 
 export async function GET(request: NextRequest) {
   const userData = await getLoggedInUser();
@@ -29,6 +30,7 @@ export async function GET(request: NextRequest) {
         select: { fileLocation: true },
       },
       stages: {
+        include: { carItems: true },
         orderBy: {
           stageNumber: "desc",
         },
@@ -81,6 +83,15 @@ export async function GET(request: NextRequest) {
         createdById: stage.createdById || "",
         stagePrice: stage.stagePrice?.toNumber(),
         chartImageUrl: stage.chartImageUrl ?? undefined,
+        carItems: stage.carItems.map((carItem) => {
+          return {
+            date: carItem.updatedAt ?? carItem.createdAt,
+            description: carItem.description,
+            name: carItem.name,
+            id: carItem.id,
+            itemType: carItem.itemType,
+          } as TCarItemBaseOnProject;
+        }),
       };
     }),
     location: project.location

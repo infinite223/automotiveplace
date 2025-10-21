@@ -25,6 +25,10 @@ const nextConfig = {
         hostname: "cloud.appwrite.io",
         pathname: "/v1/storage/**",
       },
+      {
+        protocol: "https",
+        hostname: "cdn1.iconfinder.com",
+      },
     ],
   },
 };

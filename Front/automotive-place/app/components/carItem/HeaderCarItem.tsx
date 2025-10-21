@@ -30,7 +30,7 @@ export const HeaderCarItem: FC<IHeaderCarItemProps> = ({
 
   return (
     <main
-      className={`flex text-amp-000 dark:text-amp-900 gap-2 items-center ${
+      className={`flex dark:text-amp-900 gap-2 items-center ${
         isLoading && "animate-pulse"
       }`}
     >

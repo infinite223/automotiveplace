@@ -4,10 +4,10 @@ import { TTableView } from "@/app/utils/types";
 import React, { FC, useState } from "react";
 import { HeaderCarItem } from "./HeaderCarItem";
 import { AMPFooterItem } from "../shared/AMPFooterItem";
-import { TCarItem } from "@/app/utils/types/carItem";
+import { TCarItemBaseOnProject } from "@/app/utils/types/carItem";
 
 interface CarItemProps {
-  data: TCarItem;
+  data: TCarItemBaseOnProject;
   lineClamp?: 1 | 2 | 3 | 4;
   addCarItemTailwindStyles?: string;
   isLoading: boolean;
@@ -35,19 +35,19 @@ export const CarItem: FC<CarItemProps> = ({
   const handleClickLike = () => {
     // send req to API
     // update state
-    if (!isMyCarElement) {
-      if (localData.isLikedByAuthUser) {
-        setLocalData({
-          ...localData,
-          isLikedByAuthUser: false,
-        });
-      } else {
-        setLocalData({
-          ...localData,
-          isLikedByAuthUser: true,
-        });
-      }
-    }
+    // if (!isMyCarElement) {
+    //   if (localData.isLikedByAuthUser) {
+    //     setLocalData({
+    //       ...localData,
+    //       isLikedByAuthUser: false,
+    //     });
+    //   } else {
+    //     setLocalData({
+    //       ...localData,
+    //       isLikedByAuthUser: true,
+    //     });
+    //   }
+    // }
   };
 
   return (

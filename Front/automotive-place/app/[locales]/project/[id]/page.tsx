@@ -6,12 +6,11 @@ import { iconSizes } from "@/app/utils/constants";
 import { TBasicProject, TProject } from "@/app/utils/types/project";
 import { RootState } from "@/lib/store";
 import moment from "moment";
-import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { CgShare } from "react-icons/cg";
 import { FaHeart } from "react-icons/fa";
 import { TbMessageCircleUp } from "react-icons/tb";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   motion,
   AnimatePresence,
@@ -29,21 +28,18 @@ import { TBasicTag } from "@/app/utils/types/tag";
 import { useFetchData } from "@/app/hooks/useFetchData";
 import { getCurrentStage } from "@/app/utils/helpers/stagesHelper";
 import Image from "next/image";
-import { RiArrowLeftLine } from "react-icons/ri";
 import { RxDotsHorizontal } from "react-icons/rx";
-import { useRouter } from "next/navigation";
 
 export default function Project({ params }: { params: { id: string } }) {
-  const t = useTranslations();
   const contentData = useSelector(
     (state: RootState) => state.contentData.contentData
   );
   const [activeTab, setActiveTab] = useState("informacje");
   const imageRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
-  const height = useTransform(scrollY, [0, 200], ["200px", "0px"]); // scroll 0→200px zmniejsza wysokość
+  const height = useTransform(scrollY, [0, 200], ["200px", "0px"]);
   const opacity = useTransform(scrollY, [0, 150], [1, 0]);
-  const router = useRouter();
+
   const [tempData, setTempData] = useState<TBasicProject | null>(null);
   const { data, loading, error } = useFetchData<TProject>(
     `project-${params.id}`,
@@ -93,11 +89,11 @@ export default function Project({ params }: { params: { id: string } }) {
               scrolled ? "shadow-md py-0.5" : ""
             }`}
           >
-            <div className="p-4" onClick={() => router.back()}>
+            {/* <div className="p-4" onClick={() => router.back()}>
               <RiArrowLeftLine size={iconSizes.base} />
-            </div>
+            </div> */}
             <motion.span
-              className="text-xs font-semibold"
+              className="text-xs font-semibold pl-4"
               initial={{ opacity: 1 }}
               animate={{ opacity: scrolled ? 0 : 1 }}
               transition={{ duration: 0.2 }}
@@ -115,7 +111,7 @@ export default function Project({ params }: { params: { id: string } }) {
                 " " +
                 (displayData?.carModel || "")}
             </motion.span>
-            <div className="p-4">
+            <div className="p-3">
               <RxDotsHorizontal size={iconSizes.base} />
             </div>
           </div>

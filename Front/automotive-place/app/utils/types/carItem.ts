@@ -22,6 +22,14 @@ type TCarItem = {
   tags?: TTag[];
 };
 
+type TCarItemBaseOnProject = {
+  id: string;
+  date: Date;
+  name: string;
+  description: string;
+  itemType: ItemTypes;
+};
+
 function isTCarItem(data: any): data is TCarItem {
   return (
     typeof data === "object" &&
@@ -82,7 +90,6 @@ enum ItemTypes {
   Driver = "Driver",
 }
 
-
 export function isValidItemType(type: any): type is ItemTypes {
   return Object.values(ItemTypes).includes(type);
 }
@@ -94,4 +101,4 @@ const itemTypesArray = Object.values(ItemTypes).map((value) => ({
 
 export { ItemTypes, itemTypesArray, isTCarItem };
 
-export type { TCarItem, TCarItemCreate };
+export type { TCarItem, TCarItemCreate, TCarItemBaseOnProject };
