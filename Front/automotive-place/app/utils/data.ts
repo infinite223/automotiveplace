@@ -1,21 +1,19 @@
-import { ItemTypes, TCarItem, TCarItemCreate } from "./types/carItem";
+import {
+  ItemTypes,
+  TCarItemBaseOnProject,
+  TCarItemCreate,
+} from "./types/carItem";
 import { TPostCreate } from "./types/post";
 import { TProblemCreate } from "./types/problem";
 import { TSpotCreate } from "./types/spot";
 import { TStageCreate } from "./types/stage";
 
-const carItemData: TCarItem = {
+const carItemData: TCarItemBaseOnProject = {
   id: "1",
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  date: new Date(),
   description: "Lorem ipsum...",
-  forSell: false,
-  inUse: false,
-  isVisible: true,
   itemType: ItemTypes.Turbo,
   name: "Turbo K04",
-  authorId: "1",
-  projectId: "",
 };
 
 const carItemCreateData: TCarItemCreate = {

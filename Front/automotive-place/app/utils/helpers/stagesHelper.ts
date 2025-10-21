@@ -28,7 +28,7 @@ export const getCurrentStage = (project: TProject) => {
     name: "Stock",
     projectId: project.id,
     stageNumber: 0,
-    carItems: project.carItems,
+    carItems: [], // TODO: Analysis needed
     updatedAt: new Date(),
   };
 

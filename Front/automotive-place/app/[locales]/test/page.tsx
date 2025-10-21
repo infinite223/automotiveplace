@@ -105,7 +105,7 @@ export default function Page() {
       </div>
 
       <div className="flex w-full">
-        <AMPTable
+        {/* <AMPTable
           onSearch={onSearch}
           isLoading={isLoading}
           searchOptions={{ query: "", type: "local" }}
@@ -153,7 +153,7 @@ export default function Page() {
             />
           ))}
           title="Podzespoły projektu"
-        />
+        /> */}
       </div>
     </main>
   );

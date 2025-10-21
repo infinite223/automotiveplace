@@ -99,7 +99,7 @@ export default function Garage() {
       </div>
 
       <div className="flex w-full">
-        <AMPTable
+        {/* <AMPTable
           onSearch={onSearch}
           isLoading={isLoading}
           searchOptions={{ query: "", type: "local" }}
@@ -147,7 +147,7 @@ export default function Garage() {
             />
           ))}
           title="Podzespoły projektu"
-        />
+        /> */}
       </div>
     </main>
   );
