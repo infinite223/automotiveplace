@@ -111,6 +111,7 @@ export const signIn = async (userData: SignInParams) => {
         httpOnly: true,
         sameSite: "strict",
         secure: true,
+        maxAge: 60 * 60 * 24 * 365,
       });
 
       return {
