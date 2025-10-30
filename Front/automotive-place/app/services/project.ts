@@ -6,16 +6,16 @@ import {
 import { apiEndpoints } from "./api.endpoints";
 
 export const createProject = async (
-  carItem: TProjectCreate,
+  project: TProjectCreate,
   locale: string = "en"
 ) => {
   const response = await fetch(apiEndpoints.createProject, {
     method: "POST",
-    body: JSON.stringify(carItem),
+    body: JSON.stringify(project),
     headers: { "Content-Type": "application/json", "Accept-Language": locale },
   });
   if (!response.ok) {
-    throw new Error("Failed to add car items");
+    throw new Error("Failed to add project");
   }
 
   const result = await response.json();
@@ -27,7 +27,7 @@ export const getProject = async (id: string) => {
     next: { revalidate: 60 },
   });
   if (!response.ok) {
-    throw new Error("Failed to get data");
+    throw new Error("Failed to get project");
   }
 
   const result: TProject = await response.json();

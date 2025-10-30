@@ -121,7 +121,6 @@ function isTBasicProject(data: any): data is TBasicProject {
 
 type TProjectCreate = {
   forSell: boolean;
-  inUse: boolean;
   authorId: string;
   name?: string;
   carMake: string;
@@ -145,6 +144,7 @@ type TProjectCreate = {
   transmissionGears: number;
   transmissionDescription?: string;
   transmissionWasSwapped?: boolean;
+  transmissionType: number; // type -> 0 - maual | 1 - automat -> TransmissionType enum
 
   stages?: TStageCreate[];
   carItems?: TCarItemCreate[];

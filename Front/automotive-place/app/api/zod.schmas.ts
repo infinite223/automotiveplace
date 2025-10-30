@@ -34,7 +34,7 @@ export const createStageSchema = z.object({
 export const createProjectSchema = z.object({
   name: z.string().min(3).max(50).optional(),
   carMake: z.string().min(2).max(50),
-  model: z.string().min(1).max(50),
+  carModel: z.string().min(1).max(50),
   description: z.string().min(1).max(500),
   isVisible: z.boolean().optional(),
   forSell: z.boolean().optional(),
@@ -50,8 +50,8 @@ export const createProjectSchema = z.object({
   transmissionGears: z.number().min(1).max(20),
   transmissionDescription: z.string().min(1).max(500),
   transmissionWasSwapped: z.boolean().optional(),
-  topSpeedStock: z.number().min(1).max(500),
-  weightStock: z.number().min(1).max(10000),
+  topSpeedStock: z.number().min(1).max(500).optional(),
+  weightStock: z.number().min(1).max(10000).optional(),
 
   carItems: z.array(createCarItemSchema),
   stages: z.array(createStageSchema),

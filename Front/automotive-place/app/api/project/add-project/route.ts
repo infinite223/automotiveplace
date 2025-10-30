@@ -21,7 +21,6 @@ export async function POST(request: NextRequest) {
   }
 
   const project: TProjectCreate = await request.json();
-
   let notification: ICreateNotification | null = {
     log: {
       date: new Date(),
@@ -35,6 +34,8 @@ export async function POST(request: NextRequest) {
   const author = await prisma.user.findFirst();
   // TODO - change validation in all routes to zod
   const validProject = createProjectSchema.safeParse(project);
+
+  console.log(project, "|||||", validProject.error?.errors, "validProject");
   // const result = validProject(project);
   // const findInValidResult = result.validResults.find(
   //   (result) => result.valid == false
@@ -57,7 +58,7 @@ export async function POST(request: NextRequest) {
       notification.log = {
         status: "Success",
         date: new Date(),
-        title: "Element został dodany pomyślnie",
+        title: "Projekt został dodany pomyślnie",
       };
     }
   }
@@ -67,7 +68,7 @@ export async function POST(request: NextRequest) {
 
 async function createProject(project: TProjectCreate, authorId: string) {
   const { tags, stages, carItems, ...restProjectData } = project;
-
+  console.log(project, "project");
   // const tagData: Prisma.TagUncheckedCreateWithoutProjectInput[] =
   //   tags?.map((tag) => ({
   //     name: tag.name,
@@ -80,16 +81,17 @@ async function createProject(project: TProjectCreate, authorId: string) {
 
   let newProject;
   try {
-    // newProject = await prisma.project.create({
-    //   data: {
-    //     ...restProjectData,
-    //     garageId: "",
-    //     authorId: "",
-    //     imagesUrl: "",
-    //     // TODO - first we need save images
-    //     isVerified: false,
-    //   },
-    // });
+    newProject = await prisma.project.create({
+      data: {
+        ...restProjectData,
+        garageId: "garage2",
+        authorId,
+        imagesUrl: "",
+
+        // TODO - first we need save images
+        isVerified: true, // TODO: to change
+      },
+    });
   } catch (error) {
     console.error("Error creating car item:", error);
     throw error;

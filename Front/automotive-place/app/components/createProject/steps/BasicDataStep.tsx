@@ -1,7 +1,9 @@
-// podstawowe informacje o samochodzie 
+import React, { useEffect } from "react";
 
-export const BasicDataStep = () => {
-  return (
-    <div>BasicDataStep</div>
-  )
-}
+export const BasicDataStep = ({ setIsValid }: any) => {
+  useEffect(() => {
+    setIsValid(true);
+  }, [setIsValid]);
+
+  return <div>BasicDataStep</div>;
+};
