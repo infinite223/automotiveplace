@@ -6,6 +6,7 @@ import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { ErrorStatus } from "@/app/utils/enums";
 import { createProjectSchema } from "../../zod.schmas";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
+import { TStageCreate } from "@/app/utils/types/stage";
 
 export async function POST(request: NextRequest) {
   const user = await getLoggedInUser();
@@ -90,6 +91,7 @@ async function createProject(project: TProjectCreate, authorId: string) {
 
         // TODO - first we need save images
         isVerified: true, // TODO: to change
+        stages: mapStagesToPrisma(stages ?? [], authorId),
       },
     });
   } catch (error) {
@@ -98,4 +100,35 @@ async function createProject(project: TProjectCreate, authorId: string) {
   }
 
   return newProject;
+}
+
+function mapStagesToPrisma(stages: TStageCreate[], authorId: string) {
+  if (!stages || stages.length === 0) return undefined;
+
+  return {
+    create: stages.map((s, index) => ({
+      name: s.name,
+      description: s.description || "",
+      stageNumber: s.stageNumber ?? index + 1,
+      hp: s.hp,
+      nm: s.nm,
+      acc_0_100: s.acc_0_100,
+      acc_100_200: s.acc_100_200,
+      acc_50_150: s.acc_50_150,
+      sl_150_50: s.sl_150_50,
+      sl_100_0: s.sl_100_0,
+      stagePrice: s.stagePrice,
+      maxRPM: null,
+      chartImageUrl: null,
+      topSpeed: null,
+      weight: null,
+      isBlockedByAdmin: false,
+      createdById: authorId,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      // carItems: {
+      //   connect: s.carItems?.map(ci => ({ id: ci.id })) || []
+      // }
+    })),
+  };
 }

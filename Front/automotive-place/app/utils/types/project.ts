@@ -1,7 +1,7 @@
 import { TCarItem, TCarItemCreate } from "./carItem";
 import { TStageCreate, TStage } from "./stage";
-import { TBasicTag, TTag, TTagCreate } from "./tag";
-import { TBasicUser, TUser } from "./user";
+import { TBasicTag, TTagCreate } from "./tag";
+import { TBasicUser } from "./user";
 
 type TProject = {
   id: string;
