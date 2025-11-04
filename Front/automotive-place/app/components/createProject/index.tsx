@@ -14,6 +14,11 @@ import { generateRandomProjectsToCreate } from "@/app/utils/data/project";
 import { AMPStepper } from "../shared/Stepper/AMPSteper";
 import { stepsOptions } from "./steps/config";
 import { createProjectSchema } from "@/app/api/zod.schmas";
+import { setShowCreatePost } from "@/lib/features/actions/actionsSlice";
+import { addNotification } from "@/lib/features/notifications/notificationsSlice";
+import { useDispatch } from "react-redux";
+import { CreateNotification } from "../logger/NotificationHelper";
+import { ErrorStatus } from "@/app/utils/enums";
 
 interface IInputValue {
   value: string | number;
@@ -53,7 +58,7 @@ export const CreateProjectView = () => {
     value: "",
     errorText: null,
   });
-
+  const dispatch = useDispatch();
   const [engine, setEngine] = useState<TEngineData>({
     engineName: "",
     engineStockHp: 0,
@@ -117,12 +122,25 @@ export const CreateProjectView = () => {
     );
 
     if (!findInValidResult && zodResult.success) {
-      const res = await createProject(project);
-      console.log(res);
-    } else {
-      result.validResults.map((res) => {
-        throw new Error(res.error);
-      });
+      try {
+        const res = await createProject(project);
+
+        if (res?.notification) {
+          dispatch(addNotification(JSON.stringify(res.notification)));
+          dispatch(setShowCreatePost(false));
+        }
+      } catch (error: any) {
+        dispatch(
+          addNotification(
+            JSON.stringify(
+              CreateNotification(
+                ErrorStatus.High,
+                error.message || "Unknown error occurred"
+              )
+            )
+          )
+        );
+      }
     }
   };
 

@@ -182,7 +182,7 @@ export function generateRandomProjectsToCreate(
   const projects = [];
 
   for (let i = 0; i < count; i++) {
-    const stages = generateStages ? generateRandomStagesToCreate(1) : [];
+    const stages = generateStages ? generateRandomStagesToCreate(4) : [];
     const carItems = generateCarItems ? generateRandomCarItemsToCreate(1) : [];
     const tags = generateTags ? generateRandomTagsToCreate(1) : [];
 
@@ -200,7 +200,7 @@ export function generateRandomProjectsToCreate(
       engineWasSwapped: false,
       imagesCount: 32,
       engineStockNm: 280,
-      garageId: generateRandomString(8),
+      garageId: "garage2", // generateRandomString(8),
       name: generateRandomString(5),
       projectPrice: getRandomInt(5000, 500000),
       stages,

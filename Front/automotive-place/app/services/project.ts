@@ -14,8 +14,13 @@ export const createProject = async (
     body: JSON.stringify(project),
     headers: { "Content-Type": "application/json", "Accept-Language": locale },
   });
+
   if (!response.ok) {
-    throw new Error("Failed to add project");
+    const errorData = await response.json().catch(() => ({}));
+    const message =
+      errorData?.message || `Failed to add project (${response.status})`;
+
+    throw new Error(message);
   }
 
   const result = await response.json();
