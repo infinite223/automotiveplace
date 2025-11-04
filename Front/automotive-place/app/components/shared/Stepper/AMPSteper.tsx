@@ -1,43 +1,27 @@
+import React, { useState, useRef } from "react";
 import { saveStepData } from "@/lib/features/stepData/stepDataSlice";
-import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AMPButton } from "../AMPButton";
+import { AMPStepperProps } from "./models";
 
-interface StepProps {
-  onNext: (data: any) => void;
-  onPrev: () => void;
-  setIsValid: (isValid: boolean) => void;
-}
-
-interface IStep {
-  name: string;
-  description: string;
-  icon?: JSX.Element;
-  component: React.ComponentType<StepProps>;
-}
-
-interface IStepsOptions {
-  title: string;
-  items: IStep[];
-}
-
-interface AMPStepperProps {
-  stepsOptions: IStepsOptions;
-  hideHeader?: boolean;
-  onSubmit?: () => void;
-}
-
-export const AMPStepper = ({
+export const AMPStepper: React.FC<AMPStepperProps> = ({
   stepsOptions,
   hideHeader = false,
   onSubmit,
-}: AMPStepperProps) => {
+}) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isStepValid, setIsStepValid] = useState(false);
   const dispatch = useDispatch();
 
-  const handleNext = (data: any) => {
-    dispatch(saveStepData({ step: currentStep, data }));
+  const getStepDataRef = useRef<(() => any) | null>(null);
+
+  const handleNext = () => {
+    if (getStepDataRef.current) {
+      const data = getStepDataRef.current();
+      console.log(data, "data");
+      dispatch(saveStepData({ step: currentStep, data }));
+    }
+
     if (currentStep < stepsOptions.items.length - 1) {
       setCurrentStep((prevStep) => prevStep + 1);
     }
@@ -51,9 +35,12 @@ export const AMPStepper = ({
   const isLastStep = currentStep === stepsOptions.items.length - 1;
 
   const handleSubmit = () => {
-    if (onSubmit) {
-      onSubmit();
+    if (getStepDataRef.current) {
+      const data = getStepDataRef.current();
+      dispatch(saveStepData({ step: currentStep, data }));
     }
+
+    if (onSubmit) onSubmit();
   };
 
   return (
@@ -71,7 +58,6 @@ export const AMPStepper = ({
                 }`}
                 onClick={() => setCurrentStep(index)}
               >
-                {step.icon && <span className="mr-2">{step.icon}</span>}
                 {step.name}
               </button>
             </li>
@@ -87,10 +73,12 @@ export const AMPStepper = ({
           <p className="text-sm">
             {stepsOptions.items[currentStep].description}
           </p>
+
           <StepComponent
             onNext={handleNext}
-            onPrev={handlePrev}
             setIsValid={setIsStepValid}
+            onPrev={handlePrev}
+            registerGetData={(fn) => (getStepDataRef.current = fn)}
           />
         </div>
 
@@ -102,7 +90,7 @@ export const AMPStepper = ({
           {!isLastStep ? (
             <AMPButton
               name="Dalej"
-              onClick={() => handleNext({})}
+              onClick={handleNext}
               disabled={!isStepValid}
             />
           ) : (

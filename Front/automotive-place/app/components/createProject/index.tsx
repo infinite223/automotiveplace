@@ -20,7 +20,7 @@ import { useDispatch } from "react-redux";
 import { CreateNotification } from "../logger/NotificationHelper";
 import { ErrorStatus } from "@/app/utils/enums";
 
-interface IInputValue {
+export interface IInputValue {
   value: string | number;
   errorText: string | null;
 }
@@ -81,36 +81,6 @@ export const CreateProjectView = () => {
 
   const onSubmit = async () => {
     const project = generateRandomProjectsToCreate(1, true, true, true)[0];
-
-    // const newProject: TProjectCreate = {
-    //   authorId: "",
-    //   description: description.value.toString(),
-    //   name: nameElement.value.toString(),
-    //   forSell,
-    //   inUse,
-    //   carMake,
-    //   carModel,
-    //   isVisible,
-    //   engineName: engine.engineName,
-    //   engineStockHp: engine.engineStockHp,
-    //   engineStockNm: engine.engineStockNm,
-    //   engineDescription: engine.engineDescription,
-    //   engineCapacity: engine.engineCapacity,
-    //   transmissionGears: transmission.transmissionGears,
-    //   transmissionDescription: transmission.transmissionDescription,
-    //   transmissionName: transmission.transmissionName,
-    //   transmissionWasSwapped: transmission.transmissionWasSwapped,
-
-    //   carItemsCount: carItems.length,
-    //   imagesCount: images.length,
-    //   engineWasSwapped,
-    //   carItems,
-    //   stages,
-    //   tags,
-
-    //   garageId: "",
-    //   projectPrice: 0,
-    // };
 
     console.log(project);
     const result = validProject(project);

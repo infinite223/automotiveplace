@@ -1,6 +1,9 @@
+import { IStepsOptions } from "../../shared/Stepper/models";
 import { BasicDataStep } from "./BasicDataStep";
+import { ImagesDataStep } from "./ImagesDataStep";
+import { ParamsDataStep } from "./ParamsDataStep";
 
-export const stepsOptions = {
+export const stepsOptions: IStepsOptions = {
   title: "Dodawanie projektu",
   items: [
     {
@@ -11,12 +14,12 @@ export const stepsOptions = {
     {
       name: "Zdjęcia",
       description: "Dodaj zdjęcia swojego projektu",
-      component: BasicDataStep,
+      component: ImagesDataStep,
     },
     {
       name: "Orginalne parametry",
       description: "Podaj orginalne parametry pojazdu",
-      component: BasicDataStep,
+      component: ParamsDataStep,
     },
     {
       name: "Części",
