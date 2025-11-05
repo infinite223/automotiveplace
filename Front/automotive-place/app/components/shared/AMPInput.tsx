@@ -63,10 +63,9 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
         }}
         id={id}
         style={inputStyles}
-        className={`${themeAMPButtonStyles()} ${additionalTailwindCss} w-full border-b mt-1 outline-none text-sm block dark:focus:ring-amp-100/50 dark:focus:border-amp-100/50 bg-inherit py-2 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer`}
+        className={`${themeAMPButtonStyles()} ${additionalTailwindCss} w-full border-b mt-1 outline-none text-sm block dark:focus:ring-amp-900/50 dark:focus:border-amp-900/50 bg-inherit py-2 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer`}
         placeholder={placeholder}
         required={required}
-        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
       />
       {localErrorText && (
         <span className="mt-2 text-[11px] text-red-400 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">

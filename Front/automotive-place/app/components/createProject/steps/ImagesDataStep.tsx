@@ -15,11 +15,11 @@ export const ImagesDataStep = ({
 }: BasicDataStepProps) => {
   useEffect(() => {
     setIsValid(true);
-  }, [setIsValid]);
+  }, []);
 
   useEffect(() => {
     registerGetData?.(() => ({}));
-  }, [registerGetData]);
+  }, []);
 
   return <div className="flex flex-col gap-4"></div>;
 };

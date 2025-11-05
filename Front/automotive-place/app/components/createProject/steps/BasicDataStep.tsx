@@ -7,11 +7,13 @@ interface BasicDataStepProps {
   onPrev: () => void;
   setIsValid: (isValid: boolean) => void;
   registerGetData?: (fn: () => unknown) => void;
+  initialData?: any;
 }
 
 export const BasicDataStep = ({
   setIsValid,
   registerGetData,
+  initialData,
 }: BasicDataStepProps) => {
   const [carModel, setCarModel] = useState("");
   const [carMake, setCarMake] = useState("");
@@ -21,11 +23,22 @@ export const BasicDataStep = ({
     errorText: null,
   });
 
-  // 🔹 Walidacja
+  useEffect(() => {
+    if (initialData) {
+      setCarModel(initialData.carModel || "");
+      setCarMake(initialData.carMake || "");
+      setIsVisible(initialData.isVisible || false);
+      setDescription({
+        value: initialData.description || "",
+        errorText: null,
+      });
+    }
+  }, [initialData]);
+
   useEffect(() => {
     const isValid = carMake.trim().length > 0 && carModel.trim().length > 0;
     setIsValid(isValid);
-  }, [carMake, carModel, setIsValid]);
+  }, [carMake, carModel]);
 
   useEffect(() => {
     registerGetData?.(() => ({
@@ -34,7 +47,7 @@ export const BasicDataStep = ({
       isVisible,
       description: description.value,
     }));
-  }, [carMake, carModel, isVisible, description, registerGetData]);
+  }, [carMake, carModel, isVisible, description]);
 
   return (
     <div className="flex flex-col gap-4">

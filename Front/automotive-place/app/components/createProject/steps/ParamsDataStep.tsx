@@ -15,7 +15,7 @@ export const ParamsDataStep = ({
 }: BasicDataStepProps) => {
   useEffect(() => {
     setIsValid(true);
-  }, [setIsValid]);
+  }, []);
 
   useEffect(() => {
     registerGetData?.(() => ({}));
