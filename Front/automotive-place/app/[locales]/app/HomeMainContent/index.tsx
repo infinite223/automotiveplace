@@ -79,9 +79,9 @@ export const HomeMainContent = () => {
       className="flex w-full items-center lg:pr-[150px] h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth"
     >
       <div className="flex flex-col text-[12px] w-full lg:w-[570px]">
-        {content.map((item: any) => (
+        {content.map((item: any, i: string) => (
           <div
-            key={item.id}
+            key={i}
             className="flex w-full items-center justify-center py-1"
             id={`content-${item.data.id}`}
           >

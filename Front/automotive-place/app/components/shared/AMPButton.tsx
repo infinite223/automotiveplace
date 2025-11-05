@@ -35,7 +35,7 @@ export const AMPButton: FC<IAMPButton> = ({
       disabled={disabled}
       type={isSubmit ? "submit" : "button"}
       onClick={onClick}
-      className={`${disabled ? "opacity-35" : ""} ${typeClass} ${additionalTailwindCss} hover:opacity-70 flex items-center rounded-small`}
+      className={`${disabled ? "opacity-35" : ""} ${typeClass} ${additionalTailwindCss} hover:opacity-70 flex items-center rounded-[3px]`}
     >
       {icon && <span className={name ? "mr-2" : ""}>{icon}</span>}
       {name}

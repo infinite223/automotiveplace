@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "../loading/LoadingSpinner";
 import { EngineParameter } from "@/app/utils/enums";
 import Image from "next/image";
+import AMPImage from "./AMPImage";
 
 function AMPPopularProjects() {
   const {
@@ -41,11 +42,12 @@ function AMPPopularProjects() {
             <div className="text-sm flex flex-wrap p-2 hover:bg-amp-200 rounded-sm cursor-pointer">
               <div className="flex gap-3 items-start">
                 <div className="rounded-md w-[90px] h-full bg-amp-50 flex items-center justify-center">
-                  <Image
-                    src={project.images[0]}
-                    alt={`Project image 1`}
+                  <AMPImage
+                    src={project.images?.[0]}
+                    alt="Project image 1"
                     width={90}
                     height={70}
+                    className="rounded-sm"
                   />
                 </div>
                 <div className="leading-4">
