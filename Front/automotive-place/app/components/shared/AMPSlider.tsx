@@ -37,8 +37,13 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
 
   useEffect(() => {
     setTimeout(async () => {
-      const dominant = await calculateDominantColor(images[currentIndex]);
-      setDominantColor(`rgb(${dominant})`);
+      if (!images && !images[currentIndex]) return;
+      try {
+        const dominant = await calculateDominantColor(images[currentIndex]);
+        setDominantColor(`rgb(${dominant})`);
+      } catch (error) {
+        console.error(error);
+      }
     }, 10);
   }, [currentIndex, images]);
 

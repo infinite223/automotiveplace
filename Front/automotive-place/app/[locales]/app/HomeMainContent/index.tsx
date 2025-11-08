@@ -50,6 +50,7 @@ export const HomeMainContent = () => {
   }, [isLastElementVisible]);
 
   useEffect(() => {
+    console.log(data, "data");
     const lastClickedId = sessionStorage.getItem("lastClickedId");
 
     if (lastClickedId) {
