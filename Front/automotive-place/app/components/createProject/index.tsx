@@ -1,15 +1,6 @@
-import React, { useState } from "react";
-import { AMPInput } from "./../shared/AMPInput";
-import { validCarNameValue, validProject } from "./Validation";
-import { AMPTextarea } from "../shared/AMPTextarea";
-import { AMPSwitch } from "../shared/AMPSwitch";
+import React from "react";
+import { validProject } from "./Validation";
 import { createProject } from "@/app/services/project";
-import { AMPHelpFooter } from "../shared/AMPHelpFooter";
-import { ItemTypes, TCarItemCreate } from "@/app/utils/types/carItem";
-import { TProjectCreate } from "@/app/utils/types/project";
-import { TStageCreate } from "@/app/utils/types/stage";
-import { TTagCreate } from "@/app/utils/types/tag";
-import { AMPButton } from "../shared/AMPButton";
 import { generateRandomProjectsToCreate } from "@/app/utils/data/project";
 import { AMPStepper } from "../shared/Stepper/AMPSteper";
 import { stepsOptions } from "./steps/config";
@@ -19,6 +10,7 @@ import { addNotification } from "@/lib/features/notifications/notificationsSlice
 import { useDispatch } from "react-redux";
 import { CreateNotification } from "../logger/NotificationHelper";
 import { ErrorStatus } from "@/app/utils/enums";
+import { stepperDataToCreateProject } from "./helpers";
 
 export interface IInputValue {
   value: string | number;
@@ -41,58 +33,25 @@ export type TTransmissionData = {
 };
 
 export const CreateProjectView = () => {
-  const [nameElement, setNameElement] = useState<IInputValue>({
-    value: "",
-    errorText: null,
-  });
-  const [carItemType, setCarItemType] = useState<ItemTypes>(ItemTypes.Turbo);
-  const [forSell, setForSell] = useState(false);
-  const [inUse, setInUse] = useState(false);
-  const [engineWasSwapped, setEngineWasSwapped] = useState(false);
-  const [carModel, setCarModel] = useState("");
-  const [carMake, setCarMake] = useState("");
-
-  const [isVisible, setIsVisible] = useState(false);
-  const [itemType, setItemType] = useState<ItemTypes>(ItemTypes.Brakes);
-  const [description, setDescription] = useState<IInputValue>({
-    value: "",
-    errorText: null,
-  });
   const dispatch = useDispatch();
-  const [engine, setEngine] = useState<TEngineData>({
-    engineName: "",
-    engineStockHp: 0,
-    engineStockNm: 0,
-    engineDescription: "",
-    engineCapacity: 2,
-  });
-  const [transmission, setTransmission] = useState<TTransmissionData>({
-    transmissionName: "",
-    transmissionDescription: "",
-    transmissionGears: 0,
-    transmissionWasSwapped: false,
-  });
 
-  const [carItems, setCarItems] = useState<TCarItemCreate[]>([]);
-  const [stages, setStages] = useState<TStageCreate[]>([]);
-  const [tags, setTags] = useState<TTagCreate[]>([]);
-
-  const [images, setImages] = useState<TCarItemCreate[]>([]);
-
-  const onSubmit = async () => {
-    const project = generateRandomProjectsToCreate(1, true, true, true)[0];
+  const onSubmit = async (data: any) => {
+    const project = stepperDataToCreateProject(data);
+    console.log(project);
+    // const project = generateRandomProjectsToCreate(1, true, true, true)[0];
 
     console.log(project);
     const result = validProject(project);
     const zodResult = createProjectSchema.safeParse(project);
 
-    console.log(zodResult.error?.errors);
     const findInValidResult = result.validResults.find(
       (result) => result.valid == false
     );
 
+    console.log(zodResult.error?.errors, zodResult.success, findInValidResult);
     if (!findInValidResult && zodResult.success) {
       try {
+        console.log("test");
         const res = await createProject(project);
 
         if (res?.notification) {
@@ -112,11 +71,6 @@ export const CreateProjectView = () => {
         );
       }
     }
-  };
-
-  const handleCarItemVallue = (value: string | number) => {
-    const _carItemType: any = value;
-    setCarItemType(_carItemType);
   };
 
   return (

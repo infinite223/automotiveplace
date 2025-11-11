@@ -192,7 +192,6 @@ export function generateRandomProjectsToCreate(
       carMake: generateRandomString(5),
       carModel: generateRandomString(5),
       description: generateRandomString(12),
-      authorId: (i + 3).toString() + generateRandomString(2),
       engineCapacity: 2,
       engineName: "TSI",
       engineStockHp: 200,

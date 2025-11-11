@@ -45,14 +45,27 @@ export const AMPStepper: React.FC<AMPStepperProps> = ({
   };
 
   const handleSubmit = () => {
+    let finalData = stepData.map((item: any) => ({ ...item }));
+
     if (getStepDataRef.current) {
       const data = getStepDataRef.current();
+
       dispatch(saveStepData({ step: currentStep, data }));
+
+      const existingIndex = finalData.findIndex(
+        (item: any) => item.step === currentStep
+      );
+
+      if (existingIndex !== -1) {
+        finalData[existingIndex] = { ...finalData[existingIndex], data };
+      } else {
+        finalData.push({ step: currentStep, data });
+      }
     }
 
     updateStepValidity(currentStep, true);
 
-    if (onSubmit) onSubmit();
+    if (onSubmit) onSubmit(finalData);
   };
 
   const StepComponent = stepsOptions.items[currentStep].component;

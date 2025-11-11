@@ -1,4 +1,3 @@
-// Typ bazowy dla danych przekazywanych między stepami
 export interface StepProps {
   onNext: (data: unknown) => void;
   onPrev: () => void;
@@ -19,8 +18,13 @@ export interface IStepsOptions {
   items: IStep[];
 }
 
+interface IStepData {
+  step: number;
+  data: any;
+}
+
 export interface AMPStepperProps {
   stepsOptions: IStepsOptions;
   hideHeader?: boolean;
-  onSubmit?: () => void;
+  onSubmit?: (allData: IStepData[]) => void;
 }

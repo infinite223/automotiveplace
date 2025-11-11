@@ -15,12 +15,12 @@ export const validProject = (newProject: TProjectCreate) => {
 
   // TODO - valid tags, stages, carItems and all data if exists
 
-  if (!newProject.authorId && newProject.authorId.length < 1) {
-    validResults.push({
-      error: "Brak poprawnych danych o autorze. ",
-      valid: false,
-    });
-  }
+  // if (!newProject.authorId && newProject.authorId.length < 1) {
+  //   validResults.push({
+  //     error: "Brak poprawnych danych o autorze. ",
+  //     valid: false,
+  //   });
+  // }
 
   return { validResults, notification };
 };

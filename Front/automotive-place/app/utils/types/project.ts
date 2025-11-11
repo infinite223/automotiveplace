@@ -121,7 +121,6 @@ function isTBasicProject(data: any): data is TBasicProject {
 
 type TProjectCreate = {
   forSell: boolean;
-  authorId: string;
   name?: string;
   carMake: string;
   carModel: string;

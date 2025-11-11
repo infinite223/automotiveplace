@@ -16,25 +16,25 @@ export const stepsOptions: IStepsOptions = {
       description: "Dodaj zdjęcia swojego projektu",
       component: ImagesDataStep,
     },
-    {
-      name: "Orginalne parametry",
-      description: "Podaj orginalne parametry pojazdu",
-      component: ParamsDataStep,
-    },
-    {
-      name: "Części",
-      description: "Dodaj istotne części które wykorzystuje twój projekt",
-      component: BasicDataStep,
-    },
-    {
-      name: "Etapy modyfikacji",
-      description: "Dodaj etapy modyfikacji projektu",
-      component: BasicDataStep,
-    },
-    {
-      name: "Podsumowanie",
-      description: "Podsumowanie projektu",
-      component: BasicDataStep,
-    },
+    // {
+    //   name: "Orginalne parametry",
+    //   description: "Podaj orginalne parametry pojazdu",
+    //   component: ParamsDataStep,
+    // },
+    // {
+    //   name: "Części",
+    //   description: "Dodaj istotne części które wykorzystuje twój projekt",
+    //   component: BasicDataStep,
+    // },
+    // {
+    //   name: "Etapy modyfikacji",
+    //   description: "Dodaj etapy modyfikacji projektu",
+    //   component: BasicDataStep,
+    // },
+    // {
+    //   name: "Podsumowanie",
+    //   description: "Podsumowanie projektu",
+    //   component: BasicDataStep,
+    // },
   ],
 };
