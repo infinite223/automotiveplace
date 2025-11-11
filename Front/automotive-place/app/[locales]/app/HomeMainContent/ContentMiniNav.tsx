@@ -19,6 +19,7 @@ interface IContentMiniNav {
   isUserContent?: boolean;
   handleClickInterestingContent?: () => void;
   handleClickShare?: () => void;
+  handleClickDelete?: () => void;
 }
 
 enum Visibility {
@@ -95,6 +96,7 @@ export const ContentMiniNav = ({
   isUserContent = false,
   handleClickInterestingContent,
   handleClickShare,
+  handleClickDelete,
 }: IContentMiniNav) => {
   const filteredMenuItems = menuItems
     .map((item) => {
@@ -106,6 +108,9 @@ export const ContentMiniNav = ({
       }
       if (item.name === "Udostępnij") {
         return { ...item, handleClick: handleClickShare };
+      }
+      if (item.name === "Usuń") {
+        return { ...item, handleClick: handleClickDelete };
       }
       return item;
     })

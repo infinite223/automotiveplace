@@ -27,6 +27,28 @@ export const createProject = async (
   return result;
 };
 
+export const deleteProject = async (
+  projectId: string,
+  locale: string = "en"
+) => {
+  const response = await fetch(`${apiEndpoints.deleteProject}/${projectId}`, {
+    method: "DELETE",
+    headers: { "Accept-Language": locale },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    const message =
+      errorData?.message ||
+      `Failed to delete project (status: ${response.status})`;
+
+    throw new Error(message);
+  }
+
+  const result = await response.json();
+  return result;
+};
+
 export const getProject = async (id: string) => {
   const response = await fetch(`${apiEndpoints.getProjects}?id=${id}`, {
     next: { revalidate: 60 },

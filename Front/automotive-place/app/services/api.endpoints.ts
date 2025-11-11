@@ -8,6 +8,7 @@ export const apiEndpoints = {
   createLike: `${base}/like/create`,
   deleteLike: `${base}/like/delete`,
   createProject: `${base}/project/add-project`,
+  deleteProject: `${base}/project/delete-project`,
   getProjects: `${base}/project/get-project`,
   createStage: `${base}/project/add-stage`,
 };

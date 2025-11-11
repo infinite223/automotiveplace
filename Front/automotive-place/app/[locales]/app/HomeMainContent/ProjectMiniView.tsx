@@ -9,10 +9,11 @@ import { iconSizes } from "@/app/utils/constants";
 import Link from "next/link";
 import AMPSlider from "@/app/components/shared/AMPSlider";
 import { useLike } from "@/app/hooks/useLike";
-import { ContentType, EngineParameter } from "@/app/utils/enums";
+import { ContentType, EngineParameter, ErrorStatus } from "@/app/utils/enums";
 import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
+import { deleteProject } from "@/app/services/project";
 
 export const ProjectMiniView = ({
   data,
@@ -47,6 +48,20 @@ export const ProjectMiniView = ({
     dispatch(addNotification(JSON.stringify(newN)));
   };
 
+  const handleClickDelete = async () => {
+    try {
+      const res = await deleteProject(data.id);
+      console.log(res);
+      // remove project from store
+      const newN = CreateNotification("Success", res.message);
+      dispatch(addNotification(JSON.stringify(newN)));
+    } catch (error: any) {
+      console.log(error, "error");
+      const newN = CreateNotification(ErrorStatus.Low, error);
+      dispatch(addNotification(JSON.stringify(newN)));
+    }
+  };
+
   const statisticCurrentHp = data.hp
     ? data.hp + " (+" + (data.hp - data.engineStockHp) + ") "
     : data.engineStockHp;
@@ -71,6 +86,7 @@ export const ProjectMiniView = ({
             createdAt={data.createdAt}
             handleClickInterestingContent={handleClickInterestingContent}
             handleClickShare={handleClickShare}
+            handleClickDelete={handleClickDelete}
             title={
               data.carMake +
               " " +

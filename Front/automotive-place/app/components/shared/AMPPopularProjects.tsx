@@ -35,10 +35,7 @@ function AMPPopularProjects() {
       <h2 className="px-2 font-semibold">Popularne projekty</h2>
       <div className="max-h-[85vh] overflow-y-auto custom-scrollbar flex flex-col mt-2">
         {projects?.map((project) => (
-          <Link
-            href={`./project/${project.id}`}
-            key={project.carMake + project.carModel}
-          >
+          <Link href={`./project/${project.id}`} key={project.id}>
             <div className="text-sm flex flex-wrap p-2 hover:bg-amp-200 rounded-sm cursor-pointer">
               <div className="flex gap-3 items-start">
                 <div className="rounded-md w-[90px] h-full bg-amp-50 flex items-center justify-center">
