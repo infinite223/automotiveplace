@@ -18,9 +18,11 @@ import { deleteProject } from "@/app/services/project";
 export const ProjectMiniView = ({
   data,
   isUserContent = false,
+  onDelete,
 }: {
   data: TBasicProject;
   isUserContent: boolean;
+  onDelete?: (id: string) => void;
 }) => {
   const [isClient, setIsClient] = useState(false);
   const { currentIsLiked, currentLikesCount, handleClickLike } = useLike(
@@ -51,10 +53,10 @@ export const ProjectMiniView = ({
   const handleClickDelete = async () => {
     try {
       const res = await deleteProject(data.id);
-      console.log(res);
-      // remove project from store
+
       const newN = CreateNotification("Success", res.message);
       dispatch(addNotification(JSON.stringify(newN)));
+      if (onDelete) onDelete(data.id);
     } catch (error: any) {
       console.log(error, "error");
       const newN = CreateNotification(ErrorStatus.Low, error);

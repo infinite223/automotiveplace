@@ -4,3 +4,5 @@ We need design min two tables for:
 - data on short videos with reference to the project
 - remove button on notification "x"
 - creating a route with the best places
+
+- delete project not working localy

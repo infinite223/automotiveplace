@@ -22,6 +22,9 @@ import { useMainContent } from "@/app/hooks/useMainContent";
 export const HomeMainContent = () => {
   const lastElementRef = useRef<HTMLDivElement>(null);
   const [lastSeenId, setLastSeenId] = useState<string | null>(null);
+  const [localContent, setLocalContent] = useState<TContentData[]>([]);
+  const [initialized, setInitialized] = useState(false);
+
   const isLastElementVisible = useOnScreen(lastElementRef);
   const [userId, setUserId] = useState<string | null>(null);
   const t = useTranslations();
@@ -29,20 +32,24 @@ export const HomeMainContent = () => {
   const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
     useMainContent();
 
-  const pages = (data as any)?.pages ?? [];
-  const content = pages.flatMap((page: any) => page.data);
-
+  useEffect(() => {
+    if (data) {
+      const all = (data as any)?.pages?.flatMap((page: any) => page.data) ?? [];
+      console.log(all, "test");
+      setLocalContent(all);
+    }
+  }, [data]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (
       !hasNextPage ||
       isLoading ||
       !isLastElementVisible ||
-      content.length === 0
+      localContent.length === 0
     )
       return;
 
-    const lastContentId = content[content.length - 1].id;
+    const lastContentId = localContent[localContent.length - 1].data.id;
     if (lastSeenId === lastContentId) return;
 
     setLastSeenId(lastContentId);
@@ -50,7 +57,6 @@ export const HomeMainContent = () => {
   }, [isLastElementVisible]);
 
   useEffect(() => {
-    console.log(data, "data");
     const lastClickedId = sessionStorage.getItem("lastClickedId");
 
     if (lastClickedId) {
@@ -80,14 +86,22 @@ export const HomeMainContent = () => {
       className="flex w-full items-center lg:pr-[150px] h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth"
     >
       <div className="flex flex-col text-[12px] w-full lg:w-[570px]">
-        {content.map((item: any, i: string) => (
+        {localContent.map((item, i: number) => (
           <div
             key={i}
             className="flex w-full items-center justify-center py-1"
             id={`content-${item.data.id}`}
           >
             <div className="flex w-full bg-amp-50 rounded-md">
-              <ContentSelect content={item} userId={userId} />
+              <ContentSelect
+                content={item}
+                userId={userId}
+                onDelete={(id) =>
+                  setLocalContent((prev) =>
+                    prev.filter((el) => el.data.id !== id)
+                  )
+                }
+              />
             </div>
           </div>
         ))}
@@ -102,7 +116,7 @@ export const HomeMainContent = () => {
 
         {(isLoading || isFetchingNextPage) && (
           <>
-            {content.length > 3 ? (
+            {localContent.length > 3 ? (
               <LoadingMiniView />
             ) : (
               <>
@@ -122,9 +136,11 @@ export const HomeMainContent = () => {
 export const ContentSelect = ({
   content: { data, type },
   userId,
+  onDelete,
 }: {
   content: TContentData;
   userId: string | null;
+  onDelete?: (id: string) => void;
 }) => {
   const errorText = " data is not valid";
   switch (type) {
@@ -134,6 +150,7 @@ export const ContentSelect = ({
           <ProjectMiniView
             data={data}
             isUserContent={userId === data.author.id}
+            onDelete={onDelete}
           />
         );
       }
