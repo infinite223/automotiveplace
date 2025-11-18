@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { ICreateNotification } from "@/app/utils/types";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
-import { ErrorStatus } from "@/app/utils/enums";
+import { Status } from "@/app/utils/enums";
 import { TPostCreate } from "@/app/utils/types/post";
 import { createPostSchema } from "../../zod.schmas";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
   let notification: ICreateNotification | null = {
     log: {
       date: new Date(),
-      status: ErrorStatus.Low,
+      status: Status.Low,
       title: "Coś poszło nie tak",
     },
     timer: 3000,
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       post: post,
       notification: CreateNotification(
-        ErrorStatus.Medium,
+        Status.Medium,
         validProject.error.message
       ),
     });
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
 
     if (newPost) {
       notification.log = {
-        status: "Success",
+        status: Status.Success,
         date: new Date(),
         title: "Post został dodany pomyślnie",
       };

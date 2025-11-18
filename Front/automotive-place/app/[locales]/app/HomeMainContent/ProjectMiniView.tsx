@@ -9,11 +9,13 @@ import { iconSizes } from "@/app/utils/constants";
 import Link from "next/link";
 import AMPSlider from "@/app/components/shared/AMPSlider";
 import { useLike } from "@/app/hooks/useLike";
-import { ContentType, EngineParameter, ErrorStatus } from "@/app/utils/enums";
+import { ContentType, EngineParameter, Status } from "@/app/utils/enums";
 import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
 import { deleteProject } from "@/app/services/project";
+import { useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEY_POPULAR_PROJECTS } from "@/app/components/shared/AMPPopularProjects";
 
 export const ProjectMiniView = ({
   data,
@@ -34,6 +36,8 @@ export const ProjectMiniView = ({
   );
 
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -46,7 +50,7 @@ export const ProjectMiniView = ({
   };
 
   const handleClickShare = () => {
-    const newN = CreateNotification("Success", "Shared project");
+    const newN = CreateNotification(Status.Success, "Shared project");
     dispatch(addNotification(JSON.stringify(newN)));
   };
 
@@ -54,12 +58,14 @@ export const ProjectMiniView = ({
     try {
       const res = await deleteProject(data.id);
 
-      const newN = CreateNotification("Success", res.message);
+      const newN = CreateNotification(Status.Success, res.message);
       dispatch(addNotification(JSON.stringify(newN)));
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POPULAR_PROJECTS] });
+
       if (onDelete) onDelete(data.id);
     } catch (error: any) {
       console.log(error, "error");
-      const newN = CreateNotification(ErrorStatus.Low, error);
+      const newN = CreateNotification(Status.Low, error);
       dispatch(addNotification(JSON.stringify(newN)));
     }
   };

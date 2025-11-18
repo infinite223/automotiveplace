@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 import { ICreateNotification } from "@/app/utils/types";
 import { TProjectCreate } from "@/app/utils/types/project";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
-import { ContentType, ErrorStatus } from "@/app/utils/enums";
+import { ContentType, Status } from "@/app/utils/enums";
 import { createProjectSchema } from "../../zod.schmas";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
 import { createProject } from "./createProject";
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
   let notification: ICreateNotification | null = {
     log: {
       date: new Date(),
-      status: ErrorStatus.Low,
+      status: Status.Low,
       title: "Coś poszło nie tak",
     },
     timer: 3000,
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       project: newProject,
       notification: CreateNotification(
-        ErrorStatus.Medium,
+        Status.Medium,
         validProject.error.message
       ),
     });
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
         );
 
         notification.log = {
-          status: "Success",
+          status: Status.Success,
           date: new Date(),
           title: "Projekt został dodany pomyślnie",
         };

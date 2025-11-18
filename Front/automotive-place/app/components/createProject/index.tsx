@@ -1,7 +1,6 @@
 import React from "react";
 import { validProject } from "./Validation";
 import { createProject } from "@/app/services/project";
-import { generateRandomProjectsToCreate } from "@/app/utils/data/project";
 import { AMPStepper } from "../shared/Stepper/AMPSteper";
 import { stepsOptions } from "./steps/config";
 import { createProjectSchema } from "@/app/api/zod.schmas";
@@ -9,8 +8,8 @@ import { setShowCreatePost } from "@/lib/features/actions/actionsSlice";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { useDispatch } from "react-redux";
 import { CreateNotification } from "../logger/NotificationHelper";
-import { ErrorStatus } from "@/app/utils/enums";
 import { stepperDataToCreateProject } from "./helpers";
+import { Status } from "@/app/utils/enums";
 
 export interface IInputValue {
   value: string | number;
@@ -63,7 +62,7 @@ export const CreateProjectView = () => {
           addNotification(
             JSON.stringify(
               CreateNotification(
-                ErrorStatus.High,
+                Status.High,
                 error.message || "Unknown error occurred"
               )
             )

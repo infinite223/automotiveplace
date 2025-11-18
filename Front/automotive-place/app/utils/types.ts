@@ -1,4 +1,4 @@
-import { ErrorStatus } from "./enums";
+import { Status } from "./enums";
 import { TCarItem } from "./types/carItem";
 import { TPost } from "./types/post";
 import { TProblem } from "./types/problem";
@@ -44,7 +44,7 @@ type TValidResult = {
 };
 
 type TLog = {
-  status: ErrorStatus | "Success" | "Information";
+  status: Status;
   message?: string;
   title: string;
   date: Date;

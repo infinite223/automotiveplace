@@ -2,10 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { validCarElement } from "./../../../components/createCarItem/Validation";
 import { TCarItemCreate } from "@/app/utils/types/carItem";
-import { ErrorStatus } from "@/app/utils/enums";
-import { Prisma } from "@prisma/client";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
+import { Status } from "@/app/utils/enums";
 
 export async function POST(request: NextRequest) {
   const user = await getLoggedInUser();
@@ -36,10 +35,7 @@ export async function POST(request: NextRequest) {
   if (findInValidResult) {
     return NextResponse.json({
       carItem: newCarItem,
-      notification: CreateNotification(
-        ErrorStatus.Medium,
-        findInValidResult.error
-      ),
+      notification: CreateNotification(Status.Medium, findInValidResult.error),
     });
   }
 
@@ -50,7 +46,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         carItem: newCarItem,
         notification: CreateNotification(
-          "Success",
+          Status.Success,
           "Element został dodany pomyślnie"
         ),
       });
@@ -58,10 +54,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       carItem: newCarItem,
-      notification: CreateNotification(
-        ErrorStatus.Medium,
-        "Coś poszło nie tak"
-      ),
+      notification: CreateNotification(Status.Medium, "Coś poszło nie tak"),
     });
   }
 }

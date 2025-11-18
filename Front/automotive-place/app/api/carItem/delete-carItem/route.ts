@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 import { ICreateNotification } from "@/app/utils/types";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
-import { ErrorStatus } from "@/app/utils/enums";
+import { Status } from "@/app/utils/enums";
 
 export async function DELETE(request: NextRequest) {
   const user = await getLoggedInUser();
@@ -23,7 +23,7 @@ export async function DELETE(request: NextRequest) {
   const authUser = true;
   let result = {};
   let notification: ICreateNotification | null = CreateNotification(
-    ErrorStatus.Low,
+    Status.Low,
     "Coś poszło nie tak"
   );
 
@@ -34,7 +34,7 @@ export async function DELETE(request: NextRequest) {
 
     if (result) {
       notification.log = {
-        status: "Success",
+        status: Status.Success,
         date: new Date(),
         title: "Pomyślnie usunięto element.",
       };

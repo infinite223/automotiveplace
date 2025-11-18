@@ -23,7 +23,6 @@ export const HomeMainContent = () => {
   const lastElementRef = useRef<HTMLDivElement>(null);
   const [lastSeenId, setLastSeenId] = useState<string | null>(null);
   const [localContent, setLocalContent] = useState<TContentData[]>([]);
-  const [initialized, setInitialized] = useState(false);
 
   const isLastElementVisible = useOnScreen(lastElementRef);
   const [userId, setUserId] = useState<string | null>(null);

@@ -1,8 +1,10 @@
-enum ErrorStatus {
-  Low = 0,
-  Medium = 1,
-  High = 2,
-  Critical = 3,
+enum Status {
+  Low = "Low",
+  Medium = "Medium",
+  High = "High",
+  Critical = "Critical",
+  Success = "Success",
+  Information = "Information",
 }
 
 enum AccountTypes {
@@ -30,4 +32,4 @@ export const EngineParameter = {
   MaxRPM: "Max RPM",
 } as const;
 
-export { ErrorStatus, AccountTypes, TransmissionType, ContentType };
+export { Status, AccountTypes, TransmissionType, ContentType };

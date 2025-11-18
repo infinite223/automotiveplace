@@ -7,6 +7,8 @@ type MainContentResponse = {
   hasMore: boolean;
 };
 
+export const QUERY_KEY_MAIN_CONTENT = "main-content";
+
 export const useMainContent = () => {
   return useInfiniteQuery<
     MainContentResponse,
@@ -15,7 +17,7 @@ export const useMainContent = () => {
     ["main-content"],
     number
   >({
-    queryKey: ["main-content"],
+    queryKey: [QUERY_KEY_MAIN_CONTENT],
     queryFn: async ({ pageParam = 0 }) => {
       return await getMainContentDataForUser(pageParam);
     },

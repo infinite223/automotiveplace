@@ -7,8 +7,9 @@ import { TBasicPopularProject } from "@/app/utils/types/project";
 import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "../loading/LoadingSpinner";
 import { EngineParameter } from "@/app/utils/enums";
-import Image from "next/image";
 import AMPImage from "./AMPImage";
+
+export const QUERY_KEY_POPULAR_PROJECTS = "popular-projects";
 
 function AMPPopularProjects() {
   const {
@@ -16,7 +17,7 @@ function AMPPopularProjects() {
     isLoading,
     isError,
   } = useQuery<TBasicPopularProject[]>({
-    queryKey: ["popular-projects"],
+    queryKey: [QUERY_KEY_POPULAR_PROJECTS],
     queryFn: getPopularProjects,
     staleTime: 1000 * 60 * 5,
   });

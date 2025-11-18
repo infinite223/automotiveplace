@@ -1,8 +1,8 @@
-import { ErrorStatus } from "@/app/utils/enums";
+import { Status } from "@/app/utils/enums";
 import { ICreateNotification } from "@/app/utils/types";
 
 const CreateNotification = (
-  status: ErrorStatus | "Success" | "Information",
+  status: Status,
   title: string,
   message?: string
 ) => {
@@ -20,7 +20,7 @@ const CreateNotification = (
 };
 
 const CreateNotificationWithIcon = (
-  status: ErrorStatus | "Success" | "Information",
+  status: Status,
   title: string,
   leftIcon: JSX.Element,
   message?: string

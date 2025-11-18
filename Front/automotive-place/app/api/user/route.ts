@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { log } from "console";
 import { createNewUser, validUserIfExistInDatabse } from "./Validation";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
+import { Status } from "@/app/utils/enums";
 
 export async function POST(req: Request) {
   try {
@@ -27,7 +28,7 @@ export async function POST(req: Request) {
       {
         user: null,
         notification: CreateNotification(
-          "Information",
+          Status.Information,
           "Nieoczekiwany błąd, spróbuj ponownie później"
         ),
       },

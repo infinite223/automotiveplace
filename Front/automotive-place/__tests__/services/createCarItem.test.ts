@@ -11,7 +11,7 @@ describe("createCarItem", () => {
     const mockResponse: ICreateCarItemResponse = {
       carItem: { id: 1, name: "Test Car" },
       notification: {
-        log: { date: new Date(), status: "Success", title: "" },
+        log: { date: new Date(), status: Status.Success, title: "" },
         timer: 3000,
       },
     };

@@ -9,11 +9,11 @@ import { TPostCreate } from "@/app/utils/types/post";
 import { createPost } from "@/app/services/post";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { CreateNotification } from "../logger/NotificationHelper";
-import { ErrorStatus } from "@/app/utils/enums";
 import { setShowCreatePost } from "@/lib/features/actions/actionsSlice";
 import { ZodIssue } from "zod";
 import { createPostSchema } from "@/app/api/zod.schmas";
 import { AMPButton } from "../shared/AMPButton";
+import { Status } from "@/app/utils/enums";
 
 export const CreatePostView = () => {
   const dispatch = useDispatch();
@@ -48,7 +48,7 @@ export const CreatePostView = () => {
         addNotification(
           JSON.stringify(
             // TODO - update message
-            CreateNotification(ErrorStatus.Medium, "Coś poszło nie tak")
+            CreateNotification(Status.Medium, "Coś poszło nie tak")
           )
         )
       );

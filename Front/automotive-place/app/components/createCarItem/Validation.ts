@@ -1,4 +1,4 @@
-import { ErrorStatus } from "@/app/utils/enums";
+import { Status } from "@/app/utils/enums";
 import { ICreateNotification, TValidResult } from "@/app/utils/types";
 import { TCarItemCreate, isValidItemType } from "@/app/utils/types/carItem";
 
@@ -27,7 +27,7 @@ export const validCarElement = (newElement: TCarItemCreate) => {
     notification = {
       log: {
         date: new Date(),
-        status: ErrorStatus.Low,
+        status: Status.Low,
         title: "Błąd weryfikacji danych elementu",
       },
       timer: 3000,

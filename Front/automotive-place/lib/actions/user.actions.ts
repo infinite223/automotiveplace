@@ -4,7 +4,7 @@ import { ID } from "node-appwrite";
 import { createAdminClient, createSessionClient } from "../server/appwrite";
 import { cookies } from "next/headers";
 import prisma from "../prisma";
-import { AccountTypes, ErrorStatus } from "@/app/utils/enums";
+import { AccountTypes, Status } from "@/app/utils/enums";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
 import { redirect } from "next/navigation";
 import { getLocale } from "next-intl/server";
@@ -76,13 +76,16 @@ export const signUp = async (userData: SignUpParams) => {
 
     return {
       user: JSON.parse(JSON.stringify(newUserAccount)),
-      notification: CreateNotification("Success", "Core.WelcomeBackToAmp"),
+      notification: CreateNotification(
+        Status.Information,
+        "Core.WelcomeBackToAmp"
+      ),
     };
   } catch (error) {
     return {
       user: null,
       notification: CreateNotification(
-        ErrorStatus.Medium,
+        Status.Medium,
         error instanceof Error ? error.message : "Unknown error"
       ),
     };
@@ -116,22 +119,22 @@ export const signIn = async (userData: SignInParams) => {
 
       return {
         user,
-        notification: CreateNotification("Success", "Core.WelcomeBackToAmp"),
+        notification: CreateNotification(
+          Status.Success,
+          "Core.WelcomeBackToAmp"
+        ),
       };
     }
 
     return {
       user: null,
-      notification: CreateNotification(
-        ErrorStatus.Medium,
-        "Błąd podczas logowania"
-      ),
+      notification: CreateNotification(Status.Medium, "Błąd podczas logowania"),
     };
   } catch (error) {
     return {
       user: null,
       notification: CreateNotification(
-        ErrorStatus.Medium,
+        Status.Medium,
         error instanceof Error ? error.message : "Unknown error"
       ),
     };
@@ -169,7 +172,10 @@ export const signOut = async () => {
     });
 
     return {
-      notification: CreateNotification("Success", "Core.LoggedOutSuccessfully"),
+      notification: CreateNotification(
+        Status.Success,
+        "Core.LoggedOutSuccessfully"
+      ),
     };
   } catch (error) {
     if (error instanceof Error) {
@@ -177,7 +183,7 @@ export const signOut = async () => {
 
       return {
         notification: CreateNotification(
-          ErrorStatus.Medium,
+          Status.Medium,
           error instanceof Error ? error.message : "Unknown error"
         ),
       };
@@ -186,7 +192,7 @@ export const signOut = async () => {
     logger.error("Unknown critical error: " + error);
 
     return {
-      notification: CreateNotification(ErrorStatus.Critical, "Unknown error"),
+      notification: CreateNotification(Status.Critical, "Unknown error"),
     };
   }
 };

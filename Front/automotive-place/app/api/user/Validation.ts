@@ -1,5 +1,5 @@
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
-import { ErrorStatus } from "@/app/utils/enums";
+import { Status } from "@/app/utils/enums";
 import { TValidResult } from "@/app/utils/types";
 import prisma from "@/lib/prisma";
 import { hash } from "bcrypt";
@@ -21,7 +21,7 @@ export const validUserIfExistInDatabse = async ({
       error: "Ten email jest już używany w aplikacji",
       valid: false,
       notification: CreateNotification(
-        "Information",
+        Status.Information,
         "Ten email jest już używany w aplikacji"
       ),
     } as TValidResult;
@@ -37,7 +37,7 @@ export const validUserIfExistInDatabse = async ({
       error: "Nazwa użytkownika jest już zajęta",
       valid: false,
       notification: CreateNotification(
-        "Information",
+        Status.Information,
         "Nazwa użytkownika jest już zajęta"
       ),
     } as TValidResult;
@@ -66,12 +66,15 @@ export const createNewUser = async (
 
     return {
       user: newUser,
-      notification: CreateNotification("Success", "Pomyślnie utworzono konto"),
+      notification: CreateNotification(
+        Status.Success,
+        "Pomyślnie utworzono konto"
+      ),
     };
   } catch (error) {
     return {
       user: null,
-      notification: CreateNotification(ErrorStatus.Low, "Coś poszło nie tak"),
+      notification: CreateNotification(Status.Low, "Coś poszło nie tak"),
     };
   }
 };

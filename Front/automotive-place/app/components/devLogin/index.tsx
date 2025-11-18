@@ -18,6 +18,7 @@ import { shortcutConfigs } from "@/app/utils/constants";
 import { getLoggedInUser, signIn } from "@/lib/actions/user.actions";
 import { setIsLoading } from "@/lib/features/loading/globalLoadingSlice";
 import { CreateNotification } from "../logger/NotificationHelper";
+import { Status } from "@/app/utils/enums";
 
 interface PinInputProps {
   length: number;
@@ -80,7 +81,7 @@ export const DevLogin: React.FC = () => {
         addNotification(
           JSON.stringify(
             CreateNotification(
-              "Information",
+              Status.Information,
               "Core.YouAreAlreadyLoggedInAsAdmin"
             )
           )
