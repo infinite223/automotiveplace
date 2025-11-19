@@ -35,7 +35,7 @@ export const createProjectSchema = z.object({
   name: z.string().min(3).max(50).optional(),
   carMake: z.string().min(2).max(50),
   carModel: z.string().min(1).max(50),
-  description: z.string().min(1).max(500),
+  description: z.string().min(1).max(500).optional(),
   isVisible: z.boolean().optional(),
   forSell: z.boolean().optional(),
   projectPrice: z.number().optional(),
@@ -56,6 +56,14 @@ export const createProjectSchema = z.object({
   carItems: z.array(createCarItemSchema),
   stages: z.array(createStageSchema),
   tags: z.array(createTagSchema),
+});
+
+export const basicDataSchema = createProjectSchema.pick({
+  name: true,
+  carMake: true,
+  carModel: true,
+  description: true,
+  isVisible: true,
 });
 
 export const userRegistrationSchema = z.object({

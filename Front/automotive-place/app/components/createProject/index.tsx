@@ -36,10 +36,8 @@ export const CreateProjectView = () => {
 
   const onSubmit = async (data: any) => {
     const project = stepperDataToCreateProject(data);
-    console.log(project);
     // const project = generateRandomProjectsToCreate(1, true, true, true)[0];
 
-    console.log(project);
     const result = validProject(project);
     const zodResult = createProjectSchema.safeParse(project);
 
@@ -47,16 +45,15 @@ export const CreateProjectView = () => {
       (result) => result.valid == false
     );
 
-    console.log(zodResult.error?.errors, zodResult.success, findInValidResult);
     if (!findInValidResult && zodResult.success) {
       try {
-        console.log("test");
-        const res = await createProject(project);
+        console.log(project, "proj");
+        // const res = await createProject(project);
 
-        if (res?.notification) {
-          dispatch(addNotification(JSON.stringify(res.notification)));
-          dispatch(setShowCreatePost(false));
-        }
+        // if (res?.notification) {
+        //   dispatch(addNotification(JSON.stringify(res.notification)));
+        //   dispatch(setShowCreatePost(false));
+        // }
       } catch (error: any) {
         dispatch(
           addNotification(
@@ -78,59 +75,6 @@ export const CreateProjectView = () => {
       onClick={(e) => e.stopPropagation()}
     >
       <AMPStepper stepsOptions={stepsOptions} hideHeader onSubmit={onSubmit} />
-
-      {/* <div className="ml-2">
-        <div className="flex flex-col gap-2 mt-3">
-          <AMPSwitch
-            name="Element w użyciu?"
-            setValue={setInUse}
-            value={inUse}
-          />
-          <AMPSwitch
-            name="Element na sprzedaż?"
-            setValue={setForSell}
-            value={forSell}
-          />
-
-          <p className="leading-3 text-[11px] mt-2">
-            Po utworzeniu projektu można go edytować.
-          </p>
-        </div>
-      </div>
-      <form
-        className="rounded-md p-2 pr-4 pl-4 flex flex-col max-w-lg group w-[300px] max-md:w-[100%]"
-        noValidate
-        action={onSubmit}
-      >
-        <AMPInput
-          name="Nazwa projektu"
-          setValue={(text) =>
-            setNameElement({
-              value: text,
-              errorText: validCarNameValue(text)[0].error,
-            })
-          }
-          value={nameElement.value}
-          placeholder="Np. JDM GTR"
-          inputStyles={{ fontSize: 12 }}
-        />
-        <AMPTextarea
-          name="Opis projekty"
-          setValue={(text) => setDescription({ value: text, errorText: "" })}
-          value={description.value}
-          placeholder="Np. Seryjna turbina, bez modyfikacji, orginalnie była w audi A3 8p "
-          inputStyles={{ fontSize: 12, height: "150px" }}
-        />
-
-        <AMPButton
-          name="Dodaj projekt"
-          type="primary"
-          additionalTailwindCss="justify-center"
-          isSubmit
-        />
-
-        <AMPHelpFooter footerText="Czym jest projekt?" />
-      </form> */}
     </main>
   );
 };

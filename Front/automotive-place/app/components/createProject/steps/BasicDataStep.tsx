@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { AMPTextarea } from "../../shared/AMPTextarea";
 import { AMPInput } from "../../shared/AMPInput";
-import { IInputValue } from "..";
+import { BasicDataStep as BasicDataType } from "../types";
+import { basicDataSchema } from "@/app/api/zod.schmas";
 
 interface BasicDataStepProps {
   onPrev: () => void;
@@ -15,61 +16,68 @@ export const BasicDataStep = ({
   registerGetData,
   initialData,
 }: BasicDataStepProps) => {
-  const [carModel, setCarModel] = useState("");
-  const [carMake, setCarMake] = useState("");
-  const [isVisible, setIsVisible] = useState(false);
-  const [description, setDescription] = useState<IInputValue>({
-    value: "",
-    errorText: null,
+  const [data, setData] = useState<BasicDataType>({
+    name: "",
+    carMake: "",
+    carModel: "",
+    description: "",
+    ...initialData,
   });
 
-  useEffect(() => {
-    if (initialData) {
-      setCarModel(initialData.carModel || "");
-      setCarMake(initialData.carMake || "");
-      setIsVisible(initialData.isVisible || false);
-      setDescription({
-        value: initialData.description || "",
-        errorText: null,
-      });
-    }
-  }, [initialData]);
+  const update = (field: keyof BasicDataType, value: any) => {
+    setData((prev) => ({ ...prev, [field]: value }));
+  };
 
   useEffect(() => {
-    const isValid = carMake.trim().length > 0 && carModel.trim().length > 0;
-    setIsValid(isValid);
-  }, [carMake, carModel]);
+    const result = basicDataSchema.safeParse(data);
+    setIsValid(result.success);
+  }, [data]);
 
   useEffect(() => {
     registerGetData?.(() => ({
-      carMake,
-      carModel,
-      isVisible,
-      description: description.value,
+      ...data,
+      name: data.name?.trim() ? data.name : undefined,
+      description: data.description?.trim() ? data.description : undefined,
     }));
-  }, [carMake, carModel, isVisible, description]);
+  }, [data]);
 
   return (
     <div className="flex flex-col gap-4">
+      <div className="flex gap-4 w-full">
+        <div className="flex-1">
+          <AMPInput
+            type="text"
+            placeholder="Marka (np. Audi)"
+            value={data.carMake}
+            setValue={(v) => update("carMake", v.toString())}
+            name="Marka"
+          />
+        </div>
+
+        <div className="flex-1">
+          <AMPInput
+            type="text"
+            placeholder="Model (np. A3 8P)"
+            value={data.carModel}
+            setValue={(v) => update("carModel", v.toString())}
+            name="Model"
+          />
+        </div>
+      </div>
+
       <AMPInput
         type="text"
-        placeholder="Marka (np. Audi)"
-        value={carMake}
-        setValue={(text) => setCarMake(text.toString())}
-        name="Marka"
+        placeholder="Nazwa projektu"
+        value={data.name || ""}
+        setValue={(v) => update("name", v || undefined)}
+        name="Nazwa"
       />
-      <AMPInput
-        type="text"
-        placeholder="Model (np. A3 8P)"
-        value={carModel}
-        setValue={(text) => setCarModel(text.toString())}
-        name="Model"
-      />
+
       <AMPTextarea
         name="Opis projektu"
-        setValue={(text) => setDescription({ value: text, errorText: "" })}
-        value={description.value}
+        value={data.description || ""}
         placeholder="Np. Seryjna turbina, bez modyfikacji..."
+        setValue={(v) => update("description", v || undefined)}
         inputStyles={{ fontSize: 12, height: "150px" }}
       />
     </div>

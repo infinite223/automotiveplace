@@ -8,7 +8,7 @@ export const stepsOptions: IStepsOptions = {
   items: [
     {
       name: "Podstawowe informacje",
-      description: "Podaj podstawowe informacje o pojezdzie",
+      description: "Informacje o pojezdzie",
       component: BasicDataStep,
     },
     {
