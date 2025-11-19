@@ -31,16 +31,12 @@ import Image from "next/image";
 import { RxDotsHorizontal } from "react-icons/rx";
 
 export default function Project({ params }: { params: { id: string } }) {
-  const contentData = useSelector(
-    (state: RootState) => state.contentData.contentData
-  );
   const [activeTab, setActiveTab] = useState("informacje");
   const imageRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   const height = useTransform(scrollY, [0, 200], ["200px", "0px"]);
   const opacity = useTransform(scrollY, [0, 150], [1, 0]);
 
-  const [tempData, setTempData] = useState<TBasicProject | null>(null);
   const { data, loading, error } = useFetchData<TProject>(
     `project-${params.id}`,
     () => getProject(params.id)
@@ -57,27 +53,15 @@ export default function Project({ params }: { params: { id: string } }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (loading) {
-      const content = contentData.find((item) => item.data.id === params.id);
-      if (content?.data) {
-        setTempData(content.data as TBasicProject);
-      }
-    }
-  }, [loading, contentData, params.id]);
+  const lastStage = data ? getCurrentStage(data as TProject) : undefined;
 
-  const displayData = loading ? tempData : data;
-
-  const lastStage = displayData
-    ? getCurrentStage(displayData as TProject)
-    : undefined;
-
-  if (loading && !tempData)
+  if (loading && !data)
     return (
       <div className="flex w-full min-h-screen bg-black justify-center items-center text-white text-lg">
         <LoadingSpinner />
       </div>
     );
+
   if (error) return <div>Error: {error.message}</div>;
 
   return (
@@ -107,9 +91,7 @@ export default function Project({ params }: { params: { id: string } }) {
               animate={{ opacity: scrolled ? 1 : 0 }}
               transition={{ duration: 0.2 }}
             >
-              {(displayData?.carMake || "") +
-                " " +
-                (displayData?.carModel || "")}
+              {(data?.carMake || "") + " " + (data?.carModel || "")}
             </motion.span>
             <div className="p-3">
               <RxDotsHorizontal size={iconSizes.base} />
@@ -121,9 +103,9 @@ export default function Project({ params }: { params: { id: string } }) {
             style={{ height, opacity }}
             className="relative w-full overflow-hidden"
           >
-            {displayData?.images?.[0] && (
+            {data?.images?.[0] && (
               <Image
-                src={displayData.images?.[0]}
+                src={data.images?.[0]}
                 className="object-cover"
                 alt="car-image"
                 fill
@@ -136,10 +118,10 @@ export default function Project({ params }: { params: { id: string } }) {
               <div className="flex w-full items-start justify-between flex-col">
                 <div className="flex flex-col w-full">
                   <div className="flex items-center gap-3">
-                    <span>{displayData?.carMake}</span>
+                    <span>{data?.carMake}</span>
                   </div>
                   <div className="text-lg opacity-70">
-                    <span>{displayData?.carModel}</span>
+                    <span>{data?.carModel}</span>
                     <span className=""> {lastStage?.name || "N/A"}</span>
                   </div>
                 </div>
@@ -204,7 +186,7 @@ export default function Project({ params }: { params: { id: string } }) {
             ))}
           </nav>
 
-          {displayData && (
+          {data && (
             <div className="p-4 overflow-hidden">
               <AnimatePresence mode="wait">
                 {activeTab === "informacje" && (
@@ -217,7 +199,7 @@ export default function Project({ params }: { params: { id: string } }) {
                   >
                     {data && (
                       <InfoTab
-                        name={displayData.name}
+                        name={data.name}
                         location={data?.location}
                         engine={{
                           name: data.engineName || "",
@@ -236,9 +218,9 @@ export default function Project({ params }: { params: { id: string } }) {
                           weightStock: data.weightStock || undefined,
                           topSpeedStock: data.topSpeedStock || undefined,
                         }}
-                        description={displayData.description}
+                        description={data.description}
                         lastStage={lastStage}
-                        images={displayData.images}
+                        images={data.images}
                       />
                     )}
                   </motion.div>

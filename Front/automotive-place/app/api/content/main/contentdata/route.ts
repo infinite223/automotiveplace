@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
   }
 
   const { searchParams }: any = new URL(request.url!);
-  const limit = parseInt(searchParams.get("limit")) || 4;
+  const limit = parseInt(searchParams.get("limit")) || 19;
   const page = parseInt(searchParams.get("page") || 0, 10);
   const seenPage = parseInt(searchParams.get("seenPage") || 0, 10);
   console.log(limit, page, seenPage, "limit, page, seenPage");
