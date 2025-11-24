@@ -17,10 +17,8 @@ export const BasicDataStep = ({
   initialData,
 }: BasicDataStepProps) => {
   const [data, setData] = useState<BasicDataType>({
-    name: "",
     carMake: "",
     carModel: "",
-    description: "",
     ...initialData,
   });
 

@@ -18,7 +18,7 @@ export const AMPStepper: React.FC<AMPStepperProps> = ({
   const [stepsValidity, setStepsValidity] = useState<boolean[]>(
     Array(stepsOptions.items.length).fill(false)
   );
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const getStepDataRef = useRef<(() => any) | null>(null);
 
@@ -88,7 +88,7 @@ export const AMPStepper: React.FC<AMPStepperProps> = ({
   const isCurrentStepValid = stepsValidity[currentStep];
 
   return (
-    <div className="flex w-full gap-8">
+    <div className="flex w-full gap-8 h-full">
       <div className="relative flex">
         <motion.div
           className="
@@ -179,8 +179,8 @@ export const AMPStepper: React.FC<AMPStepperProps> = ({
         </button>
       </div>
 
-      <div className="w-full flex flex-col justify-between">
-        <div className="flex flex-col mb-2 flex-1">
+      <div className="w-full flex flex-col">
+        <div className="flex flex-col mb-2 overflow-auto h-[calc(100%-170px)]">
           <h3 className="text-xl font-semibold mb-2">
             {stepsOptions.items[currentStep].name}
           </h3>

@@ -79,7 +79,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         withHeader={true}
         visible={showCreateProject}
         title="Dodawanie projektu"
-        additionalTailwindCss="relative bg-amp-700 dark:bg-amp-50 rounded-md"
+        additionalTailwindCss="relative bg-amp-700 dark:bg-amp-50 rounded-md "
         defoultBG={false}
         bgOnClickClose={false}
       >
@@ -224,7 +224,7 @@ const SideBarMobile = ({ openModal, pathname }: any) => {
   return (
     <div
       className={`
-        fixed bottom-0 left-0 right-0 z-50 bg-amp-50 h-16 flex items-center justify-around
+        fixed bottom-0 left-0 right-0 z-40 bg-amp-50 h-16 flex items-center justify-around
         transition-transform duration-300
         ${isHidden ? "translate-y-full" : "translate-y-0"}
         lg:hidden
