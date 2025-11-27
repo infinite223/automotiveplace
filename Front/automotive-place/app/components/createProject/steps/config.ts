@@ -1,5 +1,6 @@
 import { IStepsOptions } from "../../shared/Stepper/models";
 import { BasicDataStep } from "./BasicDataStep";
+import { EngineTransmissionStep } from "./EngineTransmissionStep";
 import { ImagesDataStep } from "./ImagesDataStep";
 import { ParamsDataStep } from "./ParamsDataStep";
 
@@ -12,15 +13,15 @@ export const stepsOptions: IStepsOptions = {
       component: BasicDataStep,
     },
     {
+      name: "Silnik i skrzynia biegów",
+      description: "Podstawowe informacje o silniku oraz skrzyni biegów",
+      component: EngineTransmissionStep,
+    },
+    {
       name: "Zdjęcia",
       description: "Dodaj zdjęcia swojego projektu",
       component: ImagesDataStep,
     },
-    // {
-    //   name: "Orginalne parametry",
-    //   description: "Podaj orginalne parametry pojazdu",
-    //   component: ParamsDataStep,
-    // },
     // {
     //   name: "Części",
     //   description: "Dodaj istotne części które wykorzystuje twój projekt",

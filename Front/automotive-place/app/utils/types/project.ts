@@ -150,6 +150,21 @@ type TProjectCreate = {
   tags?: TTagCreate[];
 };
 
+export type EngineTransmissionStepType = Pick<
+  TProjectCreate,
+  | "engineName"
+  | "engineStockHp"
+  | "engineStockNm"
+  | "engineDescription"
+  | "engineCapacity"
+  | "engineWasSwapped"
+  | "transmissionName"
+  | "transmissionGears"
+  | "transmissionDescription"
+  | "transmissionWasSwapped"
+  | "transmissionType"
+>;
+
 type TBasicPopularProject = {
   id: string;
   carMake: string;

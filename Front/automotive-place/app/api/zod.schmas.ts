@@ -66,6 +66,21 @@ export const basicDataSchema = createProjectSchema.pick({
   isVisible: true,
 });
 
+export const basicEngineAndTransmissionSchema = createProjectSchema.pick({
+  engineName: true,
+  engineStockHp: true,
+  engineStockNm: true,
+  engineDescription: true,
+  engineCapacity: true,
+  engineWasSwapped: true,
+
+  transmissionName: true,
+  transmissionType: true,
+  transmissionGears: true,
+  transmissionDescription: true,
+  transmissionWasSwapped: true,
+});
+
 export const userRegistrationSchema = z.object({
   name: z
     .string()
