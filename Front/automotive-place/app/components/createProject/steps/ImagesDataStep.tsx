@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { AMPTextarea } from "../../shared/AMPTextarea";
-import { AMPInput } from "../../shared/AMPInput";
-import { IInputValue } from "..";
+import React, { useEffect } from "react";
 
 interface BasicDataStepProps {
   onPrev: () => void;

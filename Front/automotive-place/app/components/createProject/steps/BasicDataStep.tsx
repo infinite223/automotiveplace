@@ -11,11 +11,11 @@ interface BasicDataStepProps {
   initialData?: any;
 }
 
-export const BasicDataStep = ({
+export const BasicDataStep: React.FC<BasicDataStepProps> = ({
   setIsValid,
   registerGetData,
   initialData,
-}: BasicDataStepProps) => {
+}) => {
   const [data, setData] = useState<BasicDataType>({
     carMake: "",
     carModel: "",

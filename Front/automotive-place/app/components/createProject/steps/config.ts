@@ -2,7 +2,7 @@ import { IStepsOptions } from "../../shared/Stepper/models";
 import { BasicDataStep } from "./BasicDataStep";
 import { EngineTransmissionStep } from "./EngineTransmissionStep";
 import { ImagesDataStep } from "./ImagesDataStep";
-import { ParamsDataStep } from "./ParamsDataStep";
+import { StagesStep } from "./StagesStep";
 
 export const stepsOptions: IStepsOptions = {
   title: "Dodawanie projektu",
@@ -22,16 +22,11 @@ export const stepsOptions: IStepsOptions = {
       description: "Dodaj zdjęcia swojego projektu",
       component: ImagesDataStep,
     },
-    // {
-    //   name: "Części",
-    //   description: "Dodaj istotne części które wykorzystuje twój projekt",
-    //   component: BasicDataStep,
-    // },
-    // {
-    //   name: "Etapy modyfikacji",
-    //   description: "Dodaj etapy modyfikacji projektu",
-    //   component: BasicDataStep,
-    // },
+    {
+      name: "Etapy modyfikacji",
+      description: "Dodaj etapy modyfikacji projektu",
+      component: StagesStep,
+    },
     // {
     //   name: "Podsumowanie",
     //   description: "Podsumowanie projektu",
