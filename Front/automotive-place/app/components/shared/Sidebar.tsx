@@ -224,7 +224,7 @@ const SideBarMobile = ({ openModal, pathname }: any) => {
   return (
     <div
       className={`
-        fixed bottom-0 left-0 right-0 z-40 bg-amp-50 h-16 flex items-center justify-around
+        fixed bottom-0 left-0 right-0 z-40 bg-amp-0 h-16 flex items-center justify-around
         transition-transform duration-300
         ${isHidden ? "translate-y-full" : "translate-y-0"}
         lg:hidden

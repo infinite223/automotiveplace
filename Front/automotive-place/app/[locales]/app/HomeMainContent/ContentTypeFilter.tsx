@@ -10,6 +10,7 @@ import {
   FaMapMarkerAlt,
   FaThLarge,
 } from "react-icons/fa";
+import { iconSizes } from "@/app/utils/constants";
 
 type Props = {
   active: ContentType | "All";
@@ -18,12 +19,12 @@ type Props = {
 
 export const ContentTypeFilter = ({ active, onChange }: Props) => {
   const iconMap: Record<ContentType | "All", JSX.Element> = {
-    All: <FaThLarge size={22} />,
-    [ContentType.Project]: <FaTools size={22} />,
-    [ContentType.Post]: <FaRegCommentDots size={22} />,
-    [ContentType.Problem]: <FaExclamationTriangle size={22} />,
-    [ContentType.Spot]: <FaMapMarkerAlt size={22} />,
-    [ContentType.Event]: <FaMapMarkerAlt size={22} />,
+    All: <FaThLarge size={iconSizes.small} />,
+    [ContentType.Project]: <FaTools size={iconSizes.small} />,
+    [ContentType.Post]: <FaRegCommentDots size={iconSizes.small} />,
+    [ContentType.Problem]: <FaExclamationTriangle size={iconSizes.small} />,
+    [ContentType.Spot]: <FaMapMarkerAlt size={iconSizes.small} />,
+    [ContentType.Event]: <FaMapMarkerAlt size={iconSizes.small} />,
   };
 
   const items: { label: string; type: ContentType | "All" }[] = [
@@ -47,7 +48,7 @@ export const ContentTypeFilter = ({ active, onChange }: Props) => {
             className="flex flex-col items-center min-w-[70px]"
           >
             <div
-              className={`w-14 h-14 rounded-full border-2 flex items-center justify-center transition-all
+              className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all
               ${isActive ? "border-amp-700/60" : "border-amp-200 "}`}
             >
               <div

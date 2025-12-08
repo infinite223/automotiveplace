@@ -123,7 +123,7 @@ export const HomeMainContent = () => {
             className="flex w-full items-center justify-center py-1"
             id={`content-${item.data.id}`}
           >
-            <div className="flex w-full bg-amp-50 rounded-md">
+            <div className="flex w-full border-t-2 border-amp-50 rounded-md">
               <ContentSelect
                 content={item}
                 userId={userId}

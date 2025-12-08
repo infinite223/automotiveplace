@@ -70,7 +70,7 @@ export default function Project({ params }: { params: { id: string } }) {
         <div className="max-w-screen-2xl w-full flex-col">
           <div
             className={`flex items-center justify-between sticky top-0 z-50 backdrop-blur-md bg-amp-900/80 dark:bg-amp-0/80 transition-all duration-300 ${
-              scrolled ? "shadow-md py-0.5" : ""
+              scrolled ? "shadow-md py-1" : ""
             }`}
           >
             {/* <div className="p-4" onClick={() => router.back()}>
@@ -93,7 +93,7 @@ export default function Project({ params }: { params: { id: string } }) {
             >
               {(data?.carMake || "") + " " + (data?.carModel || "")}
             </motion.span>
-            <div className="p-3">
+            <div className="p-1.5 px-3">
               <RxDotsHorizontal size={iconSizes.base} />
             </div>
           </div>
