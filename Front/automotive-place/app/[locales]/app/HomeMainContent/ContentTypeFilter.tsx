@@ -9,6 +9,7 @@ import {
   FaExclamationTriangle,
   FaMapMarkerAlt,
   FaThLarge,
+  FaCalendarAlt,
 } from "react-icons/fa";
 import { iconSizes } from "@/app/utils/constants";
 
@@ -24,7 +25,7 @@ export const ContentTypeFilter = ({ active, onChange }: Props) => {
     [ContentType.Post]: <FaRegCommentDots size={iconSizes.small} />,
     [ContentType.Problem]: <FaExclamationTriangle size={iconSizes.small} />,
     [ContentType.Spot]: <FaMapMarkerAlt size={iconSizes.small} />,
-    [ContentType.Event]: <FaMapMarkerAlt size={iconSizes.small} />,
+    [ContentType.Event]: <FaCalendarAlt size={iconSizes.small} />,
   };
 
   const items: { label: string; type: ContentType | "All" }[] = [
@@ -33,10 +34,11 @@ export const ContentTypeFilter = ({ active, onChange }: Props) => {
     { label: "Post", type: ContentType.Post },
     { label: "Problem", type: ContentType.Problem },
     { label: "Spot", type: ContentType.Spot },
+    { label: "Event", type: ContentType.Event },
   ];
 
   return (
-    <div className="flex gap-3 py-3 w-full overflow-x-auto no-scrollbar mt-2">
+    <div className="flex gap-1 py-3 w-full overflow-x-auto no-scrollbar mt-2">
       {items.map((item) => {
         const isActive = active === item.type;
 

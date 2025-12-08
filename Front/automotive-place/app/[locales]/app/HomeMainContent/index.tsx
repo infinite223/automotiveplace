@@ -30,7 +30,7 @@ const headerMap: Record<ContentType, string> = {
   [ContentType.Post]: "Najnowsze posty",
   [ContentType.Problem]: "Najnowsze problemy",
   [ContentType.Spot]: "Najnowsze spoty",
-  [ContentType.Event]: "",
+  [ContentType.Event]: "Najnowsze wydarzenia",
 };
 
 export const HomeMainContent = () => {
