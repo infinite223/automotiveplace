@@ -44,6 +44,7 @@ export const BasicDataStep: React.FC<BasicDataStepProps> = ({
       <div className="flex gap-4 w-full">
         <div className="flex-1">
           <AMPInput
+            required
             type="text"
             placeholder="Marka (np. Audi)"
             value={data.carMake}
@@ -55,6 +56,7 @@ export const BasicDataStep: React.FC<BasicDataStepProps> = ({
         <div className="flex-1">
           <AMPInput
             type="text"
+            required
             placeholder="Model (np. A3 8P)"
             value={data.carModel}
             setValue={(v) => update("carModel", v.toString())}

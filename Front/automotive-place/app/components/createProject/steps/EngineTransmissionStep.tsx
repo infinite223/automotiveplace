@@ -53,6 +53,7 @@ export const EngineTransmissionStep = ({
       <div className="flex gap-4 w-full">
         <div className="w-1/2">
           <AMPInput
+            required
             type="text"
             placeholder="Nazwa silnika (np. B58)"
             name="Nazwa silnika"
@@ -62,6 +63,7 @@ export const EngineTransmissionStep = ({
         </div>
         <div className="w-1/2">
           <AMPInput
+            required
             type="number"
             placeholder="Pojemność (np. 2.0)"
             name="Pojemność silnika"
@@ -72,6 +74,7 @@ export const EngineTransmissionStep = ({
       </div>
 
       <AMPTextarea
+        required
         name="Opis silnika"
         placeholder="Np. seria, brak modyfikacji"
         value={data.engineDescription || ""}
@@ -81,6 +84,7 @@ export const EngineTransmissionStep = ({
       <div className="flex gap-4 w-full">
         <div className="w-1/2">
           <AMPInput
+            required
             type="number"
             placeholder="Moc seryjna (KM)"
             name="KM"
@@ -90,6 +94,7 @@ export const EngineTransmissionStep = ({
         </div>
         <div className="w-1/2">
           <AMPInput
+            required
             type="number"
             placeholder="Moment seryjny (Nm)"
             name="Nm"
@@ -102,6 +107,7 @@ export const EngineTransmissionStep = ({
       <h3 className="text-lg font-semibold mt-4">Skrzynia biegów</h3>
 
       <AMPInput
+        required
         type="text"
         placeholder="Nazwa skrzyni (np. ZF8hp)"
         name="Skrzynia"
@@ -110,6 +116,7 @@ export const EngineTransmissionStep = ({
       />
 
       <AMPTextarea
+        required
         name="Opis skrzyni"
         placeholder="Opis skrzyni biegów"
         value={data.transmissionDescription || ""}
@@ -119,6 +126,7 @@ export const EngineTransmissionStep = ({
       <div className="flex gap-4 w-full">
         <div className="w-1/2">
           <AMPInput
+            required
             type="number"
             placeholder="Ilość biegów"
             name="Biegi"
@@ -128,6 +136,7 @@ export const EngineTransmissionStep = ({
         </div>
         <div className="w-1/2">
           <AMPInput
+            required
             type="number"
             placeholder="Typ (1-auto, 2-manual)"
             name="Typ"

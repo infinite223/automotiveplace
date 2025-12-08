@@ -45,23 +45,26 @@ export const ContentTypeFilter = ({ active, onChange }: Props) => {
             key={item.type}
             type="button"
             onClick={() => onChange(item.type)}
-            className="flex flex-col items-center min-w-[70px]"
+            className="flex flex-col items-center min-w-[70px] group"
           >
             <div
               className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all
-              ${isActive ? "border-amp-700/60" : "border-amp-200 "}`}
+      ${isActive ? "border-amp-700/60" : "border-amp-200"}
+      group-hover:border-amp-700/80`}
             >
               <div
-                className={`${isActive ? "text-amp-700/80" : "text-amp-700/60"}`}
+                className={`transition-colors
+        ${isActive ? "text-amp-700/80" : "text-amp-700/60"}
+        group-hover:text-amp-700/80`}
               >
                 {iconMap[item.type]}
               </div>
             </div>
 
             <span
-              className={`text-xs mt-1 ${
-                isActive ? "text-white" : "text-amp-700/60"
-              }`}
+              className={`text-xs mt-1 transition-colors
+      ${isActive ? "text-white" : "text-amp-700/60"}
+      group-hover:text-amp-700/80`}
             >
               {item.label}
             </span>

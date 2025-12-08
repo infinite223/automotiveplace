@@ -34,7 +34,8 @@ export const AMPTextarea: FC<IAMPTextarea<string | number>> = ({
 
   return (
     <label htmlFor={htmlFor} className="mb-5">
-      <span>{name}</span>
+      <span>{name}</span>{" "}
+      {required && <span className="text-amp-500 ml-1">*</span>}
       <textarea
         name={name}
         value={value}
@@ -50,7 +51,6 @@ export const AMPTextarea: FC<IAMPTextarea<string | number>> = ({
           {errorText}
         </span>
       )}
-
       {error && (
         <span className="mt-2 text-[11px] text-red-400 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
           {t(error)}

@@ -53,6 +53,7 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
   return (
     <label htmlFor={htmlFor} className={`${marginBotton}`}>
       <span className="font-semibold text-sm">{name}</span>
+      {required && <span className="text-amp-500 ml-1">*</span>}
       <input
         type={type}
         name={name}

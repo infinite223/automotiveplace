@@ -105,7 +105,7 @@ export const HomeMainContent = () => {
       className="flex w-full items-center lg:pr-[150px] h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth"
     >
       <div className="flex flex-col text-[12px] w-full lg:w-[570px]">
-        <div className="flex items-center gap-4 p-4 pb-0">
+        <div className="hidden items-center gap-4 p-4 pb-0 max-lg:flex">
           <Image src={Logo} alt="logo" width={25} height={25} />
           <span className={`text-md uppercase` + Yant.className}>
             Automotiveplace

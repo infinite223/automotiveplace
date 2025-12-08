@@ -60,7 +60,6 @@ export default function InfoTab({
       {description && <span className="text-sm mt-1">{description}</span>}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
-        {/* Performance */}
         <div className="space-y-4">
           <h3 className="text-lg font-bold text-text-light dark:text-text-dark">
             Performance
