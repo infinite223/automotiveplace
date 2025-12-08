@@ -18,11 +18,26 @@ import useOnScreen from "@/app/hooks/useOnScreen";
 import { ContentType } from "@/app/utils/enums";
 import { useTranslations } from "next-intl";
 import { useMainContent } from "@/app/hooks/useMainContent";
+import { ContentTypeFilter } from "./ContentTypeFilter";
+import { SlMenu } from "react-icons/sl";
+import { iconSizes } from "@/app/utils/constants";
+import Logo from "../../../../asets/logo_2.png";
+import { Yant } from "@/app/utils/helpers/fontsHelper";
+import Image from "next/image";
+
+const headerMap: Record<ContentType, string> = {
+  [ContentType.Project]: "Najnowsze projekty",
+  [ContentType.Post]: "Najnowsze posty",
+  [ContentType.Problem]: "Najnowsze problemy",
+  [ContentType.Spot]: "Najnowsze spoty",
+  [ContentType.Event]: "",
+};
 
 export const HomeMainContent = () => {
   const lastElementRef = useRef<HTMLDivElement>(null);
   const [lastSeenId, setLastSeenId] = useState<string | null>(null);
   const [localContent, setLocalContent] = useState<TContentData[]>([]);
+  const [activeFilter, setActiveFilter] = useState<ContentType | "All">("All");
 
   const isLastElementVisible = useOnScreen(lastElementRef);
   const [userId, setUserId] = useState<string | null>(null);
@@ -79,13 +94,30 @@ export const HomeMainContent = () => {
     getUser();
   }, []);
 
+  const filteredContent = localContent.filter((item) => {
+    if (activeFilter === "All") return true;
+    return item.type === activeFilter;
+  });
+
   return (
     <div
       id="content-container"
       className="flex w-full items-center lg:pr-[150px] h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth"
     >
       <div className="flex flex-col text-[12px] w-full lg:w-[570px]">
-        {localContent.map((item, i: number) => (
+        <div className="flex items-center gap-4 p-4 pb-0">
+          <Image src={Logo} alt="logo" width={25} height={25} />
+          <span className={`text-md uppercase` + Yant.className}>
+            Automotiveplace
+          </span>
+        </div>
+        <ContentTypeFilter active={activeFilter} onChange={setActiveFilter} />
+        {activeFilter !== "All" && (
+          <div className="font-semibold text-xl my-2 mx-2">
+            {headerMap[activeFilter]}
+          </div>
+        )}
+        {filteredContent.map((item, i: number) => (
           <div
             key={i}
             className="flex w-full items-center justify-center py-1"
