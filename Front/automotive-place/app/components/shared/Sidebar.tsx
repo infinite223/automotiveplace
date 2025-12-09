@@ -68,7 +68,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         withHeader={true}
         visible={isModalOpen}
         title="Wybierz opcje"
-        additionalTailwindCss="relative bottom-[15ch] bg-amp-700 dark:bg-amp-50 rounded-md"
+        additionalTailwindCss="bg-amp-700 dark:bg-amp-50 rounded-md"
         defoultBG={false}
       >
         <SelectCreateOption />
@@ -260,13 +260,13 @@ const SideBarMobile = ({ openModal, pathname }: any) => {
         route="./app/garage"
         showName={false}
       />
-      <OptionItem
+      {/* <OptionItem
         icon={<IoNotifications size={iconSizes.base} />}
         name="Notifications"
         onClick={() => {}}
         isActive={pathname === "/notifications"}
         showName={false}
-      />
+      /> */}
       <OptionItem
         icon={<SlMenu size={iconSizes.base} />}
         name={t("Core.Menu")}

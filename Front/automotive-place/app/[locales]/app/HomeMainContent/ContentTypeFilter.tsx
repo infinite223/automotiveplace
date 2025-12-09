@@ -3,15 +3,15 @@
 import React from "react";
 import { ContentType } from "@/app/utils/enums";
 
+import { FaThLarge } from "react-icons/fa";
 import {
-  FaTools,
-  FaRegCommentDots,
-  FaExclamationTriangle,
-  FaMapMarkerAlt,
-  FaThLarge,
-  FaCalendarAlt,
-} from "react-icons/fa";
-import { iconSizes } from "@/app/utils/constants";
+  EventIcon,
+  iconSizes,
+  PostIcon,
+  ProblemIcon,
+  ProjectIcon,
+  SpotIcon,
+} from "@/app/utils/constants";
 
 type Props = {
   active: ContentType | "All";
@@ -21,11 +21,11 @@ type Props = {
 export const ContentTypeFilter = ({ active, onChange }: Props) => {
   const iconMap: Record<ContentType | "All", JSX.Element> = {
     All: <FaThLarge size={iconSizes.small} />,
-    [ContentType.Project]: <FaTools size={iconSizes.small} />,
-    [ContentType.Post]: <FaRegCommentDots size={iconSizes.small} />,
-    [ContentType.Problem]: <FaExclamationTriangle size={iconSizes.small} />,
-    [ContentType.Spot]: <FaMapMarkerAlt size={iconSizes.small} />,
-    [ContentType.Event]: <FaCalendarAlt size={iconSizes.small} />,
+    [ContentType.Project]: <ProjectIcon size={iconSizes.small} />,
+    [ContentType.Post]: <PostIcon size={iconSizes.small} />,
+    [ContentType.Problem]: <ProblemIcon size={iconSizes.small} />,
+    [ContentType.Spot]: <SpotIcon size={iconSizes.small} />,
+    [ContentType.Event]: <EventIcon size={iconSizes.small} />,
   };
 
   const items: { label: string; type: ContentType | "All" }[] = [

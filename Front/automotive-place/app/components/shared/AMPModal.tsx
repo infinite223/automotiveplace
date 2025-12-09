@@ -32,7 +32,7 @@ const AMPModal = ({
       {visible && (
         <motion.div
           onClick={bgOnClickClose ? onClose : () => {}}
-          className="fixed cursor-pointer top-0 left-0 w-full z-20 h-screen flex justify-center items-center  custom-blur"
+          className="fixed cursor-pointer top-0 left-0 w-full z-[100] h-screen flex justify-center items-center  custom-blur"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -40,12 +40,34 @@ const AMPModal = ({
           transition={{ duration: 0.3 }}
         >
           <motion.div
-            className={`${additionalTailwindCss} cursor-default max-md:max-h-screen`}
+            className={`
+    ${additionalTailwindCss}
+    cursor-default
+    max-md:fixed
+    max-md:bottom-0
+    max-md:left-0
+    max-md:right-0
+    max-md:rounded-t-2xl
+    max-md:w-full
+    max-md:max-h-screen
+  `}
             id="onClose_helper"
             onClick={(e) => e.stopPropagation()}
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
+            initial={{
+              scale: window.innerWidth >= 768 ? 0.8 : 1,
+              opacity: 0,
+              y: window.innerWidth < 768 ? 300 : 0,
+            }}
+            animate={{
+              scale: 1,
+              opacity: 1,
+              y: 0,
+            }}
+            exit={{
+              scale: window.innerWidth >= 768 ? 0.8 : 1,
+              opacity: 0,
+              y: window.innerWidth < 768 ? 300 : 0,
+            }}
             transition={{ duration: 0.3 }}
           >
             <div

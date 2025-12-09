@@ -1,11 +1,13 @@
-import React, { FC, useState } from "react";
-import { FaCarRear } from "react-icons/fa6";
-import { FaCalendarDay, FaLocationArrow } from "react-icons/fa";
-import { PiQuestionMarkFill } from "react-icons/pi";
-import { motion, AnimatePresence } from "framer-motion";
-import { BsPostcardFill } from "react-icons/bs";
-import { iconSizes } from "@/app/utils/constants";
-import { AMPSeparator } from "../shared/AMPSeparator";
+import React, { FC } from "react";
+import { motion } from "framer-motion";
+import {
+  EventIcon,
+  iconSizes,
+  PostIcon,
+  ProblemIcon,
+  ProjectIcon,
+  SpotIcon,
+} from "@/app/utils/constants";
 import { useDispatch } from "react-redux";
 import {
   setShowCreatePost,
@@ -17,32 +19,37 @@ export const SelectCreateOption: FC = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex flex-col min-w-20 min-h-10 sm:w-[400px] w-[95vw] pb-4">
+    <div className="flex flex-col w-full pb-4 sm:w-[400px]">
       <OptionItem
-        name="Dodaj projekt"
+        name="Add Project"
         onClick={() => dispatch(setShowCreateProject(true))}
-        icon={<FaCarRear size={iconSize} />}
+        icon={<ProjectIcon size={iconSize} />}
       />
 
       <OptionItem
-        name="Dodaj post"
+        name="Add Post"
         onClick={() => dispatch(setShowCreatePost(true))}
-        icon={<BsPostcardFill size={iconSize} />}
+        icon={<PostIcon size={iconSize} />}
       />
+
       <OptionItem
-        name="Dodaj problem"
+        name="Add Spot"
         onClick={() => {}}
-        icon={<PiQuestionMarkFill size={iconSize} />}
+        icon={<SpotIcon size={iconSize} />}
       />
+
       <OptionItem
-        name="Dodaj spot"
+        name="Add Event"
         onClick={() => {}}
-        icon={<FaLocationArrow size={iconSize} />}
+        icon={<EventIcon size={iconSize} />}
       />
+
+      {/* <div className="my-3 border-t border-white/10" /> */}
+
       <OptionItem
-        name="Dodaj wydarzenie"
+        name="Report problem"
         onClick={() => {}}
-        icon={<FaCalendarDay size={iconSize} />}
+        icon={<ProblemIcon size={iconSize} />}
       />
     </div>
   );
@@ -52,41 +59,33 @@ const OptionItem = ({
   name,
   onClick,
   icon,
+  danger = false,
 }: {
   name: string;
   onClick: () => void;
   icon?: any;
+  danger?: boolean;
 }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <motion.div
       onClick={onClick}
-      className="w-full rounded-sm flex flex-co gap-4 px-4 text-white/80 items-center p-2 cursor-pointer hover:bg-amp-700 dark:hover:bg-amp-300/50"
+      whileTap={{ scale: 0.97 }}
+      className={`
+        w-full flex items-center gap-4 px-4 py-2.5 cursor-pointer
+        ${danger ? "text-red-500" : "text-white/90"}
+        hover:bg-white/5
+      `}
     >
-      <AnimatePresence>
-        <motion.div
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.1 }}
-          key="icon"
-          className="flex items-center justify-center"
-        >
-          {icon}
-        </motion.div>
-      </AnimatePresence>
-      <AnimatePresence>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, y: [30, 0] }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.1, delay: 0 }}
-          key="text"
-          className="flex justify-center"
-        >
-          <h3 className="text-[13px] text-center font-semibold">{name}</h3>
-        </motion.div>
-      </AnimatePresence>
+      <div
+        className={`
+          w-10 h-10 flex items-center justify-center rounded-xl
+          ${danger ? "bg-red-500/20" : "bg-amp-300"}
+        `}
+      >
+        {icon}
+      </div>
+
+      <h3 className="text-[15px] font-medium">{name}</h3>
     </motion.div>
   );
 };

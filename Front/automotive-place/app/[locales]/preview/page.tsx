@@ -30,7 +30,6 @@ export default function HomePage() {
 
   return (
     <main className="bg-black text-white">
-      {/* HERO */}
       <section className="relative h-[95vh] flex items-end">
         <div className="absolute inset-0">
           <img
@@ -66,7 +65,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 1 */}
       <section className="bg-neutral-950 py-16 px-6">
         <h2 className="text-2xl font-semibold">Discover inspiring builds</h2>
         <p className="text-white/60 mt-3 text-sm max-w-md">
@@ -82,7 +80,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 2 */}
       <section className="bg-gradient-to-b from-neutral-900 to-black py-16 px-6">
         <h2 className="text-2xl font-semibold">Connect with the scene</h2>
         <p className="text-white/60 mt-3 text-sm max-w-md">
@@ -98,7 +95,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 3 */}
       <section className="bg-neutral-950 py-16 px-6">
         <h2 className="text-2xl font-semibold">Find local car meets</h2>
         <p className="text-white/60 mt-3 text-sm max-w-md">
@@ -114,19 +110,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-black py-20 px-6 text-center">
+      <section className="bg-black py-20 px-6 text-center flex flex-col items-center">
         <h2 className="text-3xl font-bold">Ready to join the grid?</h2>
         <p className="text-white/60 mt-4 text-sm">
           Join thousands of car enthusiasts worldwide.
         </p>
 
-        <button className="mt-8 bg-white text-black px-8 py-4 rounded-xl font-semibold hover:bg-gray-200 transition">
-          Create free account
-        </button>
+        <Link
+          href={`./sign-up`}
+          className="bg-amp-500 text-white py-2 font-semibold px-6 rounded-sm mt-4"
+        >
+          {t("Core.SignUp")}
+        </Link>
       </section>
 
-      {/* FOOTER */}
       <footer className="text-center text-white/40 text-xs py-10">
         © 2025 Automotiveplace
       </footer>

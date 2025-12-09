@@ -24,6 +24,7 @@ import { iconSizes } from "@/app/utils/constants";
 import Logo from "../../../../asets/logo_2.png";
 import { Yant } from "@/app/utils/helpers/fontsHelper";
 import Image from "next/image";
+import { IoNotifications } from "react-icons/io5";
 
 const headerMap: Record<ContentType, string> = {
   [ContentType.Project]: "Najnowsze projekty",
@@ -104,12 +105,15 @@ export const HomeMainContent = () => {
       id="content-container"
       className="flex w-full items-center lg:pr-[150px] h-full max-h-screen custom-scrollbar overflow-y-auto flex-col scroll-smooth"
     >
-      <div className="flex flex-col text-[12px] w-full lg:w-[570px]">
-        <div className="hidden items-center gap-4 p-4 pb-0 max-lg:flex">
-          <Image src={Logo} alt="logo" width={25} height={25} />
-          <span className={`text-md uppercase` + Yant.className}>
-            Automotiveplace
-          </span>
+      <div className="hidden max-lg:flex flex-col text-[12px] w-full lg:w-[570px]">
+        <div className="flex items-center justify-between p-4 pb-0">
+          <div className="items-center gap-4 flex">
+            <Image src={Logo} alt="logo" width={25} height={25} />
+            <span className={`text-md uppercase` + Yant.className}>
+              Automotiveplace
+            </span>
+          </div>
+          <IoNotifications size={iconSizes.base} className="opacity-80" />
         </div>
         <ContentTypeFilter active={activeFilter} onChange={setActiveFilter} />
         {activeFilter !== "All" && (
