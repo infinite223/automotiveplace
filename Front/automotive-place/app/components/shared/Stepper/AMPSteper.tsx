@@ -89,7 +89,7 @@ export const AMPStepper: React.FC<AMPStepperProps> = ({
 
   return (
     <div className="flex w-full gap-8 h-full">
-      <div className="relative flex">
+      <div className="relative hidden md:flex">
         <motion.div
           className="
             border-r border-gray-200 dark:border-neutral-700
@@ -180,6 +180,26 @@ export const AMPStepper: React.FC<AMPStepperProps> = ({
       </div>
 
       <div className="w-full flex flex-col">
+        <div className="flex md:hidden items-center gap-2 mb-4">
+          {stepsOptions.items.map((_, index) => {
+            const isActive = currentStep === index;
+            const isDone = stepsValidity[index];
+
+            return (
+              <button
+                key={index}
+                disabled={index > 0 && !stepsValidity[index - 1]}
+                onClick={() => setCurrentStep(index)}
+                className={`
+            w-2.5 h-2.5 rounded-full transition-all
+            ${isActive ? "bg-amp-200 scale-125" : ""}
+            ${isDone ? "bg-green-500" : "bg-gray-400"}
+          `}
+              />
+            );
+          })}
+        </div>
+
         <div className="flex flex-col mb-2 overflow-auto custom-scrollbar h-[calc(100vh-280px)] max-md:h-[calc(100%-170px)]">
           <h3 className="text-xl font-semibold mb-2">
             {stepsOptions.items[currentStep].name}
