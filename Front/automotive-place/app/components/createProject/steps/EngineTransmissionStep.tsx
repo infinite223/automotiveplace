@@ -3,6 +3,7 @@ import { AMPInput } from "../../shared/AMPInput";
 import { AMPTextarea } from "../../shared/AMPTextarea";
 import { basicEngineAndTransmissionSchema } from "@/app/api/zod.schmas";
 import { EngineTransmissionStepType } from "@/app/utils/types/project";
+import { ZodIssue } from "zod";
 
 interface EngineTransmissionStepProps {
   setIsValid: (isValid: boolean) => void;
@@ -30,6 +31,7 @@ export const EngineTransmissionStep = ({
     transmissionWasSwapped: false,
     ...initialData,
   });
+  const [errors, setErrors] = useState<null | ZodIssue[]>(null);
 
   const update = (field: keyof EngineTransmissionStepType, value: any) => {
     setData((prev) => ({ ...prev, [field]: value }));
@@ -38,6 +40,9 @@ export const EngineTransmissionStep = ({
   useEffect(() => {
     const result = basicEngineAndTransmissionSchema.safeParse(data);
     setIsValid(result.success);
+
+    if (!result.success) setErrors(result.error.errors);
+    else setErrors(null);
   }, [data]);
 
   useEffect(() => {
@@ -59,6 +64,7 @@ export const EngineTransmissionStep = ({
             name="Nazwa silnika"
             value={data.engineName}
             setValue={(v) => update("engineName", v.toString())}
+            error={errors?.find((e) => e.path.includes("engineName"))?.message}
           />
         </div>
         <div className="w-1/2">
@@ -69,6 +75,9 @@ export const EngineTransmissionStep = ({
             name="Pojemność silnika"
             value={data.engineCapacity}
             setValue={(v) => update("engineCapacity", Number(v))}
+            error={
+              errors?.find((e) => e.path.includes("engineCapacity"))?.message
+            }
           />
         </div>
       </div>
@@ -79,6 +88,9 @@ export const EngineTransmissionStep = ({
         placeholder="Np. seria, brak modyfikacji"
         value={data.engineDescription || ""}
         setValue={(v) => update("engineDescription", v)}
+        error={
+          errors?.find((e) => e.path.includes("engineDescription"))?.message
+        }
       />
 
       <div className="flex gap-4 w-full">
@@ -90,6 +102,9 @@ export const EngineTransmissionStep = ({
             name="KM"
             value={data.engineStockHp}
             setValue={(v) => update("engineStockHp", Number(v))}
+            error={
+              errors?.find((e) => e.path.includes("engineStockHp"))?.message
+            }
           />
         </div>
         <div className="w-1/2">
@@ -100,6 +115,9 @@ export const EngineTransmissionStep = ({
             name="Nm"
             value={data.engineStockNm}
             setValue={(v) => update("engineStockNm", Number(v))}
+            error={
+              errors?.find((e) => e.path.includes("engineStockNm"))?.message
+            }
           />
         </div>
       </div>
@@ -113,6 +131,9 @@ export const EngineTransmissionStep = ({
         name="Skrzynia"
         value={data.transmissionName}
         setValue={(v) => update("transmissionName", v.toString())}
+        error={
+          errors?.find((e) => e.path.includes("transmissionName"))?.message
+        }
       />
 
       <AMPTextarea
@@ -121,6 +142,10 @@ export const EngineTransmissionStep = ({
         placeholder="Opis skrzyni biegów"
         value={data.transmissionDescription || ""}
         setValue={(v) => update("transmissionDescription", v)}
+        error={
+          errors?.find((e) => e.path.includes("transmissionDescription"))
+            ?.message
+        }
       />
 
       <div className="flex gap-4 w-full">
@@ -132,6 +157,9 @@ export const EngineTransmissionStep = ({
             name="Biegi"
             value={data.transmissionGears}
             setValue={(v) => update("transmissionGears", Number(v))}
+            error={
+              errors?.find((e) => e.path.includes("transmissionGears"))?.message
+            }
           />
         </div>
         <div className="w-1/2">
@@ -142,6 +170,9 @@ export const EngineTransmissionStep = ({
             name="Typ"
             value={data.transmissionType}
             setValue={(v) => update("transmissionType", Number(v))}
+            error={
+              errors?.find((e) => e.path.includes("transmissionType"))?.message
+            }
           />
         </div>
       </div>

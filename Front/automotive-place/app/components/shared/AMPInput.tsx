@@ -1,6 +1,6 @@
 import { TValidResult } from "@/app/utils/types";
 import { useTranslations } from "next-intl";
-import React, { CSSProperties, FC, useState } from "react";
+import React, { CSSProperties, FC, useEffect, useState } from "react";
 
 interface IAMPInput<TValue> {
   value: TValue;
@@ -37,8 +37,25 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
   },
   error,
 }) => {
-  const [localErrorText, setLocalErrorText] = useState("");
+  const [localErrorText, setLocalErrorText] = useState<string | null>(null);
+  const [touched, setTouched] = useState(false);
   const t = useTranslations();
+
+  const safeTranslate = (maybeKeyOrText?: string | null) => {
+    if (!maybeKeyOrText) return null;
+
+    const looksLikeLiteral =
+      /\s|\(|\)|\{|\}|\[|\]|%|:|,/.test(maybeKeyOrText) ||
+      maybeKeyOrText.length > 40;
+    if (looksLikeLiteral) return maybeKeyOrText;
+
+    try {
+      const translated = t(maybeKeyOrText);
+      return translated ?? maybeKeyOrText;
+    } catch (err) {
+      return maybeKeyOrText;
+    }
+  };
 
   const themeAMPButtonStyles = () => {
     if (themeOption === "auto") {
@@ -50,6 +67,27 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
     }
   };
 
+  useEffect(() => {
+    const firstLocal = validFunction(String(value || ""))[0]?.error ?? null;
+    setLocalErrorText(firstLocal);
+  }, [value, validFunction]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value as any);
+    const firstLocal = validFunction(e.target.value)[0]?.error ?? null;
+    setLocalErrorText(firstLocal);
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setTouched(true);
+    const firstLocal = validFunction(String(value || ""))[0]?.error ?? null;
+    setLocalErrorText(firstLocal);
+  };
+
+  const errorToShow = touched
+    ? safeTranslate(localErrorText) ?? safeTranslate(error)
+    : null;
+
   return (
     <label htmlFor={htmlFor} className={`${marginBotton}`}>
       <span className="font-semibold text-sm">{name}</span>
@@ -58,26 +96,16 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
         type={type}
         name={name}
         value={value}
-        onChange={(text) => {
-          setValue(text.target.value);
-          setLocalErrorText(validFunction(text.target.value)[0]?.error);
-        }}
+        onChange={handleChange}
+        onBlur={handleBlur}
         id={id}
         style={inputStyles}
-        className={`${themeAMPButtonStyles()} ${additionalTailwindCss} w-full border-b mt-1 outline-none text-sm block dark:focus:ring-amp-900/50 dark:focus:border-amp-900/50 bg-inherit py-2 appearance-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer`}
+        className={`${themeAMPButtonStyles()} ${additionalTailwindCss} w-full border-b mt-1 outline-none text-sm block dark:focus:ring-amp-900/50 dark:focus:border-amp-900/50 bg-inherit py-2 appearance-none peer`}
         placeholder={placeholder}
         required={required}
       />
-      {localErrorText && (
-        <span className="mt-2 text-[11px] text-red-400 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-          {localErrorText}
-        </span>
-      )}
-
-      {error && (
-        <span className="mt-2 text-[11px] text-red-400 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-          {t(error)}
-        </span>
+      {errorToShow && (
+        <span className="mt-2 text-[11px] text-red-400">{errorToShow}</span>
       )}
     </label>
   );

@@ -88,7 +88,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
       <AnimatePresence>
         {showMenu && (
           <motion.ul
-            ref={menuRef} // Dodajemy ref do obsługi zamykania menu
+            ref={menuRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { duration: 0.2 } }}
             exit={{ opacity: 0 }}
@@ -112,7 +112,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
                   }
                 }}
                 role="menuitem"
-                className={`w-full flex items-center gap-2 px-3 py-2 rounded-md ${
+                className={`w-full flex items-center gap-2 px-3 py-2 ${
                   isDisable
                     ? "opacity-50 cursor-not-allowed"
                     : "cursor-pointer hover:bg-amp-700 dark:hover:bg-amp-200"
