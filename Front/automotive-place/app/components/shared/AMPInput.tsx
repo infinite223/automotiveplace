@@ -1,6 +1,7 @@
 import { TValidResult } from "@/app/utils/types";
 import { useTranslations } from "next-intl";
 import React, { CSSProperties, FC, useEffect, useState } from "react";
+import { createSafeTranslate } from "./createSafeTranslate";
 
 interface IAMPInput<TValue> {
   value: TValue;
@@ -41,22 +42,6 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
   const [touched, setTouched] = useState(false);
   const t = useTranslations();
 
-  const safeTranslate = (maybeKeyOrText?: string | null) => {
-    if (!maybeKeyOrText) return null;
-
-    const looksLikeLiteral =
-      /\s|\(|\)|\{|\}|\[|\]|%|:|,/.test(maybeKeyOrText) ||
-      maybeKeyOrText.length > 40;
-    if (looksLikeLiteral) return maybeKeyOrText;
-
-    try {
-      const translated = t(maybeKeyOrText);
-      return translated ?? maybeKeyOrText;
-    } catch (err) {
-      return maybeKeyOrText;
-    }
-  };
-
   const themeAMPButtonStyles = () => {
     if (themeOption === "auto") {
       return "border-gray-300 focus:ring-amp-500 focus:border-amp-500/70 dark:border-amp-200/70 dark:placeholder-gray-500 dark:text-white/80";
@@ -84,9 +69,9 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
     setLocalErrorText(firstLocal);
   };
 
-  const errorToShow = touched
-    ? safeTranslate(localErrorText) ?? safeTranslate(error)
-    : null;
+  const safeTranslate = createSafeTranslate(t);
+
+  const errorToShow = touched ? safeTranslate(error) : null;
 
   return (
     <label htmlFor={htmlFor} className={`${marginBotton}`}>

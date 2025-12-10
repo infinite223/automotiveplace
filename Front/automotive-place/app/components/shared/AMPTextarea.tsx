@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import React, { CSSProperties, FC, useState } from "react";
+import { createSafeTranslate } from "./createSafeTranslate";
 
 interface IAMPTextarea<TValue> {
   value: TValue;
@@ -33,22 +34,9 @@ export const AMPTextarea: FC<IAMPTextarea<string | number>> = ({
   const t = useTranslations();
   const [touched, setTouched] = useState(false);
 
-  const safeTranslate = (maybeKeyOrText?: string | null) => {
-    if (!maybeKeyOrText) return null;
+  const safeTranslate = createSafeTranslate(t);
 
-    const looksLikeLiteral =
-      /\s|\(|\)|\{|\}|\[|\]|%|:|,/.test(maybeKeyOrText) ||
-      maybeKeyOrText.length > 40;
-
-    if (looksLikeLiteral) return maybeKeyOrText;
-
-    try {
-      const translated = t(maybeKeyOrText);
-      return translated ?? maybeKeyOrText;
-    } catch {
-      return maybeKeyOrText;
-    }
-  };
+  const errorToShow = touched ? safeTranslate(error) : null;
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value as any);
@@ -57,10 +45,6 @@ export const AMPTextarea: FC<IAMPTextarea<string | number>> = ({
   const handleBlur = () => {
     setTouched(true);
   };
-
-  const errorToShow = touched
-    ? safeTranslate(errorText ?? null) ?? safeTranslate(error)
-    : null;
 
   return (
     <label htmlFor={htmlFor} className="mb-5">
