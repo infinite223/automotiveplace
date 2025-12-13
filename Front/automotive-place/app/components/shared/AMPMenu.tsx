@@ -100,7 +100,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
               left: `${menuPosition.left}px`,
               zIndex: 1000,
             }}
-            className="bg-amp-800 dark:bg-amp-50 text-[11px] min-w-[180px] overflow-auto rounded-md border border-amp-800/50 dark:border-amp-200/50 py-1 font-sans font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10"
+            className="bg-amp-800 dark:bg-amp-50 text-[11px] min-w-[180px] overflow-auto rounded-md py-1 font-sans font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10"
           >
             {items.map(({ name, handleClick, icon, isDisable }, i) => (
               <li

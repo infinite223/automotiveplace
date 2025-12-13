@@ -71,6 +71,9 @@
       "Password": {
         "TooShort": "Password must be at least 6 characters long as"
       }
+    },
+    "Project": {
+      "TheProjectHasBeenSuccessfullyDeleted": "The project has been successfully deleted."
     }
   },
   "Preview": {

@@ -33,14 +33,14 @@ type TStageCreate = {
 
   hp: number;
   nm: number;
-  acc_0_100: number;
-  acc_100_200: number;
-  acc_50_150: number;
+  acc_0_100?: number;
+  acc_100_200?: number;
+  acc_50_150?: number;
 
-  sl_150_50: number;
-  sl_100_0: number;
+  sl_150_50?: number;
+  sl_100_0?: number;
 
-  stagePrice: number;
+  stagePrice?: number;
   //   chartImageUrl?: string;???
   carItems?: TCarItem[];
   createdById?: string;

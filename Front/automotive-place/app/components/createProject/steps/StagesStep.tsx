@@ -5,6 +5,7 @@ import { createStageSchema } from "@/app/api/zod.schmas";
 import { TStageCreate } from "@/app/utils/types/stage";
 import { AMPButton } from "../../shared/AMPButton";
 import { AMPSeparator } from "../../shared/AMPSeparator";
+import { ZodIssue } from "zod";
 
 interface StagesStepProps {
   onPrev: () => void;
@@ -38,6 +39,7 @@ export const StagesStep: React.FC<StagesStepProps> = ({
           },
         ]
   );
+  const [errors, setErrors] = useState<null | ZodIssue[]>(null);
 
   const updateStage = (
     index: number,
@@ -58,12 +60,6 @@ export const StagesStep: React.FC<StagesStepProps> = ({
         stageNumber: prev?.length,
         hp: 0,
         nm: 0,
-        acc_0_100: 0,
-        acc_100_200: 0,
-        acc_50_150: 0,
-        sl_150_50: 0,
-        sl_100_0: 0,
-        stagePrice: 0,
         carItems: [],
       },
     ]);
@@ -75,11 +71,25 @@ export const StagesStep: React.FC<StagesStepProps> = ({
   };
 
   useEffect(() => {
-    const allValid = stages?.every(
-      (s) => createStageSchema.safeParse(s).success
-    );
-    setIsValid(allValid);
-  }, [stages, setIsValid]);
+    if (!stages) {
+      setIsValid(false);
+      setErrors(null);
+      return;
+    }
+
+    for (const stage of stages) {
+      const result = createStageSchema.safeParse(stage);
+
+      if (!result.success) {
+        setIsValid(false);
+        setErrors(result.error.errors);
+        return;
+      }
+    }
+
+    setIsValid(true);
+    setErrors(null);
+  }, [stages]);
 
   useEffect(() => {
     registerGetData?.(() => stages);
@@ -106,89 +116,112 @@ export const StagesStep: React.FC<StagesStepProps> = ({
                 name={`Nazwa modyfikacji`}
                 value={stage.name}
                 setValue={(v) => updateStage(index, "name", v)}
+                error={errors?.find((e) => e.path.includes("name"))?.message}
               />
             </div>
             <div className="w-1/2">
               <AMPInput
                 type="number"
+                required
                 placeholder="Numer etapu"
                 name={`Numer etapu`}
                 value={stage.stageNumber}
                 setValue={(v) => updateStage(index, "stageNumber", Number(v))}
+                error={
+                  errors?.find((e) => e.path.includes("stageNumber"))?.message
+                }
               />
             </div>
           </div>
 
           <AMPTextarea
+            required
             name={`Opis etapu`}
             placeholder="Możesz tutaj opisać co zostało zmodyfikowane..."
             value={stage.description}
             setValue={(v) => updateStage(index, "description", v)}
+            error={errors?.find((e) => e.path.includes("description"))?.message}
           />
 
           <div className="grid grid-cols-4 max-md:grid-cols-2 gap-4 w-full">
             <AMPInput
+              required
               type="number"
               placeholder="HP"
               name={`Moc silnika`}
               value={stage.hp}
               setValue={(v) => updateStage(index, "hp", Number(v))}
+              error={errors?.find((e) => e.path.includes("hp"))?.message}
             />
 
             <AMPInput
               type="number"
+              required
               placeholder="Nm"
               name={`Moment obrotowy`}
               value={stage.nm}
               setValue={(v) => updateStage(index, "nm", Number(v))}
+              error={errors?.find((e) => e.path.includes("nm"))?.message}
             />
 
             <AMPInput
               type="number"
               placeholder="0–100 km/h"
               name={`Przyśpieszenie 0-100km/h (s)`}
-              value={stage.acc_0_100}
+              value={stage.acc_0_100 || ""}
               setValue={(v) => updateStage(index, "acc_0_100", Number(v))}
+              error={errors?.find((e) => e.path.includes("acc_0_100"))?.message}
             />
 
             <AMPInput
               type="number"
               placeholder="100–200 km/h"
               name={`Przyśpieszenie 100-200km/h (s)`}
-              value={stage.acc_100_200}
+              value={stage.acc_100_200 || ""}
               setValue={(v) => updateStage(index, "acc_100_200", Number(v))}
+              error={
+                errors?.find((e) => e.path.includes("acc_100_200"))?.message
+              }
             />
 
             <AMPInput
               type="number"
               placeholder="50–150 km/h"
               name={`Przyśpieszenie 50-150km/h (s)`}
-              value={stage.acc_50_150}
+              value={stage.acc_50_150 || ""}
               setValue={(v) => updateStage(index, "acc_50_150", Number(v))}
+              error={
+                errors?.find((e) => e.path.includes("acc_50_150"))?.message
+              }
             />
 
             <AMPInput
               type="number"
               placeholder="150–50 km/h"
               name={`Hamowanie 150-50km/h (s)`}
-              value={stage.sl_150_50}
+              value={stage.sl_150_50 || ""}
               setValue={(v) => updateStage(index, "sl_150_50", Number(v))}
+              error={errors?.find((e) => e.path.includes("sl_150_50"))?.message}
             />
 
             <AMPInput
               type="number"
               placeholder="100–0 km/h"
               name={`Hamowanie 100-0km/h (s)`}
-              value={stage.sl_100_0}
+              value={stage.sl_100_0 || ""}
               setValue={(v) => updateStage(index, "sl_100_0", Number(v))}
+              error={errors?.find((e) => e.path.includes("sl_100_0"))?.message}
             />
             {index !== 0 && (
               <AMPInput
                 type="number"
                 placeholder="Cena stage (zł)"
                 name={`Cena`}
-                value={stage.stagePrice}
+                value={stage.stagePrice || ""}
                 setValue={(v) => updateStage(index, "stagePrice", Number(v))}
+                error={
+                  errors?.find((e) => e.path.includes("stagePrice"))?.message
+                }
               />
             )}
           </div>

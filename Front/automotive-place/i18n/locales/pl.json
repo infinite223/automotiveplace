@@ -71,6 +71,9 @@
       "Password": {
         "TooShort": "Hasło musi mieć co najmniej 6 znaków"
       }
+    },
+    "Project": {
+      "TheProjectHasBeenSuccessfullyDeleted": "Projekt został pomyślnie usunięty."
     }
   },
   "Preview": {

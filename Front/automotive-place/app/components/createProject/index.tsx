@@ -4,7 +4,7 @@ import { createProject } from "@/app/services/project";
 import { AMPStepper } from "../shared/Stepper/AMPSteper";
 import { stepsOptions } from "./steps/config";
 import { createProjectSchema } from "@/app/api/zod.schmas";
-import { setShowCreatePost } from "@/lib/features/actions/actionsSlice";
+import { setShowCreateProject } from "@/lib/features/actions/actionsSlice";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { useDispatch } from "react-redux";
 import { CreateNotification } from "../logger/NotificationHelper";
@@ -48,12 +48,12 @@ export const CreateProjectView = () => {
     if (!findInValidResult && zodResult.success) {
       try {
         console.log(project, "proj");
-        // const res = await createProject(project);
+        const res = await createProject(project);
 
-        // if (res?.notification) {
-        //   dispatch(addNotification(JSON.stringify(res.notification)));
-        //   dispatch(setShowCreatePost(false));
-        // }
+        if (res?.notification) {
+          dispatch(addNotification(JSON.stringify(res.notification)));
+          dispatch(setShowCreateProject(false));
+        }
       } catch (error: any) {
         dispatch(
           addNotification(
