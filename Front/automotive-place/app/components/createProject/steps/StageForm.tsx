@@ -5,19 +5,8 @@ import { AMPTextarea } from "../../shared/AMPTextarea";
 import { AMPButton } from "../../shared/AMPButton";
 import { AMPSeparator } from "../../shared/AMPSeparator";
 import { TStageCreate } from "@/app/utils/types/stage";
-import { numberOrUndefined, stringOrUndefined } from "../helpers";
-
-interface StageFormProps {
-  stage: TStageCreate;
-  index: number;
-  errors?: ZodIssue[];
-  onChange: <K extends keyof TStageCreate>(
-    field: K,
-    value: TStageCreate[K]
-  ) => void;
-  onRemove: () => void;
-  onAdd: () => void;
-}
+import { numberOrUndefined } from "../helpers";
+import { StageFormProps } from "../types";
 
 export const StageForm: React.FC<StageFormProps> = ({
   stage,
@@ -41,11 +30,12 @@ export const StageForm: React.FC<StageFormProps> = ({
       <div className="flex gap-4 w-full">
         <div className="w-1/2">
           <AMPInput
+            required
             type="text"
             placeholder="Nazwa etapu np. modyfikacja sterownika"
             name="Nazwa etapu"
             value={stage.name ?? ""}
-            setValue={(v) => onChange("name", stringOrUndefined(v))}
+            setValue={(v) => onChange("name", v.toString())}
             error={error("name")}
           />
         </div>

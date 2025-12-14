@@ -27,7 +27,7 @@ type TStage = {
 };
 
 type TStageCreate = {
-  name?: string;
+  name: string;
   description: string;
   stageNumber: number;
 
