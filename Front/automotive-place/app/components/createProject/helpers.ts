@@ -44,3 +44,23 @@ export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
     forSell: false,
   };
 };
+
+/**
+ * Helper:
+ * - ""        -> undefined
+ * - "123"     -> 123
+ * - NaN/null  -> undefined
+ */
+export const numberOrUndefined = (v: string | number) => {
+  if (v === "" || v === null || Number.isNaN(Number(v))) {
+    return undefined;
+  }
+  return Number(v);
+};
+
+export const stringOrUndefined = (v: unknown) => {
+  if (typeof v !== "string") return undefined;
+
+  const trimmed = v.trim();
+  return trimmed === "" ? undefined : trimmed;
+};
