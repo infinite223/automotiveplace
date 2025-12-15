@@ -200,7 +200,7 @@ export const AMPStepper: React.FC<AMPStepperProps> = ({
           })}
         </div>
 
-        <div className="flex flex-col mb-2 overflow-auto custom-scrollbar h-[calc(100vh-280px)] max-md:h-[calc(100%-170px)]">
+        <div className="flex flex-col mb-2 overflow-auto custom-scrollbar h-[calc(100vh-280px)] max-md:h-[calc(100%-140px)]">
           <h3 className="text-xl font-semibold mb-2">
             {stepsOptions.items[currentStep].name}
           </h3>
@@ -217,9 +217,14 @@ export const AMPStepper: React.FC<AMPStepperProps> = ({
           />
         </div>
 
-        <div className="flex gap-2 items-center ml-auto">
+        <div className="flex gap-2 items-center ml-auto max-md:w-full">
           {currentStep > 0 && (
-            <AMPButton name="Cofnij" type="secondary" onClick={handlePrev} />
+            <AMPButton
+              name="Cofnij"
+              type="secondary"
+              onClick={handlePrev}
+              additionalTailwindCss="max-md:flex-1 justify-center"
+            />
           )}
 
           {!isLastStep ? (
@@ -227,12 +232,14 @@ export const AMPStepper: React.FC<AMPStepperProps> = ({
               name="Dalej"
               onClick={handleNext}
               disabled={!isCurrentStepValid}
+              additionalTailwindCss="max-md:flex-1 justify-center"
             />
           ) : (
             <AMPButton
               name="Zakończ"
               onClick={handleSubmit}
               disabled={!isCurrentStepValid}
+              additionalTailwindCss="max-md:flex-1 justify-center"
             />
           )}
         </div>

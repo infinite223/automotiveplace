@@ -22,39 +22,33 @@ export const CreatePostView = () => {
   const [errors, setErrors] = useState<null | ZodIssue[]>(null);
 
   const onSubmit = async () => {
-    setErrors(null);
-    setLoading(true);
+    try {
+      setErrors(null);
+      setLoading(true);
 
-    const validResults = validPost(post);
-    const validation = createPostSchema.safeParse(post);
-    if (!validation.success) {
-      setErrors(validation.error.errors);
-      setLoading(false);
+      const validation = createPostSchema.safeParse(post);
+      if (!validation.success) {
+        setErrors(validation.error.errors);
+        return;
+      }
 
-      return;
-    }
-
-    if (validResults.length == 0) {
       const result = await createPost(post);
 
-      if (result) {
-        if (result.notification) {
-          dispatch(addNotification(JSON.stringify(result.notification)));
-          dispatch(setShowCreatePost(false));
-        }
+      if (result?.notification) {
+        dispatch(addNotification(JSON.stringify(result.notification)));
+        dispatch(setShowCreatePost(false));
       }
-    } else {
+    } catch {
       dispatch(
         addNotification(
           JSON.stringify(
-            // TODO - update message
             CreateNotification(Status.Medium, "Coś poszło nie tak")
           )
         )
       );
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
@@ -66,7 +60,10 @@ export const CreatePostView = () => {
       <form
         className="rounded-md p-2 pr-4 pl-4 flex flex-col max-w-lg group w-[95vw] md:w-[760px]"
         noValidate
-        action={onSubmit}
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSubmit();
+        }}
       >
         <AMPInput
           name="Tytuł"
@@ -75,6 +72,7 @@ export const CreatePostView = () => {
           placeholder="Np. Zrobiłem swapa z 1.9TDI na 2.0TFSI"
           inputStyles={{ fontSize: 12 }}
           error={errors?.find((e) => e.path.includes("title"))?.message}
+          required
         />
         <AMPTextarea
           name="Opis"
@@ -85,17 +83,12 @@ export const CreatePostView = () => {
           placeholder="Np. Zrobiłem swapa z 1.9TDI na 2.0TFSI w sowim Audi A3 8L. Wymieniłem wszystkie uszczelki, wtryski i pompę. Silnik chodzi jak nowy."
           inputStyles={{ fontSize: 12, height: "150px" }}
           error={errors?.find((e) => e.path.includes("description"))?.message}
+          required
         />
-        {/* <button
-          type="submit"
-          className="mt-4 bg-teal-800 py-2 rounded-md text-white group-invalid:pointer-events-none group-invalid:opacity-50"
-          disabled={loading}
-        >
-          Dodaj post
-        </button> */}
 
         <AMPButton
-          name="Dodaj post"
+          disabled={loading}
+          name={loading ? "Dodawanie..." : "Dodaj post"}
           type="primary"
           additionalTailwindCss="justify-center"
           isSubmit

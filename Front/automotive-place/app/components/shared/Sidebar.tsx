@@ -65,7 +65,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
 
       <AMPModal
         onClose={closeModal}
-        withHeader={true}
+        withHeader={false}
         visible={isModalOpen}
         title="Wybierz opcje"
         additionalTailwindCss="bg-amp-700 dark:bg-amp-50 rounded-md"

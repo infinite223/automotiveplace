@@ -19,35 +19,33 @@ export const SelectCreateOption: FC = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex flex-col w-full pb-4 sm:w-[400px]">
+    <div className="flex flex-col w-full py-4 sm:w-[400px]">
       <OptionItem
-        name="Add Project"
+        name="Dodaj projekt"
         onClick={() => dispatch(setShowCreateProject(true))}
         icon={<ProjectIcon size={iconSize} />}
       />
 
       <OptionItem
-        name="Add Post"
+        name="Opublikuj post"
         onClick={() => dispatch(setShowCreatePost(true))}
         icon={<PostIcon size={iconSize} />}
       />
 
       <OptionItem
-        name="Add Spot"
+        name="Utórz szybki spot"
         onClick={() => {}}
         icon={<SpotIcon size={iconSize} />}
       />
 
       <OptionItem
-        name="Add Event"
+        name="Utwórz wydarzenie"
         onClick={() => {}}
         icon={<EventIcon size={iconSize} />}
       />
 
-      {/* <div className="my-3 border-t border-white/10" /> */}
-
       <OptionItem
-        name="Report problem"
+        name="Dodaj problem"
         onClick={() => {}}
         icon={<ProblemIcon size={iconSize} />}
       />
