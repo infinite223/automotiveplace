@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import prisma from "@/lib/prisma";
 import { TBasicPopularProject } from "@/app/utils/types/project";
