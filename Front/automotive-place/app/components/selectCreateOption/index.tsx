@@ -15,20 +15,28 @@ import {
 } from "@/lib/features/actions/actionsSlice";
 const iconSize = iconSizes.small;
 
-export const SelectCreateOption: FC = () => {
+export const SelectCreateOption: FC<{ closeModal: () => void }> = ({
+  closeModal,
+}) => {
   const dispatch = useDispatch();
 
   return (
     <div className="flex flex-col w-full py-4 sm:w-[400px]">
       <OptionItem
         name="Dodaj projekt"
-        onClick={() => dispatch(setShowCreateProject(true))}
+        onClick={() => {
+          closeModal();
+          dispatch(setShowCreateProject(true));
+        }}
         icon={<ProjectIcon size={iconSize} />}
       />
 
       <OptionItem
         name="Opublikuj post"
-        onClick={() => dispatch(setShowCreatePost(true))}
+        onClick={() => {
+          closeModal();
+          dispatch(setShowCreatePost(true));
+        }}
         icon={<PostIcon size={iconSize} />}
       />
 

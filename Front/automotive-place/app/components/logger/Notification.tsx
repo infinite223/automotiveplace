@@ -31,7 +31,7 @@ export const Notification: FC = () => {
 
   return (
     <div
-      className="fixed top-0 left-1/2 -translate-x-1/2 z-30 p-4 flex flex-col gap-2
+      className="fixed top-0 left-1/2 -translate-x-1/2 z-[99] p-4 flex flex-col gap-2
                 lg:left-auto lg:right-0 lg:translate-x-0 max-lg:w-screen max-w-[400px]"
     >
       <AnimatePresence>
@@ -42,15 +42,15 @@ export const Notification: FC = () => {
             animate={{ opacity: 1, translateY: 0 }}
             exit={{ opacity: 0, translateY: 20 }}
             transition={{ duration: 0.5 }}
-            className="border-2 border-amp-800 dark:border-amp-200 bg-amp-900 dark:bg-amp-0 p-2 rounded-sm shadow-lg"
+            className="bg-amp-900 dark:bg-amp-100 p-2 px-3 rounded-sm shadow-lg"
           >
             <div className="flex flex-col gap-2 text-black dark:text-white">
               <div className="flex items-center gap-3 justify-between w-full">
                 <NotificationIcon {...notification} />
                 <h3 className="text-sm">{t(notification.log.title)}</h3>
-                <div className="text-[11px] font-thin bg-amp-800 dark:bg-amp-100">
+                {/* <div className="text-[11px] font-thin bg-amp-800 dark:bg-amp-100">
                   {moment(notification.log.date).calendar()}
-                </div>
+                </div> */}
               </div>
               {notification.log.message && (
                 <p className="text-[11px] font-light">

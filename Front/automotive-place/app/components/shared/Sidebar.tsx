@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { LuSearch } from "react-icons/lu";
 import { BiSolidCarGarage } from "react-icons/bi";
 import { RiPlayListAddLine } from "react-icons/ri";
@@ -28,7 +28,6 @@ import Logo from "../../../asets/logo_2.png";
 import Image from "next/image";
 import { CreatePostView } from "../createPost";
 import { CreateProjectView } from "../createProject";
-import { IoNotifications } from "react-icons/io5";
 import { useScrollDirection } from "@/app/hooks/useScrollDirection";
 import Link from "next/link";
 import { Yant } from "@/app/utils/helpers/fontsHelper";
@@ -71,7 +70,7 @@ export const SideBar: FC<ISideBar> = ({}) => {
         additionalTailwindCss="bg-amp-700 dark:bg-amp-50 rounded-md"
         defoultBG={false}
       >
-        <SelectCreateOption />
+        <SelectCreateOption closeModal={closeModal} />
       </AMPModal>
 
       <AMPModal

@@ -29,7 +29,6 @@ export const ContentMiniFooter = ({
 }: IContentMiniFooter) => {
   return (
     <nav className="flex flex-col items-center justify-between w-full mt-1 pb-2 pl-3 pr-1">
-      {/* <AMPSeparator /> */}
       <div className="flex items-center justify-between w-full text-zinc-700  dark:text-zinc-300">
         <div className="flex items-center gap-3">
           <div className="flex flex-col gap-2">
