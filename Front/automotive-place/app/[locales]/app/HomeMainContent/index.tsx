@@ -17,14 +17,17 @@ import { getLoggedInUser } from "@/lib/actions/user.actions";
 import useOnScreen from "@/app/hooks/useOnScreen";
 import { ContentType } from "@/app/utils/enums";
 import { useTranslations } from "next-intl";
-import { useMainContent } from "@/app/hooks/useMainContent";
+import {
+  QUERY_KEY_MAIN_CONTENT,
+  useMainContent,
+} from "@/app/hooks/useMainContent";
 import { ContentTypeFilter } from "./ContentTypeFilter";
-import { SlMenu } from "react-icons/sl";
 import { iconSizes } from "@/app/utils/constants";
 import Logo from "../../../../asets/logo_2.png";
 import { Yant } from "@/app/utils/helpers/fontsHelper";
 import Image from "next/image";
 import { IoNotifications } from "react-icons/io5";
+import { useQueryClient } from "@tanstack/react-query";
 
 const headerMap: Record<ContentType, string> = {
   [ContentType.Project]: "Najnowsze projekty",
@@ -47,6 +50,8 @@ export const HomeMainContent = () => {
   const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
     useMainContent();
 
+  const queryClient = useQueryClient();
+
   useEffect(() => {
     if (data) {
       const all = (data as any)?.pages?.flatMap((page: any) => page.data) ?? [];
@@ -54,6 +59,7 @@ export const HomeMainContent = () => {
       setLocalContent(all);
     }
   }, [data]);
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (
@@ -100,6 +106,20 @@ export const HomeMainContent = () => {
     return item.type === activeFilter;
   });
 
+  const onDelete = (id: string) => {
+    queryClient.setQueryData([QUERY_KEY_MAIN_CONTENT], (oldData: any) => {
+      if (!oldData) return oldData;
+
+      return {
+        ...oldData,
+        pages: oldData.pages.map((page: any) => ({
+          ...page,
+          data: page.data.filter((el: any) => el.data.id !== id),
+        })),
+      };
+    });
+  };
+
   return (
     <div
       id="content-container"
@@ -131,11 +151,7 @@ export const HomeMainContent = () => {
               <ContentSelect
                 content={item}
                 userId={userId}
-                onDelete={(id) =>
-                  setLocalContent((prev) =>
-                    prev.filter((el) => el.data.id !== id)
-                  )
-                }
+                onDelete={onDelete}
               />
             </div>
           </div>
@@ -200,7 +216,11 @@ export const ContentSelect = ({
     case ContentType.Post:
       if (isTBasicPost(data)) {
         return (
-          <PostMiniView data={data} isUserContent={userId === data.author.id} />
+          <PostMiniView
+            data={data}
+            isUserContent={userId === data.author.id}
+            onDelete={onDelete}
+          />
         );
       }
       console.error(type, errorText);

@@ -9,6 +9,7 @@ import { addNotification } from "@/lib/features/notifications/notificationsSlice
 import { useDispatch } from "react-redux";
 import { useQueryClient } from "@tanstack/react-query";
 import { deletePost } from "@/app/services/post";
+import { useState } from "react";
 
 export const PostMiniView = ({
   data,
@@ -19,6 +20,8 @@ export const PostMiniView = ({
   isUserContent: boolean;
   onDelete?: (id: string) => void;
 }) => {
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const { currentIsLiked, currentLikesCount, handleClickLike } = useLike(
     data.likesCount,
     data.isLikedByAuthUser,
@@ -33,6 +36,8 @@ export const PostMiniView = ({
 
   const handleClickDelete = async () => {
     try {
+      setIsDeleting(true);
+
       const res = await deletePost(data.id);
 
       const newN = CreateNotification(Status.Success, res.message);
@@ -41,14 +46,19 @@ export const PostMiniView = ({
 
       if (onDelete) onDelete(data.id);
     } catch (error: any) {
-      console.log(error, "error");
       const newN = CreateNotification(Status.Low, error);
       dispatch(addNotification(JSON.stringify(newN)));
+    } finally {
+      setIsDeleting(false);
     }
   };
 
   return (
-    <div className="flex flex-col w-full gap-1">
+    <div
+      className={`flex flex-col w-full h-full gap-1 transition-opacity duration-300 ${
+        isDeleting ? "opacity-40 pointer-events-none" : "opacity-100"
+      }`}
+    >
       <ContentMiniNav
         createdAt={data.lastUpdateAt}
         handleClickInterestingContent={handleClickInterestingContent}

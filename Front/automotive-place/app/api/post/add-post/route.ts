@@ -60,16 +60,6 @@ export async function POST(request: NextRequest) {
 }
 
 async function createPost(post: TPostCreate, authorId: string) {
-  // const tagData: Prisma.TagUncheckedCreateWithoutProjectInput[] =
-  //   tags?.map((tag) => ({
-  //     name: tag.name,
-  //     createdAt: new Date(),
-  //     updatedAt: new Date(),
-  //     authorId: tag.authorId,
-  //     projectId: tag.projectId || "",
-  //     carItemId: tag.carItemId || "",
-  //   })) || [];
-
   let newPost;
   try {
     newPost = await prisma.post.create({
@@ -78,6 +68,7 @@ async function createPost(post: TPostCreate, authorId: string) {
         content: post.description,
         isProblem: false,
         published: true,
+        authorId,
       },
     });
 

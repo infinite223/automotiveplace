@@ -6,3 +6,10 @@ We need design min two tables for:
 - creating a route with the best places
 
 - delete project not working localy
+- Trips:
+  name
+  description
+  projects
+  locations[] with media[]
+  date -> done?
+  like
