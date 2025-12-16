@@ -2,7 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { getMainContentDataForUser } from "@/app/services/content";
 import { TContentData } from "@/app/utils/types";
 
-type MainContentResponse = {
+export type MainContentResponse = {
   data: TContentData[];
   hasMore: boolean;
 };

@@ -18,6 +18,7 @@ import useOnScreen from "@/app/hooks/useOnScreen";
 import { ContentType } from "@/app/utils/enums";
 import { useTranslations } from "next-intl";
 import {
+  MainContentResponse,
   QUERY_KEY_MAIN_CONTENT,
   useMainContent,
 } from "@/app/hooks/useMainContent";
@@ -35,16 +36,17 @@ const headerMap: Record<ContentType, string> = {
   [ContentType.Problem]: "Najnowsze problemy",
   [ContentType.Spot]: "Najnowsze spoty",
   [ContentType.Event]: "Najnowsze wydarzenia",
+  [ContentType.Trip]: "Najnowsze tripy",
 };
 
 export const HomeMainContent = () => {
-  const lastElementRef = useRef<HTMLDivElement>(null);
+  const [userId, setUserId] = useState<string | null>(null);
   const [lastSeenId, setLastSeenId] = useState<string | null>(null);
   const [localContent, setLocalContent] = useState<TContentData[]>([]);
   const [activeFilter, setActiveFilter] = useState<ContentType | "All">("All");
 
+  const lastElementRef = useRef<HTMLDivElement>(null);
   const isLastElementVisible = useOnScreen(lastElementRef);
-  const [userId, setUserId] = useState<string | null>(null);
   const t = useTranslations();
 
   const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
@@ -112,9 +114,9 @@ export const HomeMainContent = () => {
 
       return {
         ...oldData,
-        pages: oldData.pages.map((page: any) => ({
+        pages: oldData.pages.map((page: MainContentResponse) => ({
           ...page,
-          data: page.data.filter((el: any) => el.data.id !== id),
+          data: page.data.filter((el) => el.data.id !== id),
         })),
       };
     });

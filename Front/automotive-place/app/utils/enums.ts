@@ -24,6 +24,7 @@ enum ContentType {
   Spot = "Spot",
   Post = "Post",
   Event = "Event",
+  Trip = "Trip",
 }
 
 export const EngineParameter = {

@@ -5,8 +5,9 @@ import {
   FaCalendarAlt as EventIcon,
 } from "react-icons/fa";
 import { FaCarRear as ProjectIcon } from "react-icons/fa6";
+import { FaRoute as TripIcon } from "react-icons/fa";
 
-export { EventIcon, ProjectIcon, PostIcon, ProblemIcon, SpotIcon };
+export { EventIcon, ProjectIcon, PostIcon, ProblemIcon, SpotIcon, TripIcon };
 
 export const iconSizes = {
   small: 18,

@@ -11,6 +11,7 @@ import {
   ProblemIcon,
   ProjectIcon,
   SpotIcon,
+  TripIcon,
 } from "@/app/utils/constants";
 
 type Props = {
@@ -26,6 +27,7 @@ export const ContentTypeFilter = ({ active, onChange }: Props) => {
     [ContentType.Problem]: <ProblemIcon size={iconSizes.small} />,
     [ContentType.Spot]: <SpotIcon size={iconSizes.small} />,
     [ContentType.Event]: <EventIcon size={iconSizes.small} />,
+    [ContentType.Trip]: <TripIcon size={iconSizes.small} />,
   };
 
   const items: { label: string; type: ContentType | "All" }[] = [
@@ -35,6 +37,7 @@ export const ContentTypeFilter = ({ active, onChange }: Props) => {
     { label: "Problem", type: ContentType.Problem },
     { label: "Spot", type: ContentType.Spot },
     { label: "Event", type: ContentType.Event },
+    { label: "Trips", type: ContentType.Trip },
   ];
 
   return (
