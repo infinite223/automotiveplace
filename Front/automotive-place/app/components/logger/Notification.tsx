@@ -2,7 +2,6 @@
 
 import { removeNotification } from "@/lib/features/notifications/notificationsSlice";
 import { RootState } from "@/lib/store";
-import moment from "moment";
 import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";

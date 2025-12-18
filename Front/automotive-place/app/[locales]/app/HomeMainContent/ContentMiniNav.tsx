@@ -3,7 +3,7 @@ import moment from "moment";
 import "moment/locale/pl";
 import Image from "next/image";
 import { MdSaveAlt, MdOutlineReport, MdOutlineEdit } from "react-icons/md";
-import { IoMdShare, IoMdClose } from "react-icons/io";
+import { IoMdShare } from "react-icons/io";
 import { CiTrash } from "react-icons/ci";
 import { AMPMenu } from "@/app/components/shared/AMPMenu";
 import { iconSizes } from "@/app/utils/constants";

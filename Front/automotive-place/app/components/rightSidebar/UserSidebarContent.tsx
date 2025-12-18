@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { useLoggedInUser } from "@/app/hooks/useLoggedInUser";
 import { useRouter } from "next/navigation";
 import { AMPSeparator } from "../shared/AMPSeparator";
-import { IoPersonCircle, IoSettings, IoSettingsOutline } from "react-icons/io5";
+import { IoPersonCircle, IoSettingsOutline } from "react-icons/io5";
 import { iconSizes } from "@/app/utils/constants";
 import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";

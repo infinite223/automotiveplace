@@ -17,7 +17,7 @@ import AMPModal from "./AMPModal";
 import { SelectCreateOption } from "../selectCreateOption";
 import { iconSizes } from "@/app/utils/constants";
 import { SlMenu } from "react-icons/sl";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { RootState } from "@/lib/store";
 import {
@@ -37,8 +37,6 @@ interface ISideBar {}
 
 export const SideBar: FC<ISideBar> = ({}) => {
   const dispatch = useDispatch();
-  const t = useTranslations();
-  const router = useRouter();
   const pathname = usePathname();
 
   const [isModalOpen, setIsModalOpen] = useState(false);

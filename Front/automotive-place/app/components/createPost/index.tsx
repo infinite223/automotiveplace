@@ -4,7 +4,6 @@ import { AMPTextarea } from "../shared/AMPTextarea";
 import { AMPHelpFooter } from "../shared/AMPHelpFooter";
 import { useDispatch } from "react-redux";
 import { postData } from "@/app/utils/data";
-import { validPost } from "./Validation";
 import { TPostCreate } from "@/app/utils/types/post";
 import { createPost } from "@/app/services/post";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
