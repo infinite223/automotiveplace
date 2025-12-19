@@ -30,7 +30,6 @@ export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
     transmissionName: engine.transmissionName,
     transmissionType: engine.transmissionType,
 
-    // Reszta na razie na sztywno
     imagesCount: 0,
 
     stages,

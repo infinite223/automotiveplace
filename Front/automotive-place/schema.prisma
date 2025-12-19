@@ -395,3 +395,30 @@ enum LikeableType {
   SPOT
   COMPANY
 }
+
+// Concept 
+// model Trip {
+//   id               String      @id @default(cuid())
+//   name             String
+//   description      String?
+//   createdAt        DateTime    @default(now())
+//   updatedAt        DateTime    @updatedAt
+
+//   startDate        DateTime?
+//   endDate          DateTime?
+//   isDone           Boolean     @default(false)
+
+//   authorId         String
+//   isVisible        Boolean     @default(true)
+//   isBlockedByAdmin Boolean?
+//   reportId         String?
+
+//   author           User        @relation(fields: [authorId], references: [id])
+
+//   projects         TripProject[]
+//   locations        TripLocation[]
+//   media            Media[]
+
+//   userActivity     UserActivity[]
+//   tagAssignments   TagAssignment[]
+// }

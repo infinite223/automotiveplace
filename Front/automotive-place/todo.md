@@ -13,3 +13,4 @@ We need design min two tables for:
   locations[] with media[]
   date -> done?
   like
+- remove "all" option -> add req for projects, posts....
