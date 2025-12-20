@@ -31,13 +31,13 @@ export const ContentTypeFilter = ({ active, onChange }: Props) => {
   };
 
   const items: { label: string; type: ContentType | "All" }[] = [
-    { label: "All", type: "All" },
     { label: "Project", type: ContentType.Project },
     { label: "Post", type: ContentType.Post },
     { label: "Problem", type: ContentType.Problem },
     { label: "Spot", type: ContentType.Spot },
     { label: "Event", type: ContentType.Event },
     { label: "Trips", type: ContentType.Trip },
+    { label: "All", type: "All" },
   ];
 
   return (

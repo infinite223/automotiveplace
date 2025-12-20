@@ -43,7 +43,9 @@ export const HomeMainContent = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [lastSeenId, setLastSeenId] = useState<string | null>(null);
   const [localContent, setLocalContent] = useState<TContentData[]>([]);
-  const [activeFilter, setActiveFilter] = useState<ContentType | "All">("All");
+  const [activeFilter, setActiveFilter] = useState<ContentType | "All">(
+    ContentType.Project
+  );
 
   const lastElementRef = useRef<HTMLDivElement>(null);
   const isLastElementVisible = useOnScreen(lastElementRef);
@@ -207,7 +209,7 @@ export const ContentSelect = ({
           />
         );
       }
-      console.error(type, errorText);
+      console.error(type, errorText, data);
       return null;
     case ContentType.Problem:
       if (isTProblem(data)) {

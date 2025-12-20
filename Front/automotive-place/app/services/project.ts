@@ -51,7 +51,7 @@ export const deleteProject = async (
 };
 
 export const getProject = async (id: string) => {
-  const response = await fetch(`${apiEndpoints.getProjects}?id=${id}`, {
+  const response = await fetch(`${apiEndpoints.getProject}?id=${id}`, {
     next: { revalidate: 60 },
   });
   if (!response.ok) {

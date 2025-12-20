@@ -102,8 +102,7 @@ function isTBasicProject(data: any): data is TBasicProject {
       typeof data.isVisible === "boolean" &&
       typeof data.carMake === "string" &&
       typeof data.carModel === "string" &&
-      typeof data.description === "string" &&
-      typeof data.isVerified === "boolean" &&
+      // typeof data.isVerified === "boolean" &&
       typeof data.likesCount === "number" &&
       typeof data.engineNameAndCapacity === "string" &&
       typeof data.isLikedByAuthUser === "boolean" &&
@@ -113,9 +112,8 @@ function isTBasicProject(data: any): data is TBasicProject {
       typeof data.stageNumber === "number" &&
       typeof data.engineStockNm === "number" &&
       typeof data.acc_0_100 === "number") ||
-    (data.acc_0_100 === null && typeof data.acc_100_200 === "number") ||
-    (data.acc_100_200 === null &&
-      (Array.isArray(data.images) || data.images === undefined))
+    typeof data.acc_100_200 === "number" ||
+    (Array.isArray(data.images) && data.images > 0)
   );
 }
 
