@@ -70,7 +70,7 @@ export async function DELETE(
     });
 
     return NextResponse.json({
-      message: "Post has been successfully deleted",
+      message: "Post.PostHasBeenSuccessfullyDeleted",
       deletedPostId: postId,
     });
   } catch (error) {

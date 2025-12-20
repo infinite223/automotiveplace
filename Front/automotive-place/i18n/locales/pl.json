@@ -74,6 +74,9 @@
     },
     "Project": {
       "TheProjectHasBeenSuccessfullyDeleted": "Projekt został pomyślnie usunięty."
+    },
+    "Post": {
+      "PostHasBeenSuccessfullyDeleted": "Post został usunięty pomyślnie."
     }
   },
   "Preview": {

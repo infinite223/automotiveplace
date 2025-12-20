@@ -1,4 +1,4 @@
-import { TPostCreate } from "../utils/types/post";
+import { TBasicPost, TPostCreate } from "../utils/types/post";
 import { apiEndpoints } from "./api.endpoints";
 
 export const createPost = async (post: TPostCreate, locale: string = "en") => {
@@ -31,5 +31,18 @@ export const deletePost = async (postId: string, locale: string = "en") => {
   }
 
   const result = await response.json();
+  return result;
+};
+
+export const getPosts = async () => {
+  const response = await fetch(apiEndpoints.getPosts, {
+    next: { revalidate: 60 },
+  });
+  if (!response.ok) {
+    throw new Error("Failed to get data");
+  }
+
+  const result: TBasicPost[] = await response.json();
+  console.log(result, "result getPosts");
   return result;
 };
