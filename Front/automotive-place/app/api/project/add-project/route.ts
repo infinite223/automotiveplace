@@ -15,31 +15,16 @@ export async function POST(request: NextRequest) {
   if (!user) {
     return NextResponse.json(
       { message: "YouMustBeLoggedInToUseThisFunctionality" },
-      {
-        status: 404,
-        statusText: "Unauthorized",
-      }
+      { status: 404 }
     );
   }
 
   const project: TProjectCreate = await request.json();
-  let notification: ICreateNotification | null = {
-    log: {
-      date: new Date(),
-      status: Status.Low,
-      title: "Coś poszło nie tak",
-    },
-    timer: 3000,
-  };
-  let newProject = null;
 
-  const author = await prisma.user.findFirst();
-  // TODO - change validation in all routes to zod
   const validProject = createProjectSchema.safeParse(project);
-
   if (!validProject.success) {
     return NextResponse.json({
-      project: newProject,
+      project: null,
       notification: CreateNotification(
         Status.Medium,
         validProject.error.message
@@ -47,29 +32,32 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  if (author?.id) {
-    if (author?.id) {
-      try {
-        newProject = await createProject(project, author.id);
-        await createContentForUser(
-          newProject.id,
-          ContentType.Project,
-          author.id
-        );
+  const author = await prisma.user.findFirst();
 
-        notification.log = {
+  if (!author?.id) {
+    return NextResponse.json({ message: "Author not found" }, { status: 404 });
+  }
+
+  try {
+    const newProject = await createProject(project, author.id);
+
+    await createContentForUser(newProject.id, ContentType.Project, author.id);
+
+    return NextResponse.json({
+      project: newProject,
+      notification: {
+        log: {
           status: Status.Success,
           date: new Date(),
           title: "Projekt został dodany pomyślnie",
-        };
-
-        return NextResponse.json({ project: newProject, notification });
-      } catch (error: any) {
-        return NextResponse.json(
-          { message: error.message || "Unknown error while creating project" },
-          { status: 400 }
-        );
-      }
-    }
+        },
+        timer: 3000,
+      },
+    });
+  } catch (error: any) {
+    return NextResponse.json(
+      { message: error.message ?? "Unknown error" },
+      { status: 400 }
+    );
   }
 }

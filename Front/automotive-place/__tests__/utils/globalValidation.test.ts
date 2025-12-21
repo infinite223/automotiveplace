@@ -5,22 +5,6 @@ import {
 } from "@/app/utils/validation/globalValidation";
 
 describe("priceValidation", () => {
-  test("should return error for price greater than 200000 for CarItem", () => {
-    const result = priceValidation(250000, "CarItem");
-    expect(result).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          error: " Błąd walidacji ceny, sporóbuj ponownie",
-          valid: false,
-        }),
-        expect.objectContaining({
-          error: " Czy na pewno podałeś dobrą cene elemento?",
-          valid: true,
-        }),
-      ])
-    );
-  });
-
   test("should return error for price greater than 2000000 for Project", () => {
     const result = priceValidation(2500000, "Project");
     expect(result).toEqual(

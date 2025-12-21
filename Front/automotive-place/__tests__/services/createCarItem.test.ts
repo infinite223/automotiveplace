@@ -1,6 +1,7 @@
 import { createCarItem, ICreateCarItemResponse } from "@/app/services/carItem";
 import { ItemTypes, TCarItemCreate } from "@/app/utils/types/carItem";
 import { generateRandomCarItemsToCreate } from "@/app/utils/data/carItem";
+import { Status } from "@/app/utils/enums";
 
 describe("createCarItem", () => {
   beforeEach(() => {
