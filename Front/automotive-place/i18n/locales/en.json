@@ -82,5 +82,10 @@
   "Preview": {
     "title": "Application created to connect the automotive community to one common place.",
     "SeeDemoVesion": "See demo version"
+  },
+  "zod": {
+    "tooSmall": "At least {min} characters required",
+    "tooBig": "At most {max} characters allowed",
+    "email": "Invalid email"
   }
 }

@@ -32,12 +32,16 @@ import { useScrollDirection } from "@/app/hooks/useScrollDirection";
 import Link from "next/link";
 import { Yant } from "@/app/utils/helpers/fontsHelper";
 import { scrollContainerToTop } from "@/app/utils/helpers/navigationHelper";
+import z from "zod";
+import { createZodErrorMap } from "@/app/api/zodErrorMap";
 
 interface ISideBar {}
 
 export const SideBar: FC<ISideBar> = ({}) => {
   const dispatch = useDispatch();
   const pathname = usePathname();
+  const t = useTranslations();
+  z.setErrorMap(createZodErrorMap(t));
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showCreateProject = useSelector(

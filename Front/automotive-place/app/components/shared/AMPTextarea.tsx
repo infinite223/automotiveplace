@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
-import React, { CSSProperties, FC, useState } from "react";
-import { createSafeTranslate } from "./createSafeTranslate";
+import React, { CSSProperties, FC, useState, useEffect } from "react";
+import { TValidResult } from "@/app/utils/types";
 
 interface IAMPTextarea<TValue> {
   value: TValue;
@@ -15,6 +15,7 @@ interface IAMPTextarea<TValue> {
   inputStyles?: CSSProperties;
   resize?: "resize-y" | "resize-none";
   error?: string | null;
+  validFunction?: (value: string | number) => TValidResult[];
 }
 
 export const AMPTextarea: FC<IAMPTextarea<string | number>> = ({
@@ -30,21 +31,33 @@ export const AMPTextarea: FC<IAMPTextarea<string | number>> = ({
   inputStyles,
   resize = "resize-none",
   error = null,
+  validFunction = () => [],
 }) => {
   const t = useTranslations();
   const [touched, setTouched] = useState(false);
+  const [localErrorText, setLocalErrorText] = useState<string | null>(null);
 
-  const safeTranslate = createSafeTranslate(t);
-
-  const errorToShow = touched ? safeTranslate(error) : null;
+  useEffect(() => {
+    const firstLocal = validFunction(String(value || ""))[0]?.error ?? null;
+    setLocalErrorText(firstLocal);
+  }, [value, validFunction]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value as any);
+
+    if (touched) {
+      const firstLocal = validFunction(e.target.value)[0]?.error ?? null;
+      setLocalErrorText(firstLocal);
+    }
   };
 
   const handleBlur = () => {
     setTouched(true);
+    const firstLocal = validFunction(String(value || ""))[0]?.error ?? null;
+    setLocalErrorText(firstLocal);
   };
+
+  const errorToShow = touched ? error || localErrorText : null;
 
   return (
     <label htmlFor={htmlFor} className="mb-5">

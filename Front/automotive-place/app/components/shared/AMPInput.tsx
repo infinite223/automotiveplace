@@ -1,7 +1,6 @@
 import { TValidResult } from "@/app/utils/types";
 import { useTranslations } from "next-intl";
 import React, { CSSProperties, FC, useEffect, useState } from "react";
-import { createSafeTranslate } from "./createSafeTranslate";
 
 interface IAMPInput<TValue> {
   value: TValue;
@@ -69,9 +68,7 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
     setLocalErrorText(firstLocal);
   };
 
-  const safeTranslate = createSafeTranslate(t);
-
-  const errorToShow = touched ? safeTranslate(error) : null;
+  const errorToShow = touched ? localErrorText || error : null;
 
   return (
     <label htmlFor={htmlFor} className={`${marginBotton}`}>
@@ -80,6 +77,7 @@ export const AMPInput: FC<IAMPInput<string | number>> = ({
       <input
         type={type}
         name={name}
+        aria-label={name}
         value={value}
         onChange={handleChange}
         onBlur={handleBlur}

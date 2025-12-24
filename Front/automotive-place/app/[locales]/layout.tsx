@@ -1,10 +1,12 @@
-import { NextIntlClientProvider } from "next-intl";
+import { NextIntlClientProvider, useTranslations } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Providers } from "../StoreProvider";
 import { Notification } from "../components/logger/Notification";
 import { DevLogin } from "../components/devLogin";
 import { GlobalLoadingView } from "../components/loading/GlobalLoadingView";
 import { ReactQueryProvider } from "./app/providers";
+import { createZodErrorMap } from "../api/zodErrorMap";
+import z from "zod";
 
 export default async function LocaleLayout({
   children,

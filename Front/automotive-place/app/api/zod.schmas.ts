@@ -96,7 +96,7 @@ export const userLoginSchema = z.object({
 });
 
 export const createPostSchema = z.object({
-  title: z.string().min(3).max(50).optional(),
-  description: z.string().min(3).max(500).optional(),
+  title: z.string().min(3).max(50),
+  description: z.string().min(3).max(500),
   isVisible: z.boolean().optional(),
 });

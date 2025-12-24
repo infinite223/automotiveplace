@@ -1,36 +1,69 @@
+"use client";
+
 import React, { useState } from "react";
-import { AMPInput } from "./../shared/AMPInput";
+import { useDispatch } from "react-redux";
+import { ZodIssue } from "zod";
+
+import { AMPInput } from "../shared/AMPInput";
 import { AMPTextarea } from "../shared/AMPTextarea";
 import { AMPHelpFooter } from "../shared/AMPHelpFooter";
-import { useDispatch } from "react-redux";
+import { AMPButton } from "../shared/AMPButton";
+
 import { postData } from "@/app/utils/data";
 import { TPostCreate } from "@/app/utils/types/post";
 import { createPost } from "@/app/services/post";
+import { createPostSchema } from "@/app/api/zod.schmas";
+
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { CreateNotification } from "../logger/NotificationHelper";
 import { setShowCreatePost } from "@/lib/features/actions/actionsSlice";
-import { ZodIssue } from "zod";
-import { createPostSchema } from "@/app/api/zod.schmas";
-import { AMPButton } from "../shared/AMPButton";
 import { Status } from "@/app/utils/enums";
+import { zodValidFunction } from "@/app/api/zodValidFunction";
+
+type FormErrors = Partial<Record<keyof TPostCreate, string>>;
 
 export const CreatePostView = () => {
   const dispatch = useDispatch();
+
   const [post, setPost] = useState<TPostCreate>(postData);
+  const [errors, setErrors] = useState<FormErrors>({});
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<null | ZodIssue[]>(null);
+
+  const validateField = (field: keyof TPostCreate, value: string) => {
+    const partialData = { ...post, [field]: value };
+
+    const result = createPostSchema.safeParse(partialData);
+
+    if (result.success) {
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+      return;
+    }
+
+    const fieldError = result.error.errors.find((e) => e.path[0] === field);
+
+    setErrors((prev) => ({
+      ...prev,
+      [field]: fieldError?.message,
+    }));
+  };
 
   const onSubmit = async () => {
+    setLoading(true);
+
+    const validation = createPostSchema.safeParse(post);
+
+    if (!validation.success) {
+      const mappedErrors: FormErrors = {};
+      validation.error.errors.forEach((e: ZodIssue) => {
+        const field = e.path[0] as keyof TPostCreate;
+        mappedErrors[field] = e.message;
+      });
+      setErrors(mappedErrors);
+      setLoading(false);
+      return;
+    }
+
     try {
-      setErrors(null);
-      setLoading(true);
-
-      const validation = createPostSchema.safeParse(post);
-      if (!validation.success) {
-        setErrors(validation.error.errors);
-        return;
-      }
-
       const result = await createPost(post);
 
       if (result?.notification) {
@@ -55,9 +88,8 @@ export const CreatePostView = () => {
       className="flex justify-center text-sm rounded-md max-md:h-screen max-md:w-screen sm:w-[400px]"
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="w-[250px] h-[11/12] p-3 pr-4 rounded-sm border-r border-zinc-700 ml-2 hidden"></div>
       <form
-        className="rounded-md p-2 pr-4 pl-4 flex flex-col max-w-lg group w-[95vw] md:w-[760px]"
+        className="rounded-md p-4 flex flex-col gap-3 w-[95vw] md:w-[760px]"
         noValidate
         onSubmit={(e) => {
           e.preventDefault();
@@ -66,23 +98,38 @@ export const CreatePostView = () => {
       >
         <AMPInput
           name="Tytuł"
-          setValue={(value) => setPost({ ...post, title: value.toString() })}
           value={post.title}
           placeholder="Np. Zrobiłem swapa z 1.9TDI na 2.0TFSI"
           inputStyles={{ fontSize: 12 }}
-          error={errors?.find((e) => e.path.includes("title"))?.message}
           required
+          error={errors.title}
+          setValue={(value) => {
+            const val = value.toString();
+            setPost((prev) => ({ ...prev, title: val }));
+
+            if (errors.title) {
+              validateField("title", val);
+            }
+          }}
+          validFunction={zodValidFunction(createPostSchema, "title")}
         />
+
         <AMPTextarea
           name="Opis"
-          setValue={(value) =>
-            setPost({ ...post, description: value.toString() })
-          }
           value={post.description}
-          placeholder="Np. Zrobiłem swapa z 1.9TDI na 2.0TFSI w sowim Audi A3 8L. Wymieniłem wszystkie uszczelki, wtryski i pompę. Silnik chodzi jak nowy."
+          placeholder="Np. Zrobiłem swapa z 1.9TDI..."
           inputStyles={{ fontSize: 12, height: "150px" }}
-          error={errors?.find((e) => e.path.includes("description"))?.message}
           required
+          error={errors.description}
+          setValue={(value) => {
+            const val = value.toString();
+            setPost((prev) => ({ ...prev, description: val }));
+
+            if (errors.description) {
+              validateField("description", val);
+            }
+          }}
+          validFunction={zodValidFunction(createPostSchema, "description")}
         />
 
         <AMPButton
