@@ -7,6 +7,7 @@ import { formatNumber } from "@/app/utils/helpers/numbersHelper";
 import { sortStagesByStageNumber } from "@/app/utils/helpers/stagesHelper";
 import { TStage } from "@/app/utils/types/stage";
 import moment from "moment";
+import { Tooltip } from "react-tooltip";
 
 interface StagesTabProps {
   stages: TStage[];
@@ -57,14 +58,17 @@ export default function StagesTab({ stages }: StagesTabProps) {
                     label="Moc silnika"
                     value={`${stage.hp} ${EngineParameter.PowerPs}`}
                     difference={!isBase ? stage.hp - baseStage.hp : undefined}
+                    baseValue={baseStage.hp}
                   />
                   <Item
                     label="Moment obrotowy"
                     value={`${stage.nm} ${EngineParameter.TorqueNm}`}
                     difference={!isBase ? stage.nm - baseStage.nm : undefined}
+                    baseValue={baseStage.nm}
                   />
                   <Item
                     label="0–100 km/h"
+                    description="Przyspieszenie"
                     value={`${formatNumber(stage.acc_0_100)} s`}
                     difference={
                       !isBase
@@ -74,6 +78,7 @@ export default function StagesTab({ stages }: StagesTabProps) {
                   />
                   <Item
                     label="100–200 km/h"
+                    description="Przyspieszenie"
                     value={`${formatNumber(stage.acc_100_200)} s`}
                     difference={
                       !isBase
@@ -83,6 +88,7 @@ export default function StagesTab({ stages }: StagesTabProps) {
                   />
                   <Item
                     label="50–150 km/h"
+                    description="Przyspieszenie"
                     value={`${formatNumber(stage.acc_50_150)} s`}
                     difference={
                       !isBase
@@ -90,6 +96,35 @@ export default function StagesTab({ stages }: StagesTabProps) {
                         : undefined
                     }
                   />
+
+                  {stage.sl_100_0 && (
+                    <Item
+                      label="100–0 km/h"
+                      description="Droga hamowania"
+                      value={`${formatNumber(stage.sl_100_0)} s`}
+                      difference={
+                        !isBase
+                          ? (baseStage.sl_100_0 ? baseStage.sl_100_0 : 0) -
+                            stage.sl_100_0
+                          : undefined
+                      }
+                    />
+                  )}
+
+                  {stage.sl_150_50 && (
+                    <Item
+                      label="150–50 km/h"
+                      description="Droga hamowania"
+                      value={`${formatNumber(stage.sl_150_50)} s`}
+                      difference={
+                        !isBase
+                          ? (baseStage.sl_150_50 ? baseStage.sl_150_50 : 0) -
+                            stage.sl_150_50
+                          : undefined
+                      }
+                    />
+                  )}
+
                   {stage.maxRPM && baseStage.maxRPM && (
                     <Item
                       label="Max RPM"
@@ -157,12 +192,21 @@ export default function StagesTab({ stages }: StagesTabProps) {
 
 type ItemProps = {
   label: string;
+  description?: string;
   value: string | number | undefined;
   difference?: number;
+  baseValue?: number;
 };
 
-function Item({ label, value, difference }: ItemProps) {
+function Item({ label, description, value, difference, baseValue }: ItemProps) {
   if (!value) return null;
+
+  const diffPercent =
+    difference !== undefined && baseValue !== undefined && baseValue !== 0
+      ? Math.round((Math.abs(difference) / baseValue) * 100)
+      : null;
+
+  const isOver40Percent = diffPercent !== null && diffPercent >= 40;
 
   const formattedDiff =
     difference !== undefined && !isNaN(difference)
@@ -171,15 +215,46 @@ function Item({ label, value, difference }: ItemProps) {
         : `(${formatNumber(difference)})`
       : null;
 
+  const tooltipId = `value-diff-${label.replace(/\s+/g, "-")}`;
+
   return (
     <div className="flex justify-between py-2">
-      <p className="text-subtle-light dark:text-subtle-dark">{label}</p>
+      <div className="flex flex-col">
+        <p className="text-subtle-light dark:text-subtle-dark">{label}</p>
+        {description && (
+          <span className="text-xs text-subtle-light/70 dark:text-subtle-dark/70">
+            {description}
+          </span>
+        )}
+      </div>
+
       <p className="font-medium text-right">
-        {value}{" "}
+        {value}
         {formattedDiff && (
-          <span className="text-muted-foreground ml-1">{formattedDiff}</span>
+          <span
+            className={`ml-1 cursor-pointer ${
+              isOver40Percent
+                ? "text-red-500 font-semibold"
+                : "text-muted-foreground"
+            }`}
+            data-tooltip-id={tooltipId}
+            data-tooltip-content={
+              diffPercent !== null
+                ? `Dzięki modyfikacji udało się podnieść wartość od oryginalnej o ${diffPercent}%`
+                : undefined
+            }
+          >
+            {formattedDiff}
+          </span>
         )}
       </p>
+
+      {diffPercent !== null && (
+        <Tooltip
+          id={tooltipId}
+          style={{ fontSize: "11px", maxWidth: "220px" }}
+        />
+      )}
     </div>
   );
 }

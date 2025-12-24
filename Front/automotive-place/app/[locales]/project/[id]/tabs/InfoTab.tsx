@@ -65,8 +65,8 @@ export default function InfoTab({
             Performance
           </h3>
           <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100 px-4 py-2 dark:divide-subtle-dark/20 dark:bg-surface-dark">
-            <Item label="Horsepower" value={`${lastStage.hp} hp`} />
-            <Item label="Torque" value={`${lastStage.nm} Nm`} />
+            <Item label="Moc silnika" value={`${lastStage.hp} hp`} />
+            <Item label="Moment obrotowy" value={`${lastStage.nm} Nm`} />
             {lastStage.acc_0_100 && (
               <Item label="0–100 km/h" value={`${lastStage.acc_0_100}s`} />
             )}
