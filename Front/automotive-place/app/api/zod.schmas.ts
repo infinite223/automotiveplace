@@ -68,8 +68,6 @@ export const basicDataSchema = createProjectSchema.pick({
 
 export const basicEngineAndTransmissionSchema = createProjectSchema.pick({
   engineName: true,
-  engineStockHp: true,
-  engineStockNm: true,
   engineDescription: true,
   engineCapacity: true,
   engineWasSwapped: true,

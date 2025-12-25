@@ -35,9 +35,7 @@ import { scrollContainerToTop } from "@/app/utils/helpers/navigationHelper";
 import z from "zod";
 import { createZodErrorMap } from "@/app/api/zodErrorMap";
 
-interface ISideBar {}
-
-export const SideBar: FC<ISideBar> = ({}) => {
+export const SideBar = () => {
   const dispatch = useDispatch();
   const pathname = usePathname();
   const t = useTranslations();
@@ -233,7 +231,7 @@ const SideBarMobile = ({ openModal, pathname }: any) => {
       `}
     >
       <OptionItem
-        icon={<Image src={Logo} alt="logo" width={21} height={21} />}
+        icon={<MdHome size={iconSizes.large} />}
         name={t("Core.Home")}
         route={`/${locale}/app`}
         isActive={pathname.includes("/app") && pathname.split("/").length === 3}
@@ -261,13 +259,6 @@ const SideBarMobile = ({ openModal, pathname }: any) => {
         route="./app/garage"
         showName={false}
       />
-      {/* <OptionItem
-        icon={<IoNotifications size={iconSizes.base} />}
-        name="Notifications"
-        onClick={() => {}}
-        isActive={pathname === "/notifications"}
-        showName={false}
-      /> */}
       <OptionItem
         icon={<SlMenu size={iconSizes.base} />}
         name={t("Core.Menu")}

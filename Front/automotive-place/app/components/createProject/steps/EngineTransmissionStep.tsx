@@ -4,6 +4,7 @@ import { AMPTextarea } from "../../shared/AMPTextarea";
 import { basicEngineAndTransmissionSchema } from "@/app/api/zod.schmas";
 import { EngineTransmissionStepType } from "@/app/utils/types/project";
 import { ZodIssue } from "zod";
+import { AMPHelpFooter } from "../../shared/AMPHelpFooter";
 
 interface EngineTransmissionStepProps {
   setIsValid: (isValid: boolean) => void;
@@ -20,8 +21,6 @@ export const EngineTransmissionStep = ({
     engineName: "",
     engineCapacity: "",
     engineDescription: "",
-    engineStockHp: "",
-    engineStockNm: "",
     engineWasSwapped: false,
 
     transmissionName: "",
@@ -52,8 +51,8 @@ export const EngineTransmissionStep = ({
   }, [data]);
 
   return (
-    <div className="flex flex-col gap-4">
-      <h3 className="text-lg font-semibold">Silnik</h3>
+    <div className="flex flex-col gap-1">
+      <h3 className="text-lg font-semibold mb-2">Silnik</h3>
 
       <div className="flex gap-4 w-full">
         <div className="w-1/2">
@@ -93,36 +92,8 @@ export const EngineTransmissionStep = ({
         }
       />
 
-      <div className="flex gap-4 w-full">
-        <div className="w-1/2">
-          <AMPInput
-            required
-            type="number"
-            placeholder="Moc seryjna (KM)"
-            name="KM"
-            value={data.engineStockHp}
-            setValue={(v) => update("engineStockHp", Number(v))}
-            error={
-              errors?.find((e) => e.path.includes("engineStockHp"))?.message
-            }
-          />
-        </div>
-        <div className="w-1/2">
-          <AMPInput
-            required
-            type="number"
-            placeholder="Moment seryjny (Nm)"
-            name="Nm"
-            value={data.engineStockNm}
-            setValue={(v) => update("engineStockNm", Number(v))}
-            error={
-              errors?.find((e) => e.path.includes("engineStockNm"))?.message
-            }
-          />
-        </div>
-      </div>
-
-      <h3 className="text-lg font-semibold mt-4">Skrzynia biegów</h3>
+      <AMPHelpFooter footerText="Szczegółowe paramerty silnika będzie można podać w kolejnym kroku" />
+      <h3 className="text-lg font-semibold mt-4 mb-2">Skrzynia biegów</h3>
 
       <AMPInput
         required

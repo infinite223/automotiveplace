@@ -5,12 +5,12 @@ const createJestConfig = nextJest({
 });
 
 const customJestConfig = {
-  testEnvironment: "jsdom",
+  testEnvironment: "node",
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1",
   },
-  testPathIgnorePatterns: ["/node_modules/", "/.next/", "<rootDir>/app/api/"],
+  testMatch: ["<rootDir>/app/api/**/*.test.{ts,tsx,js,jsx}"],
 };
 
 export default createJestConfig(customJestConfig);
