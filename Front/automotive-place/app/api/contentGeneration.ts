@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { Job, UserActivity, Tag, UserContent } from "@prisma/client";
+import { Job, UserActivity, Tag } from "@prisma/client";
 import { TBasicTag } from "../utils/types/tag";
 
 type ContentItem = {
@@ -55,7 +55,7 @@ export const generateContentForUser = async (userId: string) => {
       tags: project.tagAssignments.map((t) => t.tag),
     })),
   ];
-  
+
   const transformedUserActivity = userActivity.map((activity) => ({
     ...activity,
     tags: activity.tagAssignments.map((t) => t.tag),

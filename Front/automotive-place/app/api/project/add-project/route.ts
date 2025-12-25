@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { ICreateNotification } from "@/app/utils/types";
 import { TProjectCreate } from "@/app/utils/types/project";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { ContentType, Status } from "@/app/utils/enums";

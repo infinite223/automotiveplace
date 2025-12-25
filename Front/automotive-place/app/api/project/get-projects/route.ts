@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import prisma from "@/lib/prisma";
-import { TBasicPopularProject, TBasicProject } from "@/app/utils/types/project";
+import { TBasicProject } from "@/app/utils/types/project";
 
 export async function GET(request: NextRequest) {
   const userData = await getLoggedInUser();
