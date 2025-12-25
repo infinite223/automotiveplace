@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AMPInput } from "./../shared/AMPInput";
-import { validCarElement, validCarNameValue } from "./Validation";
+import { validCarElement } from "./Validation";
 import { AMPTextarea } from "../shared/AMPTextarea";
 import { AMPHelpFooter } from "../shared/AMPHelpFooter";
 import { createCarItem } from "@/app/services/carItem";
@@ -47,7 +47,7 @@ export const CreateCarItemView = () => {
 
   return (
     <main
-      className="flex justify-center bg-amp-000 dark:bg-amp-900 text-sm rounded-md"
+      className="flex  justify-center bg-amp-000 dark:bg-amp-900 text-sm rounded-md"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="w-[250px] h-[11/12] p-3 pr-4 rounded-sm border-r border-zinc-700 ml-2">
@@ -106,7 +106,6 @@ export const CreateCarItemView = () => {
           value={carItem.name}
           placeholder="Np. Turbina K03s"
           inputStyles={{ fontSize: 12 }}
-          validFunction={validCarNameValue}
         />
         <AMPTextarea
           name="Opis elementu"

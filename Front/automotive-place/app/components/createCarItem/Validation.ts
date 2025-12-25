@@ -6,8 +6,6 @@ export const validCarElement = (newElement: TCarItemCreate) => {
   let validResults: TValidResult[] = [];
   let notification: ICreateNotification | null = null;
 
-  validResults = validResults.concat(validCarNameValue(newElement.name));
-
   if (newElement.authorId.length < 1) {
     //maybe valid authorId?
     validResults.push({
@@ -36,22 +34,4 @@ export const validCarElement = (newElement: TCarItemCreate) => {
   }
 
   return { validResults, notification };
-};
-
-export const validCarNameValue = (value: string | number) => {
-  let validResults: TValidResult[] = [];
-
-  if (typeof value === "number") {
-    validResults.push({
-      error: "Nazwa elementu nie może być liczbą. ",
-      valid: false,
-    });
-  } else if (value.length < 3) {
-    validResults.push({
-      error: "Nazwa elementu musi być dłuższa. ",
-      valid: false,
-    });
-  }
-
-  return validResults;
 };

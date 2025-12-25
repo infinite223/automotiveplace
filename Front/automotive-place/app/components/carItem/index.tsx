@@ -23,7 +23,7 @@ export const CarItem: FC<CarItemProps> = ({
   tableView,
   showFullView = true,
 }) => {
-  const isMyCarElement = true; //data.authorId === "1";
+  const isMyCarElement = true;
 
   const [localData, setLocalData] = useState(data);
   const lineClampsVariants: Record<number, string> = {

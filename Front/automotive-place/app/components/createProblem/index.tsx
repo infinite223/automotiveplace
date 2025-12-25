@@ -53,7 +53,6 @@ export const CreateProblemView = () => {
           value={problem.title}
           placeholder="Np. jakiś problem"
           inputStyles={{ fontSize: 12 }}
-          //   validFunction={validCarNameValue}
         />
         <AMPTextarea
           name="Opis elementu"

@@ -51,7 +51,6 @@ export const CreateSpotView = () => {
           value={spot.title}
           placeholder="Np. jakiś spot"
           inputStyles={{ fontSize: 12 }}
-          //   validFunction={validCarNameValue}
         />
         <AMPTextarea
           name="Opis elementu"

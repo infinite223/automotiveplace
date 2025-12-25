@@ -43,7 +43,6 @@ export const CreateStageView = () => {
           value={stage.name}
           placeholder="Np. Turbina K03s"
           inputStyles={{ fontSize: 12 }}
-          //   validFunction={validCarNameValue}
         />
         <AMPTextarea
           name="Opis etapu"

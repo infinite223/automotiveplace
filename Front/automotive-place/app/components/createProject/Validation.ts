@@ -10,7 +10,6 @@ export const validProject = (newProject: TProjectCreate) => {
   let validResults: TValidResult[] = [];
   let notification: ICreateNotification | null = null;
 
-  validResults = validResults.concat(validCarMakeValue(newProject.carMake));
   validResults = validResults.concat(validStages(newProject.stages));
 
   // TODO - valid tags, stages, carItems and all data if exists
@@ -23,39 +22,6 @@ export const validProject = (newProject: TProjectCreate) => {
   // }
 
   return { validResults, notification };
-};
-
-export const validCarNameValue = (value: string | number) => {
-  let validResults: TValidResult[] = [];
-
-  if (typeof value === "number") {
-    validResults.push({
-      error: "Nazwa elementu nie może być liczbą. ",
-      valid: false,
-    });
-  } else if (value.length < 3) {
-    validResults.push({
-      error: "Nazwa elementu musi być dłuższa. ",
-      valid: false,
-    });
-  }
-
-  return validResults;
-};
-
-export const validCarMakeValue = (value: string | number) => {
-  let validResults: TValidResult[] = [];
-
-  if (typeof value === "number") {
-    validResults.push({
-      error: "Nazwa projektu nie może być liczbą. ",
-      valid: false,
-    });
-  }
-
-  // TODO - sprawdzanie czy należy do grupy pojazdów
-
-  return validResults;
 };
 
 export const validStages = (stages: TStageCreate[] | undefined) => {
