@@ -41,16 +41,16 @@ const AMPModal = ({
         >
           <motion.div
             className={`
-    ${additionalTailwindCss}
-    cursor-default
-    max-md:fixed
-    max-md:bottom-0
-    max-md:left-0
-    max-md:right-0
-    max-md:rounded-t-2xl
-    max-md:w-full
-    max-md:max-h-screen
-  `}
+  ${additionalTailwindCss}
+  cursor-default
+  max-md:fixed
+  max-md:bottom-0
+  max-md:left-0
+  max-md:right-0
+  max-md:rounded-t-2xl
+  max-md:w-full
+  max-md:max-h-[100dvh]
+`}
             id="onClose_helper"
             onClick={(e) => e.stopPropagation()}
             initial={{
@@ -71,7 +71,7 @@ const AMPModal = ({
             transition={{ duration: 0.3 }}
           >
             <div
-              className={`${defoultBG && "bg-custom-primary"} shadow-amp-800 dark:shadow-amp-200 rounded-sm p-0 z-30`}
+              className={`${defoultBG && "bg-custom-primary"} shadow-amp-800 dark:shadow-amp-200 rounded-sm p-0 z-30 pb-[env(safe-area-inset-bottom)]`}
             >
               {withHeader && <AMPModalHeader title={title} onClose={onClose} />}
               {children}
