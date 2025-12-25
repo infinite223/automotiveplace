@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { createLike, deleteLike } from "@/app/services/like";
 import { TContentTypes } from "../utils/types";
 import { TBasicTag } from "../utils/types/tag";
@@ -14,34 +14,37 @@ export const useLike = (
   const [currentIsLiked, setCurrentIsLiked] = useState(initialIsLiked);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleClickLike = async () => {
-    console.log("test", initialLikesCount, initialIsLiked, id, tags);
+  const handleClickLike = useCallback(async () => {
     if (isLoading) return;
+
     setIsLoading(true);
 
-    if (currentIsLiked) {
-      setCurrentLikesCount((prev) => prev - 1);
-      setCurrentIsLiked(false);
-      try {
-        await deleteLike(id);
-      } catch (error) {
-        console.error("Error while deleting like", error);
-        setCurrentLikesCount((prev) => prev + 1);
-        setCurrentIsLiked(true);
-      }
-    } else {
-      setCurrentLikesCount((prev) => prev + 1);
-      setCurrentIsLiked(true);
-      try {
-        await createLike(id, type, tags);
-      } catch (error) {
-        console.error("Error while creating like", error);
-        setCurrentLikesCount((prev) => prev - 1);
-        setCurrentIsLiked(false);
-      }
-    }
-    setIsLoading(false);
-  };
+    const nextIsLiked = !currentIsLiked;
+    const diff = nextIsLiked ? 1 : -1;
 
-  return { currentLikesCount, currentIsLiked, isLoading, handleClickLike };
+    setCurrentIsLiked(nextIsLiked);
+    setCurrentLikesCount((prev) => prev + diff);
+
+    try {
+      if (nextIsLiked) {
+        await createLike(id, type, tags);
+      } else {
+        await deleteLike(id);
+      }
+    } catch (error) {
+      console.error("Like error:", error);
+
+      setCurrentIsLiked(!nextIsLiked);
+      setCurrentLikesCount((prev) => prev - diff);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [isLoading, currentIsLiked, id, type, tags]);
+
+  return {
+    currentLikesCount,
+    currentIsLiked,
+    isLoading,
+    handleClickLike,
+  };
 };

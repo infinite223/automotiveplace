@@ -82,17 +82,14 @@ export const basicEngineAndTransmissionSchema = createProjectSchema.pick({
 });
 
 export const userRegistrationSchema = z.object({
-  name: z
-    .string()
-    .min(1, { message: "Core.Errors.Name.Required" })
-    .max(100, { message: "Core.Errors.Name.TooLong" }),
-  email: z.string().email({ message: "Core.Errors.Email.Invalid" }),
-  password: z.string().min(6, { message: "Core.Errors.Password.TooShort" }),
+  name: z.string().min(1).max(100),
+  email: z.string().email(),
+  password: z.string().min(6),
 });
 
 export const userLoginSchema = z.object({
-  email: z.string().email({ message: "Core.Errors.Email.Invalid" }),
-  password: z.string().min(6, { message: "Core.Errors.Password.TooShort" }),
+  email: z.string().email(),
+  password: z.string().min(6),
 });
 
 export const createPostSchema = z.object({

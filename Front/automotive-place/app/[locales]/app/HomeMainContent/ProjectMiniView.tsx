@@ -28,13 +28,14 @@ export const ProjectMiniView = ({
 }) => {
   const [isClient, setIsClient] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const { currentIsLiked, currentLikesCount, handleClickLike } = useLike(
-    data.likesCount,
-    data.isLikedByAuthUser,
-    data.id,
-    ContentType.Project,
-    data.tags
-  );
+  const { currentIsLiked, currentLikesCount, handleClickLike, isLoading } =
+    useLike(
+      data.likesCount,
+      data.isLikedByAuthUser,
+      data.id,
+      ContentType.Project,
+      data.tags
+    );
 
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -156,11 +157,12 @@ export const ProjectMiniView = ({
             handleClickLike={handleClickLike}
             handleClickShare={handleClickShare}
             type={ContentType.Project}
+            isLoading={isLoading}
             actions={
               <Link
                 href={`./project/${data.id}`}
                 onClick={handleLinkClick}
-                className="flex font-semibold items-center text-sm cursor-pointer transition ease-in-out gap-2 border-amp-200/50 hover:border-amp-200/70 dark:border-amp-800/40 dark:hover:border-amp-800/70 border-0 rounded-sm pl-2 pr-1 py-1 opacity-80 hover:opacity-50"
+                className="flex font-semibold items-center text-sm cursor-pointer transition ease-in-out gap-2 border-amp-200/50 hover:border-amp-200/70 dark:border-amp-800/40 dark:hover:border-amp-800/70 border-0 rounded-sm pl-2  py-1 opacity-80 hover:opacity-50"
               >
                 Zobacz projekt
                 <IoIosArrowForward size={iconSizes.base} />
@@ -190,10 +192,10 @@ const StatisticMiniItem = ({
 
   return (
     <div className="flex flex-col">
-      <div className="text-sm font-semibold">
+      <div className="text-sm font-semibold whitespace-nowrap overflow-hidden text-ellipsis">
         {value} {type}
       </div>
-      <div className="text-xs text-amp-100/90 dark:text-amp-700/90 mt-[-2px]">
+      <div className="text-[10px] sm:text-xs text-amp-100/90 dark:text-amp-700/90 mt-[-2px] whitespace-nowrap overflow-hidden text-ellipsis">
         {title}
       </div>
     </div>

@@ -6,6 +6,8 @@ import { TbMessageCircleUp } from "react-icons/tb";
 
 import { FaRegHeart } from "react-icons/fa6";
 import { AMPTag } from "@/app/components/shared/AMPTag";
+import { useEffect } from "react";
+import { FaHeart } from "react-icons/fa";
 
 interface IContentMiniFooter {
   type: TContentTypes;
@@ -16,6 +18,7 @@ interface IContentMiniFooter {
   handleClickLike: () => void;
   handleClickShare?: () => void;
   isUserContent?: boolean;
+  isLoading?: boolean;
 }
 
 export const ContentMiniFooter = ({
@@ -26,23 +29,35 @@ export const ContentMiniFooter = ({
   handleClickLike,
   handleClickShare,
   isUserContent,
+  isLoading = false,
 }: IContentMiniFooter) => {
   return (
-    <nav className="flex flex-col items-center justify-between w-full mt-1 pb-2 pl-3 pr-1">
+    <nav className="flex flex-col items-center justify-between w-full mt-1 pb-2 pl-2 pr-1">
       <div className="flex items-center justify-between w-full text-zinc-700  dark:text-zinc-300">
         <div className="flex items-center gap-3">
           <div className="flex flex-col gap-2">
             <div
-              className={`flex rounded-md h-min gap-2.5 pl-1 pr-1 pt-0.5 pb-0.5 items-center cursor-pointer`}
+              className={`flex rounded-md h-min gap-2.5 pl-1 pr-1 pt-0.5 pb-0.5 items-center
+    transition-colors duration-300 ease-in-out
+    ${
+      isLoading
+        ? "cursor-wait pointer-events-none"
+        : "cursor-pointer hover:bg-red-500/10"
+    }`}
               onClick={handleClickLike}
             >
-              <FaRegHeart
-                size={iconSizes.base}
-                color={currentIsLiked ? "white" : ""}
-                className={`cursor-pointer transition-colors duration-300 ease-in-out ${
-                  currentIsLiked ? "transform scale-95" : ""
-                }`}
-              />
+              {currentIsLiked ? (
+                <FaHeart
+                  size={iconSizes.base}
+                  className="text-amp-500 transition-transform duration-300 scale-95"
+                />
+              ) : (
+                <FaRegHeart
+                  size={iconSizes.base}
+                  className="transition-transform duration-300"
+                />
+              )}
+
               <span className="text-sm">{currentLikesCount}</span>
             </div>
           </div>

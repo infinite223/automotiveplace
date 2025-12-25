@@ -60,18 +60,6 @@
     "LoggedOutSuccessfully": "Wylogowano pomyślnie",
     "Loading": "Ładowanie",
     "GiveFeedback": "Przekaż opinie",
-    "Errors": {
-      "Name": {
-        "Required": "Imię jest wymagane",
-        "TooLong": "Imię jest za długie"
-      },
-      "Email": {
-        "Invalid": "Nieprawidłowy adres e-mail"
-      },
-      "Password": {
-        "TooShort": "Hasło musi mieć co najmniej 6 znaków"
-      }
-    },
     "Project": {
       "TheProjectHasBeenSuccessfullyDeleted": "Projekt został pomyślnie usunięty."
     },

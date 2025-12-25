@@ -85,62 +85,65 @@ export const CreatePostView = () => {
 
   return (
     <main
-      className="flex justify-center text-sm rounded-md max-md:h-screen max-md:w-screen sm:w-[400px]"
+      className="flex justify-center text-sm rounded-md max-md:w-screen sm:w-[400px] h-[11/12]"
       onClick={(e) => e.stopPropagation()}
     >
       <form
-        className="rounded-md p-4 flex flex-col gap-3 w-[95vw] md:w-[760px]"
+        className="rounded-md p-4 flex flex-col justify-between gap-3 w-[95vw] md:w-[760px]"
         noValidate
         onSubmit={(e) => {
           e.preventDefault();
           onSubmit();
         }}
       >
-        <AMPInput
-          name="Tytuł"
-          value={post.title}
-          placeholder="Np. Zrobiłem swapa z 1.9TDI na 2.0TFSI"
-          inputStyles={{ fontSize: 12 }}
-          required
-          error={errors.title}
-          setValue={(value) => {
-            const val = value.toString();
-            setPost((prev) => ({ ...prev, title: val }));
+        <div className="flex flex-col">
+          <AMPInput
+            name="Tytuł"
+            value={post.title}
+            placeholder="Np. Zrobiłem swapa z 1.9TDI na 2.0TFSI"
+            inputStyles={{ fontSize: 12 }}
+            required
+            error={errors.title}
+            setValue={(value) => {
+              const val = value.toString();
+              setPost((prev) => ({ ...prev, title: val }));
 
-            if (errors.title) {
-              validateField("title", val);
-            }
-          }}
-          validFunction={zodValidFunction(createPostSchema, "title")}
-        />
+              if (errors.title) {
+                validateField("title", val);
+              }
+            }}
+            validFunction={zodValidFunction(createPostSchema, "title")}
+          />
 
-        <AMPTextarea
-          name="Opis"
-          value={post.description}
-          placeholder="Np. Zrobiłem swapa z 1.9TDI..."
-          inputStyles={{ fontSize: 12, height: "150px" }}
-          required
-          error={errors.description}
-          setValue={(value) => {
-            const val = value.toString();
-            setPost((prev) => ({ ...prev, description: val }));
+          <AMPTextarea
+            name="Opis"
+            value={post.description}
+            placeholder="Np. Zrobiłem swapa z 1.9TDI..."
+            inputStyles={{ fontSize: 12, height: "150px" }}
+            required
+            error={errors.description}
+            setValue={(value) => {
+              const val = value.toString();
+              setPost((prev) => ({ ...prev, description: val }));
 
-            if (errors.description) {
-              validateField("description", val);
-            }
-          }}
-          validFunction={zodValidFunction(createPostSchema, "description")}
-        />
+              if (errors.description) {
+                validateField("description", val);
+              }
+            }}
+            validFunction={zodValidFunction(createPostSchema, "description")}
+          />
+        </div>
+        <div className="flex flex-col">
+          <AMPButton
+            disabled={loading}
+            name={loading ? "Dodawanie..." : "Dodaj post"}
+            type="primary"
+            additionalTailwindCss="justify-center"
+            isSubmit
+          />
 
-        <AMPButton
-          disabled={loading}
-          name={loading ? "Dodawanie..." : "Dodaj post"}
-          type="primary"
-          additionalTailwindCss="justify-center"
-          isSubmit
-        />
-
-        <AMPHelpFooter footerText="Czym jest post?" />
+          <AMPHelpFooter footerText="Czym jest post?" />
+        </div>
       </form>
     </main>
   );
