@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { AMPInput } from "./AMPInput";
+import { AMPInput } from "../components/shared/AMPInput";
 import React from "react";
 
 jest.mock("next-intl", () => ({

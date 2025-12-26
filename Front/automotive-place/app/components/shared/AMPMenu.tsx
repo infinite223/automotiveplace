@@ -81,6 +81,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
             onClick={() => setShowMenu(!showMenu)}
             className="cursor-pointer"
             size={size ?? iconSizes.base}
+            data-testid="menu-toggle"
           />
         )}
       </div>

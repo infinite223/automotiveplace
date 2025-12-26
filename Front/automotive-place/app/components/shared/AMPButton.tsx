@@ -2,44 +2,44 @@
 
 import React, { FC } from "react";
 
+type ButtonType = "primary" | "secondary" | "tertiary" | "none";
+
 interface IAMPButton {
   name?: string;
   onClick?: () => void;
   disabled?: boolean;
   additionalTailwindCss?: string;
-  type?: "primary" | "secondary" | "tertiary" | "none";
+  type?: ButtonType;
   icon?: React.ReactNode;
   isSubmit?: boolean;
 }
 
-const buttonTypeClasses = {
+const buttonTypeClasses: Record<ButtonType, string> = {
   primary: "bg-amp-500 text-white p-1.5 px-3 rounded-sm",
   secondary: "bg-amp-300 text-white p-1.5 px-3 rounded-sm",
-  tertiary: " text-white p-1.5 px-3 rounded-sm",
+  tertiary: "text-white p-1.5 px-3 rounded-sm",
   none: "p-1.5 px-3",
 };
 
 export const AMPButton: FC<IAMPButton> = ({
   name,
   onClick,
-  disabled,
-  additionalTailwindCss,
+  disabled = false,
+  additionalTailwindCss = "",
   type = "primary",
   isSubmit = false,
   icon,
 }) => {
-  const typeClass = buttonTypeClasses[type];
-
   return (
     <button
-      disabled={disabled}
       type={isSubmit ? "submit" : "button"}
-      onClick={onClick}
+      disabled={disabled}
+      onClick={disabled ? undefined : onClick}
       className={`
         ${disabled ? "opacity-35 cursor-not-allowed" : "hover:opacity-70"}
-        ${typeClass}
+        ${buttonTypeClasses[type]}
         ${additionalTailwindCss}
-        flex items-center rounded-[3px]
+        flex items-center
       `}
     >
       {icon && <span className={name ? "mr-2" : ""}>{icon}</span>}
