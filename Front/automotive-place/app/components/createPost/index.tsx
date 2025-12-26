@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { ZodIssue } from "zod";
 
@@ -28,6 +28,7 @@ export const CreatePostView = () => {
   const [post, setPost] = useState<TPostCreate>(postData);
   const [errors, setErrors] = useState<FormErrors>({});
   const [loading, setLoading] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const validateField = (field: keyof TPostCreate, value: string) => {
     const partialData = { ...post, [field]: value };
@@ -46,6 +47,11 @@ export const CreatePostView = () => {
       [field]: fieldError?.message,
     }));
   };
+
+  useEffect(() => {
+    const result = createPostSchema.safeParse(post);
+    setIsFormValid(result.success);
+  }, [post]);
 
   const onSubmit = async () => {
     setLoading(true);
@@ -68,7 +74,10 @@ export const CreatePostView = () => {
 
       if (result?.notification) {
         dispatch(addNotification(JSON.stringify(result.notification)));
-        dispatch(setShowCreatePost(false));
+        console.log(result.notification, "not");
+        if (result.notification.log.status == Status.Success) {
+          dispatch(setShowCreatePost(false));
+        }
       }
     } catch {
       dispatch(
@@ -135,7 +144,7 @@ export const CreatePostView = () => {
         </div>
         <div className="flex flex-col">
           <AMPButton
-            disabled={loading}
+            disabled={!isFormValid || loading}
             name={loading ? "Dodawanie..." : "Dodaj post"}
             type="primary"
             additionalTailwindCss="justify-center"

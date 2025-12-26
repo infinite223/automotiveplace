@@ -1,3 +1,4 @@
+import { ICreateNotification } from "../utils/types";
 import { TBasicPost, TPostCreate } from "../utils/types/post";
 import { apiEndpoints } from "./api.endpoints";
 
@@ -12,7 +13,7 @@ export const createPost = async (post: TPostCreate, locale: string = "en") => {
   }
 
   const result = await response.json();
-  return result;
+  return result as { post: any; notification: ICreateNotification };
 };
 
 export const deletePost = async (postId: string, locale: string = "en") => {
