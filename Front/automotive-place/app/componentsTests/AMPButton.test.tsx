@@ -1,94 +1,87 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { AMPButton } from "../components/shared/AMPButton";
+import { MdClose } from "react-icons/md";
 
 describe("AMPButton component", () => {
   it("renders button with text", () => {
     render(<AMPButton name="Click me" />);
-
-    expect(
-      screen.getByRole("button", { name: "Click me" })
-    ).toBeInTheDocument();
+    const button = screen.getByRole("button", { name: /Click me/i });
+    expect(button).toBeInTheDocument();
   });
 
-  it("calls onClick when clicked", async () => {
-    const user = userEvent.setup();
-    const onClick = jest.fn();
-
-    render(<AMPButton name="Click me" onClick={onClick} />);
-
-    await user.click(screen.getByRole("button"));
-
-    expect(onClick).toHaveBeenCalledTimes(1);
+  it("calls onClick when clicked", () => {
+    const handleClick = jest.fn();
+    render(<AMPButton name="Click me" onClick={handleClick} />);
+    const button = screen.getByRole("button", { name: /Click me/i });
+    fireEvent.click(button);
+    expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
-  it("does not call onClick when disabled", async () => {
-    const user = userEvent.setup();
-    const onClick = jest.fn();
-
-    render(<AMPButton name="Disabled" onClick={onClick} disabled />);
-
-    const button = screen.getByRole("button");
-
-    expect(button).toBeDisabled();
-
-    await user.click(button);
-
-    expect(onClick).not.toHaveBeenCalled();
+  it("applies primary class when type is primary", () => {
+    render(<AMPButton name="Click me" type="primary" />);
+    const button = screen.getByRole("button", { name: /Click me/i });
+    expect(button).toHaveClass(
+      "bg-amp-500",
+      "text-white",
+      "p-1.5",
+      "px-3",
+      "rounded-sm"
+    );
   });
 
-  it("renders submit type when isSubmit is true", () => {
+  it("applies secondary class when type is secondary", () => {
+    render(<AMPButton name="Click me" type="secondary" />);
+    const button = screen.getByRole("button", { name: /Click me/i });
+    expect(button).toHaveClass(
+      "bg-amp-300",
+      "text-white",
+      "p-1.5",
+      "px-3",
+      "rounded-sm"
+    );
+  });
+
+  it("applies tertiary class when type is tertiary", () => {
+    render(<AMPButton name="Click me" type="tertiary" />);
+    const button = screen.getByRole("button", { name: /Click me/i });
+    expect(button).toHaveClass("text-white", "p-1.5", "px-3", "rounded-sm");
+  });
+
+  it("applies none class when type is none", () => {
+    render(<AMPButton name="Click me" type="none" />);
+    const button = screen.getByRole("button", { name: /Click me/i });
+    expect(button).toHaveClass("p-1.5", "px-3");
+  });
+
+  it("applies additionalTailwindCss when provided", () => {
+    render(<AMPButton name="Click me" additionalTailwindCss="custom-class" />);
+    const button = screen.getByRole("button", { name: /Click me/i });
+    expect(button).toHaveClass("custom-class");
+  });
+
+  it("renders icon if provided", () => {
+    render(<AMPButton name="Click me" icon={<MdClose data-testid="icon" />} />);
+    const icon = screen.getByTestId("icon");
+    expect(icon).toBeInTheDocument();
+  });
+
+  it("renders as submit button if isSubmit is true", () => {
     render(<AMPButton name="Submit" isSubmit />);
-
-    const button = screen.getByRole("button");
-
+    const button = screen.getByRole("button", { name: /Submit/i });
     expect(button).toHaveAttribute("type", "submit");
   });
 
-  it("renders button type by default when isSubmit is false", () => {
-    render(<AMPButton name="Normal" />);
-
-    const button = screen.getByRole("button");
-
+  it("renders as button type if isSubmit is false", () => {
+    render(<AMPButton name="Click me" />);
+    const button = screen.getByRole("button", { name: /Click me/i });
     expect(button).toHaveAttribute("type", "button");
   });
 
-  it("applies correct class for primary type", () => {
-    render(<AMPButton name="Primary" type="primary" />);
-
-    const button = screen.getByRole("button");
-
-    expect(button.className).toContain("bg-amp-500");
-  });
-
-  it("applies correct class for secondary type", () => {
-    render(<AMPButton name="Secondary" type="secondary" />);
-
-    const button = screen.getByRole("button");
-
-    expect(button.className).toContain("bg-amp-300");
-  });
-
-  it("renders icon when icon prop is provided", () => {
-    render(
-      <AMPButton name="With icon" icon={<span data-testid="icon">⭐</span>} />
-    );
-
-    expect(screen.getByTestId("icon")).toBeInTheDocument();
-  });
-
-  it("renders icon without text correctly", () => {
-    render(<AMPButton icon={<span data-testid="icon">⭐</span>} />);
-
-    expect(screen.getByTestId("icon")).toBeInTheDocument();
-  });
-
-  it("applies additionalTailwindCss", () => {
-    render(<AMPButton name="Styled" additionalTailwindCss="test-class" />);
-
-    const button = screen.getByRole("button");
-
-    expect(button.className).toContain("test-class");
+  it("applies disabled styles when disabled", () => {
+    render(<AMPButton name="Click me" disabled />);
+    const button = screen.getByRole("button", { name: /Click me/i });
+    expect(button).toBeDisabled();
+    expect(button).toHaveClass("opacity-35", "cursor-not-allowed");
   });
 });

@@ -3,19 +3,22 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { AMPMenu, TMenuItem } from "../components/shared/AMPMenu";
 
 jest.mock("framer-motion", () => {
+  const MotionUl = React.forwardRef<
+    HTMLUListElement,
+    React.HTMLAttributes<HTMLUListElement> & { children?: React.ReactNode }
+  >(({ children, ...props }, ref) => (
+    <ul ref={ref} {...props}>
+      {children}
+    </ul>
+  ));
+  MotionUl.displayName = "MotionUl";
+
   return {
     AnimatePresence: ({ children }: { children: React.ReactNode }) => (
       <>{children}</>
     ),
     motion: {
-      ul: React.forwardRef<
-        HTMLUListElement,
-        React.HTMLAttributes<HTMLUListElement>
-      >(({ children, ...props }, ref) => (
-        <ul ref={ref} {...props}>
-          {children}
-        </ul>
-      )),
+      ul: MotionUl,
     },
   };
 });
