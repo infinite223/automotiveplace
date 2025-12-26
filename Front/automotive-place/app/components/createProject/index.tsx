@@ -34,39 +34,57 @@ export type TTransmissionData = {
 export const CreateProjectView = () => {
   const dispatch = useDispatch();
 
+  // const onSubmit = async (data: any) => {
+  //   const project = stepperDataToCreateProject(data);
+  //   // const project = generateRandomProjectsToCreate(1, true, true, true)[0];
+
+  //   const result = validProject(project);
+  //   const zodResult = createProjectSchema.safeParse(project);
+
+  //   const findInValidResult = result.validResults.find(
+  //     (result) => result.valid == false
+  //   );
+
+  //   if (!findInValidResult && zodResult.success) {
+  //     try {
+  //       console.log(project, "proj");
+  //       const res = await createProject(project);
+
+  //       if (res?.notification) {
+  //         dispatch(addNotification(JSON.stringify(res.notification)));
+  //         dispatch(setShowCreateProject(false));
+  //       }
+  //     } catch (error: any) {
+  //       dispatch(
+  //         addNotification(
+  //           JSON.stringify(
+  //             CreateNotification(
+  //               Status.High,
+  //               error.message || "Unknown error occurred"
+  //             )
+  //           )
+  //         )
+  //       );
+  //     }
+  //   }
+  // };
+
   const onSubmit = async (data: any) => {
-    const project = stepperDataToCreateProject(data);
-    // const project = generateRandomProjectsToCreate(1, true, true, true)[0];
+    console.log(data, "data");
+    const imagesStepData: File[] = data[0].data.images || [];
+    console.log(imagesStepData, "imagesStepData");
+    const formData = new FormData();
 
-    const result = validProject(project);
-    const zodResult = createProjectSchema.safeParse(project);
+    imagesStepData.forEach((file) => {
+      formData.append("files", file);
+    });
 
-    const findInValidResult = result.validResults.find(
-      (result) => result.valid == false
-    );
+    const res = await fetch("/api/upload-images", {
+      method: "POST",
+      body: formData,
+    });
 
-    if (!findInValidResult && zodResult.success) {
-      try {
-        console.log(project, "proj");
-        const res = await createProject(project);
-
-        if (res?.notification) {
-          dispatch(addNotification(JSON.stringify(res.notification)));
-          dispatch(setShowCreateProject(false));
-        }
-      } catch (error: any) {
-        dispatch(
-          addNotification(
-            JSON.stringify(
-              CreateNotification(
-                Status.High,
-                error.message || "Unknown error occurred"
-              )
-            )
-          )
-        );
-      }
-    }
+    if (!res.ok) throw new Error("Upload failed");
   };
 
   return (

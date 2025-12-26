@@ -29,7 +29,6 @@ export const BasicDataStep: React.FC<BasicDataStepProps> = ({
   };
 
   useEffect(() => {
-    console.log("useEffect 1");
     const result = basicDataSchema.safeParse(data);
     setIsValid(result.success);
 
@@ -39,7 +38,6 @@ export const BasicDataStep: React.FC<BasicDataStepProps> = ({
   }, [data]);
 
   useEffect(() => {
-    console.log("useEffect 2");
     registerGetData?.(() => ({
       ...data,
       name: data.name?.trim() ? data.name : undefined,
