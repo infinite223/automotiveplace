@@ -58,6 +58,7 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const openSearchBar = () => {

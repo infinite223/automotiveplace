@@ -56,7 +56,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
 
       setMenuPosition({ top, left });
     }
-  }, [showMenu]);
+  }, [showMenu, menuRef]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {

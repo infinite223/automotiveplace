@@ -42,12 +42,14 @@ export const EngineTransmissionStep = ({
 
     if (!result.success) setErrors(result.error.errors);
     else setErrors(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   useEffect(() => {
     registerGetData?.(() => ({
       ...data,
     }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (

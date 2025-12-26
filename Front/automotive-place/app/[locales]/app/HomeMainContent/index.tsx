@@ -79,6 +79,7 @@ export const HomeMainContent = () => {
 
     setLastSeenId(lastContentId);
     fetchNextPage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLastElementVisible]);
 
   useEffect(() => {

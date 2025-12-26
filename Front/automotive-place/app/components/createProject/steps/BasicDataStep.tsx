@@ -29,19 +29,23 @@ export const BasicDataStep: React.FC<BasicDataStepProps> = ({
   };
 
   useEffect(() => {
+    console.log("useEffect 1");
     const result = basicDataSchema.safeParse(data);
     setIsValid(result.success);
 
     if (!result.success) setErrors(result.error.errors);
     else setErrors(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   useEffect(() => {
+    console.log("useEffect 2");
     registerGetData?.(() => ({
       ...data,
       name: data.name?.trim() ? data.name : undefined,
       description: data.description?.trim() ? data.description : undefined,
     }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (

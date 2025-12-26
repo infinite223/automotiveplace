@@ -7,7 +7,7 @@ jest.mock("next/image", () => ({
   __esModule: true,
   default: ({ fill, ...props }: any) => {
     // eslint-disable-next-line @next/next/no-img-element
-    return <img {...props} />;
+    return <img {...props} alt="img-test" />;
   },
 }));
 
@@ -62,8 +62,7 @@ describe("AMPImageZoomModal component", () => {
       />
     );
 
-    const img = screen.getByAltText("slide-1") as HTMLImageElement;
-
+    const img = screen.getByAltText("img-test") as HTMLImageElement;
     expect(img).toBeInTheDocument();
     expect(img.src).toContain("/img-2.jpg");
   });

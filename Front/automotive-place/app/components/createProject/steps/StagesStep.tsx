@@ -77,10 +77,12 @@ export const StagesStep: React.FC<StagesStepProps> = ({
 
     setErrors(newErrors);
     setIsValid(valid);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stages]);
 
   useEffect(() => {
     registerGetData?.(() => stages);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stages, registerGetData]);
 
   return (

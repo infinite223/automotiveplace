@@ -12,10 +12,12 @@ export const ParamsDataStep = ({
 }: BasicDataStepProps) => {
   useEffect(() => {
     setIsValid(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     registerGetData?.(() => ({}));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [registerGetData]);
 
   return <div className="flex flex-col gap-4"></div>;
