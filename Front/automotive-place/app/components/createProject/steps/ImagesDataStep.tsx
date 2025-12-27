@@ -23,6 +23,7 @@ export const ImagesDataStep = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    console.log(images, "imgs", registerGetData);
     registerGetData?.(() => ({
       images: images
         .filter((img) => img.status === "ok")

@@ -1,6 +1,6 @@
 import React from "react";
 import { validProject } from "./Validation";
-import { createProject } from "@/app/services/project";
+import { createProject, uploadImageProject } from "@/app/services/project";
 import { AMPStepper } from "../shared/Stepper/AMPSteper";
 import { stepsOptions } from "./steps/config";
 import { createProjectSchema } from "@/app/api/zod.schmas";
@@ -34,58 +34,66 @@ export type TTransmissionData = {
 export const CreateProjectView = () => {
   const dispatch = useDispatch();
 
+  const onSubmit = async (data: any) => {
+    const project = stepperDataToCreateProject(data);
+    // const project = generateRandomProjectsToCreate(1, true, true, true)[0];
+
+    const result = validProject(project);
+    const zodResult = createProjectSchema.safeParse(project);
+
+    const findInValidResult = result.validResults.find(
+      (result) => result.valid == false
+    );
+
+    if (!findInValidResult && zodResult.success) {
+      try {
+        const res = await createProject(project);
+        const images: File[] = data[2].data.images || [];
+        const projectId = res.project.id;
+
+        if (images.length) {
+          const formData = new FormData();
+          images.forEach((file) => formData.append("files", file));
+
+          await uploadImageProject(projectId, formData);
+        }
+
+        if (res?.notification) {
+          dispatch(addNotification(JSON.stringify(res.notification)));
+          dispatch(setShowCreateProject(false));
+        }
+      } catch (error: any) {
+        dispatch(
+          addNotification(
+            JSON.stringify(
+              CreateNotification(
+                Status.High,
+                error.message || "Unknown error occurred"
+              )
+            )
+          )
+        );
+      }
+    }
+  };
+
   // const onSubmit = async (data: any) => {
   //   const project = stepperDataToCreateProject(data);
-  //   // const project = generateRandomProjectsToCreate(1, true, true, true)[0];
+  //   const images: File[] = data[0].data.images || [];
 
-  //   const result = validProject(project);
-  //   const zodResult = createProjectSchema.safeParse(project);
+  //   const res = await createProject(project);
+  //   const projectId = res.project.id;
 
-  //   const findInValidResult = result.validResults.find(
-  //     (result) => result.valid == false
-  //   );
+  //   if (images.length) {
+  //     const formData = new FormData();
+  //     images.forEach((file) => formData.append("files", file));
 
-  //   if (!findInValidResult && zodResult.success) {
-  //     try {
-  //       console.log(project, "proj");
-  //       const res = await createProject(project);
-
-  //       if (res?.notification) {
-  //         dispatch(addNotification(JSON.stringify(res.notification)));
-  //         dispatch(setShowCreateProject(false));
-  //       }
-  //     } catch (error: any) {
-  //       dispatch(
-  //         addNotification(
-  //           JSON.stringify(
-  //             CreateNotification(
-  //               Status.High,
-  //               error.message || "Unknown error occurred"
-  //             )
-  //           )
-  //         )
-  //       );
-  //     }
+  //     await fetch(`/api/upload-images/${projectId}/media`, {
+  //       method: "POST",
+  //       body: formData,
+  //     });
   //   }
   // };
-
-  const onSubmit = async (data: any) => {
-    console.log(data, "data");
-    const imagesStepData: File[] = data[0].data.images || [];
-    console.log(imagesStepData, "imagesStepData");
-    const formData = new FormData();
-
-    imagesStepData.forEach((file) => {
-      formData.append("files", file);
-    });
-
-    const res = await fetch("/api/upload-images", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!res.ok) throw new Error("Upload failed");
-  };
 
   return (
     <main

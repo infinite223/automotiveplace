@@ -28,6 +28,27 @@ export const createProject = async (
   return result;
 };
 
+export const uploadImageProject = async (
+  projectId: string,
+  formData: FormData
+) => {
+  const response = await fetch(`/api/upload-images/${projectId}`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    const message =
+      errorData?.message || `Failed upload images (${response.status})`;
+
+    throw new Error(message);
+  }
+
+  const result = await response.json();
+  return result;
+};
+
 export const deleteProject = async (
   projectId: string,
   locale: string = "en"
