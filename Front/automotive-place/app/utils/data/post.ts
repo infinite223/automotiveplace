@@ -1,17 +1,19 @@
-import { TPost } from "../types/post";
-import { generateRandomDate, generateRandomString } from "./randomData";
+import { TBasicPost } from "../types/post";
+import { generateRandomString } from "./randomData";
 
 export function generateRandomPosts(count: number) {
   const posts = [];
   for (let i = 0; i < count; i++) {
-    const _posts: TPost = {
+    const _posts: TBasicPost = {
       id: generateRandomString(10),
-      createdAt: generateRandomDate(new Date(2020, 0, 1), new Date()),
-      updatedAt: generateRandomDate(new Date(2020, 0, 1), new Date()),
-      isVisible: Math.random() < 0.5,
       content: "",
       imagesUrl: "",
       title: "Random post",
+      isLikedByAuthUser: false,
+      author: { id: "", name: "test" },
+      lastUpdateAt: new Date(),
+      likesCount: 2,
+      tags: [],
     };
 
     posts.push(_posts);
