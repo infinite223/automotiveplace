@@ -1,3 +1,5 @@
+import { MainContentResponse } from "../hooks/useMainContent";
+import { ContentType } from "../utils/enums";
 import {
   TBasicPopularProject,
   TBasicProject,
@@ -5,6 +7,7 @@ import {
   TProjectCreate,
 } from "../utils/types/project";
 import { apiEndpoints } from "./api.endpoints";
+import { PAGE_SIZE } from "./consts";
 
 export const createProject = async (
   project: TProjectCreate,
@@ -97,15 +100,29 @@ export const getPopularProjects = async () => {
   return result;
 };
 
-export const getProjects = async () => {
-  const response = await fetch(apiEndpoints.getProjects, {
-    next: { revalidate: 60 },
-  });
+export const getProjectsInfinite = async (
+  page: number
+): Promise<MainContentResponse> => {
+  const response = await fetch(
+    `${apiEndpoints.getProjects}?page=${page}&limit=${PAGE_SIZE}`,
+    { next: { revalidate: 60 } }
+  );
+
   if (!response.ok) {
-    throw new Error("Failed to get data");
+    throw new Error("Failed to get projects");
   }
 
-  const result: TBasicProject[] = await response.json();
-  console.log(result, "result getProjects");
-  return result;
+  const result: {
+    data: TBasicProject[];
+    hasMore: boolean;
+    page: number;
+  } = await response.json();
+
+  return {
+    data: result.data.map((project) => ({
+      data: project,
+      type: ContentType.Project,
+    })),
+    hasMore: result.hasMore,
+  };
 };

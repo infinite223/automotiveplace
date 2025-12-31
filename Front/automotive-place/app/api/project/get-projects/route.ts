@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
       },
     };
   });
-
+  console.log(data, "data");
   return NextResponse.json({
     data,
     hasMore,

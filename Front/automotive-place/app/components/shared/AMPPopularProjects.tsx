@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "../loading/LoadingSpinner";
 import { EngineParameter } from "@/app/utils/enums";
 import AMPImage from "./AMPImage";
+import { getProjectImageSrcByFileId } from "@/app/utils/helpers/storageHelper";
 
 export const QUERY_KEY_POPULAR_PROJECTS = "popular-projects";
 
@@ -35,37 +36,40 @@ function AMPPopularProjects() {
     <div>
       <h2 className="px-2 font-semibold">Popularne projekty</h2>
       <div className="max-h-[85vh] overflow-y-auto custom-scrollbar flex flex-col mt-2">
-        {projects?.map((project) => (
-          <Link href={`./project/${project.id}`} key={project.id}>
-            <div className="text-sm flex flex-wrap p-2 hover:bg-amp-200 rounded-sm cursor-pointer">
-              <div className="flex gap-3 items-start">
-                <div className="rounded-md w-[90px] h-full bg-amp-50 flex items-center justify-center">
-                  <AMPImage
-                    src={project.images?.[0]}
-                    alt="Project image 1"
-                    width={90}
-                    height={70}
-                    className="rounded-sm"
-                  />
-                </div>
-                <div className="leading-4">
-                  <div className="font-semibold">
-                    {project.carMake} {project.carModel}
+        {projects?.map((project) => {
+          const imgFullPath = getProjectImageSrcByFileId(project.images?.[0]);
+          return (
+            <Link href={`./project/${project.id}`} key={project.id}>
+              <div className="text-sm flex flex-wrap p-2 hover:bg-amp-200 rounded-sm cursor-pointer">
+                <div className="flex gap-3 items-start">
+                  <div className="rounded-md w-[90px] h-full bg-amp-50 flex items-center justify-center">
+                    <AMPImage
+                      src={imgFullPath}
+                      alt="Project image 1"
+                      width={90}
+                      height={70}
+                      className="rounded-sm"
+                    />
                   </div>
-                  <div className="text-xs leading-[15px]">
-                    <div>{project.stageName}</div>
-                    <div>
-                      {EngineParameter.PowerPs}: {project.currentHp}
+                  <div className="leading-4">
+                    <div className="font-semibold">
+                      {project.carMake} {project.carModel}
                     </div>
-                    <div>
-                      {EngineParameter.TorqueNm}: {project.currentNm}
+                    <div className="text-xs leading-[15px]">
+                      <div>{project.stageName}</div>
+                      <div>
+                        {EngineParameter.PowerPs}: {project.currentHp}
+                      </div>
+                      <div>
+                        {EngineParameter.TorqueNm}: {project.currentNm}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
