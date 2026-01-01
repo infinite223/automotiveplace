@@ -4,6 +4,7 @@ import { MdClose } from "react-icons/md";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { iconSizes } from "@/app/utils/constants";
 import Image from "next/image";
+import { getProjectImageSrcByFileId } from "@/app/utils/helpers/storageHelper";
 
 interface AMPImageZoomModalProps {
   images: string[];
@@ -22,6 +23,8 @@ const AMPImageZoomModal: React.FC<AMPImageZoomModalProps> = ({
   onNext,
   visible,
 }) => {
+  const imgFullPath = getProjectImageSrcByFileId(images[currentIndex]);
+
   return (
     <AMPModal onClose={onClose} visible={visible} withHeader={false}>
       <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-90">
@@ -52,7 +55,7 @@ const AMPImageZoomModal: React.FC<AMPImageZoomModalProps> = ({
 
           <div className="relative w-full h-full flex justify-center items-center">
             <Image
-              src={images[currentIndex]}
+              src={imgFullPath ?? ""}
               alt={`slide-${currentIndex}`}
               className="object-contain max-w-screen max-h-screen"
               fill

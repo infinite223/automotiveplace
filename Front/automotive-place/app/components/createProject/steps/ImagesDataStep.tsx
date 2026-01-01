@@ -23,7 +23,6 @@ export const ImagesDataStep = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    console.log(images, "imgs", registerGetData);
     registerGetData?.(() => ({
       images: images
         .filter((img) => img.status === "ok")
@@ -68,9 +67,9 @@ export const ImagesDataStep = ({
 
       const isNSFW = predictions.some(
         (p) =>
-          (p.className === "Porn" && p.probability > 0.7) ||
-          (p.className === "Hentai" && p.probability > 0.7) ||
-          (p.className === "Sexy" && p.probability > 0.8)
+          (p.className === "Porn" && p.probability > 0.6) ||
+          (p.className === "Hentai" && p.probability > 0.6) ||
+          (p.className === "Sexy" && p.probability > 0.6)
       );
 
       setImages((prev) =>
