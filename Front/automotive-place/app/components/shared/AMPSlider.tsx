@@ -16,7 +16,7 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dominantColor, setDominantColor] = useState("white");
   const imgContainerRef = useRef<HTMLDivElement>(null);
-  console.log(images);
+
   const handlePrevClick = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? images.length - 1 : prevIndex - 1

@@ -55,7 +55,9 @@ export const getPostsInfinite = async (
     hasMore: boolean;
     page: number;
   } = await response.json();
+
   console.log(result.data, "get posts");
+
   return {
     data: result.data.map((post) => ({
       data: post,

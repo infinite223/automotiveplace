@@ -42,7 +42,6 @@ const headerMap: Record<ContentType, string> = {
 export const HomeMainContent = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [lastSeenId, setLastSeenId] = useState<string | null>(null);
-  const [localContent, setLocalContent] = useState<TContentData[]>([]);
   const [activeFilter, setActiveFilter] = useState<ContentType | "All">(
     ContentType.Project
   );
@@ -62,28 +61,25 @@ export const HomeMainContent = () => {
         ? postsQuery
         : null;
 
-  const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
-    activeQuery ?? {};
-
-  useEffect(() => {
-    if (data) {
-      const all = (data as any)?.pages?.flatMap((page: any) => page.data) ?? [];
-      console.log(all, "test");
-      setLocalContent(all);
-    }
+  const data = activeQuery?.data;
+  const fetchNextPage = activeQuery?.fetchNextPage;
+  const hasNextPage = activeQuery?.hasNextPage;
+  const isLoading = activeQuery?.isLoading ?? false;
+  const isFetchingNextPage = activeQuery?.isFetchingNextPage ?? false;
+  const content = useMemo<TContentData[]>(() => {
+    return data?.pages.flatMap((page) => page.data) ?? [];
   }, [data]);
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (
       !hasNextPage ||
       isLoading ||
       !isLastElementVisible ||
-      localContent.length === 0
+      content.length === 0
     )
       return;
 
-    const lastContentId = localContent[localContent.length - 1].data.id;
+    const lastContentId = content[content.length - 1].data.id;
     if (lastSeenId === lastContentId) return;
 
     setLastSeenId(lastContentId);
@@ -115,7 +111,7 @@ export const HomeMainContent = () => {
     getUser();
   }, []);
 
-  const filteredContent = localContent.filter((item) => {
+  const filteredContent = content.filter((item) => {
     if (activeFilter === "All") return true;
     return item.type === activeFilter;
   });
@@ -181,7 +177,7 @@ export const HomeMainContent = () => {
 
         {(isLoading || isFetchingNextPage) && (
           <>
-            {localContent.length > 3 ? (
+            {content.length > 3 ? (
               <LoadingMiniView />
             ) : (
               <>

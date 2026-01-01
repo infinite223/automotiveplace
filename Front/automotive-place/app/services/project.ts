@@ -118,6 +118,8 @@ export const getProjectsInfinite = async (
     page: number;
   } = await response.json();
 
+  console.log(result.data, "result getProjectsInfinite");
+
   return {
     data: result.data.map((project) => ({
       data: project,

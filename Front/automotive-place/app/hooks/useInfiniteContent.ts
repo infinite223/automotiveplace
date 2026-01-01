@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { MainContentResponse } from "./useMainContent";
-import { getPostsInfinite } from "../services/post";
 import { getProjectsInfinite } from "../services/project";
+import { getPostsInfinite } from "../services/post";
 
 type FetchFn = (page: number) => Promise<MainContentResponse>;
 
@@ -10,15 +10,9 @@ export const useInfiniteContent = (
   fetchFn: FetchFn,
   enabled = true
 ) => {
-  return useInfiniteQuery<
-    MainContentResponse,
-    Error,
-    MainContentResponse,
-    [string],
-    number
-  >({
+  return useInfiniteQuery<MainContentResponse, Error>({
     queryKey: [key],
-    queryFn: ({ pageParam = 0 }) => fetchFn(pageParam),
+    queryFn: ({ pageParam = 0 }) => fetchFn(pageParam as number),
     getNextPageParam: (lastPage, pages) =>
       lastPage.hasMore ? pages.length : undefined,
     initialPageParam: 0,
