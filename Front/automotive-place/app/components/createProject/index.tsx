@@ -1,6 +1,6 @@
 import React from "react";
 import { validProject } from "./Validation";
-import { createProject } from "@/app/services/project";
+import { createProject, uploadImageProject } from "@/app/services/project";
 import { AMPStepper } from "../shared/Stepper/AMPSteper";
 import { stepsOptions } from "./steps/config";
 import { createProjectSchema } from "@/app/api/zod.schmas";
@@ -47,8 +47,16 @@ export const CreateProjectView = () => {
 
     if (!findInValidResult && zodResult.success) {
       try {
-        console.log(project, "proj");
         const res = await createProject(project);
+        const images: File[] = data[2].data.images || [];
+        const projectId = res.project.id;
+
+        if (images.length) {
+          const formData = new FormData();
+          images.forEach((file) => formData.append("files", file));
+
+          await uploadImageProject(projectId, formData);
+        }
 
         if (res?.notification) {
           dispatch(addNotification(JSON.stringify(res.notification)));
@@ -68,6 +76,24 @@ export const CreateProjectView = () => {
       }
     }
   };
+
+  // const onSubmit = async (data: any) => {
+  //   const project = stepperDataToCreateProject(data);
+  //   const images: File[] = data[0].data.images || [];
+
+  //   const res = await createProject(project);
+  //   const projectId = res.project.id;
+
+  //   if (images.length) {
+  //     const formData = new FormData();
+  //     images.forEach((file) => formData.append("files", file));
+
+  //     await fetch(`/api/upload-images/${projectId}/media`, {
+  //       method: "POST",
+  //       body: formData,
+  //     });
+  //   }
+  // };
 
   return (
     <main

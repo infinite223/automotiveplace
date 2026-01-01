@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { TContentData } from "@/app/utils/types";
 import { isTBasicProject } from "@/app/utils/types/project";
 import { ProjectMiniView } from "./ProjectMiniView";
@@ -20,7 +20,6 @@ import { useTranslations } from "next-intl";
 import {
   MainContentResponse,
   QUERY_KEY_MAIN_CONTENT,
-  useMainContent,
 } from "@/app/hooks/useMainContent";
 import { ContentTypeFilter } from "./ContentTypeFilter";
 import { iconSizes } from "@/app/utils/constants";
@@ -29,6 +28,7 @@ import { Yant } from "@/app/utils/helpers/fontsHelper";
 import Image from "next/image";
 import { IoNotifications } from "react-icons/io5";
 import { useQueryClient } from "@tanstack/react-query";
+import { usePosts, useProjects } from "@/app/hooks/useInfiniteContent";
 
 const headerMap: Record<ContentType, string> = {
   [ContentType.Project]: "Najnowsze projekty",
@@ -42,7 +42,6 @@ const headerMap: Record<ContentType, string> = {
 export const HomeMainContent = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [lastSeenId, setLastSeenId] = useState<string | null>(null);
-  const [localContent, setLocalContent] = useState<TContentData[]>([]);
   const [activeFilter, setActiveFilter] = useState<ContentType | "All">(
     ContentType.Project
   );
@@ -51,34 +50,40 @@ export const HomeMainContent = () => {
   const isLastElementVisible = useOnScreen(lastElementRef);
   const t = useTranslations();
 
-  const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
-    useMainContent();
-
   const queryClient = useQueryClient();
+  const projectsQuery = useProjects(activeFilter === ContentType.Project);
+  const postsQuery = usePosts(activeFilter === ContentType.Post);
 
-  useEffect(() => {
-    if (data) {
-      const all = (data as any)?.pages?.flatMap((page: any) => page.data) ?? [];
-      console.log(all, "test");
-      setLocalContent(all);
-    }
+  const activeQuery =
+    activeFilter === ContentType.Project
+      ? projectsQuery
+      : activeFilter === ContentType.Post
+        ? postsQuery
+        : null;
+
+  const data = activeQuery?.data;
+  const fetchNextPage = activeQuery?.fetchNextPage;
+  const hasNextPage = activeQuery?.hasNextPage;
+  const isLoading = activeQuery?.isLoading ?? false;
+  const isFetchingNextPage = activeQuery?.isFetchingNextPage ?? false;
+  const content = useMemo<TContentData[]>(() => {
+    return data?.pages.flatMap((page) => page.data) ?? [];
   }, [data]);
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (
       !hasNextPage ||
       isLoading ||
       !isLastElementVisible ||
-      localContent.length === 0
+      content.length === 0
     )
       return;
 
-    const lastContentId = localContent[localContent.length - 1].data.id;
+    const lastContentId = content[content.length - 1].data.id;
     if (lastSeenId === lastContentId) return;
 
     setLastSeenId(lastContentId);
-    fetchNextPage();
+    fetchNextPage?.();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLastElementVisible]);
 
@@ -106,7 +111,7 @@ export const HomeMainContent = () => {
     getUser();
   }, []);
 
-  const filteredContent = localContent.filter((item) => {
+  const filteredContent = content.filter((item) => {
     if (activeFilter === "All") return true;
     return item.type === activeFilter;
   });
@@ -172,7 +177,7 @@ export const HomeMainContent = () => {
 
         {(isLoading || isFetchingNextPage) && (
           <>
-            {localContent.length > 3 ? (
+            {content.length > 3 ? (
               <LoadingMiniView />
             ) : (
               <>

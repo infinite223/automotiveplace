@@ -3,14 +3,12 @@
 import { AMPButton } from "@/app/components/shared/AMPButton";
 import { getProject } from "@/app/services/project";
 import { iconSizes } from "@/app/utils/constants";
-import { TBasicProject, TProject } from "@/app/utils/types/project";
-import { RootState } from "@/lib/store";
+import { TProject } from "@/app/utils/types/project";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { CgShare } from "react-icons/cg";
 import { FaHeart } from "react-icons/fa";
 import { TbMessageCircleUp } from "react-icons/tb";
-import { useSelector } from "react-redux";
 import {
   motion,
   AnimatePresence,
@@ -29,6 +27,7 @@ import { useFetchData } from "@/app/hooks/useFetchData";
 import { getCurrentStage } from "@/app/utils/helpers/stagesHelper";
 import Image from "next/image";
 import { RxDotsHorizontal } from "react-icons/rx";
+import { getProjectImageSrcByFileId } from "@/app/utils/helpers/storageHelper";
 
 export default function Project({ params }: { params: { id: string } }) {
   const [activeTab, setActiveTab] = useState("informacje");
@@ -63,6 +62,7 @@ export default function Project({ params }: { params: { id: string } }) {
     );
 
   if (error) return <div>Error: {error.message}</div>;
+  const bgImage = getProjectImageSrcByFileId(data?.images?.[0]);
 
   return (
     <main className="flex w-full min-h-dvh bg-amp-900 dark:bg-amp-0 flex-col items-center gap-2 text-black dark:text-white">
@@ -103,9 +103,9 @@ export default function Project({ params }: { params: { id: string } }) {
             style={{ height, opacity }}
             className="relative w-full overflow-hidden"
           >
-            {data?.images?.[0] && (
+            {bgImage && (
               <Image
-                src={data.images?.[0]}
+                src={bgImage}
                 className="object-cover"
                 alt="car-image"
                 fill

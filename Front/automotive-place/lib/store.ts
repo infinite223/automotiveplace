@@ -17,6 +17,10 @@ export const store = configureStore({
     actions: actionsSlice,
     contentData: contentDataSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

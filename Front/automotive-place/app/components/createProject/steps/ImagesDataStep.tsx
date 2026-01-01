@@ -1,4 +1,7 @@
-import React, { useEffect } from "react";
+"use client";
+
+import { checkImage } from "@/app/services/checkImage";
+import React, { useEffect, useRef, useState } from "react";
 
 interface BasicDataStepProps {
   onPrev: () => void;
@@ -6,19 +9,122 @@ interface BasicDataStepProps {
   registerGetData?: (fn: () => unknown) => void;
 }
 
+type ImageState = {
+  file: File;
+  url: string;
+  status: "pending" | "ok" | "blocked";
+};
+
 export const ImagesDataStep = ({
   setIsValid,
   registerGetData,
 }: BasicDataStepProps) => {
-  useEffect(() => {
-    setIsValid(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const [images, setImages] = useState<ImageState[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    registerGetData?.(() => ({}));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    registerGetData?.(() => ({
+      images: images
+        .filter((img) => img.status === "ok")
+        .map((img) => img.file),
+    }));
+  }, [images, registerGetData]);
 
-  return <div className="flex flex-col gap-4"></div>;
+  useEffect(() => {
+    const hasBlocked = images.some((img) => img.status === "blocked");
+    const hasValid = images.some((img) => img.status === "ok");
+
+    const newValid = hasValid && !hasBlocked;
+
+    setIsValid(newValid);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [images]);
+
+  const handleFiles = async (files: FileList | null) => {
+    if (!files) return;
+
+    const newImages: ImageState[] = [];
+
+    for (const file of Array.from(files)) {
+      const url = URL.createObjectURL(file);
+
+      newImages.push({
+        file,
+        url,
+        status: "pending",
+      });
+    }
+
+    setImages((prev) => [...prev, ...newImages]);
+
+    for (const img of newImages) {
+      const imageEl = new Image();
+      imageEl.src = img.url;
+
+      await new Promise((res) => (imageEl.onload = res));
+
+      const predictions = await checkImage(imageEl);
+
+      const isNSFW = predictions.some(
+        (p) =>
+          (p.className === "Porn" && p.probability > 0.6) ||
+          (p.className === "Hentai" && p.probability > 0.6) ||
+          (p.className === "Sexy" && p.probability > 0.6)
+      );
+
+      setImages((prev) =>
+        prev.map((p) =>
+          p.url === img.url ? { ...p, status: isNSFW ? "blocked" : "ok" } : p
+        )
+      );
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-4">
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        multiple
+        hidden
+        onChange={(e) => handleFiles(e.target.files)}
+      />
+
+      <button
+        type="button"
+        className="px-4 py-2 bg-blue-600 text-white rounded-md w-fit"
+        onClick={() => inputRef.current?.click()}
+      >
+        Dodaj zdjęcia
+      </button>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {images.map((img, index) => (
+          <div
+            key={index}
+            className="relative border rounded-md overflow-hidden"
+          >
+            <img
+              src={img.url}
+              alt="upload"
+              className="object-cover w-full h-32"
+            />
+
+            {img.status === "pending" && (
+              <div className="absolute inset-0 bg-black/50 text-white flex items-center justify-center text-xs">
+                Sprawdzanie...
+              </div>
+            )}
+
+            {img.status === "blocked" && (
+              <div className="absolute inset-0 bg-red-600/80 text-white flex items-center justify-center text-xs text-center px-2">
+                Zdjęcie niedozwolone (NSFW)
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };

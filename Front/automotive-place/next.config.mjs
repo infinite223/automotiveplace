@@ -29,6 +29,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "cdn1.iconfinder.com",
       },
+      {
+        protocol: "https",
+        hostname: "fra.cloud.appwrite.io",
+      },
     ],
   },
 };

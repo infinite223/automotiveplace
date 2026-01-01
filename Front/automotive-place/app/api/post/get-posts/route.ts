@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import prisma from "@/lib/prisma";
+import { TBasicPost } from "@/app/utils/types/post";
 
 export async function GET(request: NextRequest) {
   const userData = await getLoggedInUser();
@@ -16,7 +17,7 @@ export async function GET(request: NextRequest) {
   const limit = Number(searchParams.get("limit")) || 10;
   const page = Number(searchParams.get("page")) || 0;
 
-  const posts = await prisma.post.findMany({
+  const postsFromDb = await prisma.post.findMany({
     take: limit + 1,
     skip: page * limit,
     orderBy: {
@@ -40,38 +41,33 @@ export async function GET(request: NextRequest) {
     },
   });
 
+  // Obsługa paginacji
   let hasMore = false;
-  if (posts.length > limit) {
+  if (postsFromDb.length > limit) {
     hasMore = true;
-    posts.pop();
+    postsFromDb.pop();
   }
 
-  const data = posts.map((post) => ({
+  // Transformacja do TBasicPost
+  const data: TBasicPost[] = postsFromDb.map((post) => ({
     id: post.id,
-    createdAt: post.createdAt,
-    updatedAt: post.updatedAt,
-
     title: post.title,
     content: post.content ?? "",
-
-    images: post.media.map((m) => m.fileLocation),
-
-    tags: post.tagAssignments.map((ta) => ({
-      id: ta.tag.id,
-      name: ta.tag.name,
-    })),
-
+    imagesUrl: post.media.length > 0 ? post.media[0].fileLocation : null,
     likesCount: post.userActivity.length,
-
     isLikedByAuthUser: !!post.userActivity.find(
       (ua) => ua.userId === userData.user.$id && ua.activityType === "LIKE"
     ),
-
+    lastUpdateAt: post.updatedAt,
     author: {
       id: post.author!.id,
       name: post.author!.name,
       email: post.author!.email,
     },
+    tags: post.tagAssignments.map((ta) => ({
+      id: ta.tag.id,
+      name: ta.tag.name,
+    })),
   }));
 
   return NextResponse.json({

@@ -20,8 +20,8 @@ export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
     engineCapacity: engine.engineCapacity,
     engineName: engine.engineName,
     engineDescription: engine.engineDescription,
-    engineStockHp: engine.engineStockHp,
-    engineStockNm: engine.engineStockNm,
+    engineStockHp: engine.engineStockHp ?? 200,
+    engineStockNm: engine.engineStockNm ?? 300,
     engineWasSwapped: engine.engineWasSwapped,
 
     transmissionWasSwapped: engine.transmissionWasSwapped,

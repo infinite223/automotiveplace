@@ -5,6 +5,7 @@ import { iconSizes } from "@/app/utils/constants";
 import AMPImageZoomModal from "./AMPImageZoomModal";
 import Image from "next/image";
 import { calculateDominantColor } from "@/app/utils/helpers/colorHelper";
+import { getProjectImageSrcByFileId } from "@/app/utils/helpers/storageHelper";
 
 interface AMPSliderProps {
   images: string[];
@@ -60,25 +61,23 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
           className="flex transition-transform duration-500 ease-in-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
-          {images.map((image, index) => (
-            // <img
-            //   key={index}
-            //   src={image}
-            //   alt={`slide-${index}`}
-            //   className="flex-shrink-0 object-contain w-full h-full my-auto"
-            //   onDoubleClick={openModal}
-            // />
-            <Image
-              key={index}
-              src={image}
-              alt={`slide-${index}`}
-              width={1200}
-              height={800}
-              className="flex-shrink-0 object-contain w-full h-full my-auto"
-              onDoubleClick={openModal}
-              priority={index === 0}
-            />
-          ))}
+          {images.map((imageId, index) => {
+            const imgFullPath = getProjectImageSrcByFileId(imageId);
+            if (!imgFullPath) return;
+
+            return (
+              <Image
+                key={index}
+                src={imgFullPath}
+                alt={`slide-${index}`}
+                width={1200}
+                height={800}
+                className="flex-shrink-0 object-contain w-full h-full my-auto"
+                onDoubleClick={openModal}
+                priority={index === 0}
+              />
+            );
+          })}
         </div>
 
         {images.length > 1 && (

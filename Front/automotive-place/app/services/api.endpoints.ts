@@ -13,6 +13,6 @@ export const apiEndpoints = {
   getProject: `${base}/project/get-project`,
   getProjects: `${base}/project/get-projects`,
   getPopularProjects: `${base}/project/get-popular-projects`,
-  getPosts: `${base}/project/get-posts`,
+  getPosts: `${base}/post/get-posts`,
   createStage: `${base}/project/add-stage`,
 };

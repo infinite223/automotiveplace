@@ -14,3 +14,5 @@ We need design min two tables for:
   date -> done?
   like
 - remove "all" option -> add req for projects, posts....
+
+- change in code image loading -> `const imageUrl = `${process.env.APPWRITE_ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${fileId}/view?project=${PROJECT_ID}`;`

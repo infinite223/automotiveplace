@@ -1,8 +1,8 @@
 import { Status } from "./enums";
 import { TCarItem } from "./types/carItem";
-import { TPost } from "./types/post";
+import { TBasicPost } from "./types/post";
 import { TProblem } from "./types/problem";
-import { TBasicProject, TProject } from "./types/project";
+import { TBasicProject } from "./types/project";
 import { TSpot } from "./types/spot";
 
 type TCarItemLikes = {};
@@ -68,7 +68,12 @@ type TContentTypes =
   | "Post"
   | "Company";
 
-type TContentDataOptions = TCarItem | TBasicProject | TProblem | TSpot | TPost;
+type TContentDataOptions =
+  | TCarItem
+  | TBasicProject
+  | TProblem
+  | TSpot
+  | TBasicPost;
 
 type TContentData = {
   type: TContentTypes;

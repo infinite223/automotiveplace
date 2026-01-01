@@ -6,6 +6,7 @@ import { Status } from "@/app/utils/enums";
 import { TPostCreate } from "@/app/utils/types/post";
 import { createPostSchema } from "../../zod.schmas";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
+import { checkText } from "../../moderation/textModeration";
 
 export async function POST(request: NextRequest) {
   const user = await getLoggedInUser();
@@ -21,6 +22,27 @@ export async function POST(request: NextRequest) {
   }
 
   const post: TPostCreate = await request.json();
+  const titleCheck = checkText(post.title);
+  if (!titleCheck.ok) {
+    return NextResponse.json({
+      post,
+      notification: CreateNotification(
+        Status.Medium,
+        `Tytuł zawiera niedozwolone słowo: "${titleCheck.word}"`
+      ),
+    });
+  }
+
+  const descriptionCheck = checkText(post.description);
+  if (!descriptionCheck.ok) {
+    return NextResponse.json({
+      post,
+      notification: CreateNotification(
+        Status.Medium,
+        `Opis zawiera niedozwolone słowo: "${descriptionCheck.word}"`
+      ),
+    });
+  }
 
   let notification: ICreateNotification | null = {
     log: {
