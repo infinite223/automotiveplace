@@ -3,6 +3,7 @@ import { BasicDataStep } from "./BasicDataStep";
 import { EngineTransmissionStep } from "./EngineTransmissionStep";
 import { ImagesDataStep } from "./ImagesDataStep";
 import { StagesStep } from "./StagesStep";
+import { SummaryDataStep } from "./SummaryDataStep";
 
 export const stepsOptions: IStepsOptions = {
   title: "Dodawanie projektu",
@@ -22,15 +23,16 @@ export const stepsOptions: IStepsOptions = {
       description: "Dodaj zdjęcia swojego projektu",
       component: ImagesDataStep,
     },
-    // {
-    //   name: "Etapy modyfikacji",
-    //   description: "Dodaj etapy modyfikacji projektu",
-    //   component: StagesStep,
-    // },
-    // {
-    //   name: "Podsumowanie",
-    //   description: "Podsumowanie projektu",
-    //   component: BasicDataStep,
-    // },
+    {
+      name: "Etapy modyfikacji",
+      description: "Dodaj etapy modyfikacji projektu",
+      component: StagesStep,
+    },
+    // TODO - add tags
+    {
+      name: "Podsumowanie",
+      description: "Podsumowanie projektu",
+      component: SummaryDataStep,
+    },
   ],
 };

@@ -2,6 +2,7 @@
 
 import { checkImage } from "@/app/services/checkImage";
 import React, { useEffect, useRef, useState } from "react";
+import { AMPButton } from "../../shared/AMPButton";
 
 interface BasicDataStepProps {
   onPrev: () => void;
@@ -91,20 +92,16 @@ export const ImagesDataStep = ({
         onChange={(e) => handleFiles(e.target.files)}
       />
 
-      <button
-        type="button"
-        className="px-4 py-2 bg-blue-600 text-white rounded-md w-fit"
+      <AMPButton
+        type="secondary"
+        name="Dodaj zdjęcia"
+        additionalTailwindCss="w-fit"
         onClick={() => inputRef.current?.click()}
-      >
-        Dodaj zdjęcia
-      </button>
+      />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {images.map((img, index) => (
-          <div
-            key={index}
-            className="relative border rounded-md overflow-hidden"
-          >
+          <div key={index} className="relative rounded-sm overflow-hidden">
             <img
               src={img.url}
               alt="upload"

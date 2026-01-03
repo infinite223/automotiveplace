@@ -4,8 +4,8 @@ import { TProjectCreate } from "@/app/utils/types/project";
 export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
   const basic = steps[0]?.data || {};
   const engine = steps[1]?.data || {};
-
-  const stages = generateRandomStagesToCreate(1);
+  const stages = steps[3]?.data || [];
+  // const stages = generateRandomStagesToCreate(1);
 
   return {
     garageId: "garage2",

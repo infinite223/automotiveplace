@@ -17,10 +17,7 @@ import { getLoggedInUser } from "@/lib/actions/user.actions";
 import useOnScreen from "@/app/hooks/useOnScreen";
 import { ContentType } from "@/app/utils/enums";
 import { useTranslations } from "next-intl";
-import {
-  MainContentResponse,
-  QUERY_KEY_MAIN_CONTENT,
-} from "@/app/hooks/useMainContent";
+import { MainContentResponse } from "@/app/hooks/useMainContent";
 import { ContentTypeFilter } from "./ContentTypeFilter";
 import { iconSizes } from "@/app/utils/constants";
 import Logo from "../../../../asets/logo_2.png";
@@ -37,6 +34,12 @@ const headerMap: Record<ContentType, string> = {
   [ContentType.Spot]: "Najnowsze spoty",
   [ContentType.Event]: "Najnowsze wydarzenia",
   [ContentType.Trip]: "Najnowsze tripy",
+};
+
+const QUERY_KEY_BY_FILTER: Partial<Record<ContentType | "All", string[]>> = {
+  [ContentType.Project]: ["projects"],
+  [ContentType.Post]: ["posts"],
+  All: ["projects", "posts"],
 };
 
 export const HomeMainContent = () => {
@@ -66,9 +69,11 @@ export const HomeMainContent = () => {
   const hasNextPage = activeQuery?.hasNextPage;
   const isLoading = activeQuery?.isLoading ?? false;
   const isFetchingNextPage = activeQuery?.isFetchingNextPage ?? false;
+
   const content = useMemo<TContentData[]>(() => {
     return data?.pages.flatMap((page) => page.data) ?? [];
   }, [data]);
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (
@@ -117,7 +122,10 @@ export const HomeMainContent = () => {
   });
 
   const onDelete = (id: string) => {
-    queryClient.setQueryData([QUERY_KEY_MAIN_CONTENT], (oldData: any) => {
+    const keys = QUERY_KEY_BY_FILTER[activeFilter];
+
+    queryClient.setQueryData([keys], (oldData: any) => {
+      console.log(oldData, "oldData");
       if (!oldData) return oldData;
 
       return {

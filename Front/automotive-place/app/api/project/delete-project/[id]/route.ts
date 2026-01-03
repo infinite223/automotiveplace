@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { Prisma } from "@prisma/client";
+import { createAdminClient } from "@/lib/server/appwrite";
+import { bucketId } from "@/app/utils/helpers/storageHelper";
 
 export async function DELETE(
   request: NextRequest,
@@ -15,13 +17,13 @@ export async function DELETE(
       { status: 401 }
     );
   }
+  const { storage } = await createAdminClient();
 
-  const { id } = params;
-  const projectId = id;
-  console.log(id, "projectId");
+  const projectId = params.id;
+
   try {
     const project = await prisma.project.findUnique({
-      where: { id },
+      where: { id: projectId },
     });
 
     if (!project) {
@@ -38,20 +40,34 @@ export async function DELETE(
       );
     }
 
+    const mediaFiles = await prisma.media.findMany({
+      where: { projectId },
+    });
+
+    for (const media of mediaFiles) {
+      try {
+        await storage.deleteFile(bucketId, media.fileLocation);
+      } catch (err) {
+        console.error(
+          `Failed to delete Appwrite file ${media.fileLocation}`,
+          err
+        );
+
+        return NextResponse.json(
+          {
+            message:
+              "Failed to delete project images. Project was NOT deleted.",
+            failedFileId: media.fileLocation,
+          },
+          { status: 500 }
+        );
+      }
+    }
+
     await prisma.$transaction(async (tx) => {
-      const content = await tx.content.findFirst({
+      await tx.media.deleteMany({
         where: { projectId },
       });
-
-      if (content) {
-        await tx.userContent.deleteMany({
-          where: { contentId: content.id },
-        });
-
-        await tx.content.delete({
-          where: { id: content.id },
-        });
-      }
 
       await tx.stage.deleteMany({
         where: { projectId },
@@ -67,7 +83,7 @@ export async function DELETE(
     });
 
     return NextResponse.json({
-      message: "Project.TheProjectHasBeenSuccessfullyDeleted",
+      message: "Project successfully deleted",
       deletedProjectId: projectId,
     });
   } catch (error) {
