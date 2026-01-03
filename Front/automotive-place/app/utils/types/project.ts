@@ -110,9 +110,7 @@ function isTBasicProject(data: any): data is TBasicProject {
       typeof data.nm === "number" &&
       typeof data.engineStockHp === "number" &&
       typeof data.stageNumber === "number" &&
-      typeof data.engineStockNm === "number" &&
-      typeof data.acc_0_100 === "number") ||
-    typeof data.acc_100_200 === "number" ||
+      typeof data.engineStockNm === "number") ||
     (Array.isArray(data.images) && data.images > 0)
   );
 }

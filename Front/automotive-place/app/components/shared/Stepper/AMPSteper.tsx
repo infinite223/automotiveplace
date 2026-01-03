@@ -49,6 +49,7 @@ export const AMPStepper: React.FC<AMPStepperProps> = ({
   const handleNext = () => {
     if (getStepDataRef.current) {
       const data = getStepDataRef.current();
+      console.log(data, "data");
       dispatch(saveStepData({ step: currentStep, data }));
     }
 

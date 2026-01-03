@@ -7,6 +7,13 @@ export type BasicDataStep = Pick<
   "name" | "carModel" | "carMake" | "description"
 >;
 
+export interface StepProps {
+  onPrev: () => void;
+  setIsValid: (isValid: boolean) => void;
+  registerGetData?: (fn: () => unknown) => void;
+  initialData?: any;
+}
+
 export interface StageFormProps {
   stage: TStageCreate;
   index: number;

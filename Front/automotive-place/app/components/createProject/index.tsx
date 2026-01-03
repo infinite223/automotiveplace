@@ -36,11 +36,12 @@ export const CreateProjectView = () => {
 
   const onSubmit = async (data: any) => {
     const project = stepperDataToCreateProject(data);
+    console.log(project, "project");
     // const project = generateRandomProjectsToCreate(1, true, true, true)[0];
 
     const result = validProject(project);
     const zodResult = createProjectSchema.safeParse(project);
-
+    console.log(zodResult, "zodResult", result);
     const findInValidResult = result.validResults.find(
       (result) => result.valid == false
     );
@@ -76,24 +77,6 @@ export const CreateProjectView = () => {
       }
     }
   };
-
-  // const onSubmit = async (data: any) => {
-  //   const project = stepperDataToCreateProject(data);
-  //   const images: File[] = data[0].data.images || [];
-
-  //   const res = await createProject(project);
-  //   const projectId = res.project.id;
-
-  //   if (images.length) {
-  //     const formData = new FormData();
-  //     images.forEach((file) => formData.append("files", file));
-
-  //     await fetch(`/api/upload-images/${projectId}/media`, {
-  //       method: "POST",
-  //       body: formData,
-  //     });
-  //   }
-  // };
 
   return (
     <main

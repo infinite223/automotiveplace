@@ -31,11 +31,11 @@ export const ContentTypeFilter = ({ active, onChange }: Props) => {
   };
 
   const items: { label: string; type: ContentType | "All" }[] = [
-    { label: "Project", type: ContentType.Project },
-    { label: "Post", type: ContentType.Post },
-    { label: "Problem", type: ContentType.Problem },
-    { label: "Spot", type: ContentType.Spot },
-    { label: "Event", type: ContentType.Event },
+    { label: "Projects", type: ContentType.Project },
+    { label: "Posts", type: ContentType.Post },
+    { label: "Problems", type: ContentType.Problem },
+    { label: "Spots", type: ContentType.Spot },
+    { label: "Events", type: ContentType.Event },
     { label: "Trips", type: ContentType.Trip },
     { label: "All", type: "All" },
   ];
@@ -54,7 +54,7 @@ export const ContentTypeFilter = ({ active, onChange }: Props) => {
           >
             <div
               className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all
-      ${isActive ? "border-amp-700/60" : "border-amp-200"}
+      ${isActive ? "border-amp-700/50" : "border-amp-200"}
       group-hover:border-amp-700/80`}
             >
               <div

@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
   try {
     const newProject = await createProject(project, author.id);
 
-    await createContentForUser(newProject.id, ContentType.Project, author.id);
+    // await createContentForUser(newProject.id, ContentType.Project, author.id);
 
     return NextResponse.json({
       project: newProject,
