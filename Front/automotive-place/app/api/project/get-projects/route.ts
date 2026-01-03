@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
         ? lastStage.acc_100_200.toNumber()
         : null,
 
-      stageNumber: project.stages.length,
+      stageNumber: project.stages[project.stages.length - 1].stageNumber,
 
       engineNameAndCapacity: project.engineName + " " + project.engineCapacity,
 
@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
       },
     };
   });
-  console.log(data, "data");
+
   return NextResponse.json({
     data,
     hasMore,

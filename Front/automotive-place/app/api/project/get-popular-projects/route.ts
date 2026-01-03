@@ -47,6 +47,11 @@ export async function GET() {
       ? project.stages[project.stages.length - 1]
       : null;
 
+    let stageName = "STOCK";
+    if (lastStage && lastStage.stageNumber > 0) {
+      stageName = "STAGE " + lastStage.stageNumber;
+    }
+
     return {
       id: project.id,
       carMake: project.carMake,
@@ -57,7 +62,7 @@ export async function GET() {
       author: project.author,
       likesCount: project._count.userActivity,
       images: project.media.map((m) => m.fileLocation),
-      stageName: lastStage ? lastStage.name : "Stock",
+      stageName,
     };
   });
 

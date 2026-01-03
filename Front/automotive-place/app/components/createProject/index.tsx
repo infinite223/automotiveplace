@@ -36,7 +36,6 @@ export const CreateProjectView = () => {
 
   const onSubmit = async (data: any) => {
     const project = stepperDataToCreateProject(data);
-    console.log(project, "project");
     // const project = generateRandomProjectsToCreate(1, true, true, true)[0];
 
     const result = validProject(project);

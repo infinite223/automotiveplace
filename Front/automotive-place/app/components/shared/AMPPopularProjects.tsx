@@ -9,6 +9,7 @@ import { LoadingSpinner } from "../loading/LoadingSpinner";
 import { EngineParameter } from "@/app/utils/enums";
 import AMPImage from "./AMPImage";
 import { getProjectImageSrcByFileId } from "@/app/utils/helpers/storageHelper";
+import { FiChevronRight } from "react-icons/fi";
 
 export const QUERY_KEY_POPULAR_PROJECTS = "popular-projects";
 
@@ -38,9 +39,10 @@ function AMPPopularProjects() {
       <div className="max-h-[85vh] overflow-y-auto custom-scrollbar flex flex-col mt-2">
         {projects?.map((project) => {
           const imgFullPath = getProjectImageSrcByFileId(project.images?.[0]);
+
           return (
             <Link href={`./project/${project.id}`} key={project.id}>
-              <div className="text-sm flex flex-wrap p-2 hover:bg-amp-200 rounded-sm cursor-pointer">
+              <div className="group text-sm flex items-center justify-between p-2 hover:bg-amp-200 rounded-sm cursor-pointer transition">
                 <div className="flex gap-3 items-start">
                   <div className="rounded-md w-[90px] h-full bg-amp-50 flex items-center justify-center">
                     <AMPImage
@@ -51,6 +53,7 @@ function AMPPopularProjects() {
                       className="rounded-sm"
                     />
                   </div>
+
                   <div className="leading-4">
                     <div className="font-semibold">
                       {project.carMake} {project.carModel}
@@ -66,6 +69,20 @@ function AMPPopularProjects() {
                     </div>
                   </div>
                 </div>
+
+                <FiChevronRight
+                  size={20}
+                  className="
+        text-amp-600
+        opacity-0
+        group-hover:opacity-100
+        group-hover:translate-x-1
+        transition-all
+        duration-200
+        flex-shrink-0
+        mr-2
+      "
+                />
               </div>
             </Link>
           );

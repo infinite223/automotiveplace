@@ -85,7 +85,7 @@ export const ProjectMiniView = ({
     : data.engineStockNm;
 
   const currentStage =
-    data.stageNumber !== 0 ? "STAGE " + data.stageNumber : "STOCK";
+    data.stageNumber > 0 ? "STAGE " + data.stageNumber : "STOCK";
 
   const handleClickInterestingContent = () => {
     console.log("Add/remove content from intresting", data.id);
