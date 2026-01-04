@@ -33,7 +33,7 @@ type TProject = {
   engineWasSwapped?: boolean;
   engineCapacity: number;
 
-  transmissionName: string;
+  transmissionName?: string;
   transmissionGears: number;
   transmissionDescription?: string;
   transmissionWasSwapped?: boolean;

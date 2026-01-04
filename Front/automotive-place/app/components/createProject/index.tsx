@@ -10,6 +10,10 @@ import { useDispatch } from "react-redux";
 import { CreateNotification } from "../logger/NotificationHelper";
 import { stepperDataToCreateProject } from "./helpers";
 import { Status } from "@/app/utils/enums";
+import {
+  setIsLoading,
+  setLoadingText,
+} from "@/lib/features/loading/globalLoadingSlice";
 
 export interface IInputValue {
   value: string | number;
@@ -35,8 +39,11 @@ export const CreateProjectView = () => {
   const dispatch = useDispatch();
 
   const onSubmit = async (data: any) => {
+    dispatch(setIsLoading(true));
+    dispatch(setLoadingText("Pobieranie danych..."));
     const project = stepperDataToCreateProject(data);
     // const project = generateRandomProjectsToCreate(1, true, true, true)[0];
+    dispatch(setLoadingText("Sprawdzanie danych..."));
 
     const result = validProject(project);
     const zodResult = createProjectSchema.safeParse(project);
@@ -47,10 +54,13 @@ export const CreateProjectView = () => {
 
     if (!findInValidResult && zodResult.success) {
       try {
+        dispatch(setLoadingText("Dodawanie projektu..."));
+
         const res = await createProject(project);
         const images: File[] = data[2].data.images || [];
         const projectId = res.project.id;
 
+        dispatch(setLoadingText("Dodawanie zdjęć..."));
         if (images.length) {
           const formData = new FormData();
           images.forEach((file) => formData.append("files", file));
@@ -73,6 +83,8 @@ export const CreateProjectView = () => {
             )
           )
         );
+      } finally {
+        dispatch(setIsLoading(false));
       }
     }
   };

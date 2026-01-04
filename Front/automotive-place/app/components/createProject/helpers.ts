@@ -1,12 +1,13 @@
-import { generateRandomStagesToCreate } from "@/app/utils/data/stage";
 import { TProjectCreate } from "@/app/utils/types/project";
+import { TStageCreate } from "@/app/utils/types/stage";
 
 export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
   const basic = steps[0]?.data || {};
   const engine = steps[1]?.data || {};
-  const stages = steps[3]?.data || [];
-  // const stages = generateRandomStagesToCreate(1);
-
+  const stages: TStageCreate[] = steps[3]?.data || [];
+  const stockData = stages.find(
+    (stage: TStageCreate) => stage.stageNumber === 0
+  );
   return {
     garageId: "garage2",
 
@@ -20,8 +21,8 @@ export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
     engineCapacity: engine.engineCapacity,
     engineName: engine.engineName,
     engineDescription: engine.engineDescription,
-    engineStockHp: engine.engineStockHp ?? 200,
-    engineStockNm: engine.engineStockNm ?? 300,
+    engineStockHp: stockData?.hp ?? 0,
+    engineStockNm: stockData?.nm ?? 0,
     engineWasSwapped: engine.engineWasSwapped,
 
     transmissionWasSwapped: engine.transmissionWasSwapped,

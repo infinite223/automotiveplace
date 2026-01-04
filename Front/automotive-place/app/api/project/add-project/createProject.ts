@@ -6,7 +6,7 @@ import { Prisma } from "@prisma/client";
 
 export async function createProject(project: TProjectCreate, authorId: string) {
   const { tags, stages, carItems, ...restProjectData } = project;
-
+  console.log(project, "project");
   let newProject;
   try {
     newProject = await prisma.project.create({

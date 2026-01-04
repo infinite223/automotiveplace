@@ -124,8 +124,7 @@ export const HomeMainContent = () => {
   const onDelete = (id: string) => {
     const keys = QUERY_KEY_BY_FILTER[activeFilter];
 
-    queryClient.setQueryData([keys], (oldData: any) => {
-      console.log(oldData, "oldData");
+    queryClient.setQueryData(keys!, (oldData: any) => {
       if (!oldData) return oldData;
 
       return {

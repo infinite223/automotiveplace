@@ -12,7 +12,7 @@ export const GlobalLoadingView = () => {
   if (!isLoading) return;
 
   return (
-    <div className="z-40 fixed flex items-center justify-center w-full h-svh bg-black bg-opacity-80">
+    <div className="z-[99] fixed flex items-center justify-center w-full h-svh bg-black bg-opacity-80">
       <div role="status" className="flex flex-col gap-3 items-center">
         <LoadingSpinner />
         <span className="sr-only">Loading...</span>

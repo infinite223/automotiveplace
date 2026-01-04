@@ -54,7 +54,7 @@ model Project {
   engineDescription           String?
   engineCapacity              Decimal
   engineWasSwapped            Boolean?
-  transmissionName            String
+  transmissionName            String?
   transmissionGears           Int
   transmissionDescription     String?
   transmissionWasSwapped      Boolean?

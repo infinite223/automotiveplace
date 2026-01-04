@@ -76,13 +76,19 @@ export const ProjectMiniView = ({
     }
   };
 
-  const statisticCurrentHp = data.hp
-    ? data.hp + " (+" + (data.hp - data.engineStockHp) + ") "
-    : data.engineStockHp;
+  const statisticCurrentHp =
+    data.stageNumber > 0
+      ? data.hp
+        ? data.hp + " (+" + (data.hp - data.engineStockHp) + ") "
+        : data.engineStockHp
+      : data.hp + " ";
 
-  const statisticCurrentNm = data.nm
-    ? data.nm + " (+" + (data.nm - data.engineStockNm) + ") "
-    : data.engineStockNm;
+  const statisticCurrentNm =
+    data.stageNumber > 0
+      ? data.nm
+        ? data.nm + " (+" + (data.nm - data.engineStockNm) + ") "
+        : data.engineStockNm
+      : data.nm + " ";
 
   const currentStage =
     data.stageNumber > 0 ? "STAGE " + data.stageNumber : "STOCK";

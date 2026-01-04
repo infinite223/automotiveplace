@@ -45,10 +45,10 @@ export const createProjectSchema = z.object({
   engineDescription: z.string().min(1).max(500),
   engineCapacity: z.number().min(1).max(100),
   engineWasSwapped: z.boolean().optional(),
-  transmissionName: z.string().min(1).max(50),
+  transmissionName: z.string().min(1).max(50).optional(),
   transmissionType: z.number().min(0).max(2), // type -> 0 - maual | 1 - automatic |
   transmissionGears: z.number().min(1).max(20),
-  transmissionDescription: z.string().min(1).max(500),
+  transmissionDescription: z.string().min(1).max(500).optional(),
   transmissionWasSwapped: z.boolean().optional(),
   topSpeedStock: z.number().min(1).max(500).optional(),
   weightStock: z.number().min(1).max(10000).optional(),

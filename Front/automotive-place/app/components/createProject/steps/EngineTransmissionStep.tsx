@@ -23,8 +23,6 @@ export const EngineTransmissionStep = ({
     engineDescription: "",
     engineWasSwapped: false,
 
-    transmissionName: "",
-    transmissionDescription: "",
     transmissionType: "", // automat = 1, manual = 2?
     transmissionGears: "",
     transmissionWasSwapped: false,
@@ -98,7 +96,6 @@ export const EngineTransmissionStep = ({
       <h3 className="text-lg font-semibold mt-4 mb-2">Skrzynia biegów</h3>
 
       <AMPInput
-        required
         type="text"
         placeholder="Nazwa skrzyni (np. ZF8hp)"
         name="Skrzynia"
@@ -110,7 +107,6 @@ export const EngineTransmissionStep = ({
       />
 
       <AMPTextarea
-        required
         name="Opis skrzyni"
         placeholder="Opis skrzyni biegów"
         value={data.transmissionDescription || ""}
