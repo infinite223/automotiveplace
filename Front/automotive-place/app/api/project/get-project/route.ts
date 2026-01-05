@@ -65,6 +65,7 @@ export async function GET(request: NextRequest) {
     engineDescription: project.engineDescription || undefined,
     engineWasSwapped: project.engineWasSwapped || false,
     engineCapacity: project.engineCapacity.toNumber() || 0,
+    transmissionName: project.transmissionName || undefined,
     transmissionDescription: project.transmissionDescription || undefined,
     transmissionWasSwapped: project.transmissionWasSwapped || false,
     projectPrice: project.projectPrice.toNumber() || undefined,
