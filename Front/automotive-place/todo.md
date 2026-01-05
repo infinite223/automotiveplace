@@ -5,7 +5,6 @@ We need design min two tables for:
 - remove button on notification "x"
 - creating a route with the best places
 
-- delete project not working localy
 - Trips:
   name
   description
@@ -13,6 +12,5 @@ We need design min two tables for:
   locations[] with media[]
   date -> done?
   like
-- remove "all" option -> add req for projects, posts....
 
-- change in code image loading -> `const imageUrl = `${process.env.APPWRITE_ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${fileId}/view?project=${PROJECT_ID}`;`
+- implement VisualModification

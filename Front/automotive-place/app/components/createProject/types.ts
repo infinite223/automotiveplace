@@ -1,5 +1,5 @@
 import { TProjectCreate } from "@/app/utils/types/project";
-import { TStageCreate } from "@/app/utils/types/stage";
+import { TStageCreate, TStepStageCreate } from "@/app/utils/types/stage";
 import { ZodIssue } from "zod";
 
 export type BasicDataStep = Pick<
@@ -15,12 +15,12 @@ export interface StepProps {
 }
 
 export interface StageFormProps {
-  stage: TStageCreate;
+  stage: TStepStageCreate;
   index: number;
   errors?: ZodIssue[];
-  onChange: <K extends keyof TStageCreate>(
+  onChange: <K extends keyof TStepStageCreate>(
     field: K,
-    value: TStageCreate[K]
+    value: TStepStageCreate[K]
   ) => void;
   onRemove: () => void;
   onAdd: () => void;

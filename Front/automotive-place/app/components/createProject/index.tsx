@@ -14,6 +14,7 @@ import {
   setIsLoading,
   setLoadingText,
 } from "@/lib/features/loading/globalLoadingSlice";
+import { TStageCreate, TStepStageCreate } from "@/app/utils/types/stage";
 
 export interface IInputValue {
   value: string | number;
@@ -39,6 +40,7 @@ export const CreateProjectView = () => {
   const dispatch = useDispatch();
 
   const onSubmit = async (data: any) => {
+    console.log(data, "data");
     dispatch(setIsLoading(true));
     dispatch(setLoadingText("Pobieranie danych..."));
     const project = stepperDataToCreateProject(data);
@@ -67,6 +69,23 @@ export const CreateProjectView = () => {
 
           await uploadImageProject(projectId, formData);
         }
+
+        const stages: TStageCreate[] = project.stages ?? [];
+        const stepStages = data[3]?.data as TStepStageCreate[];
+
+        for (let i = 0; i < stages.length; i++) {
+          const stageFile = stepStages[i]?.chartImage;
+          if (!stageFile) continue;
+
+          const formData = new FormData();
+          formData.append("files", stageFile);
+
+          await uploadImageProject(projectId, formData, stages[i].stageNumber);
+
+          // stages[i].chartImageUrl = stageFile.name; // opcjonalnie placeholder do UI, faktyczny fileLocation pobierzesz z DB
+        }
+
+        // project.stages = stages;
 
         if (res?.notification) {
           dispatch(addNotification(JSON.stringify(res.notification)));

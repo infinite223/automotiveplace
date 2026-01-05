@@ -4,9 +4,10 @@ import { AMPInput } from "../../shared/AMPInput";
 import { AMPTextarea } from "../../shared/AMPTextarea";
 import { AMPButton } from "../../shared/AMPButton";
 import { AMPSeparator } from "../../shared/AMPSeparator";
-import { TStageCreate } from "@/app/utils/types/stage";
+import { TStageCreate, TStepStageCreate } from "@/app/utils/types/stage";
 import { numberOrUndefined } from "../helpers";
 import { StageFormProps } from "../types";
+import { StageChartImageUpload } from "./StageChartImageUpload";
 
 export const StageForm: React.FC<StageFormProps> = ({
   stage,
@@ -16,7 +17,7 @@ export const StageForm: React.FC<StageFormProps> = ({
   onRemove,
   onAdd,
 }) => {
-  const error = (field: keyof TStageCreate) =>
+  const error = (field: keyof TStepStageCreate) =>
     errors.find((e) => e.path[0] === field)?.message;
 
   return (
@@ -139,8 +140,11 @@ export const StageForm: React.FC<StageFormProps> = ({
           />
         )}
       </div>
+      <StageChartImageUpload
+        value={stage.chartImage}
+        onChange={(file) => onChange("chartImage", file)}
+      />
 
-      {/* Akcje */}
       <div className="grid grid-cols-2 gap-4 w-full">
         {index !== 0 && (
           <AMPButton

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { createStageSchema } from "@/app/api/zod.schmas";
-import { TStageCreate } from "@/app/utils/types/stage";
+import { createStageSchema, createStageStepSchema } from "@/app/api/zod.schmas";
+import { TStageCreate, TStepStageCreate } from "@/app/utils/types/stage";
 import { ZodIssue } from "zod";
 import { StageForm } from "./StageForm";
 
@@ -18,12 +18,12 @@ export const StagesStep: React.FC<StagesStepProps> = ({
   registerGetData,
   initialData = [],
 }) => {
-  const [stages, setStages] = useState<TStageCreate[]>(
+  const [stages, setStages] = useState<TStepStageCreate[]>(
     initialData?.length
       ? initialData
       : [
           {
-            name: "Stage 0 – seria",
+            name: "SERIA",
             description: "Parametry seryjne pojazdu przed modyfikacjami",
             stageNumber: 0,
             hp: 0,
@@ -36,7 +36,7 @@ export const StagesStep: React.FC<StagesStepProps> = ({
 
   const updateStage = (
     index: number,
-    field: keyof TStageCreate,
+    field: keyof TStepStageCreate,
     value: any
   ) => {
     setStages((prev) =>
@@ -68,7 +68,7 @@ export const StagesStep: React.FC<StagesStepProps> = ({
     let valid = true;
 
     stages.forEach((stage, index) => {
-      const result = createStageSchema.safeParse(stage);
+      const result = createStageStepSchema.safeParse(stage);
       if (!result.success) {
         valid = false;
         newErrors[index] = result.error.errors;

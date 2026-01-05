@@ -275,7 +275,7 @@ const LikeButton = ({
   likesCount,
   tags,
 }: LikeButtonProps) => {
-  const { currentLikesCount, handleClickLike } = useLike(
+  const { currentIsLiked, currentLikesCount, handleClickLike } = useLike(
     likesCount,
     isLikedByAuthUser,
     id,
@@ -289,7 +289,7 @@ const LikeButton = ({
       type="tertiary"
       icon={
         <FaHeart
-          className={isLikedByAuthUser ? "text-amp-500" : ""}
+          className={currentIsLiked ? "text-amp-500" : ""}
           size={iconSizes.base}
         />
       }

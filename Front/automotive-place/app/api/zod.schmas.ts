@@ -31,6 +31,29 @@ export const createStageSchema = z.object({
   carItems: z.array(createCarItemSchema),
 });
 
+export const createStageStepSchema = z.object({
+  name: z.string().min(3).max(50),
+  description: z.string().min(1).max(500),
+  stageNumber: z.number().min(0).max(50),
+
+  hp: z.number().min(1).max(5000),
+  nm: z.number().min(1).max(8000),
+
+  acc_0_100: z.number().min(1).max(100).optional(),
+  acc_100_200: z.number().min(1).max(150).optional(),
+  acc_50_150: z.number().min(1).max(150).optional(),
+
+  sl_150_50: z.number().min(1).max(2000).optional(),
+  sl_100_0: z.number().min(1).max(2000).optional(),
+
+  stagePrice: z.number().optional(),
+
+  chartImage: z.instanceof(File).optional().nullable(),
+
+  carItems: z.array(createCarItemSchema).optional(),
+  createdById: z.string().optional(),
+});
+
 export const createProjectSchema = z.object({
   name: z.string().min(3).max(50).optional(),
   carMake: z.string().min(2).max(50),

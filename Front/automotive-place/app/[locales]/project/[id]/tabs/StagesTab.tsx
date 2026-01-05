@@ -1,10 +1,12 @@
 "use client";
 
 import { CarItem } from "@/app/components/carItem";
+import AMPImage from "@/app/components/shared/AMPImage";
 import { AMPSeparator } from "@/app/components/shared/AMPSeparator";
 import { EngineParameter } from "@/app/utils/enums";
 import { formatNumber } from "@/app/utils/helpers/numbersHelper";
 import { sortStagesByStageNumber } from "@/app/utils/helpers/stagesHelper";
+import { getProjectImageSrcByFileId } from "@/app/utils/helpers/storageHelper";
 import { TStage } from "@/app/utils/types/stage";
 import moment from "moment";
 import { Tooltip } from "react-tooltip";
@@ -27,6 +29,9 @@ export default function StagesTab({ stages }: StagesTabProps) {
         <div className="flex gap-6 min-w-max pb-4">
           {sortedStages.map((stage, index) => {
             const isBase = index === sortedStages.length - 1;
+            const chartImageUrl = getProjectImageSrcByFileId(
+              stage.chartImageUrl
+            );
 
             return (
               <div
@@ -165,10 +170,11 @@ export default function StagesTab({ stages }: StagesTabProps) {
                         Wykres z hamowni:
                       </h4>
                       <div className="w-full h-[160px] overflow-hidden rounded-md border border-amp-200 dark:border-subtle-dark/30">
-                        <img
-                          src={stage.chartImageUrl}
+                        <AMPImage
+                          src={chartImageUrl}
                           alt={`Wykres z hamowni - ${stage.name}`}
                           className="w-full h-full object-cover"
+                          fill
                         />
                       </div>
                     </div>

@@ -279,6 +279,32 @@ model Stage {
   project          Project   @relation(fields: [projectId], references: [id])
 }
 
+// model VisualModification {
+//   id               String    @id @default(cuid())
+//   createdAt        DateTime  @default(now()) @map("created_at")
+//   updatedAt        DateTime  @updatedAt @map("updated_at")
+
+//   name             String
+//   description      String?
+//   modificationType VisualModificationType
+
+//   projectId        String
+//   authorId         String
+//   companyId        String?
+
+//   isVisible        Boolean   @default(true)
+//   isBlockedByAdmin Boolean?
+//   reportId         String?
+
+//   project          Project  @relation(fields: [projectId], references: [id])
+//   author           User     @relation(fields: [authorId], references: [id])
+//   company          Company? @relation(fields: [companyId], references: [id])
+
+//   media            Media[]
+//   tagAssignments   TagAssignment[]
+//   userActivity     UserActivity[]
+// }
+
 model Tag {
   id               String          @id @default(cuid())
   name             String
@@ -423,4 +449,19 @@ enum LikeableType {
 
 //   userActivity     UserActivity[]
 //   tagAssignments   TagAssignment[]
+// }
+
+// enum VisualModificationType {
+//   FRONT_BUMPER
+//   REAR_BUMPER
+//   SPOILER
+//   SIDE_SKIRT
+//   HOOD
+//   ROOF
+//   WRAP
+//   PAINT
+//   WHEELS
+//   INTERIOR
+//   LIGHTING
+//   OTHER
 // }

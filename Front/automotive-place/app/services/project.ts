@@ -33,8 +33,13 @@ export const createProject = async (
 
 export const uploadImageProject = async (
   projectId: string,
-  formData: FormData
+  formData: FormData,
+  stageNumber?: number
 ) => {
+  if (stageNumber !== undefined) {
+    formData.append("stageNumber", String(stageNumber));
+  }
+
   const response = await fetch(`/api/upload-images/${projectId}`, {
     method: "POST",
     body: formData,
@@ -44,7 +49,6 @@ export const uploadImageProject = async (
     const errorData = await response.json().catch(() => ({}));
     const message =
       errorData?.message || `Failed upload images (${response.status})`;
-
     throw new Error(message);
   }
 
