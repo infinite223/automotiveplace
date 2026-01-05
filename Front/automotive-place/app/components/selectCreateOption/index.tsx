@@ -7,6 +7,7 @@ import {
   ProblemIcon,
   ProjectIcon,
   SpotIcon,
+  TripIcon,
 } from "@/app/utils/constants";
 import { useDispatch } from "react-redux";
 import {
@@ -44,6 +45,12 @@ export const SelectCreateOption: FC<{ closeModal: () => void }> = ({
         name="Utórz szybki spot"
         onClick={() => {}}
         icon={<SpotIcon size={iconSize} />}
+      />
+
+      <OptionItem
+        name="Dodaj trip"
+        onClick={() => {}}
+        icon={<TripIcon size={iconSize} />}
       />
 
       <OptionItem

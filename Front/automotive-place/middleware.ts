@@ -7,7 +7,7 @@ import arcjet, { detectBot, shield, tokenBucket } from "@arcjet/next";
 
 export const config = {
   matcher: ["/", "/(pl|en)/:path*"],
-}; 
+};
 
 const publicPaths = [
   "/sign-in",
@@ -134,7 +134,7 @@ export default async function middleware(request: NextRequest) {
     }
   }
 
-  if (!rateLimit(request) && !request.url.includes("localhost")) {
+  if (process.env.NODE_ENV === "production" && !rateLimit(request)) {
     return NextResponse.json(
       { message: "Too many requests, please try again later." },
       { status: 429 }

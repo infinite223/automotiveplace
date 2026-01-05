@@ -91,7 +91,7 @@ export const CreateProjectView = () => {
 
   return (
     <main
-      className="flex text-sm relative top-0 flex-col-reverse md:flex-row w-[95vw] max-md:px-5 max-md:w-[100vw] max-md:h-dvh h-[11/12] p-3 mr-0 rounded-sm border-r border-zinc-700"
+      className="flex text-sm relative top-0 flex-col-reverse md:flex-row w-[95vw] max-md:px-5 max-md:w-[100vw] max-md:h-dvh h-[11/12] p-3 max-md:pt-0 mr-0 rounded-sm border-r border-zinc-700"
       onClick={(e) => e.stopPropagation()}
     >
       <AMPStepper stepsOptions={stepsOptions} hideHeader onSubmit={onSubmit} />

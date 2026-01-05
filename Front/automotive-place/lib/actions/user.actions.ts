@@ -109,11 +109,13 @@ export const signIn = async (userData: SignInParams) => {
 
     const user = await getUserInfo(session.userId);
     if (user) {
+      const isProd = process.env.NODE_ENV === "production";
+
       cookies().set("appwrite-session", session.secret, {
         path: "/",
         httpOnly: true,
-        sameSite: "strict",
-        secure: true,
+        sameSite: isProd ? "strict" : "lax",
+        secure: isProd,
         maxAge: 60 * 60 * 24 * 365,
       });
 

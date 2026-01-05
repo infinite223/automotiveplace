@@ -201,7 +201,7 @@ export const AMPStepper: React.FC<AMPStepperProps> = ({
           })}
         </div>
 
-        <div className="flex flex-col mb-2 overflow-auto custom-scrollbar h-[calc(100vh-280px)] max-md:h-[calc(100%-140px)]">
+        <div className="flex flex-col mb-2 pb-5 overflow-auto custom-scrollbar no-scrollbar h-[calc(100vh-280px)] max-md:h-[calc(100%-140px)]">
           <h3 className="text-xl font-semibold mb-2">
             {stepsOptions.items[currentStep].name}
           </h3>

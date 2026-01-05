@@ -16,6 +16,10 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dominantColor, setDominantColor] = useState("white");
   const imgContainerRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  const SWIPE_THRESHOLD = 50; // px
 
   const handlePrevClick = () => {
     setCurrentIndex((prevIndex) =>
@@ -48,6 +52,31 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
     }, 10);
   }, [currentIndex, images]);
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchEndX.current = null;
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) {
+      return;
+    }
+
+    const deltaX = touchStartX.current - touchEndX.current;
+
+    if (Math.abs(deltaX) < SWIPE_THRESHOLD) return;
+
+    if (deltaX > 0) {
+      handleNextClick();
+    } else {
+      handlePrevClick();
+    }
+  };
+
   return (
     <>
       <div
@@ -56,6 +85,9 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
         style={{
           backgroundColor: dominantColor,
         }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         <div
           className="flex transition-transform duration-500 ease-in-out"

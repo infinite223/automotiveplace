@@ -70,7 +70,7 @@ export default function Project({ params }: { params: { id: string } }) {
         <div className="max-w-screen-2xl w-full flex-col">
           <div
             className={`flex items-center justify-between sticky top-0 z-50 backdrop-blur-md bg-amp-900/80 dark:bg-amp-0/80 transition-all duration-300 ${
-              scrolled ? "shadow-md py-1" : ""
+              scrolled ? "shadow-md py-2" : "py-1.5"
             }`}
           >
             {/* <div className="p-4" onClick={() => router.back()}>
@@ -142,9 +142,15 @@ export default function Project({ params }: { params: { id: string } }) {
                 <div className="mt-4 gap-2 flex w-full justify-end flex-wrap-reverse">
                   <AMPButton
                     name="Nawiąż kontakt"
-                    additionalTailwindCss="text-sm py-2 max-w-[300px] flex-1 w-full justify-center"
+                    additionalTailwindCss="text-sm py-2 gap-1 max-w-[300px] flex-1 w-full justify-center"
                     type="primary"
                     icon={<TbMessageCircleUp size={iconSizes.small} />}
+                  />
+
+                  <AMPButton
+                    additionalTailwindCss="text-sm py-2"
+                    type="tertiary"
+                    icon={<CgShare size={iconSizes.base} />}
                   />
 
                   {data && (
@@ -155,12 +161,6 @@ export default function Project({ params }: { params: { id: string } }) {
                       tags={data.tags || []}
                     />
                   )}
-
-                  <AMPButton
-                    additionalTailwindCss="text-sm py-2"
-                    type="secondary"
-                    icon={<CgShare size={iconSizes.small} />}
-                  />
                 </div>
               </div>
             </header>
@@ -285,9 +285,14 @@ const LikeButton = ({
   return (
     <AMPButton
       name={currentLikesCount.toString()}
-      additionalTailwindCss="text-sm rounded-lg  py-2"
-      type="secondary"
-      icon={<FaHeart size={iconSizes.small - 2} />}
+      additionalTailwindCss="text-sm rounded-lg py-2 ml-[-10px]"
+      type="tertiary"
+      icon={
+        <FaHeart
+          className={isLikedByAuthUser ? "text-amp-500" : ""}
+          size={iconSizes.base}
+        />
+      }
       onClick={handleClickLike}
     />
   );

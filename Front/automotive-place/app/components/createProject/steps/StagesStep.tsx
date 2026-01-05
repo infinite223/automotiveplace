@@ -86,7 +86,7 @@ export const StagesStep: React.FC<StagesStepProps> = ({
   }, [stages, registerGetData]);
 
   return (
-    <div className="flex flex-col gap-4 overflow-auto scroll-smooth h-[calc(100vh-180px)] pr-2 custom-scrollbar">
+    <div className="flex flex-col gap-4 overflow-auto scroll-smooth h-[calc(100vh-180px)] pr-2 custom-scrollbar no-scrollbar">
       {stages.map((stage, index) => (
         <StageForm
           key={index}

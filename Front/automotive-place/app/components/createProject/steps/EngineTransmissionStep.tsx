@@ -59,7 +59,7 @@ export const EngineTransmissionStep = ({
           <AMPInput
             required
             type="text"
-            placeholder="Nazwa silnika (np. B58)"
+            placeholder="np. B58, V6, VR5"
             name="Nazwa silnika"
             value={data.engineName}
             setValue={(v) => update("engineName", v.toString())}

@@ -28,7 +28,7 @@ const AMPImageZoomModal: React.FC<AMPImageZoomModalProps> = ({
   return (
     <AMPModal onClose={onClose} visible={visible} withHeader={false}>
       <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-90">
-        <div className="relative w-screen h-screen flex justify-center items-center">
+        <div className="relative w-screen h-[100dvh] flex justify-center items-center">
           <button
             className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 text-white p-2 rounded-full cursor-pointer hover:opacity-70"
             onClick={onClose}
