@@ -5,6 +5,7 @@ import { basicEngineAndTransmissionSchema } from "@/app/api/zod.schmas";
 import { EngineTransmissionStepType } from "@/app/utils/types/project";
 import { ZodIssue } from "zod";
 import { AMPHelpFooter } from "../../shared/AMPHelpFooter";
+import { AMPSelect } from "../../shared/AMPSelect";
 
 interface EngineTransmissionStepProps {
   setIsValid: (isValid: boolean) => void;
@@ -23,7 +24,7 @@ export const EngineTransmissionStep = ({
     engineDescription: "",
     engineWasSwapped: false,
 
-    transmissionType: "", // automat = 1, manual = 2?
+    transmissionType: 2, // automat = 1, manual = 2?
     transmissionGears: "",
     transmissionWasSwapped: false,
     ...initialData,
@@ -132,13 +133,15 @@ export const EngineTransmissionStep = ({
           />
         </div>
         <div className="w-1/2">
-          <AMPInput
+          <AMPSelect<number>
+            title="Typ skrzyni biegów"
+            value={data.transmissionType || 1}
+            setValue={(v) => update("transmissionType", v)}
+            options={[
+              { label: "Automat", value: 1 },
+              { label: "Manual", value: 2 },
+            ]}
             required
-            type="number"
-            placeholder="Typ (1-auto, 2-manual)"
-            name="Typ"
-            value={data.transmissionType}
-            setValue={(v) => update("transmissionType", Number(v))}
             error={
               errors?.find((e) => e.path.includes("transmissionType"))?.message
             }

@@ -23,8 +23,8 @@ export const StageForm: React.FC<StageFormProps> = ({
   return (
     <div className="pt-4 border-t border-amp-700/50 flex flex-col gap-2">
       {index === 0 && (
-        <div className="text-sm text-amp-500 font-semibold mb-2">
-          Stage 0 – dane bazowe pojazdu (przed modyfikacjami)
+        <div className="text-sm font-semibold mb-2">
+          Stage 0 to dane bazowe pojazdu (przed modyfikacjami)
         </div>
       )}
 
@@ -140,6 +140,7 @@ export const StageForm: React.FC<StageFormProps> = ({
           />
         )}
       </div>
+
       <StageChartImageUpload
         value={stage.chartImage}
         onChange={(file) => onChange("chartImage", file)}
@@ -150,7 +151,7 @@ export const StageForm: React.FC<StageFormProps> = ({
           <AMPButton
             type="none"
             name="Usuń stage"
-            additionalTailwindCss="justify-center border border-amp-300/70 w-full"
+            additionalTailwindCss="justify-center border border-amp-300/70 w-full text-xs"
             onClick={onRemove}
           />
         )}
@@ -158,7 +159,7 @@ export const StageForm: React.FC<StageFormProps> = ({
         <AMPButton
           type="secondary"
           name="Dodaj kolejny stage"
-          additionalTailwindCss={`justify-center w-full ${
+          additionalTailwindCss={`justify-center w-full text-xs ${
             index === 0 ? "col-span-2" : ""
           }`}
           onClick={onAdd}

@@ -169,7 +169,7 @@ export default function StagesTab({ stages }: StagesTabProps) {
                       <h4 className="font-semibold text-sm text-text-light dark:text-text-dark mb-2">
                         Wykres z hamowni:
                       </h4>
-                      <div className="w-full h-[160px] overflow-hidden rounded-md border border-amp-200 dark:border-subtle-dark/30">
+                      <div className="w-full h-[160px] overflow-hidden  border border-amp-200 dark:border-subtle-dark/30">
                         <AMPImage
                           src={chartImageUrl}
                           alt={`Wykres z hamowni - ${stage.name}`}

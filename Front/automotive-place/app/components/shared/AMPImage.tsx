@@ -27,7 +27,7 @@ export const AMPImage: React.FC<AMPImageProps> = ({
 
   return (
     <div
-      className={`relative flex items-center justify-center bg-gray-100 dark:bg-amp-50 rounded-md overflow-hidden ${className}`}
+      className={`relative flex items-center justify-center bg-gray-100 dark:bg-amp-50 rounded-sm overflow-hidden ${className}`}
       style={{
         width: typeof width === "number" ? `${width}px` : width ?? undefined,
         height:

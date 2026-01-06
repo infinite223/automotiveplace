@@ -2,7 +2,8 @@
 
 import React, { useRef, useState } from "react";
 import { checkImage } from "@/app/services/checkImage";
-import { AMPButton } from "../../shared/AMPButton";
+import { FiX, FiImage } from "react-icons/fi";
+import Image from "next/image";
 
 type ImageState = {
   file: File;
@@ -15,7 +16,7 @@ interface Props {
   onChange: (file: File | null) => void;
 }
 
-export const StageChartImageUpload: React.FC<Props> = ({ value, onChange }) => {
+export const StageChartImageUpload: React.FC<Props> = ({ onChange }) => {
   const [image, setImage] = useState<ImageState | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -32,9 +33,8 @@ export const StageChartImageUpload: React.FC<Props> = ({ value, onChange }) => {
 
     setImage(imgState);
 
-    const imageEl = new Image();
+    const imageEl = new window.Image();
     imageEl.src = url;
-
     await new Promise((res) => (imageEl.onload = res));
 
     const predictions = await checkImage(imageEl);
@@ -55,8 +55,20 @@ export const StageChartImageUpload: React.FC<Props> = ({ value, onChange }) => {
     }
   };
 
+  const removeImage = () => {
+    setImage(null);
+    onChange(null);
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+  };
+
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-3">
+      <p className="text-sm">
+        Tutaj możesz dodać zdjęcie wykresu z hamowni na potwierdzenie danych
+      </p>
+
       <input
         ref={inputRef}
         type="file"
@@ -65,29 +77,52 @@ export const StageChartImageUpload: React.FC<Props> = ({ value, onChange }) => {
         onChange={(e) => handleFile(e.target.files?.[0] ?? null)}
       />
 
-      <AMPButton
-        type="secondary"
-        name="Dodaj wykres (hamownia)"
-        onClick={() => inputRef.current?.click()}
-      />
+      <div
+        className="relative min-h-48 w-full border border-dashed border-amp-300 rounded-md flex items-center justify-center cursor-pointer hover:bg-amp-300 transition"
+        onClick={() => !image && inputRef.current?.click()}
+      >
+        {!image && (
+          <div className="flex flex-col items-center gap-2 text-gray-400">
+            <FiImage size={32} />
+            <span className="text-xs">Kliknij aby dodać zdjęcie</span>
+          </div>
+        )}
 
-      {image && (
-        <div className="relative w-full h-40 rounded overflow-hidden">
-          <img src={image.url} className="object-contain w-full h-full" />
+        {image && (
+          <>
+            <Image
+              src={image.url}
+              alt="Wykres z hamowni"
+              width={800}
+              height={600}
+              style={{ width: "100%", height: "auto" }}
+              className="rounded-md object-contain"
+            />
 
-          {image.status === "pending" && (
-            <div className="absolute inset-0 bg-black/50 text-white flex items-center justify-center text-xs">
-              Sprawdzanie...
-            </div>
-          )}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                removeImage();
+              }}
+              className="absolute top-2 right-2 bg-black/60 text-white rounded-full p-1 hover:bg-black"
+            >
+              <FiX size={14} />
+            </button>
 
-          {image.status === "blocked" && (
-            <div className="absolute inset-0 bg-red-600/80 text-white flex items-center justify-center text-xs">
-              Zdjęcie niedozwolone (NSFW)
-            </div>
-          )}
-        </div>
-      )}
+            {image.status === "pending" && (
+              <div className="absolute inset-0 bg-black/50 text-white flex items-center justify-center text-xs">
+                Sprawdzanie...
+              </div>
+            )}
+
+            {image.status === "blocked" && (
+              <div className="absolute inset-0 bg-red-600/80 text-white flex items-center justify-center text-xs text-center px-2">
+                Zdjęcie niedozwolone (NSFW)
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };
