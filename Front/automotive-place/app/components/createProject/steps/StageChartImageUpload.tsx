@@ -24,9 +24,12 @@ export const StageChartImageUpload: React.FC<Props> = ({ onChange }) => {
     if (!file) return;
 
     const url = URL.createObjectURL(file);
+    const newFile = new File([file], `dyno_${file.name}`, {
+      type: file.type,
+    });
 
     const imgState: ImageState = {
-      file,
+      file: newFile,
       url,
       status: "pending",
     };
@@ -51,7 +54,7 @@ export const StageChartImageUpload: React.FC<Props> = ({ onChange }) => {
       onChange(null);
     } else {
       setImage({ ...imgState, status: "ok" });
-      onChange(file);
+      onChange(newFile);
     }
   };
 

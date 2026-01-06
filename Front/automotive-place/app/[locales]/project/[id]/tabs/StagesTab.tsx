@@ -1,12 +1,11 @@
 "use client";
 
 import { CarItem } from "@/app/components/carItem";
-import AMPImage from "@/app/components/shared/AMPImage";
 import { AMPSeparator } from "@/app/components/shared/AMPSeparator";
+import AMPSlider from "@/app/components/shared/AMPSlider";
 import { EngineParameter } from "@/app/utils/enums";
 import { formatNumber } from "@/app/utils/helpers/numbersHelper";
 import { sortStagesByStageNumber } from "@/app/utils/helpers/stagesHelper";
-import { getProjectImageSrcByFileId } from "@/app/utils/helpers/storageHelper";
 import { TStage } from "@/app/utils/types/stage";
 import moment from "moment";
 import { Tooltip } from "react-tooltip";
@@ -29,14 +28,11 @@ export default function StagesTab({ stages }: StagesTabProps) {
         <div className="flex gap-6 min-w-max pb-4">
           {sortedStages.map((stage, index) => {
             const isBase = index === sortedStages.length - 1;
-            const chartImageUrl = getProjectImageSrcByFileId(
-              stage.chartImageUrl
-            );
 
             return (
               <div
                 key={stage.id}
-                className="flex-shrink-0 w-[290px] bg-amp-900 dark:bg-amp-100 rounded-xl divide-y divide-amp-200 dark:divide-subtle-dark/20 shadow-sm px-4 py-3"
+                className="flex-shrink-0 w-[290px] bg-amp-900 dark:bg-amp-100 rounded-small divide-y divide-amp-200 dark:divide-subtle-dark/20 shadow-sm px-4 py-3"
               >
                 <div className="pb-2">
                   <h2 className="font-semibold text-lg text-text-light dark:text-text-dark">
@@ -170,12 +166,7 @@ export default function StagesTab({ stages }: StagesTabProps) {
                         Wykres z hamowni:
                       </h4>
                       <div className="w-full h-[160px] overflow-hidden  border border-amp-200 dark:border-subtle-dark/30">
-                        <AMPImage
-                          src={chartImageUrl}
-                          alt={`Wykres z hamowni - ${stage.name}`}
-                          className="w-full h-full object-cover"
-                          fill
-                        />
+                        <AMPSlider images={[stage.chartImageUrl]} />
                       </div>
                     </div>
                   )}

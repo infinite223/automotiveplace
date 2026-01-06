@@ -77,7 +77,9 @@ export async function GET(request: NextRequest) {
 
       likesCount: project.userActivity.length,
 
-      images: project.media.map((m) => m.fileLocation),
+      images: project.media
+        .filter((m) => !m.fileName.toLowerCase().includes("dyno"))
+        .map((m) => m.fileLocation),
 
       tags: project.tagAssignments.map((ta) => ({
         id: ta.tag.id,
