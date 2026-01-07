@@ -81,11 +81,7 @@ export const CreateProjectView = () => {
           formData.append("files", stageFile);
 
           await uploadImageProject(projectId, formData, stages[i].stageNumber);
-
-          // stages[i].chartImageUrl = stageFile.name; // opcjonalnie placeholder do UI, faktyczny fileLocation pobierzesz z DB
         }
-
-        // project.stages = stages;
 
         if (res?.notification) {
           dispatch(addNotification(JSON.stringify(res.notification)));

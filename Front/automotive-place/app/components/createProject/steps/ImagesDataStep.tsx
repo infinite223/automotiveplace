@@ -3,6 +3,7 @@
 import { checkImage } from "@/app/services/checkImage";
 import React, { useEffect, useRef, useState } from "react";
 import { AMPButton } from "../../shared/AMPButton";
+import { compressImageIfNeeded } from "@/app/services/compressImage";
 
 interface BasicDataStepProps {
   onPrev: () => void;
@@ -46,7 +47,9 @@ export const ImagesDataStep = ({
 
     const newImages: ImageState[] = [];
 
-    for (const file of Array.from(files)) {
+    for (const originalFile of Array.from(files)) {
+      const file = await compressImageIfNeeded(originalFile, originalFile.name);
+
       const url = URL.createObjectURL(file);
 
       newImages.push({

@@ -7,7 +7,7 @@ import { TProject } from "@/app/utils/types/project";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { CgShare } from "react-icons/cg";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { TbMessageCircleUp } from "react-icons/tb";
 import {
   motion,
@@ -288,10 +288,14 @@ const LikeButton = ({
       additionalTailwindCss="text-sm rounded-lg py-2 ml-[-10px]"
       type="tertiary"
       icon={
-        <FaHeart
-          className={currentIsLiked ? "text-amp-500" : ""}
-          size={iconSizes.base}
-        />
+        currentIsLiked ? (
+          <FaHeart className="text-amp-500" size={iconSizes.base} />
+        ) : (
+          <FaRegHeart
+            size={iconSizes.base}
+            className="transition-transform duration-300"
+          />
+        )
       }
       onClick={handleClickLike}
     />

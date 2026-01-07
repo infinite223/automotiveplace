@@ -4,6 +4,7 @@ import React, { useRef, useState } from "react";
 import { checkImage } from "@/app/services/checkImage";
 import { FiX, FiImage } from "react-icons/fi";
 import Image from "next/image";
+import { compressImageIfNeeded } from "@/app/services/compressImage";
 
 type ImageState = {
   file: File;
@@ -23,13 +24,13 @@ export const StageChartImageUpload: React.FC<Props> = ({ onChange }) => {
   const handleFile = async (file: File | null) => {
     if (!file) return;
 
-    const url = URL.createObjectURL(file);
-    const newFile = new File([file], `dyno_${file.name}`, {
-      type: file.type,
-    });
+    const fileName = `dyno_${file.name}`;
+    const compressedFile = await compressImageIfNeeded(file, fileName);
+
+    const url = URL.createObjectURL(compressedFile);
 
     const imgState: ImageState = {
-      file: newFile,
+      file: compressedFile,
       url,
       status: "pending",
     };
@@ -54,7 +55,7 @@ export const StageChartImageUpload: React.FC<Props> = ({ onChange }) => {
       onChange(null);
     } else {
       setImage({ ...imgState, status: "ok" });
-      onChange(newFile);
+      onChange(compressedFile);
     }
   };
 
