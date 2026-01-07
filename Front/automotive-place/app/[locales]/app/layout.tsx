@@ -12,8 +12,10 @@ export const metadata: Metadata = {
 
 export default async function Layout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   const user = await getLoggedInUser();
   const locale = await getLocale();
@@ -25,6 +27,7 @@ export default async function Layout({
       <div className="flex lg:h-[calc(100%-0px)] h-[100dvh] w-full justify-between flex-col lg:flex-row overflow-hidden">
         <SideBar />
         {children}
+        {modal}
         <RightSidebar />
       </div>
     </div>

@@ -6,7 +6,6 @@ import { ContentMiniNav } from "./ContentMiniNav";
 import { ContentMiniFooter } from "./ContentMiniFooter";
 import { IoIosArrowForward } from "react-icons/io";
 import { iconSizes } from "@/app/utils/constants";
-import Link from "next/link";
 import AMPSlider from "@/app/components/shared/AMPSlider";
 import { useLike } from "@/app/hooks/useLike";
 import { ContentType, EngineParameter, Status } from "@/app/utils/enums";
@@ -16,6 +15,8 @@ import { CreateNotification } from "@/app/components/logger/NotificationHelper";
 import { deleteProject } from "@/app/services/project";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEY_POPULAR_PROJECTS } from "@/app/components/shared/AMPPopularProjects";
+import Link from "next/link";
+import { useLocale } from "next-intl";
 
 export const ProjectMiniView = ({
   data,
@@ -36,6 +37,7 @@ export const ProjectMiniView = ({
       ContentType.Project,
       data.tags
     );
+  const locale = useLocale();
 
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -46,10 +48,6 @@ export const ProjectMiniView = ({
   if (!data) {
     return null;
   }
-
-  const handleLinkClick = () => {
-    sessionStorage.setItem("lastClickedId", data.id);
-  };
 
   const handleClickShare = () => {
     const newN = CreateNotification(Status.Success, "Shared project");
@@ -166,8 +164,8 @@ export const ProjectMiniView = ({
             isLoading={isLoading}
             actions={
               <Link
-                href={`./project/${data.id}`}
-                onClick={handleLinkClick}
+                href={`/${locale}/app/project/${data.id}`}
+                scroll={false}
                 className="flex font-semibold items-center text-sm cursor-pointer transition ease-in-out gap-2 border-amp-200/50 hover:border-amp-200/70 dark:border-amp-800/40 dark:hover:border-amp-800/70 border-0 rounded-sm pl-2  py-1 opacity-80 hover:opacity-50"
               >
                 Zobacz projekt

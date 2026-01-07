@@ -10,6 +10,7 @@ import { EngineParameter } from "@/app/utils/enums";
 import AMPImage from "./AMPImage";
 import { getProjectImageSrcByFileId } from "@/app/utils/helpers/storageHelper";
 import { FiChevronRight } from "react-icons/fi";
+import { useLocale } from "next-intl";
 
 export const QUERY_KEY_POPULAR_PROJECTS = "popular-projects";
 
@@ -23,6 +24,7 @@ function AMPPopularProjects() {
     queryFn: getPopularProjects,
     staleTime: 1000 * 60 * 5,
   });
+  const locale = useLocale();
 
   if (isLoading)
     return (
@@ -41,7 +43,10 @@ function AMPPopularProjects() {
           const imgFullPath = getProjectImageSrcByFileId(project.images?.[0]);
 
           return (
-            <Link href={`./project/${project.id}`} key={project.id}>
+            <Link
+              href={`/${locale}/app/project/${project.id}`}
+              key={project.id}
+            >
               <div className="group text-sm flex items-center justify-between p-2 hover:bg-amp-200 rounded-sm cursor-pointer transition">
                 <div className="flex gap-3 items-start">
                   <div className="rounded-md w-[90px] h-full bg-amp-50 flex items-center justify-center">

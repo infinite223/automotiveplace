@@ -56,7 +56,7 @@ export default function Project({ params }: { params: { id: string } }) {
 
   if (loading && !data)
     return (
-      <div className="flex w-full min-h-screen bg-black justify-center items-center text-white text-lg">
+      <div className="fixed inset-0 z-[88] flex w-full min-h-screen bg-black justify-center items-center text-white text-lg">
         <LoadingSpinner />
       </div>
     );
@@ -65,7 +65,7 @@ export default function Project({ params }: { params: { id: string } }) {
   const bgImage = getProjectImageSrcByFileId(data?.images?.[0]);
 
   return (
-    <main className="flex w-full min-h-dvh bg-amp-900 dark:bg-amp-0 flex-col items-center gap-2 text-black dark:text-white">
+    <main className="fixed inset-0 z-[88] flex w-full min-h-dvh custom-scrollbar overflow-y-auto bg-amp-900 dark:bg-amp-0 flex-col items-center gap-2 text-black dark:text-white">
       <div className="w-full pb-32 flex justify-center">
         <div className="max-w-screen-2xl w-full flex-col">
           <div

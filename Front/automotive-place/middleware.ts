@@ -105,26 +105,26 @@ export default async function middleware(request: NextRequest) {
 
   const decision = await aj.protect(request, { requested: 5 });
 
-  if (decision.isDenied()) {
-    if (decision.reason.isRateLimit()) {
-      logger.error("Rate limit exceeded");
+  // if (decision.isDenied()) {
+  //   if (decision.reason.isRateLimit()) {
+  //     logger.error("Rate limit exceeded");
 
-      return NextResponse.json(
-        { error: "Too Many Requests", reason: decision.reason },
-        { status: 429 }
-      );
-    } else if (decision.reason.isBot()) {
-      return NextResponse.json(
-        { error: "No bots allowed", reason: decision.reason },
-        { status: 403 }
-      );
-    } else {
-      return NextResponse.json(
-        { error: "Forbidden", reason: decision.reason },
-        { status: 403 }
-      );
-    }
-  }
+  //     return NextResponse.json(
+  //       { error: "Too Many Requests", reason: decision.reason },
+  //       { status: 429 }
+  //     );
+  //   } else if (decision.reason.isBot()) {
+  //     return NextResponse.json(
+  //       { error: "No bots allowed", reason: decision.reason },
+  //       { status: 403 }
+  //     );
+  //   } else {
+  //     return NextResponse.json(
+  //       { error: "Forbidden", reason: decision.reason },
+  //       { status: 403 }
+  //     );
+  //   }
+  // }
 
   if (!publicPaths.some((path) => pathname.startsWith(`/${locale}${path}`))) {
     const user = await getLoggedInUser();
