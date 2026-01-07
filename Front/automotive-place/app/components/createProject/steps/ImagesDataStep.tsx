@@ -4,6 +4,7 @@ import { checkImage } from "@/app/services/checkImage";
 import React, { useEffect, useRef, useState } from "react";
 import { AMPButton } from "../../shared/AMPButton";
 import { compressImageIfNeeded } from "@/app/services/compressImage";
+import { LoadingSpinner } from "../../loading/LoadingSpinner";
 
 interface BasicDataStepProps {
   onPrev: () => void;
@@ -112,8 +113,8 @@ export const ImagesDataStep = ({
             />
 
             {img.status === "pending" && (
-              <div className="absolute inset-0 bg-black/50 text-white flex items-center justify-center text-xs">
-                Sprawdzanie...
+              <div className="absolute inset-0 bg-black/60 text-white flex items-center justify-center text-xs">
+                <LoadingSpinner />
               </div>
             )}
 

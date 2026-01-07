@@ -2,9 +2,10 @@
 
 import React, { useRef, useState } from "react";
 import { checkImage } from "@/app/services/checkImage";
-import { FiX, FiImage } from "react-icons/fi";
+import { FiX } from "react-icons/fi";
 import Image from "next/image";
 import { compressImageIfNeeded } from "@/app/services/compressImage";
+import { LuChartSpline } from "react-icons/lu";
 
 type ImageState = {
   file: File;
@@ -87,8 +88,9 @@ export const StageChartImageUpload: React.FC<Props> = ({ onChange }) => {
       >
         {!image && (
           <div className="flex flex-col items-center gap-2 text-gray-400">
-            <FiImage size={32} />
-            <span className="text-xs">Kliknij aby dodać zdjęcie</span>
+            <LuChartSpline size={32} />
+
+            <span className="text-xs">Kliknij aby dodać zdjęcie wykresu</span>
           </div>
         )}
 

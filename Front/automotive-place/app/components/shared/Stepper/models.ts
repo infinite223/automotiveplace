@@ -8,7 +8,7 @@ export interface StepProps {
 
 export interface IStep {
   name: string;
-  description: string;
+  description?: string;
   icon?: JSX.Element;
   component: React.ComponentType<StepProps>;
 }

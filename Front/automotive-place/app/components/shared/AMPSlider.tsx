@@ -19,7 +19,7 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
 
-  const SWIPE_THRESHOLD = 50; // px
+  const SWIPE_THRESHOLD = 50;
 
   const handlePrevClick = () => {
     setCurrentIndex((prevIndex) =>
@@ -115,7 +115,7 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
         {images.length > 1 && (
           <>
             <button
-              className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:opacity-70 text-white p-1 rounded-full cursor-pointer left-2 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute top-1/2 transform -translate-y-1/2 z-[99] bg-black bg-opacity-50 hover:opacity-70 text-white p-1 rounded-full cursor-pointer left-2 opacity-0 group-hover:opacity-100 transition-opacity"
               onClick={handlePrevClick}
             >
               <FaAngleLeft size={iconSizes.small} />

@@ -39,13 +39,13 @@ const AMPImageZoomModal: React.FC<AMPImageZoomModalProps> = ({
           {images.length > 1 && (
             <>
               <button
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full cursor-pointer"
+                className="z-10 absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full cursor-pointer"
                 onClick={onPrev}
               >
                 <FaAngleLeft size={iconSizes.large} />
               </button>
               <button
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full cursor-pointer"
+                className="z-10 absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full cursor-pointer"
                 onClick={onNext}
               >
                 <FaAngleRight size={iconSizes.large} />

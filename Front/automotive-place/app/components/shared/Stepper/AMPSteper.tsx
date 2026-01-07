@@ -205,9 +205,11 @@ export const AMPStepper: React.FC<AMPStepperProps> = ({
           <h3 className="text-xl font-semibold mb-2">
             {stepsOptions.items[currentStep].name}
           </h3>
-          <p className="text-sm mb-4 opacity-85">
-            {stepsOptions.items[currentStep].description}
-          </p>
+          {stepsOptions.items[currentStep].description && (
+            <p className="text-sm mb-4 opacity-85">
+              {stepsOptions.items[currentStep].description}
+            </p>
+          )}
 
           <StepComponent
             onNext={handleNext}
