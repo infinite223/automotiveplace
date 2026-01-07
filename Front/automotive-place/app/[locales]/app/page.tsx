@@ -185,7 +185,7 @@ export default function Page() {
   );
 }
 
-export const ContentSelect = ({
+const ContentSelect = ({
   content: { data, type },
   userId,
   onDelete,
