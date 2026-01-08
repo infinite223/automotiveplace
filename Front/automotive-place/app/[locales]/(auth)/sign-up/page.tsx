@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AMPInput } from "../../../components/shared/AMPInput";
 import { AMPButton } from "@/app/components/shared/AMPButton";
 import Link from "next/link";
-import { signUp } from "@/lib/actions/user.actions";
+import { getLoggedInUser, signUp } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useDispatch } from "react-redux";
@@ -12,6 +12,7 @@ import { setIsLoading } from "@/lib/features/loading/globalLoadingSlice";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { ZodIssue } from "zod";
 import { userRegistrationSchema } from "@/app/api/zod.schmas";
+import { Status } from "@/app/utils/enums";
 
 export default function Page() {
   const router = useRouter();
@@ -23,6 +24,15 @@ export default function Page() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [errors, setErrors] = useState<null | ZodIssue[]>(null);
+
+  useEffect(() => {
+    const chekUserLoggedIn = async () => {
+      const user = await getLoggedInUser();
+      if (user) router.push(`./app`);
+    };
+
+    chekUserLoggedIn();
+  }, [router, locale]);
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
@@ -39,10 +49,10 @@ export default function Page() {
     dispatch(setIsLoading(true));
 
     const result = await signUp(userRegistration);
+
     dispatch(setIsLoading(false));
     dispatch(addNotification(JSON.stringify(result.notification)));
-    if (result.notification.log.status === "Success")
-      router.push(`${locale}/app`);
+    if (result.notification.log.status === Status.Success) router.push(`./app`);
   };
 
   return (
@@ -62,7 +72,6 @@ export default function Page() {
             type="email"
             placeholder={t("Core.Placeholders.EnterEmail")}
             setValue={(text) => setEmail(text.toString())}
-            themeOption="white"
             error={errors?.find((e) => e.path.includes("email"))?.message}
           />
           <AMPInput
@@ -71,14 +80,12 @@ export default function Page() {
             type="password"
             name={t("Core.Password") + ":"}
             setValue={(text) => setPassword(text.toString())}
-            themeOption="white"
             error={errors?.find((e) => e.path.includes("password"))?.message}
           />
           <AMPInput
             placeholder={t("Core.Placeholders.EnterAccountName")}
             value={name}
             type="text"
-            themeOption="white"
             name={t("Core.AccountName") + ":"}
             setValue={(text) => setName(text.toString())}
             error={errors?.find((e) => e.path.includes("name"))?.message}
@@ -96,7 +103,7 @@ export default function Page() {
           {t("Core.DoYouAlreadyHaveAnAccount")}
           <Link
             href={"./sign-in"}
-            className="text-amp-700 dark:text-amp-300 font-semibold"
+            className="text-amp-300 dark:text-amp-700/70 ml-2 font-semibold"
           >
             {" "}
             {t("Core.SignIn")}

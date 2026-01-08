@@ -104,7 +104,7 @@ export default function Project({ params }: { params: { id: string } }) {
               <Image
                 src={bgImage}
                 alt="car-image"
-                className="w-full h-auto object-contain"
+                className="w-full h-auto md:max-h-[400px] object-contain"
                 width={1920}
                 height={280}
                 priority
@@ -114,15 +114,15 @@ export default function Project({ params }: { params: { id: string } }) {
             <div className="absolute inset-0 mb-[-2px] bg-gradient-to-b from-transparent to-black pointer-events-none" />
           </motion.div>
 
-          <nav className="flex flex-col justify-between w-full py-4 px-4">
+          <nav className="flex flex-col relative z-10 justify-between mt-[-100px] w-full py-4 px-4">
             <header className="text-3xl font-semibold gap-1 flex flex-col flex-wrap">
               <div className="flex w-full items-start justify-between flex-col">
                 <div className="flex flex-col w-full">
                   <div className="flex items-center gap-3">
-                    <span>{data?.carMake}</span>
+                    <span>{data?.carModel}</span>
                   </div>
                   <div className="text-lg opacity-70">
-                    <span>{data?.carModel}</span>
+                    <span>{data?.carMake}</span>
                     <span className=""> {lastStage?.name || "N/A"}</span>
                   </div>
                 </div>

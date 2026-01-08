@@ -68,7 +68,6 @@ export default function Page() {
             value={email}
             name={t("Core.EmailAddress") + ":"}
             type="email"
-            themeOption="white"
             placeholder={t("Core.Placeholders.EnterEmail")}
             error={errors?.find((e) => e.path.includes("email"))?.message}
             setValue={(text) => setEmail(text.toString())}
@@ -78,7 +77,6 @@ export default function Page() {
             value={password}
             type="password"
             name={t("Core.Password") + ":"}
-            themeOption="white"
             error={errors?.find((e) => e.path.includes("password"))?.message}
             setValue={(text) => setPassword(text.toString())}
           />
@@ -95,7 +93,7 @@ export default function Page() {
           {t("Core.DontHaveAnAccountYet")}
           <Link
             href={"./sign-up"}
-            className="text-amp-700 dark:text-amp-300 font-semibold"
+            className="text-amp-300 dark:text-amp-700/70 ml-2 font-semibold"
           >
             {" "}
             {t("Core.SignUp")}

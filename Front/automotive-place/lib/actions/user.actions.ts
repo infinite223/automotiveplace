@@ -76,10 +76,7 @@ export const signUp = async (userData: SignUpParams) => {
 
     return {
       user: JSON.parse(JSON.stringify(newUserAccount)),
-      notification: CreateNotification(
-        Status.Information,
-        "Core.WelcomeBackToAmp"
-      ),
+      notification: CreateNotification(Status.Success, "Core.WelcomeBackToAmp"),
     };
   } catch (error) {
     return {

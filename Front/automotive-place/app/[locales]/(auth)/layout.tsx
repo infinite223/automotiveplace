@@ -6,7 +6,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="flex min-h-dvh w-full justify-between font-inter bg-gradient-to-tl from-white via-amp-900 to-amp-100/10">
+    <main className="flex min-h-dvh w-full text-black dark:text-white justify-between font-inter bg-gradient-to-tl from-black via-amp-0/95 to-amp-0/90">
       {/* <Image
         src={Logo}
         alt="logo"
