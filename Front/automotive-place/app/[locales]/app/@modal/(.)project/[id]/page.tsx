@@ -33,7 +33,7 @@ export default function Project({ params }: { params: { id: string } }) {
   const [activeTab, setActiveTab] = useState("informacje");
   const imageRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
-  const height = useTransform(scrollY, [0, 200], ["200px", "0px"]);
+  const height = useTransform(scrollY, [0, 200], ["150px", "80px"]);
   const opacity = useTransform(scrollY, [0, 150], [1, 0]);
 
   const { data, loading, error } = useFetchData<TProject>(
@@ -68,14 +68,11 @@ export default function Project({ params }: { params: { id: string } }) {
     <main className="fixed inset-0 z-[88] flex w-full min-h-dvh custom-scrollbar overflow-y-auto bg-amp-900 dark:bg-amp-0 flex-col items-center gap-2 text-black dark:text-white">
       <div className="w-full pb-32 flex justify-center">
         <div className="max-w-screen-2xl w-full flex-col">
-          <div
+          {/* <div
             className={`flex items-center justify-between sticky top-0 z-50 backdrop-blur-md bg-amp-900/80 dark:bg-amp-0/80 transition-all duration-300 ${
               scrolled ? "shadow-md py-2" : "py-1.5"
             }`}
           >
-            {/* <div className="p-4" onClick={() => router.back()}>
-              <RiArrowLeftLine size={iconSizes.base} />
-            </div> */}
             <motion.span
               className="text-xs font-semibold pl-4"
               initial={{ opacity: 1 }}
@@ -96,21 +93,25 @@ export default function Project({ params }: { params: { id: string } }) {
             <div className="p-1.5 px-3">
               <RxDotsHorizontal size={iconSizes.base} />
             </div>
-          </div>
+          </div> */}
 
           <motion.div
             ref={imageRef}
-            style={{ height, opacity }}
-            className="relative w-full overflow-hidden"
+            style={{ opacity }}
+            className="relative w-full"
           >
             {bgImage && (
               <Image
                 src={bgImage}
-                className="object-cover"
                 alt="car-image"
-                fill
+                className="w-full h-auto object-contain"
+                width={1920}
+                height={280}
+                priority
               />
             )}
+
+            <div className="absolute inset-0 mb-[-2px] bg-gradient-to-b from-transparent to-black pointer-events-none" />
           </motion.div>
 
           <nav className="flex flex-col justify-between w-full py-4 px-4">

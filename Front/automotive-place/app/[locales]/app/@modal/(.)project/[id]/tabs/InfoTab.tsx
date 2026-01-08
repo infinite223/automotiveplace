@@ -73,8 +73,10 @@ export default function InfoTab({
             {lastStage.acc_100_200 && (
               <Item label="100–200 km/h" value={`${lastStage.acc_100_200}s`} />
             )}
-            {lastStage.acc_50_150 && (
+            {lastStage.acc_50_150 ? (
               <Item label="50–150 km/h" value={`${lastStage.acc_50_150}s`} />
+            ) : (
+              <></>
             )}
             {lastStage.maxRPM && (
               <Item
@@ -85,7 +87,6 @@ export default function InfoTab({
           </div>
         </div>
 
-        {/* Silnik */}
         <div className="space-y-4">
           <div className="flex items-center gap-3 px-2">
             <PiEngineBold size={iconSizes.base} />
