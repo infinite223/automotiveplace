@@ -83,7 +83,7 @@ export async function DELETE(
     });
 
     return NextResponse.json({
-      message: "Project successfully deleted",
+      message: "Core.Project.TheProjectHasBeenSuccessfullyDeleted",
       deletedProjectId: projectId,
     });
   } catch (error) {
