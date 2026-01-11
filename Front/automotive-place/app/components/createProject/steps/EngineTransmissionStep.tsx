@@ -74,7 +74,7 @@ export const EngineTransmissionStep = ({
             placeholder="Pojemność (np. 2.0)"
             name="Pojemność silnika"
             value={data.engineCapacity}
-            setValue={(v) => update("engineCapacity", Number(v))}
+            setValue={(v) => update("engineCapacity", v.toString())}
             error={
               errors?.find((e) => e.path.includes("engineCapacity"))?.message
             }

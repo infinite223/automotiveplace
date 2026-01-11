@@ -49,21 +49,21 @@ type TStageCreate = {
 type TStepStageCreate = {
   name: string;
   description: string;
-  stageNumber: number;
 
-  hp: number;
-  nm: number;
-  acc_0_100?: number;
-  acc_100_200?: number;
-  acc_50_150?: number;
+  stageNumber: string;
+  hp: string;
+  nm: string;
 
-  sl_150_50?: number;
-  sl_100_0?: number;
+  acc_0_100?: string;
+  acc_100_200?: string;
+  acc_50_150?: string;
+  sl_150_50?: string;
+  sl_100_0?: string;
 
-  stagePrice?: number;
+  stagePrice?: string;
+
   chartImage?: File | null;
-  carItems?: TCarItem[];
-  createdById?: string;
+  carItems?: any[];
 };
 
 export type { TStageCreate, TStage, TStepStageCreate };

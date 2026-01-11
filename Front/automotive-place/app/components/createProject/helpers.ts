@@ -2,6 +2,7 @@ import { TProjectCreate } from "@/app/utils/types/project";
 import { TStageCreate } from "@/app/utils/types/stage";
 
 export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
+  // TODO - add mapper for string from inputes to numbers
   const basic = steps[0]?.data || {};
   const engine = steps[1]?.data || {};
   const stages: TStageCreate[] = steps[3]?.data || [];

@@ -1,13 +1,12 @@
 import React from "react";
-import { ZodIssue } from "zod";
 import { AMPInput } from "../../shared/AMPInput";
 import { AMPTextarea } from "../../shared/AMPTextarea";
 import { AMPButton } from "../../shared/AMPButton";
 import { AMPSeparator } from "../../shared/AMPSeparator";
-import { TStageCreate, TStepStageCreate } from "@/app/utils/types/stage";
-import { numberOrUndefined } from "../helpers";
+import { TStepStageCreate } from "@/app/utils/types/stage";
 import { StageFormProps } from "../types";
 import { StageChartImageUpload } from "./StageChartImageUpload";
+import { stringOrUndefined } from "../helpers";
 
 export const StageForm: React.FC<StageFormProps> = ({
   stage,
@@ -48,7 +47,7 @@ export const StageForm: React.FC<StageFormProps> = ({
             placeholder="Numer etapu"
             name="Numer etapu"
             value={stage.stageNumber}
-            setValue={(v) => onChange("stageNumber", Number(v))}
+            setValue={(v) => onChange("stageNumber", v.toString())}
             error={error("stageNumber")}
           />
         </div>
@@ -70,7 +69,7 @@ export const StageForm: React.FC<StageFormProps> = ({
           placeholder="HP"
           name="Moc silnika"
           value={stage.hp}
-          setValue={(v) => onChange("hp", Number(v))}
+          setValue={(v) => onChange("hp", v.toString())}
           error={error("hp")}
         />
 
@@ -80,7 +79,7 @@ export const StageForm: React.FC<StageFormProps> = ({
           placeholder="Nm"
           name="Moment obrotowy"
           value={stage.nm}
-          setValue={(v) => onChange("nm", Number(v))}
+          setValue={(v) => onChange("nm", v.toString())}
           error={error("nm")}
         />
 
@@ -89,7 +88,7 @@ export const StageForm: React.FC<StageFormProps> = ({
           placeholder="0–100 km/h"
           name="Przyśpieszenie 0–100 km/h (s)"
           value={stage.acc_0_100 ?? ""}
-          setValue={(v) => onChange("acc_0_100", numberOrUndefined(v))}
+          setValue={(v) => onChange("acc_0_100", stringOrUndefined(v))}
           error={error("acc_0_100")}
         />
 
@@ -98,7 +97,7 @@ export const StageForm: React.FC<StageFormProps> = ({
           placeholder="100–200 km/h"
           name="Przyśpieszenie 100–200 km/h (s)"
           value={stage.acc_100_200 ?? ""}
-          setValue={(v) => onChange("acc_100_200", numberOrUndefined(v))}
+          setValue={(v) => onChange("acc_100_200", stringOrUndefined(v))}
           error={error("acc_100_200")}
         />
 
@@ -107,7 +106,7 @@ export const StageForm: React.FC<StageFormProps> = ({
           placeholder="50–150 km/h"
           name="Przyśpieszenie 50–150 km/h (s)"
           value={stage.acc_50_150 ?? ""}
-          setValue={(v) => onChange("acc_50_150", numberOrUndefined(v))}
+          setValue={(v) => onChange("acc_50_150", stringOrUndefined(v))}
           error={error("acc_50_150")}
         />
 
@@ -116,7 +115,7 @@ export const StageForm: React.FC<StageFormProps> = ({
           placeholder="150–50 km/h"
           name="Hamowanie 150–50 km/h (s)"
           value={stage.sl_150_50 ?? ""}
-          setValue={(v) => onChange("sl_150_50", numberOrUndefined(v))}
+          setValue={(v) => onChange("sl_150_50", stringOrUndefined(v))}
           error={error("sl_150_50")}
         />
 
@@ -125,7 +124,7 @@ export const StageForm: React.FC<StageFormProps> = ({
           placeholder="100–0 km/h"
           name="Hamowanie 100–0 km/h (s)"
           value={stage.sl_100_0 ?? ""}
-          setValue={(v) => onChange("sl_100_0", numberOrUndefined(v))}
+          setValue={(v) => onChange("sl_100_0", stringOrUndefined(v))}
           error={error("sl_100_0")}
         />
 
@@ -135,7 +134,7 @@ export const StageForm: React.FC<StageFormProps> = ({
             placeholder="Cena stage (zł)"
             name="Cena stage"
             value={stage.stagePrice ?? ""}
-            setValue={(v) => onChange("stagePrice", numberOrUndefined(v))}
+            setValue={(v) => onChange("stagePrice", stringOrUndefined(v))}
             error={error("stagePrice")}
           />
         )}

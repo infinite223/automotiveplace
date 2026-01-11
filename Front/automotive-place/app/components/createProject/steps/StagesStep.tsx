@@ -26,8 +26,8 @@ export const StagesStep: React.FC<StagesStepProps> = ({
             name: "SERIA",
             description: "Parametry seryjne pojazdu przed modyfikacjami",
             stageNumber: 0,
-            hp: 0,
-            nm: 0,
+            hp: "",
+            nm: "",
             carItems: [],
           },
         ]
@@ -50,9 +50,9 @@ export const StagesStep: React.FC<StagesStepProps> = ({
       {
         name: "",
         description: "",
-        stageNumber: prev?.length,
-        hp: 0,
-        nm: 0,
+        stageNumber: prev?.length.toString(),
+        hp: "",
+        nm: "",
         carItems: [],
       },
     ]);
