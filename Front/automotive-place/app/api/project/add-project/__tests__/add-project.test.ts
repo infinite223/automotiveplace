@@ -27,21 +27,18 @@ import { NextRequest } from "next/server";
 import prisma from "@/lib/prisma";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { createProject } from "../createProject";
-import { TProjectCreate } from "@/app/utils/types/project";
+import { TBasicProject, TProjectCreate } from "@/app/utils/types/project";
 
-const mockUser = { id: "user-1" };
+const mockUser = { id: "user-1", name: "Test User" };
 
 const validProject: TProjectCreate = {
   forSell: false,
   name: "Test project",
-
   carMake: "BMW",
   carModel: "E46",
   description: "desc",
-
   carItemsCount: 0,
   imagesCount: 0,
-
   isVisible: true,
   garageId: "garage-1",
   projectPrice: 10000,
@@ -59,9 +56,45 @@ const validProject: TProjectCreate = {
   transmissionWasSwapped: false,
   transmissionType: 0,
 
-  stages: [],
+  stages: [
+    {
+      name: "SERIA",
+      description: "Stock stage",
+      stageNumber: 0,
+      hp: 231,
+      nm: 300,
+      carItems: [],
+    },
+  ],
+
   carItems: [],
   tags: [],
+};
+
+const mockProject: TBasicProject = {
+  id: "project-1",
+  name: "Test project",
+  carMake: "BMW",
+  carModel: "E46",
+  description: "desc",
+  isVisible: true,
+  forSell: false,
+  engineStockHp: 231,
+  engineStockNm: 300,
+  hp: 231,
+  nm: 300,
+  stageNumber: 0,
+  images: [],
+  tags: [],
+  author: { id: mockUser.id, name: mockUser.name },
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  isVerified: true,
+  likesCount: 0,
+  isLikedByAuthUser: false,
+  engineNameAndCapacity: "M54B30 3",
+  acc_0_100: null,
+  acc_100_200: null,
 };
 
 describe("POST /api/project/add-project", () => {
@@ -90,10 +123,7 @@ describe("POST /api/project/add-project", () => {
     (getLoggedInUser as jest.Mock).mockResolvedValue(mockUser);
     (prisma.user.findFirst as jest.Mock).mockResolvedValue(mockUser);
 
-    (createProject as jest.Mock).mockResolvedValue({
-      id: "project-1",
-      name: "Test project",
-    });
+    (createProject as jest.Mock).mockResolvedValue(mockProject);
 
     const req = new NextRequest("http://localhost/api/project/add-project", {
       method: "POST",
@@ -102,7 +132,6 @@ describe("POST /api/project/add-project", () => {
 
     const res = await POST(req);
     const json = await res.json();
-    console.log("JSON:", json);
 
     expect(res.status).toBe(200);
     expect(json.project.id).toBe("project-1");
@@ -114,7 +143,7 @@ describe("POST /api/project/add-project", () => {
 
     const req = new NextRequest("http://localhost/api/project/add-project", {
       method: "POST",
-      body: JSON.stringify({}), // invalid
+      body: JSON.stringify({}),
     });
 
     const res = await POST(req);
