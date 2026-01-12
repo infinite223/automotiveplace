@@ -7,6 +7,7 @@ import { createProjectSchema } from "../../zod.schmas";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
 import { createProject } from "./createProject";
 import { createContentForUser } from "../../helpers";
+import { mapProjectToBasicProject } from "../../mappers/project";
 
 export async function POST(request: NextRequest) {
   const user = await getLoggedInUser();
@@ -41,9 +42,10 @@ export async function POST(request: NextRequest) {
     const newProject = await createProject(project, author.id);
 
     // await createContentForUser(newProject.id, ContentType.Project, author.id);
+    const data = mapProjectToBasicProject(newProject, author.id);
 
     return NextResponse.json({
-      project: newProject,
+      project: data,
       notification: {
         log: {
           status: Status.Success,

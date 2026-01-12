@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import prisma from "@/lib/prisma";
 import { TBasicProject } from "@/app/utils/types/project";
+import { mapProjectToBasicProject } from "../../mappers/project";
 
 export async function GET(request: NextRequest) {
   const userData = await getLoggedInUser();
@@ -38,60 +39,9 @@ export async function GET(request: NextRequest) {
     projects.pop();
   }
 
-  const data: TBasicProject[] = projects.map((project) => {
-    const lastStage =
-      project.stages.length > 0
-        ? project.stages[project.stages.length - 1]
-        : null;
-
-    return {
-      id: project.id,
-      createdAt: project.createdAt,
-      updatedAt: project.updatedAt,
-      forSell: project.forSell,
-      isVisible: project.isVisible,
-
-      name: project.name ?? null,
-      carMake: project.carMake,
-      carModel: project.carModel,
-      description: project.description ?? null,
-      isVerified: project.isVerified,
-
-      hp: lastStage ? lastStage.hp : project.engineStockHp,
-      nm: lastStage ? lastStage.nm : project.engineStockNm,
-      engineStockHp: project.engineStockHp,
-      engineStockNm: project.engineStockNm,
-
-      acc_0_100: lastStage?.acc_0_100 ? lastStage.acc_0_100.toNumber() : null,
-      acc_100_200: lastStage?.acc_100_200
-        ? lastStage.acc_100_200.toNumber()
-        : null,
-
-      stageNumber: project.stages[project.stages.length - 1].stageNumber,
-
-      engineNameAndCapacity: project.engineName + " " + project.engineCapacity,
-
-      isLikedByAuthUser: !!project.userActivity.find(
-        (ua) => ua.userId === userData.user.$id && ua.activityType === "LIKE"
-      ),
-
-      likesCount: project.userActivity.length,
-
-      images: project.media
-        .filter((m) => !m.fileName.toLowerCase().includes("dyno"))
-        .map((m) => m.fileLocation),
-
-      tags: project.tagAssignments.map((ta) => ({
-        id: ta.tag.id,
-        name: ta.tag.name,
-      })),
-
-      author: {
-        id: project.author.id,
-        name: project.author.name,
-      },
-    };
-  });
+  const data: TBasicProject[] = projects.map((project) =>
+    mapProjectToBasicProject(project, userData.user.$id)
+  );
 
   return NextResponse.json({
     data,

@@ -8,13 +8,16 @@ import { setShowCreateProject } from "@/lib/features/actions/actionsSlice";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { useDispatch } from "react-redux";
 import { CreateNotification } from "../logger/NotificationHelper";
-import { stepperDataToCreateProject } from "./helpers";
+import { mergeProjectWithMedia, stepperDataToCreateProject } from "./helpers";
 import { Status } from "@/app/utils/enums";
 import {
   setIsLoading,
   setLoadingText,
 } from "@/lib/features/loading/globalLoadingSlice";
-import { TStageCreate, TStepStageCreate } from "@/app/utils/types/stage";
+import { TStepStageCreate } from "@/app/utils/types/stage";
+import { InfiniteData, useQueryClient } from "@tanstack/react-query";
+import { addProjectToInfiniteQuery } from "@/app/hooks/useInfiniteContent";
+import { MainContentResponse } from "@/app/hooks/useMainContent";
 
 export interface IInputValue {
   value: string | number;
@@ -38,69 +41,105 @@ export type TTransmissionData = {
 
 export const CreateProjectView = () => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   const onSubmit = async (data: any) => {
-    console.log(data, "data");
     dispatch(setIsLoading(true));
-    dispatch(setLoadingText("Pobieranie danych..."));
-    const project = stepperDataToCreateProject(data);
-    // const project = generateRandomProjectsToCreate(1, true, true, true)[0];
-    dispatch(setLoadingText("Sprawdzanie danych..."));
+    dispatch(setLoadingText("Przygotowywanie danych..."));
 
-    const result = validProject(project);
-    const zodResult = createProjectSchema.safeParse(project);
-    console.log(zodResult, "zodResult", result);
-    const findInValidResult = result.validResults.find(
-      (result) => result.valid == false
-    );
+    try {
+      const project = stepperDataToCreateProject(data);
 
-    if (!findInValidResult && zodResult.success) {
-      try {
-        dispatch(setLoadingText("Dodawanie projektu..."));
+      dispatch(setLoadingText("Sprawdzanie danych..."));
 
-        const res = await createProject(project);
-        const images: File[] = data[2].data.images || [];
-        const projectId = res.project.id;
+      const customValidation = validProject(project);
+      const zodResult = createProjectSchema.safeParse(project);
 
-        dispatch(setLoadingText("Dodawanie zdjęć..."));
-        if (images.length) {
-          const formData = new FormData();
-          images.forEach((file) => formData.append("files", file));
+      const invalid = customValidation.validResults.find(
+        (r) => r.valid === false
+      );
 
-          await uploadImageProject(projectId, formData);
-        }
-
-        const stages: TStageCreate[] = project.stages ?? [];
-        const stepStages = data[3]?.data as TStepStageCreate[];
-
-        for (let i = 0; i < stages.length; i++) {
-          const stageFile = stepStages[i]?.chartImage;
-          if (!stageFile) continue;
-
-          const formData = new FormData();
-          formData.append("files", stageFile);
-
-          await uploadImageProject(projectId, formData, stages[i].stageNumber);
-        }
-
-        if (res?.notification) {
-          dispatch(addNotification(JSON.stringify(res.notification)));
-          dispatch(setShowCreateProject(false));
-        }
-      } catch (error: any) {
+      if (invalid || !zodResult.success) {
         dispatch(
           addNotification(
             JSON.stringify(
               CreateNotification(
-                Status.High,
-                error.message || "Unknown error occurred"
+                Status.Medium,
+                invalid?.error ??
+                  zodResult.error?.errors[0]?.message ??
+                  "Dane formularza są niepoprawne"
               )
             )
           )
         );
-      } finally {
-        dispatch(setIsLoading(false));
+
+        return;
       }
+
+      dispatch(setLoadingText("Dodawanie projektu..."));
+      const res = await createProject(project);
+      let createdProject = res.project;
+
+      const projectId = res.project.id;
+      const images: File[] = data[2]?.data?.images ?? [];
+
+      if (images.length) {
+        dispatch(setLoadingText("Dodawanie zdjęć..."));
+
+        const formData = new FormData();
+        images.forEach((file) => formData.append("files", file));
+
+        const uploadRes = await uploadImageProject(projectId, formData);
+
+        if (uploadRes?.success) {
+          createdProject = mergeProjectWithMedia(
+            createdProject,
+            uploadRes.files
+          );
+        }
+      }
+
+      const stages = project.stages ?? [];
+      const stepStages = data[3]?.data as TStepStageCreate[];
+
+      for (let i = 0; i < stages.length; i++) {
+        const stageFile = stepStages?.[i]?.chartImage;
+        if (!stageFile) continue;
+
+        dispatch(
+          setLoadingText(`Dodawanie wykresu – Stage ${stages[i].stageNumber}`)
+        );
+
+        const formData = new FormData();
+        formData.append("files", stageFile);
+
+        await uploadImageProject(projectId, formData, stages[i].stageNumber);
+      }
+
+      if (res?.notification) {
+        queryClient.setQueryData(
+          ["projects"],
+          (oldData: InfiniteData<MainContentResponse> | undefined) =>
+            addProjectToInfiniteQuery(oldData, createdProject)
+        );
+
+        dispatch(addNotification(JSON.stringify(res.notification)));
+        dispatch(setShowCreateProject(false));
+      }
+    } catch (error: any) {
+      dispatch(
+        addNotification(
+          JSON.stringify(
+            CreateNotification(
+              Status.High,
+              error?.message || "Wystąpił nieoczekiwany błąd"
+            )
+          )
+        )
+      );
+    } finally {
+      dispatch(setIsLoading(false));
+      dispatch(setLoadingText(""));
     }
   };
 

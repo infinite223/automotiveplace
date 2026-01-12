@@ -19,6 +19,13 @@ export async function createProject(project: TProjectCreate, authorId: string) {
         stages: mapStagesToPrisma(stages ?? [], authorId),
         tagAssignments: mapTagsToPrisma(tags ?? [], authorId),
       },
+      include: {
+        author: { select: { id: true, name: true } },
+        stages: { orderBy: { stageNumber: "asc" } },
+        media: true,
+        userActivity: true,
+        tagAssignments: { include: { tag: true } },
+      },
     });
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {

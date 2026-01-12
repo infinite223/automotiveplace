@@ -1,4 +1,4 @@
-import { TProject } from "@/app/utils/types/project";
+import { TBasicProject, TProject } from "@/app/utils/types/project";
 import { Project, TagAssignment, Stage, User, CarItem } from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/library";
 import { mapTags } from "./tags";
@@ -66,3 +66,72 @@ export function mapProject(
     userId: project.authorId,
   };
 }
+
+type ProjectWithRelations = Project & {
+  author: { id: string; name: string };
+  stages: any[];
+  media: any[];
+  userActivity?: any[];
+  tagAssignments?: { tag: { id: string; name: string } }[];
+};
+
+export const mapProjectToBasicProject = (
+  project: ProjectWithRelations,
+  authUserId?: string
+): TBasicProject => {
+  const lastStage =
+    project.stages?.length > 0
+      ? project.stages[project.stages.length - 1]
+      : null;
+
+  return {
+    id: project.id,
+    createdAt: project.createdAt,
+    updatedAt: project.updatedAt,
+
+    forSell: project.forSell,
+    isVisible: project.isVisible,
+    isVerified: project.isVerified,
+
+    name: project.name ?? null,
+    carMake: project.carMake,
+    carModel: project.carModel,
+    description: project.description ?? null,
+
+    hp: lastStage?.hp ?? project.engineStockHp,
+    nm: lastStage?.nm ?? project.engineStockNm,
+    engineStockHp: project.engineStockHp,
+    engineStockNm: project.engineStockNm,
+
+    acc_0_100: lastStage?.acc_0_100?.toNumber?.() ?? null,
+    acc_100_200: lastStage?.acc_100_200?.toNumber?.() ?? null,
+
+    stageNumber: lastStage?.stageNumber ?? 0,
+
+    engineNameAndCapacity: `${project.engineName} ${project.engineCapacity}`,
+
+    isLikedByAuthUser: authUserId
+      ? !!project.userActivity?.find(
+          (ua) => ua.userId === authUserId && ua.activityType === "LIKE"
+        )
+      : false,
+
+    likesCount: project.userActivity?.length ?? 0,
+
+    images:
+      project.media
+        ?.filter((m) => !m.fileName.toLowerCase().includes("dyno"))
+        .map((m) => m.fileLocation) ?? [],
+
+    tags:
+      project.tagAssignments?.map((ta) => ({
+        id: ta.tag.id,
+        name: ta.tag.name,
+      })) ?? [],
+
+    author: {
+      id: project.author.id,
+      name: project.author.name,
+    },
+  };
+};

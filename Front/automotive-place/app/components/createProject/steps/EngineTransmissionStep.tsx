@@ -126,7 +126,7 @@ export const EngineTransmissionStep = ({
             placeholder="Ilość biegów"
             name="Biegi"
             value={data.transmissionGears}
-            setValue={(v) => update("transmissionGears", Number(v))}
+            setValue={(v) => update("transmissionGears", v.toString())}
             error={
               errors?.find((e) => e.path.includes("transmissionGears"))?.message
             }

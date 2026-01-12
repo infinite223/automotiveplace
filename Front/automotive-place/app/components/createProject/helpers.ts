@@ -1,14 +1,16 @@
-import { TProjectCreate } from "@/app/utils/types/project";
-import { TStageCreate } from "@/app/utils/types/stage";
+import { TBasicProject, TProjectCreate } from "@/app/utils/types/project";
+import { TStageCreate, TStepStageCreate } from "@/app/utils/types/stage";
 
 export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
-  // TODO - add mapper for string from inputes to numbers
   const basic = steps[0]?.data || {};
   const engine = steps[1]?.data || {};
-  const stages: TStageCreate[] = steps[3]?.data || [];
+  const stepStages = steps[3]?.data || [];
+
+  const stages = mapStepStagesToStages(stepStages);
   const stockData = stages.find(
     (stage: TStageCreate) => stage.stageNumber === 0
   );
+
   return {
     garageId: "garage2",
 
@@ -19,7 +21,7 @@ export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
     name: basic.name,
 
     // Step 2
-    engineCapacity: engine.engineCapacity,
+    engineCapacity: numberFromString(engine.engineCapacity) ?? 0,
     engineName: engine.engineName,
     engineDescription: engine.engineDescription,
     engineStockHp: stockData?.hp ?? 0,
@@ -28,7 +30,7 @@ export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
 
     transmissionWasSwapped: engine.transmissionWasSwapped,
     transmissionDescription: engine.transmissionDescription,
-    transmissionGears: engine.transmissionGears,
+    transmissionGears: numberFromString(engine.transmissionGears) ?? 0,
     transmissionName: engine.transmissionName,
     transmissionType: engine.transmissionType,
 
@@ -46,6 +48,53 @@ export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
   };
 };
 
+export const mapStepStagesToStages = (
+  stages: TStepStageCreate[]
+): TStageCreate[] => stages.map(mapStepStageToStage);
+
+const mapStepStageToStage = (stage: TStepStageCreate): TStageCreate => ({
+  name: stage.name,
+  description: stage.description,
+
+  stageNumber: numberFromString(stage.stageNumber) ?? 0,
+
+  hp: numberFromString(stage.hp) ?? 0,
+  nm: numberFromString(stage.nm) ?? 0,
+
+  acc_0_100: numberFromString(stage.acc_0_100),
+  acc_100_200: numberFromString(stage.acc_100_200),
+  acc_50_150: numberFromString(stage.acc_50_150),
+
+  sl_150_50: numberFromString(stage.sl_150_50),
+  sl_100_0: numberFromString(stage.sl_100_0),
+
+  stagePrice: numberFromString(stage.stagePrice),
+
+  carItems: stage.carItems ?? [],
+});
+
+export const numberFromString = (v: unknown): number | undefined => {
+  if (typeof v !== "string") return undefined;
+
+  const normalized = v.replace(",", ".").trim();
+  if (normalized === "") return undefined;
+
+  const n = Number(normalized);
+  return Number.isNaN(n) ? undefined : n;
+};
+
+export const mergeProjectWithMedia = (
+  project: TBasicProject,
+  uploadedFiles: { fileLocation: string }[]
+): TBasicProject => {
+  return {
+    ...project,
+    images: [
+      ...(project.images ?? []),
+      ...uploadedFiles.map((f) => f.fileLocation),
+    ],
+  };
+};
 /**
  * Helper:
  * - ""        -> undefined
