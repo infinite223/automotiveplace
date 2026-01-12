@@ -12,8 +12,6 @@ export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
   );
 
   return {
-    garageId: "garage2",
-
     // Step 1
     carMake: basic.carMake,
     carModel: basic.carModel,

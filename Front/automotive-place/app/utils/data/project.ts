@@ -199,7 +199,6 @@ export function generateRandomProjectsToCreate(
       engineWasSwapped: false,
       imagesCount: 32,
       engineStockNm: 280,
-      garageId: "garage2", // generateRandomString(8),
       name: generateRandomString(5),
       projectPrice: getRandomInt(5000, 500000),
       stages,

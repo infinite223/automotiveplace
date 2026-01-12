@@ -1,3 +1,10 @@
+import { POST } from "../route";
+import { NextRequest } from "next/server";
+import prisma from "@/lib/prisma";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
+import { createProject } from "../createProject";
+import { TBasicProject, TProjectCreate } from "@/app/utils/types/project";
+
 jest.mock("@/lib/actions/user.actions", () => ({
   getLoggedInUser: jest.fn(),
 }));
@@ -6,7 +13,7 @@ jest.mock("@/lib/prisma", () => ({
   __esModule: true,
   default: {
     user: {
-      findFirst: jest.fn(),
+      findUnique: jest.fn(),
     },
     project: {
       create: jest.fn(),
@@ -18,18 +25,7 @@ jest.mock("../createProject", () => ({
   createProject: jest.fn(),
 }));
 
-jest.mock("../../../helpers", () => ({
-  createContentForUser: jest.fn(),
-}));
-
-import { POST } from "../route";
-import { NextRequest } from "next/server";
-import prisma from "@/lib/prisma";
-import { getLoggedInUser } from "@/lib/actions/user.actions";
-import { createProject } from "../createProject";
-import { TBasicProject, TProjectCreate } from "@/app/utils/types/project";
-
-const mockUser = { id: "user-1", name: "Test User" };
+const mockUser = { user: { $id: "user-1", name: "Test User" } };
 
 const validProject: TProjectCreate = {
   forSell: false,
@@ -40,7 +36,6 @@ const validProject: TProjectCreate = {
   carItemsCount: 0,
   imagesCount: 0,
   isVisible: true,
-  garageId: "garage-1",
   projectPrice: 10000,
 
   engineName: "M54B30",
@@ -86,7 +81,7 @@ const mockProject: TBasicProject = {
   stageNumber: 0,
   images: [],
   tags: [],
-  author: { id: mockUser.id, name: mockUser.name },
+  author: { id: mockUser.user.$id, name: mockUser.user.name },
   createdAt: new Date(),
   updatedAt: new Date(),
   isVerified: true,
@@ -112,16 +107,19 @@ describe("POST /api/project/add-project", () => {
 
     const res = await POST(req);
 
-    expect(res).toBeDefined();
     expect(res.status).toBe(404);
-
     const json = await res.json();
     expect(json.message).toBe("YouMustBeLoggedInToUseThisFunctionality");
   });
 
   it("creates project when data is valid", async () => {
     (getLoggedInUser as jest.Mock).mockResolvedValue(mockUser);
-    (prisma.user.findFirst as jest.Mock).mockResolvedValue(mockUser);
+
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue({
+      id: mockUser.user.$id,
+      name: mockUser.user.name,
+      garage: { id: "garage-1" },
+    });
 
     (createProject as jest.Mock).mockResolvedValue(mockProject);
 
@@ -135,7 +133,11 @@ describe("POST /api/project/add-project", () => {
 
     expect(res.status).toBe(200);
     expect(json.project.id).toBe("project-1");
-    expect(createProject).toHaveBeenCalledWith(validProject, mockUser.id);
+    expect(createProject).toHaveBeenCalledWith(
+      validProject,
+      mockUser.user.$id,
+      "garage-1"
+    );
   });
 
   it("returns validation error for invalid project", async () => {

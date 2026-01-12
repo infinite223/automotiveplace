@@ -125,7 +125,6 @@ type TProjectCreate = {
   imagesCount: number;
 
   isVisible: boolean;
-  garageId: string;
   projectPrice: number;
 
   engineName: string;

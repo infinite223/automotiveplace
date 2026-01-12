@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
   };
   let newPost = null;
 
-  const author = await prisma.user.findFirst();
+  const author = await prisma.user.findUnique({ where: { id: user.user.$id } });
   const validProject = createPostSchema.safeParse(post);
   if (!validProject.success) {
     return NextResponse.json({
