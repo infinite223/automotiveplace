@@ -26,6 +26,7 @@ import Image from "next/image";
 import { IoNotifications } from "react-icons/io5";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePosts, useProjects } from "@/app/hooks/useInfiniteContent";
+import { TbMessage2Up } from "react-icons/tb";
 
 const headerMap: Record<ContentType, string> = {
   [ContentType.Project]: "Najnowsze projekty",
@@ -134,7 +135,10 @@ export default function Page() {
               Automotiveplace
             </span>
           </div>
-          <IoNotifications size={iconSizes.base} className="opacity-80" />
+          <div className="flex gap-5 items-center">
+            {/* <TbMessage2Up size={iconSizes.base} className="opacity-80" /> */}
+            <IoNotifications size={iconSizes.base} className="opacity-80" />
+          </div>
         </div>
         <ContentTypeFilter active={activeFilter} onChange={setActiveFilter} />
         {activeFilter !== "All" && (

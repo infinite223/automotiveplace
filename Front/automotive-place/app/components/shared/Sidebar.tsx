@@ -254,9 +254,7 @@ const SideBarMobile = ({ openModal, pathname }: any) => {
         />
 
         <OptionItem
-          icon={
-            <RiPlayListAddLine size={iconSizes.base} className="text-amp-500" />
-          }
+          icon={<RiPlayListAddLine size={iconSizes.base} />}
           name={t("Core.Add")}
           onClick={openModal}
           showName={false}
@@ -293,7 +291,7 @@ const SideBarMobile = ({ openModal, pathname }: any) => {
 
             {/* DRAWER */}
             <motion.div
-              className="fixed top-0 left-0 h-full w-[280px] bg-amp-0 z-50 p-4 pt-6"
+              className="fixed top-0 left-0 h-full w-[280px] bg-amp-50 z-50 p-4 pt-6"
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
