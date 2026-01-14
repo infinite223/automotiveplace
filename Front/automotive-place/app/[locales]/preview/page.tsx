@@ -72,11 +72,11 @@ export default function HomePage() {
         </p>
 
         <div className="mt-8 mx-auto max-w-xs rounded-3xl overflow-hidden border border-neutral-800">
-          <img
+          {/* <img
             src="https://via.placeholder.com/400x600"
             alt="App preview"
             className="w-full"
-          />
+          /> */}
         </div>
       </section>
 
@@ -87,11 +87,11 @@ export default function HomePage() {
         </p>
 
         <div className="mt-8 mx-auto max-w-xs rounded-3xl overflow-hidden border border-neutral-800">
-          <img
+          {/* <img
             src="https://via.placeholder.com/400x600"
             alt="Feed preview"
             className="w-full"
-          />
+          /> */}
         </div>
       </section>
 
@@ -102,11 +102,11 @@ export default function HomePage() {
         </p>
 
         <div className="mt-8 mx-auto max-w-xs rounded-3xl overflow-hidden border border-neutral-800">
-          <img
+          {/* <img
             src="https://via.placeholder.com/400x600"
             alt="Map preview"
             className="w-full"
-          />
+          /> */}
         </div>
       </section>
 

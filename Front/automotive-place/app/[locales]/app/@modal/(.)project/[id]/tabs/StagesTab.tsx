@@ -14,6 +14,12 @@ interface StagesTabProps {
   stages: TStage[];
 }
 
+function hasValue(v: string | number | undefined) {
+  if (v === undefined || v === null) return false;
+  const num = Number(String(v).replace(/[^\d.-]/g, ""));
+  return !isNaN(num) && num > 0;
+}
+
 export default function StagesTab({ stages }: StagesTabProps) {
   const sortedStages = sortStagesByStageNumber(stages);
   const baseStage = sortedStages[sortedStages.length - 1];
@@ -196,6 +202,8 @@ type ItemProps = {
 };
 
 function Item({ label, description, value, difference, baseValue }: ItemProps) {
+  if (!hasValue(value)) return null;
+
   if (!value) return null;
 
   const diffPercent =

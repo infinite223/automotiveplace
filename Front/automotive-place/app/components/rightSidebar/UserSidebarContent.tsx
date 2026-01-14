@@ -51,7 +51,7 @@ export default function UserSidebarContent({
       className={tailwindContainer}
     >
       <div className="flex flex-col w-full gap-3">
-        <nav className="flex w-full font-bold items-center gap-2">
+        <nav className="flex w-full font-bold items-center gap-2 ml-2">
           <span className="p-1 bg-amp-700 dark:bg-amp-200 rounded-full w-10 h-10 flex items-center justify-center">
             <IoPersonCircle size={iconSizes.large} />
           </span>

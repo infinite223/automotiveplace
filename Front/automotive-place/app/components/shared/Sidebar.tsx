@@ -34,6 +34,9 @@ import { Yant } from "@/app/utils/helpers/fontsHelper";
 import { scrollContainerToTop } from "@/app/utils/helpers/navigationHelper";
 import z from "zod";
 import { createZodErrorMap } from "@/app/api/zodErrorMap";
+import { motion, AnimatePresence } from "framer-motion";
+import { MobileMenuContent } from "./MobileMenuContent";
+import UserSidebarContent from "../rightSidebar/UserSidebarContent";
 
 export const SideBar = () => {
   const dispatch = useDispatch();
@@ -220,57 +223,93 @@ const SideBarMobile = ({ openModal, pathname }: any) => {
   const locale = useLocale();
   const isHidden = scrollDirection === "down";
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <div
-      className={`
-        fixed bottom-0 left-0 right-0 z-40 bg-amp-0 h-16 flex items-center justify-around
-        transition-transform duration-300
-        ${isHidden ? "translate-y-full" : "translate-y-0"}
-        lg:hidden
-        shadow-md
-      `}
-    >
-      <OptionItem
-        icon={<MdHome size={iconSizes.large} />}
-        name={t("Core.Home")}
-        route={`/${locale}/app`}
-        isActive={pathname.includes("/app") && pathname.split("/").length === 3}
-        showName={false}
-      />
-      <OptionItem
-        icon={<LuSearch size={iconSizes.base} />}
-        name={t("Core.Search")}
-        onClick={() => {}}
-        isActive={pathname === "/search"}
-        showName={false}
-      />
-      <OptionItem
-        icon={<RiPlayListAddLine size={iconSizes.base} />}
-        name={t("Core.Add")}
-        onClick={openModal}
-        isActive={pathname === "/add"}
-        showName={false}
-      />
-      <OptionItem
-        icon={<BiSolidCarGarage size={iconSizes.base} />}
-        name={t("Core.Garage")}
-        onClick={() => {}}
-        isActive={pathname.includes("/app/garage")}
-        route="./app/garage"
-        showName={false}
-      />
-      <OptionItem
-        icon={<SlMenu size={iconSizes.base} />}
-        name={t("Core.Menu")}
-        onClick={() => {}}
-        isActive={pathname === "/menu"}
-        showName={false}
-      />
-    </div>
+    <>
+      {/* BOTTOM BAR */}
+      <div
+        className={`
+          fixed bottom-0 left-0 right-0 z-40 bg-amp-0 h-16 flex items-center justify-around
+          transition-transform duration-300
+          ${isHidden ? "translate-y-full" : "translate-y-0"}
+          lg:hidden
+          shadow-md
+        `}
+      >
+        <OptionItem
+          icon={<MdHome size={iconSizes.large} />}
+          name={t("Core.Home")}
+          route={`/${locale}/app`}
+          isActive={
+            pathname.includes("/app") && pathname.split("/").length === 3
+          }
+          showName={false}
+        />
+
+        <OptionItem
+          icon={<LuSearch size={iconSizes.base} />}
+          name={t("Core.Search")}
+          showName={false}
+        />
+
+        <OptionItem
+          icon={
+            <RiPlayListAddLine size={iconSizes.base} className="text-amp-500" />
+          }
+          name={t("Core.Add")}
+          onClick={openModal}
+          showName={false}
+        />
+
+        <OptionItem
+          icon={<BiSolidCarGarage size={iconSizes.base} />}
+          name={t("Core.Garage")}
+          route="./app/garage"
+          showName={false}
+        />
+
+        {/* MENU BUTTON */}
+        <OptionItem
+          icon={<SlMenu size={iconSizes.base} />}
+          name={t("Core.Menu")}
+          onClick={() => setIsMenuOpen(true)}
+          showName={false}
+        />
+      </div>
+
+      {/* SLIDE MENU */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <>
+            {/* BACKDROP */}
+            <motion.div
+              className="fixed inset-0 bg-black/40 z-40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMenuOpen(false)}
+            />
+
+            {/* DRAWER */}
+            <motion.div
+              className="fixed top-0 left-0 h-full w-[280px] bg-amp-0 z-50 p-4 pt-6"
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            >
+              {/* <MobileMenuContent onClose={() => setIsMenuOpen(false)} /> */}
+              <UserSidebarContent tailwindContainer="" />
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
-const OptionItem: FC<{
+export const OptionItem: FC<{
   name: string;
   icon: any;
   onClick?: () => void;
