@@ -62,7 +62,7 @@ export const ContentTypeFilter = ({ active, onChange }: Props) => {
     <div
       className={`
         fixed
-        z-[80] bg-black/80 backdrop-blur-md
+        z-[10] bg-black/80 backdrop-blur-md
         md:ml-[-30px]
         w-fit max-w-[100vw] mx-auto flex gap-2 py-3 px-3
         overflow-x-auto no-scrollbar
