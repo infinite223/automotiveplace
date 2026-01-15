@@ -257,7 +257,7 @@ const SideBarMobile = ({ openModal, pathname }: any) => {
           icon={
             <AiOutlinePlus
               size={iconSizes.large}
-              className="bg-amp-500 h-10 w-10 rounded-full p-2"
+              className="bg-amp-500 h-11 w-11 rounded-full p-3"
             />
           }
           name={t("Core.Add")}
