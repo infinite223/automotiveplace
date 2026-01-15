@@ -63,6 +63,11 @@ export default function Project({ params }: { params: { id: string } }) {
 
   if (error) return <div>Error: {error.message}</div>;
   const bgImage = getProjectImageSrcByFileId(data?.images?.[0]);
+  const currentStage = lastStage?.stageNumber
+    ? lastStage.stageNumber > 0
+      ? "STAGE " + lastStage?.stageNumber
+      : "STOCK"
+    : "STOCK";
 
   return (
     <main className="fixed inset-0 z-[88] flex w-full min-h-dvh custom-scrollbar overflow-y-auto bg-amp-900 dark:bg-amp-0 flex-col items-center gap-2 text-black dark:text-white">
@@ -118,26 +123,34 @@ export default function Project({ params }: { params: { id: string } }) {
             <header className="text-3xl font-semibold gap-1 flex flex-col flex-wrap">
               <div className="flex w-full items-start justify-between flex-col">
                 <div className="flex flex-col w-full">
-                  <div className="flex items-center gap-3">
-                    <span>{data?.carModel}</span>
-                  </div>
                   <div className="text-lg opacity-70">
                     <span>{data?.carMake}</span>
-                    <span className=""> {lastStage?.name || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <span>{data?.carModel}</span>
+                  </div>
+                  <div className="text-sm opacity-70">
+                    <span>Etap modyfikacji </span>
+                    <span className=""> {currentStage || "N/A"}</span>
                   </div>
                 </div>
                 <div className="flex flex-col mt-2">
-                  <div className="text-medium mb-1">{data?.author?.name}</div>
+                  <div className="text-medium mb-1">
+                    Autor: {data?.author?.name}
+                  </div>
                   <div className="text-sm opacity-70">
                     Opublikowany:{" "}
                     {moment(data?.createdAt, "YYYYMMDD").fromNow()}
                   </div>
-                  {lastStage && (
-                    <div className="text-sm opacity-70">
-                      Modyfikowany:{" "}
-                      {moment(lastStage?.createdAt, "YYYYMMDD").fromNow()}
-                    </div>
-                  )}
+
+                  {lastStage &&
+                    moment(lastStage?.createdAt, "YYYYMMDD").fromNow() !==
+                      moment(data?.createdAt, "YYYYMMDD").fromNow() && (
+                      <div className="text-sm opacity-70">
+                        Ostatnia modyfikacja:{" "}
+                        {moment(lastStage?.createdAt, "YYYYMMDD").fromNow()}
+                      </div>
+                    )}
                 </div>
 
                 <div className="mt-4 gap-2 flex w-full justify-end flex-wrap-reverse">
