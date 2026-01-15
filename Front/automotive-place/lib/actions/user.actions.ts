@@ -59,6 +59,12 @@ export const signUp = async (userData: SignUpParams) => {
         name: userData.name,
         password: "",
         id: newUserId,
+        garage: {
+          create: {
+            name: userData.name + " garage",
+            description: "",
+          },
+        },
       },
     });
 

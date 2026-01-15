@@ -31,7 +31,7 @@ export const Notification: FC = () => {
   return (
     <div
       className="fixed top-0 left-1/2 -translate-x-1/2 z-[99] p-4 flex flex-col gap-2
-                lg:left-auto lg:right-0 lg:translate-x-0 max-lg:w-screen max-w-[400px]"
+                lg:left-auto lg:right-0 lg:translate-x-0 max-lg:w-screen max-w-[400px] max-md:max-w-[99vw]"
     >
       <AnimatePresence>
         {notifications.map((notification) => (

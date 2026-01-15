@@ -58,6 +58,32 @@ export default function Page() {
     dispatch(addNotification(JSON.stringify(result.notification)));
     if (result.notification.log.status === Status.Success) router.push(`./app`);
   };
+  type RegistrationField = "email" | "password" | "name";
+
+  const validateField = (field: RegistrationField, value: string) => {
+    if (value.length === 0) {
+      setErrors((prev) => {
+        if (!prev) return null;
+        const filtered = prev.filter((e) => !e.path.includes(field));
+        return filtered.length ? filtered : null;
+      });
+      return;
+    }
+
+    const schema = userRegistrationSchema.pick({ [field]: true } as any);
+    const result = schema.safeParse({ [field]: value });
+
+    setErrors((prev) => {
+      if (result.success) {
+        if (!prev) return null;
+        const filtered = prev.filter((e) => !e.path.includes(field));
+        return filtered.length ? filtered : null;
+      }
+
+      const otherErrors = prev?.filter((e) => !e.path.includes(field)) ?? [];
+      return [...otherErrors, ...result.error.errors];
+    });
+  };
 
   return (
     <main className="w-full items-center flex flex-col justify-center">
@@ -75,7 +101,11 @@ export default function Page() {
             name={t("Core.EmailAddress") + ":"}
             type="email"
             placeholder={t("Core.Placeholders.EnterEmail")}
-            setValue={(text) => setEmail(text.toString())}
+            setValue={(text) => {
+              const value = text.toString();
+              setEmail(value);
+              validateField("email", value);
+            }}
             error={errors?.find((e) => e.path.includes("email"))?.message}
           />
           <AMPInput
@@ -83,7 +113,11 @@ export default function Page() {
             value={password}
             type="password"
             name={t("Core.Password") + ":"}
-            setValue={(text) => setPassword(text.toString())}
+            setValue={(text) => {
+              const value = text.toString();
+              setPassword(value);
+              validateField("password", value);
+            }}
             error={errors?.find((e) => e.path.includes("password"))?.message}
           />
           <AMPInput
@@ -91,7 +125,11 @@ export default function Page() {
             value={name}
             type="text"
             name={t("Core.AccountName") + ":"}
-            setValue={(text) => setName(text.toString())}
+            setValue={(text) => {
+              const value = text.toString();
+              setName(value);
+              validateField("name", value);
+            }}
             error={errors?.find((e) => e.path.includes("name"))?.message}
           />
         </div>

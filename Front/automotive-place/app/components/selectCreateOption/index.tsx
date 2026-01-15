@@ -42,7 +42,7 @@ export const SelectCreateOption: FC<{ closeModal: () => void }> = ({
       />
 
       <OptionItem
-        name="Utórz szybki spot"
+        name="Utwórz szybki spot"
         onClick={() => {}}
         icon={<SpotIcon size={iconSize} />}
       />

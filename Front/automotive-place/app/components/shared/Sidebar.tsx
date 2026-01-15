@@ -35,8 +35,8 @@ import { scrollContainerToTop } from "@/app/utils/helpers/navigationHelper";
 import z from "zod";
 import { createZodErrorMap } from "@/app/api/zodErrorMap";
 import { motion, AnimatePresence } from "framer-motion";
-import { MobileMenuContent } from "./MobileMenuContent";
 import UserSidebarContent from "../rightSidebar/UserSidebarContent";
+import { AiOutlinePlus } from "react-icons/ai";
 
 export const SideBar = () => {
   const dispatch = useDispatch();
@@ -254,10 +254,16 @@ const SideBarMobile = ({ openModal, pathname }: any) => {
         />
 
         <OptionItem
-          icon={<RiPlayListAddLine size={iconSizes.base} />}
+          icon={
+            <AiOutlinePlus
+              size={iconSizes.large}
+              className="bg-amp-500 h-10 w-10 rounded-full p-2"
+            />
+          }
           name={t("Core.Add")}
           onClick={openModal}
           showName={false}
+          isActive
         />
 
         <OptionItem
@@ -328,7 +334,7 @@ export const OptionItem: FC<{
 
   const classes = `${additionalTailwindCss || ""} flex-row ${
     isActive ? "font-semibold opacity-90" : "opacity-80"
-  } gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 hover:bg-amp-200 rounded-md pl-1 2xl:pl-3 w-full cursor-pointer flex items-center justify-start`;
+  } gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 md:hover:bg-amp-200 rounded-md pl-1 2xl:pl-3 w-full cursor-pointer flex items-center justify-start`;
   if (route) {
     const handleClick = (
       e: React.MouseEvent<HTMLAnchorElement, MouseEvent>

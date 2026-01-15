@@ -19,15 +19,17 @@ type Props = {
   onChange: (type: ContentType | "All") => void;
 };
 
+const iconSize = iconSizes.small - 4;
+
 export const ContentTypeFilter = ({ active, onChange }: Props) => {
   const iconMap: Record<ContentType | "All", JSX.Element> = {
-    All: <FaThLarge size={iconSizes.small} />,
-    [ContentType.Project]: <ProjectIcon size={iconSizes.small} />,
-    [ContentType.Post]: <PostIcon size={iconSizes.small} />,
-    [ContentType.Problem]: <ProblemIcon size={iconSizes.small} />,
-    [ContentType.Spot]: <SpotIcon size={iconSizes.small} />,
-    [ContentType.Event]: <EventIcon size={iconSizes.small} />,
-    [ContentType.Trip]: <TripIcon size={iconSizes.small} />,
+    All: <FaThLarge size={iconSize} />,
+    [ContentType.Project]: <ProjectIcon size={iconSize} />,
+    [ContentType.Post]: <PostIcon size={iconSize} />,
+    [ContentType.Problem]: <ProblemIcon size={iconSize} />,
+    [ContentType.Spot]: <SpotIcon size={iconSize} />,
+    [ContentType.Event]: <EventIcon size={iconSize} />,
+    [ContentType.Trip]: <TripIcon size={iconSize} />,
   };
 
   const items: { label: string; type: ContentType | "All" }[] = [
@@ -41,7 +43,7 @@ export const ContentTypeFilter = ({ active, onChange }: Props) => {
   ];
 
   return (
-    <div className="flex gap-1 py-3 w-full overflow-x-auto no-scrollbar mt-2">
+    <div className="flex gap-2 py-3 w-full overflow-x-auto no-scrollbar mt-2 px-3">
       {items.map((item) => {
         const isActive = active === item.type;
 
@@ -50,29 +52,25 @@ export const ContentTypeFilter = ({ active, onChange }: Props) => {
             key={item.type}
             type="button"
             onClick={() => onChange(item.type)}
-            className="flex flex-col items-center min-w-[70px] group"
+            className={`
+            flex items-center gap-2 px-3 py-1.5 rounded-full whitespace-nowrap
+            transition-colors
+            ${
+              isActive
+                ? "bg-amp-500 text-white"
+                : "bg-amp-200/40 text-amp-700/70 hover:bg-amp-200/70"
+            }
+          `}
           >
-            <div
-              className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all
-      ${isActive ? "border-amp-700/50" : "border-amp-200"}
-      group-hover:border-amp-700/80`}
-            >
-              <div
-                className={`transition-colors
-        ${isActive ? "text-amp-700/80" : "text-amp-700/60"}
-        group-hover:text-amp-700/80`}
-              >
-                {iconMap[item.type]}
-              </div>
-            </div>
-
             <span
-              className={`text-xs mt-1 transition-colors
-      ${isActive ? "text-white" : "text-amp-700/60"}
-      group-hover:text-amp-700/80`}
+              className={`flex items-center ${
+                isActive ? "text-white" : "text-amp-700/70"
+              }`}
             >
-              {item.label}
+              {iconMap[item.type]}
             </span>
+
+            <span className="text-sm font-medium">{item.label}</span>
           </button>
         );
       })}

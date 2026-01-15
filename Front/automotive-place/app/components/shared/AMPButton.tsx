@@ -36,7 +36,7 @@ export const AMPButton: FC<IAMPButton> = ({
       disabled={disabled}
       onClick={disabled ? undefined : onClick}
       className={`
-        ${disabled ? "opacity-35 cursor-not-allowed" : "hover:opacity-70"}
+        ${disabled ? "opacity-35 cursor-not-allowed" : "md:hover:opacity-70"}
         ${buttonTypeClasses[type]}
         ${additionalTailwindCss}
         flex items-center

@@ -142,7 +142,7 @@ export default function Page() {
         </div>
         <ContentTypeFilter active={activeFilter} onChange={setActiveFilter} />
         {activeFilter !== "All" && (
-          <div className="font-semibold text-xl my-2 mx-2">
+          <div className="font-semibold text-lg my-2 mx-2">
             {headerMap[activeFilter]}
           </div>
         )}

@@ -57,6 +57,23 @@ export default function Page() {
     if (result.notification.log.status === "Success") router.push("./app");
   };
 
+  const validateField = (field: "email" | "password", value: string) => {
+    const schema = userLoginSchema.pick({ [field]: true } as any);
+
+    const result = schema.safeParse({ [field]: value });
+
+    setErrors((prev) => {
+      if (result.success) {
+        if (!prev) return null;
+        const filtered = prev.filter((e) => !e.path.includes(field));
+        return filtered.length ? filtered : null;
+      }
+
+      const otherErrors = prev?.filter((e) => !e.path.includes(field)) ?? [];
+      return [...otherErrors, ...result.error.errors];
+    });
+  };
+
   return (
     <main className="w-full items-center flex flex-col justify-center">
       <form
@@ -74,7 +91,11 @@ export default function Page() {
             type="email"
             placeholder={t("Core.Placeholders.EnterEmail")}
             error={errors?.find((e) => e.path.includes("email"))?.message}
-            setValue={(text) => setEmail(text.toString())}
+            setValue={(text) => {
+              const value = text.toString();
+              setEmail(value);
+              validateField("email", value);
+            }}
           />
           <AMPInput
             placeholder={t("Core.Placeholders.EnterPassword")}
@@ -82,7 +103,11 @@ export default function Page() {
             type="password"
             name={t("Core.Password") + ":"}
             error={errors?.find((e) => e.path.includes("password"))?.message}
-            setValue={(text) => setPassword(text.toString())}
+            setValue={(text) => {
+              const value = text.toString();
+              setPassword(value);
+              validateField("password", value);
+            }}
           />
         </div>
         <AMPButton
