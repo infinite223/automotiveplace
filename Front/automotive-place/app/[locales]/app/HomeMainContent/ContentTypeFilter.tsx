@@ -29,7 +29,6 @@ export const ContentTypeFilter = ({ active, onChange }: Props) => {
     if (!parent) return;
 
     const handleScroll = () => {
-      // Jeśli przewinięcie jest większe niż 44px (tailwind top-44)
       setIsSticky(parent.scrollTop > 44);
     };
 

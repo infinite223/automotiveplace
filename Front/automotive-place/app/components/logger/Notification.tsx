@@ -28,6 +28,8 @@ export const Notification: FC = () => {
     };
   }, [notifications, dispatch]);
 
+  if (notifications.length === 0) return;
+
   return (
     <div
       className="fixed top-0 left-1/2 -translate-x-1/2 z-[99] p-4 flex flex-col gap-2
