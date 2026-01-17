@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AMPInput } from "../../shared/AMPInput";
 import { AMPTextarea } from "../../shared/AMPTextarea";
 import { AMPButton } from "../../shared/AMPButton";
@@ -7,6 +7,8 @@ import { TStepStageCreate } from "@/app/utils/types/stage";
 import { StageFormProps } from "../types";
 import { StageChartImageUpload } from "./StageChartImageUpload";
 import { stringOrUndefined } from "../helpers";
+import { IconFromItemType } from "../../carItem/IconFromItemType";
+import { AddCarItemModal } from "./AddCarItemModal";
 
 export const StageForm: React.FC<StageFormProps> = ({
   stage,
@@ -18,6 +20,7 @@ export const StageForm: React.FC<StageFormProps> = ({
 }) => {
   const error = (field: keyof TStepStageCreate) =>
     errors.find((e) => e.path[0] === field)?.message;
+  const [showAddItem, setShowAddItem] = useState(false);
 
   return (
     <div className="pt-4 border-t border-amp-700/50 flex flex-col gap-2">
@@ -165,7 +168,43 @@ export const StageForm: React.FC<StageFormProps> = ({
         />
       </div>
 
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center justify-between">
+          <h4 className="text-sm font-semibold">Elementy w tym stage</h4>
+          <AMPButton
+            type="secondary"
+            name="Dodaj element"
+            onClick={() => setShowAddItem(true)}
+          />
+        </div>
+
+        {stage.carItems?.length === 0 && (
+          <p className="text-xs opacity-60">Brak dodanych elementów</p>
+        )}
+
+        {stage.carItems?.map((item, i) => (
+          <div
+            key={i}
+            className="flex items-center gap-2 p-2 border border-amp-200 rounded-md text-xs"
+          >
+            <IconFromItemType itemType={item.itemType} isLoading={false} />
+            <div className="flex flex-col">
+              <span className="font-semibold">{item.name}</span>
+              <span className="opacity-70">{item.description}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
       <AMPSeparator />
+
+      <AddCarItemModal
+        visible={showAddItem}
+        onClose={() => setShowAddItem(false)}
+        onAdd={(item) =>
+          onChange("carItems", [...(stage.carItems ?? []), item])
+        }
+      />
     </div>
   );
 };

@@ -19,11 +19,11 @@ const carItemData: TCarItemBaseOnProject = {
 const carItemCreateData: TCarItemCreate = {
   description: "",
   forSell: false,
-  inUse: false,
+  inUse: true,
   isVisible: true,
   itemType: ItemTypes.Turbo,
   name: "",
-  authorId: "1qw2",
+  authorId: "",
   projectId: "",
   tags: [],
 };

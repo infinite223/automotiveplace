@@ -57,7 +57,7 @@ type TCarItemCreate = {
   forSell: boolean;
   isVisible: boolean;
   inUse: boolean;
-  name: string;
+  name?: string;
   description: string;
   itemType: ItemTypes;
   authorId: string;
