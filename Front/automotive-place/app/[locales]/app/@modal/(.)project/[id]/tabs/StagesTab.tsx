@@ -142,9 +142,11 @@ export default function StagesTab({ stages }: StagesTabProps) {
                     />
                   )}
 
+                  <AMPSeparator additionalTailwindCss="h-[1px]" />
+
                   {stage.carItems && stage.carItems.length > 0 && (
-                    <div className="pt-3">
-                      <h4 className="font-semibold text-sm text-text-light dark:text-text-dark mb-2">
+                    <div className="pt-1">
+                      <h4 className="text-sm text-subtle-light dark:text-subtle-dark opacity-80 mb-2">
                         Części użyte w tym etapie:
                       </h4>
                       <div className="flex flex-col gap-2 max-h-[180px] overflow-y-auto custom-scrollbar">
@@ -159,7 +161,6 @@ export default function StagesTab({ stages }: StagesTabProps) {
                               showFullView={false}
                               addCarItemTailwindStyles="px-0 py-1"
                             />
-                            <AMPSeparator />
                           </>
                         ))}
                       </div>
@@ -223,7 +224,7 @@ function Item({ label, description, value, difference, baseValue }: ItemProps) {
   const tooltipId = `value-diff-${label.replace(/\s+/g, "-")}`;
 
   return (
-    <div className="flex justify-between py-2">
+    <div className="flex justify-between py-1.5">
       <div className="flex flex-col">
         <p className="text-subtle-light dark:text-subtle-dark">{label}</p>
         {description && (

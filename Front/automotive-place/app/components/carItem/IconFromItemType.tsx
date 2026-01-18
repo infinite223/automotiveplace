@@ -16,15 +16,15 @@ export const IconFromItemType: FC<IconFromItemTypeProps> = ({
   const [iconUrl, setIconUrl] = useState("");
 
   useEffect(() => {
-    if (itemType === "Turbo") {
-      setIconUrl(
-        "https://cdn1.iconfinder.com/data/icons/car-parts-glyph-1/64/Turbo-1024.png",
-      );
-      // } else if (itemType === "Audio") {
-      //   setIconUrl(
-      //     "https://cdn2.iconfinder.com/data/icons/squircle-ui/32/Sound-1024.png",
-      //   );
-    }
+    // if (itemType === "Turbo") {
+    setIconUrl(
+      "https://cdn1.iconfinder.com/data/icons/car-parts-glyph-1/64/Turbo-1024.png",
+    );
+    // } else if (itemType === "Audio") {
+    //   setIconUrl(
+    //     "https://cdn2.iconfinder.com/data/icons/squircle-ui/32/Sound-1024.png",
+    //   );
+    // }
   }, [itemType]);
 
   return (

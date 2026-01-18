@@ -7,14 +7,14 @@ import { bucketId } from "@/app/utils/helpers/storageHelper";
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const user = await getLoggedInUser();
 
   if (!user) {
     return NextResponse.json(
       { message: "You must be logged in to delete a project" },
-      { status: 401 }
+      { status: 401 },
     );
   }
   const { storage } = await createAdminClient();
@@ -29,14 +29,14 @@ export async function DELETE(
     if (!project) {
       return NextResponse.json(
         { message: "Project not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     if (project.authorId !== user.user.$id) {
       return NextResponse.json(
         { message: "You are not the owner of this project" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -50,7 +50,7 @@ export async function DELETE(
       } catch (err) {
         console.error(
           `Failed to delete Appwrite file ${media.fileLocation}`,
-          err
+          err,
         );
 
         return NextResponse.json(
@@ -59,12 +59,27 @@ export async function DELETE(
               "Failed to delete project images. Project was NOT deleted.",
             failedFileId: media.fileLocation,
           },
-          { status: 500 }
+          { status: 500 },
         );
       }
     }
 
     await prisma.$transaction(async (tx) => {
+      const stages = await tx.stage.findMany({
+        where: { projectId },
+        select: { id: true },
+      });
+
+      const stageIds = stages.map((s) => s.id);
+
+      if (stageIds.length > 0) {
+        await tx.carItem.deleteMany({
+          where: {
+            stageId: { in: stageIds },
+          },
+        });
+      }
+
       await tx.media.deleteMany({
         where: { projectId },
       });
@@ -92,13 +107,13 @@ export async function DELETE(
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       return NextResponse.json(
         { message: `Database error: ${error.code}` },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     return NextResponse.json(
       { message: "Unknown error while deleting project" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

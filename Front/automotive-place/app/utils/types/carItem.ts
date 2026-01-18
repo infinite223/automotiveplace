@@ -62,6 +62,7 @@ type TCarItemCreate = {
   itemType: ItemTypes;
   authorId: string;
   projectId?: string;
+  carItemPrice?: number;
   tags: TTagCreate[];
 };
 

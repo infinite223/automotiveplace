@@ -187,7 +187,7 @@ export const CreateCarItemView = ({ onCancel, onSubmitLocal }: Props) => {
 
           <hr className="border-zinc-100 dark:border-zinc-800 w-full" />
 
-          <p className="bg-amp-800 dark:bg-amp-100 leading-3 text-[11px] mt-2">
+          <p className="bg-amp-800 dark:bg-amp-100 max-md:hidden leading-3 text-[11px] mt-2">
             Po utworzeniu elementu można go edytować.
           </p>
         </div>

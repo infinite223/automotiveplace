@@ -168,11 +168,12 @@ export const StageForm: React.FC<StageFormProps> = ({
         />
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 mt-2">
         <div className="flex items-center justify-between">
           <h4 className="text-sm font-semibold">Elementy w tym stage</h4>
           <AMPButton
             type="secondary"
+            additionalTailwindCss="text-xs"
             name="Dodaj element"
             onClick={() => setShowAddItem(true)}
           />

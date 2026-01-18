@@ -54,7 +54,7 @@ export const CarItem: FC<CarItemProps> = ({
     <main
       className={`${
         isLoading && "animate-pulse "
-      } flex select-none rounded-md p-2 gap-1.5 border border-zinc-200 dark:border-zinc-900 ${addCarItemTailwindStyles} ${
+      } flex select-none rounded-md p-2 gap-1.5  ${addCarItemTailwindStyles} ${
         tableView === "rows" ? "w-full grid grid-cols-4" : "flex-col"
       }`}
     >
