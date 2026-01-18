@@ -65,7 +65,6 @@ model Project {
   topSpeedStock               Decimal?
   transmissionType            Int
   weightStock                 Decimal?
-  carItems                    CarItem[]
   contents                    Content[]
   location                    Location?
   media                       Media[]
@@ -354,7 +353,6 @@ model CarItem {
   description      String
   itemType         String
   carItemPrice     Decimal?
-  projectId        String
   authorId         String
   garageId         String?
   stageId          String?
@@ -364,7 +362,6 @@ model CarItem {
   author           User            @relation(fields: [authorId], references: [id])
   company          Company?        @relation(fields: [companyId], references: [id])
   garage           Garage?         @relation(fields: [garageId], references: [id])
-  project          Project         @relation(fields: [projectId], references: [id])
   stage            Stage?          @relation(fields: [stageId], references: [id])
   tagAssignments   TagAssignment[]
   userActivity     UserActivity[]

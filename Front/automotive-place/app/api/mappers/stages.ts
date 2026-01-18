@@ -1,9 +1,10 @@
 import { TProject } from "@/app/utils/types/project";
 import { ProjectWithIncludes } from "./project";
 import { TStageCreate } from "@/app/utils/types/stage";
+import { mapCarItemsToPrisma } from "./carItems";
 
 export function mapStages(
-  stages: ProjectWithIncludes["stages"]
+  stages: ProjectWithIncludes["stages"],
 ): TProject["stages"] {
   return stages.map((stage) => ({
     ...stage,
@@ -45,9 +46,7 @@ export function mapStagesToPrisma(stages: TStageCreate[], authorId: string) {
       createdById: authorId,
       createdAt: new Date(),
       updatedAt: new Date(),
-      // carItems: {
-      //   connect: s.carItems?.map(ci => ({ id: ci.id })) || []
-      // }
+      carItems: mapCarItemsToPrisma(s.carItems, authorId),
     })),
   };
 }

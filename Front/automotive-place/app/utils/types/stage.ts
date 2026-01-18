@@ -1,4 +1,4 @@
-import { TCarItem, TCarItemBaseOnProject } from "./carItem";
+import { TCarItem, TCarItemBaseOnProject, TCarItemCreate } from "./carItem";
 
 type TStage = {
   id: string;
@@ -42,7 +42,7 @@ type TStageCreate = {
 
   stagePrice?: number;
   chartImageUrl?: string;
-  carItems?: TCarItem[];
+  carItems?: TCarItemCreate[];
   createdById?: string;
 };
 
@@ -63,7 +63,7 @@ type TStepStageCreate = {
   stagePrice?: string;
 
   chartImage?: File | null;
-  carItems?: any[];
+  carItems?: TCarItemCreate[];
 };
 
 export type { TStageCreate, TStage, TStepStageCreate };

@@ -28,9 +28,12 @@ export const SummaryDataStep: React.FC<StepProps> = ({
   useEffect(() => {
     registerGetData?.(() => ({
       tags,
+      forSell,
+      price,
+      isVisable,
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tags]);
+  }, [forSell, forSell, price, isVisable]);
 
   return (
     <div className="flex flex-col gap-4">

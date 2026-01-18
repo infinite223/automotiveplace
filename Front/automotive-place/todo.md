@@ -14,3 +14,5 @@ We need design min two tables for:
   like
 
 - implement VisualModification
+- implement garage
+- ..

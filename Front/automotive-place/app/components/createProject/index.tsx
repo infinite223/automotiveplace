@@ -44,6 +44,7 @@ export const CreateProjectView = () => {
   const queryClient = useQueryClient();
 
   const onSubmit = async (data: any) => {
+    console.log(data, "data");
     dispatch(setIsLoading(true));
     dispatch(setLoadingText("Przygotowywanie danych..."));
 
@@ -56,7 +57,7 @@ export const CreateProjectView = () => {
       const zodResult = createProjectSchema.safeParse(project);
 
       const invalid = customValidation.validResults.find(
-        (r) => r.valid === false
+        (r) => r.valid === false,
       );
 
       if (invalid || !zodResult.success) {
@@ -67,10 +68,10 @@ export const CreateProjectView = () => {
                 Status.Medium,
                 invalid?.error ??
                   zodResult.error?.errors[0]?.message ??
-                  "Dane formularza są niepoprawne"
-              )
-            )
-          )
+                  "Dane formularza są niepoprawne",
+              ),
+            ),
+          ),
         );
 
         return;
@@ -94,7 +95,7 @@ export const CreateProjectView = () => {
         if (uploadRes?.success) {
           createdProject = mergeProjectWithMedia(
             createdProject,
-            uploadRes.files
+            uploadRes.files,
           );
         }
       }
@@ -107,7 +108,7 @@ export const CreateProjectView = () => {
         if (!stageFile) continue;
 
         dispatch(
-          setLoadingText(`Dodawanie wykresu – Stage ${stages[i].stageNumber}`)
+          setLoadingText(`Dodawanie wykresu – Stage ${stages[i].stageNumber}`),
         );
 
         const formData = new FormData();
@@ -120,7 +121,7 @@ export const CreateProjectView = () => {
         queryClient.setQueryData(
           ["projects"],
           (oldData: InfiniteData<MainContentResponse> | undefined) =>
-            addProjectToInfiniteQuery(oldData, createdProject)
+            addProjectToInfiniteQuery(oldData, createdProject),
         );
 
         dispatch(addNotification(JSON.stringify(res.notification)));
@@ -132,10 +133,10 @@ export const CreateProjectView = () => {
           JSON.stringify(
             CreateNotification(
               Status.High,
-              error?.message || "Wystąpił nieoczekiwany błąd"
-            )
-          )
-        )
+              error?.message || "Wystąpił nieoczekiwany błąd",
+            ),
+          ),
+        ),
       );
     } finally {
       dispatch(setIsLoading(false));

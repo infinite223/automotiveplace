@@ -5,10 +5,11 @@ export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
   const basic = steps[0]?.data || {};
   const engine = steps[1]?.data || {};
   const stepStages = steps[3]?.data || [];
+  const summary = steps[4]?.data || {};
 
   const stages = mapStepStagesToStages(stepStages);
   const stockData = stages.find(
-    (stage: TStageCreate) => stage.stageNumber === 0
+    (stage: TStageCreate) => stage.stageNumber === 0,
   );
 
   return {
@@ -40,14 +41,14 @@ export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
     carItems: [],
     tags: [],
 
-    isVisible: true,
-    projectPrice: 30000,
-    forSell: false,
+    isVisible: summary.isVisable,
+    projectPrice: numberFromString(summary.price) ?? 0,
+    forSell: summary.forSell,
   };
 };
 
 export const mapStepStagesToStages = (
-  stages: TStepStageCreate[]
+  stages: TStepStageCreate[],
 ): TStageCreate[] => stages.map(mapStepStageToStage);
 
 const mapStepStageToStage = (stage: TStepStageCreate): TStageCreate => ({
@@ -83,7 +84,7 @@ export const numberFromString = (v: unknown): number | undefined => {
 
 export const mergeProjectWithMedia = (
   project: TBasicProject,
-  uploadedFiles: { fileLocation: string }[]
+  uploadedFiles: { fileLocation: string }[],
 ): TBasicProject => {
   return {
     ...project,

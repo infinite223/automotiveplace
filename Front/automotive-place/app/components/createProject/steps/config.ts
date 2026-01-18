@@ -27,7 +27,6 @@ export const stepsOptions: IStepsOptions = {
       description: "Dodaj etapy modyfikacji projektu",
       component: StagesStep,
     },
-    // TODO - add tags
     {
       name: "Podsumowanie",
       description: "Podsumowanie projektu",

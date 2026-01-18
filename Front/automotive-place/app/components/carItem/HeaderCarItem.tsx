@@ -3,7 +3,7 @@
 import { TTableView } from "@/app/utils/types";
 import React, { FC } from "react";
 import { IconFromItemType } from "./IconFromItemType";
-import { AMPMenu, TMenuItem } from "../shared/AMPMenu";
+import { AMPMenu } from "../shared/AMPMenu";
 import { removeCarItem } from "@/app/services/carItem";
 import { ItemTypes } from "@/app/utils/types/carItem";
 import { useDispatch } from "react-redux";
@@ -59,7 +59,7 @@ export const HeaderCarItem: FC<IHeaderCarItemProps> = ({
           },
         ]}
       />
-      <div className="flex gap-2">
+      <div className="flex gap-3">
         <IconFromItemType itemType={itemType} isLoading={isLoading} />
         <div
           className={`${isLoading && "bg-amp-800 dark:bg-amp-100 rounded-md w-[70px]"}`}

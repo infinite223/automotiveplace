@@ -36,7 +36,6 @@ export const AMPSelect = <TValue extends string | number>({
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Walidacja
   useEffect(() => {
     const firstLocal = validFunction(value)[0]?.error ?? null;
     setLocalError(firstLocal);
@@ -74,11 +73,11 @@ export const AMPSelect = <TValue extends string | number>({
 
       <div className="mt-1 cursor-pointer">
         <div
-          className="flex items-center justify-between w-full bg-amp-800 dark:bg-amp-50 border-b border-amp-300 dark:border-amp-200 rounded-md px-3 py-2"
+          className="flex items-center justify-between w-full bg-amp-800 dark:bg-amp-50 border-b border-amp-300 dark:border-amp-200 px-3 py-2"
           onClick={() => setOpen(!open)}
         >
           <div className="flex items-center gap-2">
-            {leftIcon && <div className="w-5">{leftIcon}</div>}
+            {leftIcon && <div className="w-8">{leftIcon}</div>}
             <span>
               {options.find((opt) => opt.value == value)?.label || "Wybierz..."}
             </span>
@@ -87,7 +86,7 @@ export const AMPSelect = <TValue extends string | number>({
         </div>
 
         {open && (
-          <div className="absolute top-full left-0 w-full bg-amp-800 dark:bg-amp-50 border border-amp-300 dark:border-amp-200 rounded-sm shadow-lg max-h-60 overflow-auto z-[101]">
+          <div className="absolute top-full left-0 w-full bg-amp-800 dark:bg-amp-50 border border-amp-300 dark:border-amp-200 rounded-sm shadow-lg max-h-60 overflow-auto custom-scrollbar z-[101]">
             {options.map((opt) => {
               const isSelected = opt.value == value;
               return (

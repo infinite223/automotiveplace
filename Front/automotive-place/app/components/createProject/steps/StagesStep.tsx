@@ -30,17 +30,17 @@ export const StagesStep: React.FC<StagesStepProps> = ({
             nm: "",
             carItems: [],
           },
-        ]
+        ],
   );
   const [errors, setErrors] = useState<StageErrors>({});
 
   const updateStage = (
     index: number,
     field: keyof TStepStageCreate,
-    value: any
+    value: any,
   ) => {
     setStages((prev) =>
-      prev.map((s, i) => (i === index ? { ...s, [field]: value } : s))
+      prev.map((s, i) => (i === index ? { ...s, [field]: value } : s)),
     );
   };
 
