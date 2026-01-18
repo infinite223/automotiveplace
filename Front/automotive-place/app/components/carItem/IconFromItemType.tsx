@@ -1,8 +1,7 @@
 "use client";
 
-import { ItemTypes } from "@/app/utils/types/carItem";
-import Image from "next/image";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
+import { ITEM_TYPE_ICON_MAP, ItemTypes } from "@/app/utils/types/carItem";
 
 interface IconFromItemTypeProps {
   itemType: ItemTypes;
@@ -13,37 +12,20 @@ export const IconFromItemType: FC<IconFromItemTypeProps> = ({
   itemType,
   isLoading,
 }) => {
-  const [iconUrl, setIconUrl] = useState("");
+  const Icon = ITEM_TYPE_ICON_MAP[itemType];
 
-  useEffect(() => {
-    // if (itemType === "Turbo") {
-    setIconUrl(
-      "https://cdn1.iconfinder.com/data/icons/car-parts-glyph-1/64/Turbo-1024.png",
+  if (isLoading) {
+    return (
+      <div className="w-8 h-8 rounded-full bg-amp-800 dark:bg-amp-100 animate-pulse" />
     );
-    // } else if (itemType === "Audio") {
-    //   setIconUrl(
-    //     "https://cdn2.iconfinder.com/data/icons/squircle-ui/32/Sound-1024.png",
-    //   );
-    // }
-  }, [itemType]);
+  }
+
+  if (!Icon) return null;
 
   return (
-    <div
-      className={`${isLoading && "bg-amp-800 dark:bg-amp-100 w-7 h-7 rounded-full"}`}
-    >
-      {!isLoading && (
-        <>
-          <Image
-            className={`${
-              isLoading && "bg-amp-800 dark:bg-amp-100 rounded-md"
-            } w-8 h-8 rounded-sm dark:invert`}
-            alt="car item tyoe image"
-            src={iconUrl}
-            width={10}
-            height={10}
-          />
-        </>
-      )}
-    </div>
+    <Icon
+      className="w-7 h-7 text-zinc-800 dark:text-zinc-100"
+      aria-label={itemType}
+    />
   );
 };

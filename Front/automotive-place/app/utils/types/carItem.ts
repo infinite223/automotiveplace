@@ -2,6 +2,29 @@ import { TCarItemLikes } from "../types";
 import { TProject } from "./project";
 import { TTag, TTagCreate } from "./tag";
 import { TUser } from "./user";
+import { IconType } from "react-icons";
+
+import {
+  FaCarSide,
+  FaCarBattery,
+  FaTools,
+  FaCog,
+  FaCompactDisc,
+  FaLightbulb,
+  FaCar,
+} from "react-icons/fa";
+import { SiTurbosquid } from "react-icons/si";
+
+import {
+  GiCarWheel,
+  GiSuspensionBridge,
+  GiGearStick,
+  GiSteeringWheel,
+  GiSpeaker,
+  GiCarDoor,
+} from "react-icons/gi";
+
+import { MdOutlineElectricBolt, MdSpeed } from "react-icons/md";
 
 type TCarItem = {
   id: string;
@@ -90,6 +113,41 @@ enum ItemTypes {
   Candles = "Candles",
   Driver = "Driver",
 }
+
+export const ITEM_TYPE_ICON_MAP: Record<ItemTypes, IconType> = {
+  [ItemTypes.Turbo]: SiTurbosquid,
+  [ItemTypes.Kompressor]: MdSpeed,
+
+  [ItemTypes.Exhaust]: FaCarSide,
+
+  [ItemTypes.Brakes]: FaTools,
+  [ItemTypes.Clutch]: GiGearStick,
+  [ItemTypes.Transmission]: GiGearStick,
+
+  [ItemTypes.Suspension]: GiSuspensionBridge,
+  [ItemTypes.SteeringSystem]: GiSteeringWheel,
+
+  [ItemTypes.EngineTuneUp]: FaCog,
+  [ItemTypes.FuelInjectors]: FaCog,
+  [ItemTypes.CoolingSystem]: MdOutlineElectricBolt,
+
+  [ItemTypes.Audio]: GiSpeaker,
+
+  [ItemTypes.Wheels]: GiCarWheel,
+  [ItemTypes.Tires]: GiCarWheel,
+
+  [ItemTypes.Battery]: FaCarBattery,
+  [ItemTypes.Alternator]: MdOutlineElectricBolt,
+  [ItemTypes.StarterMotor]: MdOutlineElectricBolt,
+
+  [ItemTypes.Lights]: FaLightbulb,
+  [ItemTypes.BodyKit]: GiCarDoor,
+
+  [ItemTypes.Candles]: FaCompactDisc,
+  [ItemTypes.Driver]: FaCar,
+
+  [ItemTypes.Other]: FaCar,
+};
 
 export function isValidItemType(type: any): type is ItemTypes {
   return Object.values(ItemTypes).includes(type);
