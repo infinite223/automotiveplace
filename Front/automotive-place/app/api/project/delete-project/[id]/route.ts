@@ -80,6 +80,10 @@ export async function DELETE(
         });
       }
 
+      await tx.projectHistory.deleteMany({
+        where: { projectId },
+      });
+
       await tx.media.deleteMany({
         where: { projectId },
       });

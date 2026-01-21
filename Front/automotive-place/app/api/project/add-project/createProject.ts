@@ -3,13 +3,14 @@ import prisma from "@/lib/prisma";
 import { mapTagsToPrisma } from "../../mappers/tags";
 import { mapStagesToPrisma } from "../../mappers/stages";
 import { Prisma } from "@prisma/client";
+import { mapHistoryToPrisma } from "../../mappers/history";
 
 export async function createProject(
   project: TProjectCreate,
   authorId: string,
-  garageId: string
+  garageId: string,
 ) {
-  const { tags, stages, carItems, ...restProjectData } = project;
+  const { tags, stages, carItems, history, ...restProjectData } = project;
 
   let newProject;
   try {
@@ -23,6 +24,7 @@ export async function createProject(
         isVerified: true, // TODO: to change
         stages: mapStagesToPrisma(stages ?? [], authorId),
         tagAssignments: mapTagsToPrisma(tags ?? [], authorId),
+        history: mapHistoryToPrisma(history ?? [], authorId),
       },
       include: {
         author: { select: { id: true, name: true } },
@@ -36,7 +38,7 @@ export async function createProject(
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2003") {
         throw new Error(
-          `Invalid reference: probably garageId "${garageId}" does not exist`
+          `Invalid reference: probably garageId "${garageId}" does not exist`,
         );
       }
     }

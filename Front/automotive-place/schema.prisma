@@ -75,6 +75,29 @@ model Project {
   stages                      Stage[]
   tagAssignments              TagAssignment[]
   userActivity                UserActivity[]
+  history ProjectHistory[]
+}
+
+model ProjectHistory {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  date        DateTime 
+  mileage     Int      
+  title       String   
+  description String?  @db.Text
+  price       Decimal?
+  
+  // Relacje
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  companyId   String? 
+  company     Company? @relation(fields: [companyId], references: [id])
+  
+  authorId    String
+  author      User     @relation("HistoryAuthor", fields: [authorId], references: [id])
 }
 
 model Content {
@@ -150,6 +173,7 @@ model User {
   userActivity               UserActivity[]
   userContent                UserContent[]
   company                    Company?                     @relation(fields: [companyId], references: [id])
+  projectHistories ProjectHistory[] @relation("HistoryAuthor")
 
   @@map("users")
 }
@@ -188,6 +212,7 @@ model Company {
   projects         Project[]
   tagAssignments   TagAssignment[]
   users            User[]
+  performedServices ProjectHistory[]
 }
 
 model Garage {
