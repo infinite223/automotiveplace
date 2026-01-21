@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { createStageSchema, createStageStepSchema } from "@/app/api/zod.schmas";
-import { TStageCreate, TStepStageCreate } from "@/app/utils/types/stage";
+import React, { useState, useEffect, useRef } from "react";
+import { createStageStepSchema } from "@/app/api/zod.schmas";
+import { TStepStageCreate } from "@/app/utils/types/stage";
 import { ZodIssue } from "zod";
 import { StageForm } from "./StageForm";
 
@@ -33,6 +33,7 @@ export const StagesStep: React.FC<StagesStepProps> = ({
         ],
   );
   const [errors, setErrors] = useState<StageErrors>({});
+  const lastStageRef = useRef<HTMLDivElement>(null);
 
   const updateStage = (
     index: number,
@@ -77,27 +78,43 @@ export const StagesStep: React.FC<StagesStepProps> = ({
 
     setErrors(newErrors);
     setIsValid(valid);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stages]);
+  }, [stages, setIsValid]);
+
+  useEffect(() => {
+    if (stages.length > 1 && lastStageRef.current) {
+      lastStageRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [stages.length]);
 
   useEffect(() => {
     registerGetData?.(() => stages);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stages, registerGetData]);
 
   return (
     <div className="flex flex-col gap-4 overflow-auto scroll-smooth h-[calc(100vh-180px)] pr-2 custom-scrollbar no-scrollbar">
-      {stages.map((stage, index) => (
-        <StageForm
-          key={index}
-          stage={stage}
-          index={index}
-          errors={errors[index]}
-          onChange={(field, value) => updateStage(index, field, value)}
-          onRemove={() => removeStage(index)}
-          onAdd={addStage}
-        />
-      ))}
+      {stages.map((stage, index) => {
+        const isLast = index === stages.length - 1;
+        return (
+          <div
+            key={index}
+            ref={isLast ? lastStageRef : null}
+            className="w-full"
+          >
+            <StageForm
+              stage={stage}
+              index={index}
+              errors={errors[index]}
+              onChange={(field, value) => updateStage(index, field, value)}
+              onRemove={() => removeStage(index)}
+              onAdd={addStage}
+              lastStageIndex={stages.length}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 };

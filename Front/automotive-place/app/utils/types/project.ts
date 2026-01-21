@@ -1,4 +1,5 @@
 import { TCarItem, TCarItemCreate } from "./carItem";
+import { THistoryCreate } from "./history";
 import { TStageCreate, TStage } from "./stage";
 import { TBasicTag, TTagCreate } from "./tag";
 import { TBasicUser } from "./user";
@@ -143,6 +144,7 @@ type TProjectCreate = {
   stages?: TStageCreate[];
   carItems?: TCarItemCreate[];
   tags?: TTagCreate[];
+  history?: THistoryCreate[];
 };
 
 export type EngineTransmissionStepType = Pick<

@@ -18,6 +18,7 @@ import { TStepStageCreate } from "@/app/utils/types/stage";
 import { InfiniteData, useQueryClient } from "@tanstack/react-query";
 import { addProjectToInfiniteQuery } from "@/app/hooks/useInfiniteContent";
 import { MainContentResponse } from "@/app/hooks/useMainContent";
+import { resetStepData } from "@/lib/features/stepData/stepDataSlice";
 
 export interface IInputValue {
   value: string | number;
@@ -126,6 +127,7 @@ export const CreateProjectView = () => {
 
         dispatch(addNotification(JSON.stringify(res.notification)));
         dispatch(setShowCreateProject(false));
+        dispatch(resetStepData());
       }
     } catch (error: any) {
       dispatch(

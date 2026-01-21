@@ -20,7 +20,7 @@ import { useTranslations } from "next-intl";
 import { MainContentResponse } from "@/app/hooks/useMainContent";
 import { ContentTypeFilter } from "./HomeMainContent/ContentTypeFilter";
 import { iconSizes } from "@/app/utils/constants";
-import Logo from "../../../asets/logo_2.png";
+import Logo from "../../../asets/logo_3.png";
 import { Yant } from "@/app/utils/helpers/fontsHelper";
 import Image from "next/image";
 import { IoNotifications } from "react-icons/io5";
@@ -47,7 +47,7 @@ export default function Page() {
   const [userId, setUserId] = useState<string | null>(null);
   const [lastSeenId, setLastSeenId] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<ContentType | "All">(
-    ContentType.Project
+    ContentType.Project,
   );
 
   const lastElementRef = useRef<HTMLDivElement>(null);
@@ -130,7 +130,7 @@ export default function Page() {
       <div className="flex flex-col text-[12px] w-full lg:w-[570px] pb-4">
         <div className="hidden max-lg:flex items-center justify-between p-4 pb-0 max-md:mb-14">
           <div className="items-center gap-4 flex">
-            <Image src={Logo} alt="logo" width={25} height={25} />
+            <Image src={Logo} alt="logo" width={28} height={28} />
             <span className={`text-md uppercase` + Yant.className}>
               Automotiveplace
             </span>

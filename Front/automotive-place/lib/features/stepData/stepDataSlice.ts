@@ -20,8 +20,11 @@ export const stepDataSlice = createSlice({
         state.push({ step, data });
       }
     },
+    resetStepData: () => {
+      return initialState;
+    },
   },
 });
 
-export const { saveStepData } = stepDataSlice.actions;
+export const { saveStepData, resetStepData } = stepDataSlice.actions;
 export default stepDataSlice.reducer;

@@ -1,6 +1,7 @@
 import { IStepsOptions } from "../../shared/Stepper/models";
 import { BasicDataStep } from "./BasicDataStep";
 import { EngineTransmissionStep } from "./EngineTransmissionStep";
+import { HistoryStep } from "./HistoryStep";
 import { ImagesDataStep } from "./ImagesDataStep";
 import { StagesStep } from "./StagesStep";
 import { SummaryDataStep } from "./SummaryDataStep";
@@ -26,6 +27,11 @@ export const stepsOptions: IStepsOptions = {
       name: "Etapy modyfikacji",
       description: "Dodaj etapy modyfikacji projektu",
       component: StagesStep,
+    },
+    {
+      name: "Historia projektu",
+      description: "Dodaj historię serwisową i modyfikacji",
+      component: HistoryStep,
     },
     {
       name: "Podsumowanie",

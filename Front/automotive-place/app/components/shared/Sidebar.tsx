@@ -24,7 +24,7 @@ import {
   setShowCreatePost,
   setShowCreateProject,
 } from "@/lib/features/actions/actionsSlice";
-import Logo from "../../../asets/logo_2.png";
+import Logo from "../../../asets/logo_3.png";
 import Image from "next/image";
 import { CreatePostView } from "../createPost";
 import { CreateProjectView } from "../createProject";
@@ -46,10 +46,10 @@ export const SideBar = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showCreateProject = useSelector(
-    (state: RootState) => state.actions.showCreateProject
+    (state: RootState) => state.actions.showCreateProject,
   );
   const showCreatePost = useSelector(
-    (state: RootState) => state.actions.showCreatePost
+    (state: RootState) => state.actions.showCreatePost,
   );
 
   const openModal = () => setIsModalOpen(true);
@@ -123,7 +123,7 @@ const SideBarDesktop: FC<{ openModal: () => void; pathname: string }> = ({
             </div>
 
             <div className="gap-4 pl-1 pt-2 items-center hidden 2xl:flex">
-              <Image src={Logo} alt="logo" width={25} height={25} />
+              <Image src={Logo} alt="logo" width={35} height={35} />
               <span className={`text-md uppercase` + Yant.className}>
                 Automotiveplace
               </span>
@@ -337,7 +337,7 @@ export const OptionItem: FC<{
   } gap-5 max-2xl:gap-2 max-2xl:flex-col p-2 pr-1 md:hover:bg-amp-200 rounded-md pl-1 2xl:pl-3 w-full cursor-pointer flex items-center justify-start`;
   if (route) {
     const handleClick = (
-      e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+      e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     ) => {
       if (pathname === route) {
         e.preventDefault();

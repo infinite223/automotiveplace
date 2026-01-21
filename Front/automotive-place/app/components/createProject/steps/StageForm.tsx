@@ -17,6 +17,7 @@ export const StageForm: React.FC<StageFormProps> = ({
   onChange,
   onRemove,
   onAdd,
+  lastStageIndex,
 }) => {
   const error = (field: keyof TStepStageCreate) =>
     errors.find((e) => e.path[0] === field)?.message;
@@ -148,26 +149,6 @@ export const StageForm: React.FC<StageFormProps> = ({
         onChange={(file) => onChange("chartImage", file)}
       />
 
-      <div className="grid grid-cols-2 gap-4 w-full">
-        {index !== 0 && (
-          <AMPButton
-            type="none"
-            name="Usuń stage"
-            additionalTailwindCss="justify-center border border-amp-300/70 w-full text-xs"
-            onClick={onRemove}
-          />
-        )}
-
-        <AMPButton
-          type="secondary"
-          name="Dodaj kolejny stage"
-          additionalTailwindCss={`justify-center w-full text-xs ${
-            index === 0 ? "col-span-2" : ""
-          }`}
-          onClick={onAdd}
-        />
-      </div>
-
       <div className="flex flex-col gap-2 mt-2">
         <div className="flex items-center justify-between">
           <h4 className="text-sm font-semibold">Elementy w tym stage</h4>
@@ -198,6 +179,28 @@ export const StageForm: React.FC<StageFormProps> = ({
       </div>
 
       <AMPSeparator />
+
+      <div className="grid grid-cols-2 gap-4 w-full">
+        {index !== 0 && (
+          <AMPButton
+            type="none"
+            name="Usuń stage"
+            additionalTailwindCss={`justify-center border border-amp-300/70 w-full text-xs ${index !== lastStageIndex - 1 && "col-span-2"}`}
+            onClick={onRemove}
+          />
+        )}
+
+        {index === lastStageIndex - 1 && (
+          <AMPButton
+            type="secondary"
+            name="Dodaj kolejny stage"
+            additionalTailwindCss={`justify-center w-full text-xs ${
+              index === 0 ? "col-span-2" : ""
+            }`}
+            onClick={onAdd}
+          />
+        )}
+      </div>
 
       <AddCarItemModal
         visible={showAddItem}

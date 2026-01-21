@@ -20,8 +20,9 @@ export interface StageFormProps {
   errors?: ZodIssue[];
   onChange: <K extends keyof TStepStageCreate>(
     field: K,
-    value: TStepStageCreate[K]
+    value: TStepStageCreate[K],
   ) => void;
   onRemove: () => void;
   onAdd: () => void;
+  lastStageIndex: number;
 }

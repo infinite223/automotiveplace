@@ -5,11 +5,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const user = await getLoggedInUser();
-  if (!user)
+  if (!user) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
 
   const formData = await req.formData();
   const files = formData.getAll("files") as File[];
@@ -31,7 +32,7 @@ export async function POST(
     const uploaded = await storage.createFile(
       "67a125f200369445f106", // bucket ID
       crypto.randomUUID(),
-      file
+      file,
     );
 
     mediaRecords.push({
