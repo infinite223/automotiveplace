@@ -37,6 +37,7 @@ export const HistoryStep: React.FC<HistoryStepProps> = ({
         date: new Date().toISOString().split("T")[0],
         mileage: "",
         price: "",
+        isVisible: false,
       },
     ]);
   };
@@ -66,7 +67,7 @@ export const HistoryStep: React.FC<HistoryStepProps> = ({
       {history.length === 0 && (
         <div className="flex flex-col items-center justify-center py-10 opacity-60">
           <p>Brak wpisów w historii serwisowej.</p>
-          <button onClick={addHistory} className="text-amp-500 font-bold mt-2">
+          <button onClick={addHistory} className="font-bold mt-2">
             Dodaj pierwszy wpis
           </button>
         </div>

@@ -88,8 +88,7 @@ model ProjectHistory {
   title       String   
   description String?  @db.Text
   price       Decimal?
-  
-  // Relacje
+  isVisible   Boolean
   projectId   String
   project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   

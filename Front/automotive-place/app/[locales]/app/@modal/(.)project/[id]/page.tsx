@@ -28,6 +28,7 @@ import { getCurrentStage } from "@/app/utils/helpers/stagesHelper";
 import Image from "next/image";
 import { RxDotsHorizontal } from "react-icons/rx";
 import { getProjectImageSrcByFileId } from "@/app/utils/helpers/storageHelper";
+import HistoryTab from "./tabs/HistoryTab";
 
 export default function Project({ params }: { params: { id: string } }) {
   const [activeTab, setActiveTab] = useState("informacje");
@@ -38,7 +39,7 @@ export default function Project({ params }: { params: { id: string } }) {
 
   const { data, loading, error } = useFetchData<TProject>(
     `project-${params.id}`,
-    () => getProject(params.id)
+    () => getProject(params.id),
   );
 
   const [scrolled, setScrolled] = useState(false);
@@ -263,6 +264,18 @@ export default function Project({ params }: { params: { id: string } }) {
                     <ReferencesTab />
                   </motion.div>
                 )}
+
+                {activeTab === "historia" && (
+                  <motion.div
+                    key="historia"
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -50 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {data && <HistoryTab history={data.history || []} />}
+                  </motion.div>
+                )}
               </AnimatePresence>
             </div>
           )}
@@ -294,7 +307,7 @@ const LikeButton = ({
     isLikedByAuthUser,
     id,
     ContentType.Project,
-    tags
+    tags,
   );
   return (
     <AMPButton

@@ -1,5 +1,5 @@
 import { TCarItem, TCarItemCreate } from "./carItem";
-import { THistoryCreate } from "./history";
+import { TBasicHistory, THistoryCreate } from "./history";
 import { TStageCreate, TStage } from "./stage";
 import { TBasicTag, TTagCreate } from "./tag";
 import { TBasicUser } from "./user";
@@ -46,7 +46,7 @@ type TProject = {
   carItems?: TCarItem[];
   stages?: TStage[];
   tags?: TBasicTag[];
-
+  history?: TBasicHistory[];
   // likes:
   // pickedProjectsOnEventOrSpot:
   // tags:

@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
       {
         status: 404,
         statusText: "Unauthorized",
-      }
+      },
     );
   }
 
@@ -28,6 +28,20 @@ export async function GET(request: NextRequest) {
       author: true,
       media: {
         select: { fileLocation: true },
+      },
+      history: {
+        include: {
+          company: {
+            select: {
+              id: true,
+              name: true,
+              imagesUrl: true,
+            },
+          },
+        },
+        orderBy: {
+          date: "desc",
+        },
       },
       stages: {
         include: { carItems: true },
@@ -71,6 +85,17 @@ export async function GET(request: NextRequest) {
     projectPrice: project.projectPrice.toNumber() || undefined,
     weightStock: project.weightStock?.toNumber() || undefined,
     topSpeedStock: project.topSpeedStock?.toNumber() || undefined,
+    history: project.history.map((h) => ({
+      id: h.id,
+      date: h.date,
+      mileage: h.mileage,
+      title: h.title,
+      description: h.description,
+      price: h.price?.toNumber?.() || null,
+      authorId: h.authorId,
+      isVisible: h.isVisible,
+      company: h.company,
+    })),
     stages: project.stages.map((stage) => {
       return {
         ...stage,

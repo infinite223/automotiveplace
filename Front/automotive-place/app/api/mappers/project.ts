@@ -1,5 +1,13 @@
 import { TBasicProject, TProject } from "@/app/utils/types/project";
-import { Project, TagAssignment, Stage, User, CarItem } from "@prisma/client";
+import {
+  Project,
+  TagAssignment,
+  Stage,
+  User,
+  CarItem,
+  ProjectHistory,
+  Company,
+} from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/library";
 import { mapTags } from "./tags";
 import { mapStages } from "./stages";
@@ -12,6 +20,9 @@ export type ProjectWithIncludes = Project & {
   author: User;
   stages: (Stage & {
     carItems: CarItem[];
+  })[];
+  history: (ProjectHistory & {
+    company: Pick<Company, "id" | "name" | "imagesUrl"> | null;
   })[];
   tagAssignments: (TagAssignment & {
     tag: {
@@ -38,7 +49,7 @@ export type ProjectWithIncludes = Project & {
 
 export function mapProject(
   project: ProjectWithIncludes,
-  userId: string
+  userId: string,
 ): TProject {
   return {
     images: project.media.map((m) => m.fileLocation),
@@ -56,12 +67,23 @@ export function mapProject(
     weightStock: project.weightStock?.toNumber?.() || undefined,
     topSpeedStock: project.topSpeedStock?.toNumber?.() || undefined,
     stages: mapStages(project.stages),
+    history: project.history.map((h) => ({
+      id: h.id,
+      date: h.date,
+      mileage: h.mileage,
+      title: h.title,
+      description: h.description,
+      price: h.price?.toNumber?.() || null,
+      authorId: h.authorId,
+      isVisible: h.isVisible,
+      company: h.company,
+    })),
     location: mapLocation(project.location),
     likesCount:
       project.userActivity.filter((ua) => ua.activityType === "LIKE").length ||
       0,
     isLikedByAuthUser: !!project.userActivity.find(
-      (ua) => ua.userId === userId
+      (ua) => ua.userId === userId,
     ),
     userId: project.authorId,
   };
@@ -77,7 +99,7 @@ type ProjectWithRelations = Project & {
 
 export const mapProjectToBasicProject = (
   project: ProjectWithRelations,
-  authUserId?: string
+  authUserId?: string,
 ): TBasicProject => {
   const lastStage =
     project.stages?.length > 0
@@ -112,7 +134,7 @@ export const mapProjectToBasicProject = (
 
     isLikedByAuthUser: authUserId
       ? !!project.userActivity?.find(
-          (ua) => ua.userId === authUserId && ua.activityType === "LIKE"
+          (ua) => ua.userId === authUserId && ua.activityType === "LIKE",
         )
       : false,
 

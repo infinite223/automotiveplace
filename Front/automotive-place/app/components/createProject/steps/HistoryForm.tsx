@@ -4,11 +4,12 @@ import { AMPTextarea } from "../../shared/AMPTextarea";
 import { AMPButton } from "../../shared/AMPButton";
 import { AMPSeparator } from "../../shared/AMPSeparator";
 import { TStepHistoryCreate } from "@/app/utils/types/history";
+import { AMPSwitch } from "../../shared/AMPSwitch";
 
 interface HistoryFormProps {
   item: TStepHistoryCreate;
   index: number;
-  onChange: (field: keyof TStepHistoryCreate, value: string) => void;
+  onChange: (field: keyof TStepHistoryCreate, value: string | boolean) => void;
   onRemove: () => void;
   onAdd: () => void;
   isLast: boolean;
@@ -69,19 +70,27 @@ export const HistoryForm: React.FC<HistoryFormProps> = ({
         setValue={(v) => onChange("description", v.toString())}
       />
 
+      <div className="w-fit">
+        <AMPSwitch
+          name="Czy chcesz aby ten wpis był widoczny dla wszystkich?"
+          value={item.isVisible}
+          additionalTailwindCss="ml-1"
+          setValue={(v) => onChange("isVisible", v)}
+        />
+      </div>
       <div className="flex gap-2 mt-2">
         <AMPButton
           type="none"
           name="Usuń wpis"
           onClick={onRemove}
-          additionalTailwindCss="border border-amp-300/70 w-full text-xs"
+          additionalTailwindCss="border border-amp-300/70 justify-center w-full text-xs"
         />
         {isLast && (
           <AMPButton
             type="secondary"
             name="Dodaj kolejny"
             onClick={onAdd}
-            additionalTailwindCss="w-full text-xs"
+            additionalTailwindCss="w-full justify-center text-xs"
           />
         )}
       </div>

@@ -18,6 +18,7 @@ export function mapHistoryToPrisma(
       companyId: h.companyId || null,
       createdAt: new Date(),
       updatedAt: new Date(),
+      isVisible: h.isVisible,
     })),
   };
 }

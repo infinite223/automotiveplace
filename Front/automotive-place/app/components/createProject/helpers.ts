@@ -51,6 +51,7 @@ export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
       date: h.date,
       mileage: numberFromString(h.mileage) ?? 0,
       price: numberFromString(h.price),
+      isVisible: h.isVisible,
     })),
   };
 };
