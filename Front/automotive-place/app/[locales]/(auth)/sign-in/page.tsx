@@ -125,8 +125,8 @@ export default function Page() {
         />
       </form>
 
-      <footer className="text-center flex flex-col justify-evenly h-full">
-        <p className="text-xs opacity-90">
+      <footer className="text-center flex flex-col justify-center h-full gap-5 mt-2">
+        <p className="text-sm opacity-90">
           {t("Core.DontHaveAnAccountYet")}
           <Link href={"./sign-up"} className="text-amp-500 ml-2 font-semibold">
             {t("Core.SignUp")}
@@ -134,7 +134,7 @@ export default function Page() {
         </p>
 
         <div className="flex flex-col gap-5">
-          <p className="uppercase opacity-40 text-xs font-light">
+          <p className="uppercase opacity-40 text-[10px] font-light">
             Lub kontynuuj przez
           </p>
 

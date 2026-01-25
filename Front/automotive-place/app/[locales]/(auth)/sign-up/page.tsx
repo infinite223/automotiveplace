@@ -90,7 +90,7 @@ export default function Page() {
   };
 
   return (
-    <main className="w-full items-center flex flex-col justify-evenly h-full">
+    <main className="w-full items-center py-2 flex flex-col justify-between h-full">
       <div className="h-full flex justify-center items-center">
         <Image src={Logo} alt="logo" width={60} height={60} className="h-fit" />
       </div>
@@ -147,16 +147,16 @@ export default function Page() {
         />
       </form>
 
-      <footer className="text-center flex flex-col justify-evenly h-full">
-        <p className="text-xs opacity-90">
+      <footer className="text-center flex flex-col justify-center h-full gap-5 mt-2">
+        <p className="text-sm opacity-90">
           {t("Core.DoYouAlreadyHaveAnAccount")}
           <Link href={"./sign-in"} className="text-amp-500 ml-2 font-semibold">
             {t("Core.SignIn")}
           </Link>
         </p>
 
-        <div className="flex flex-col gap-5">
-          <p className="uppercase opacity-40 text-xs font-light">
+        <div className="flex flex-col gap-5 pb-5">
+          <p className="uppercase opacity-40 text-[10px] font-light">
             Lub kontynuuj przez
           </p>
 
