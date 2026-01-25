@@ -13,6 +13,10 @@ import { addNotification } from "@/lib/features/notifications/notificationsSlice
 import { ZodIssue } from "zod";
 import { userRegistrationSchema } from "@/app/api/zod.schmas";
 import { Status } from "@/app/utils/enums";
+import Logo from "../../../../asets/logo_3.png";
+import Image from "next/image";
+import { FaGoogle, FaFacebookF } from "react-icons/fa";
+import { iconSizes } from "@/app/utils/constants";
 
 export default function Page() {
   const router = useRouter();
@@ -86,13 +90,15 @@ export default function Page() {
   };
 
   return (
-    <main className="w-full items-center flex flex-col justify-center">
+    <main className="w-full items-center flex flex-col justify-evenly h-full">
+      <Image src={Logo} alt="logo" width={70} height={70} className="h-fit" />
+
       <form
         onSubmit={onSubmit}
-        className="w-[300px] gap-2 bottom-1 flex flex-col"
+        className="md:w-[300px] w-full max-w-[85vw] gap-2 bottom-1 flex flex-col"
       >
-        <div className="flex flex-col mb-10">
-          <p className="text-xs font-thin">{t("Core.Welcome")}</p>
+        <div className="flex flex-col mb-5 gap-2">
+          <p className="text-xs font-thin opacity-80">{t("Core.Welcome")}</p>
           <h1 className="text-2xl font-bold">{t("Core.CreateAccount")}</h1>
         </div>
         <div className="flex flex-col bordre-2">
@@ -140,17 +146,45 @@ export default function Page() {
         />
       </form>
 
-      <footer className="mt-3">
-        <p className="text-xs">
+      <footer className="text-center flex flex-col gap-7">
+        <p className="text-xs opacity-90">
           {t("Core.DoYouAlreadyHaveAnAccount")}
-          <Link
-            href={"./sign-in"}
-            className="text-amp-300 dark:text-amp-700/70 ml-2 font-semibold"
-          >
-            {" "}
+          <Link href={"./sign-in"} className="text-amp-500 ml-2 font-semibold">
             {t("Core.SignIn")}
           </Link>
         </p>
+
+        <div className="flex flex-col gap-5">
+          <p className="uppercase opacity-60 text-xs tracking-widest">
+            Lub kontynuuj przez
+          </p>
+
+          <div className="flex gap-4 justify-center">
+            <button
+              type="button"
+              className="flex items-center justify-center h-14 w-14
+                   border border-gray-300/50 rounded-full
+                   hover:text-amp-500 transition"
+              onClick={() => {
+                console.log("Google register");
+              }}
+            >
+              <FaGoogle size={iconSizes.base} />
+            </button>
+
+            <button
+              type="button"
+              className="flex items-center justify-center h-14 w-14
+                   border border-gray-300/50 rounded-full
+                   hover:text-amp-500 transition"
+              onClick={() => {
+                console.log("Facebook register");
+              }}
+            >
+              <FaFacebookF size={iconSizes.base} />
+            </button>
+          </div>
+        </div>
       </footer>
     </main>
   );

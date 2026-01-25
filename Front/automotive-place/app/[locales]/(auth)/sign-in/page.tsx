@@ -12,6 +12,10 @@ import { addNotification } from "@/lib/features/notifications/notificationsSlice
 import { setIsLoading } from "@/lib/features/loading/globalLoadingSlice";
 import { userLoginSchema } from "@/app/api/zod.schmas";
 import { ZodIssue } from "zod";
+import Logo from "../../../../asets/logo_3.png";
+import Image from "next/image";
+import { FaGoogle, FaFacebookF } from "react-icons/fa";
+import { iconSizes } from "@/app/utils/constants";
 
 export default function Page() {
   const router = useRouter();
@@ -75,12 +79,14 @@ export default function Page() {
   };
 
   return (
-    <main className="w-full items-center flex flex-col justify-center">
+    <main className="w-full items-center flex flex-col justify-evenly h-full">
+      <Image src={Logo} alt="logo" width={70} height={70} className="h-fit" />
+
       <form
         onSubmit={onSubmit}
-        className="w-[300px] gap-2 bottom-1 flex flex-col"
+        className="md:w-[300px] w-full max-w-[85vw] gap-2 bottom-1 flex flex-col"
       >
-        <div className="flex flex-col mb-10">
+        <div className="flex flex-col mb-5 gap-2 opacity-80">
           <p className="text-xs font-thin">{t("Core.HelloAgain")}</p>
           <h1 className="text-2xl font-bold">{t("Core.SignIn")}</h1>
         </div>
@@ -110,24 +116,51 @@ export default function Page() {
             }}
           />
         </div>
+
         <AMPButton
           name={t("Core.SignIn")}
-          additionalTailwindCss="bg-amp-500 text-white text-sm rounded-sm justify-center"
+          additionalTailwindCss="mt-4 bg-amp-500 py-2.5 text-white text-sm justify-center"
           isSubmit
         />
       </form>
 
-      <footer className="mt-3">
-        <p className="text-xs">
+      <footer className="text-center flex flex-col gap-7">
+        <p className="text-xs opacity-90">
           {t("Core.DontHaveAnAccountYet")}
-          <Link
-            href={"./sign-up"}
-            className="text-amp-300 dark:text-amp-700/70 ml-2 font-semibold"
-          >
-            {" "}
+          <Link href={"./sign-up"} className="text-amp-500 ml-2 font-semibold">
             {t("Core.SignUp")}
           </Link>
         </p>
+
+        <div className="flex flex-col gap-5">
+          <p className="uppercase opacity-60 text-xs tracking-widest">
+            Lub kontynuuj przez
+          </p>
+
+          <div className="flex gap-4 justify-center">
+            <button
+              type="button"
+              className="flex items-center gap-2 h-14 w-14 justify-center border border-gray-300/50 rounded-full
+                   hover:text-amp-500 transition text-sm font-medium"
+              onClick={() => {
+                console.log("Google login");
+              }}
+            >
+              <FaGoogle size={iconSizes.base} />
+            </button>
+
+            <button
+              type="button"
+              className="flex items-center gap-2 h-14 w-14 justify-center border border-gray-300/50 rounded-full
+                   hover:text-amp-500 transition text-sm font-medium"
+              onClick={() => {
+                console.log("Facebook login");
+              }}
+            >
+              <FaFacebookF size={iconSizes.base} />
+            </button>
+          </div>
+        </div>
       </footer>
     </main>
   );
