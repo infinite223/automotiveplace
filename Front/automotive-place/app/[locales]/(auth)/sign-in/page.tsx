@@ -79,14 +79,15 @@ export default function Page() {
   };
 
   return (
-    <main className="w-full items-center flex flex-col justify-evenly h-full">
-      <Image src={Logo} alt="logo" width={70} height={70} className="h-fit" />
-
+    <main className="w-full items-center flex py-2 flex-col justify-evenly h-full">
+      <div className="h-full flex justify-center items-center">
+        <Image src={Logo} alt="logo" width={60} height={60} className="h-fit" />
+      </div>
       <form
         onSubmit={onSubmit}
-        className="md:w-[300px] w-full max-w-[85vw] gap-2 bottom-1 flex flex-col"
+        className="md:w-[300px] w-full h-full max-w-[85vw] gap-2 bottom-1 flex flex-col"
       >
-        <div className="flex flex-col mb-5 gap-2 opacity-80">
+        <div className="flex flex-col items-center mb-5 gap-2 opacity-80">
           <p className="text-xs font-thin">{t("Core.HelloAgain")}</p>
           <h1 className="text-2xl font-bold">{t("Core.SignIn")}</h1>
         </div>
@@ -119,12 +120,12 @@ export default function Page() {
 
         <AMPButton
           name={t("Core.SignIn")}
-          additionalTailwindCss="mt-4 bg-amp-500 py-2.5 text-white text-sm justify-center"
+          additionalTailwindCss="mt-4 bg-amp-500 text-white text-sm justify-center"
           isSubmit
         />
       </form>
 
-      <footer className="text-center flex flex-col gap-7">
+      <footer className="text-center flex flex-col justify-evenly h-full">
         <p className="text-xs opacity-90">
           {t("Core.DontHaveAnAccountYet")}
           <Link href={"./sign-up"} className="text-amp-500 ml-2 font-semibold">
@@ -133,31 +134,31 @@ export default function Page() {
         </p>
 
         <div className="flex flex-col gap-5">
-          <p className="uppercase opacity-60 text-xs tracking-widest">
+          <p className="uppercase opacity-40 text-xs font-light">
             Lub kontynuuj przez
           </p>
 
           <div className="flex gap-4 justify-center">
             <button
               type="button"
-              className="flex items-center gap-2 h-14 w-14 justify-center border border-gray-300/50 rounded-full
+              className="flex items-center gap-2 h-12 w-12 justify-center border border-gray-300/50 rounded-full
                    hover:text-amp-500 transition text-sm font-medium"
               onClick={() => {
                 console.log("Google login");
               }}
             >
-              <FaGoogle size={iconSizes.base} />
+              <FaGoogle size={iconSizes.small} />
             </button>
 
             <button
               type="button"
-              className="flex items-center gap-2 h-14 w-14 justify-center border border-gray-300/50 rounded-full
+              className="flex items-center gap-2 h-12 w-12 justify-center border border-gray-300/50 rounded-full
                    hover:text-amp-500 transition text-sm font-medium"
               onClick={() => {
                 console.log("Facebook login");
               }}
             >
-              <FaFacebookF size={iconSizes.base} />
+              <FaFacebookF size={iconSizes.small} />
             </button>
           </div>
         </div>
