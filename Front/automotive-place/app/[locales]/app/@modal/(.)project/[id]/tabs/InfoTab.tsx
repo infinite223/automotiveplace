@@ -54,6 +54,11 @@ export default function InfoTab({
   const t = useTranslations();
   if (!lastStage) return null;
 
+  const hasExtraData =
+    globalInfo.weightStock ||
+    globalInfo.topSpeedStock ||
+    globalInfo.projectPrice;
+
   return (
     <div className="flex flex-col w-full">
       {name && <span className="mt-2 font-semibold">{name}</span>}
@@ -64,7 +69,7 @@ export default function InfoTab({
           <h3 className="text-lg font-bold text-text-light dark:text-text-dark">
             Performance
           </h3>
-          <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100 px-4 py-2 dark:divide-subtle-dark/20 dark:bg-surface-dark">
+          <div className="divide-y divide-amp-200/70 rounded-small bg-amp-900 dark:bg-amp-50 px-4 py-2 dark:divide-subtle-dark/20 dark:bg-surface-dark">
             <Item label="Moc silnika" value={`${lastStage.hp} hp`} />
             <Item label="Moment obrotowy" value={`${lastStage.nm} Nm`} />
             {Number(lastStage.acc_0_100) > 0 && (
@@ -95,7 +100,7 @@ export default function InfoTab({
               Silnik
             </h3>
           </div>
-          <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100 px-4 py-2 dark:divide-subtle-dark/20 dark:bg-surface-dark">
+          <div className="divide-y divide-amp-200/70 rounded-small bg-amp-900 dark:bg-amp-50 px-4 py-2 dark:divide-subtle-dark/20 dark:bg-surface-dark">
             <Item label="Nazwa" value={engine.name} />
             {engine.description && (
               <Item label="Opis" value={engine.description} />
@@ -105,7 +110,6 @@ export default function InfoTab({
           </div>
         </div>
 
-        {/* Skrzynia biegów */}
         <div className="space-y-4">
           <div className="flex items-center gap-3 px-2">
             <GiGearStickPattern size={iconSizes.base} />
@@ -113,7 +117,7 @@ export default function InfoTab({
               Skrzynia biegów
             </h3>
           </div>
-          <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100 px-4 py-2 dark:divide-subtle-dark/20 dark:bg-surface-dark">
+          <div className="divide-y divide-amp-200/70 rounded-small bg-amp-900 dark:bg-amp-50 px-4 py-2 dark:divide-subtle-dark/20 dark:bg-surface-dark">
             <Item label="Nazwa" value={transmission.name} />
             {transmission.description && (
               <Item label="Opis" value={transmission.description} />
@@ -127,32 +131,33 @@ export default function InfoTab({
           </div>
         </div>
 
-        {/* Reszta */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3 px-2">
-            <PiInfo size={iconSizes.base} />
-            <h3 className="text-lg font-bold text-text-light dark:text-text-dark">
-              Reszta
-            </h3>
+        {hasExtraData && (
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 px-2">
+              <PiInfo size={iconSizes.base} />
+              <h3 className="text-lg font-bold text-text-light dark:text-text-dark">
+                Reszta
+              </h3>
+            </div>
+            <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100 px-4 py-2 dark:divide-subtle-dark/20 dark:bg-surface-dark">
+              {globalInfo.weightStock && (
+                <Item label="Waga" value={`${globalInfo.weightStock} kg`} />
+              )}
+              {globalInfo.topSpeedStock && (
+                <Item
+                  label="Prędkość maksymalna"
+                  value={`${globalInfo.topSpeedStock} km/h`}
+                />
+              )}
+              {globalInfo.projectPrice && (
+                <Item
+                  label="Cena projektu"
+                  value={`~${globalInfo.projectPrice.toLocaleString()} zł`}
+                />
+              )}
+            </div>
           </div>
-          <div className="divide-y divide-amp-200 rounded-small bg-amp-900 dark:bg-amp-100 px-4 py-2 dark:divide-subtle-dark/20 dark:bg-surface-dark">
-            {globalInfo.weightStock && (
-              <Item label="Waga" value={`${globalInfo.weightStock} kg`} />
-            )}
-            {globalInfo.topSpeedStock && (
-              <Item
-                label="Prędkość maksymalna"
-                value={`${globalInfo.topSpeedStock} km/h`}
-              />
-            )}
-            {globalInfo.projectPrice && (
-              <Item
-                label="Cena projektu"
-                value={`~${globalInfo.projectPrice.toLocaleString()} zł`}
-              />
-            )}
-          </div>
-        </div>
+        )}
       </div>
 
       <span className="my-6 text-lg font-bold">Zdjęcia</span>

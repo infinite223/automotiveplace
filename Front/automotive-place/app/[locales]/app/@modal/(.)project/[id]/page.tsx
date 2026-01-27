@@ -29,9 +29,11 @@ import Image from "next/image";
 import { RxDotsHorizontal } from "react-icons/rx";
 import { getProjectImageSrcByFileId } from "@/app/utils/helpers/storageHelper";
 import HistoryTab from "./tabs/HistoryTab";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
 
 export default function Project({ params }: { params: { id: string } }) {
   const [activeTab, setActiveTab] = useState("informacje");
+  const [userId, setUserId] = useState<string | null>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   const height = useTransform(scrollY, [0, 200], ["150px", "80px"]);
@@ -53,7 +55,16 @@ export default function Project({ params }: { params: { id: string } }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const getUser = async () => {
+      setUserId((await getLoggedInUser())?.user.$id ?? null);
+    };
+
+    getUser();
+  }, []);
+
   const lastStage = data ? getCurrentStage(data as TProject) : undefined;
+  const isMyProject = data?.authorId === userId;
 
   if (loading && !data)
     return (
@@ -181,7 +192,7 @@ export default function Project({ params }: { params: { id: string } }) {
             </header>
           </nav>
 
-          <nav className="flex w-full items-center gap-3 mt-3 border-b border-amp-700 dark:border-amp-200">
+          <nav className="flex w-full items-center gap-3 mt-3 border-b border-amp-700 dark:border-amp-200 overflow-x-auto custom-scrollbar no-scrollbar">
             {tabsConfig.map((tab) => (
               <button
                 key={tab.id}
@@ -273,7 +284,12 @@ export default function Project({ params }: { params: { id: string } }) {
                     exit={{ opacity: 0, x: -50 }}
                     transition={{ duration: 0.3 }}
                   >
-                    {data && <HistoryTab history={data.history || []} />}
+                    {data && (
+                      <HistoryTab
+                        history={data.history || []}
+                        isMyProject={isMyProject}
+                      />
+                    )}
                   </motion.div>
                 )}
               </AnimatePresence>

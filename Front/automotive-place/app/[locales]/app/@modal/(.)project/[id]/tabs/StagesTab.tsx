@@ -38,7 +38,7 @@ export default function StagesTab({ stages }: StagesTabProps) {
             return (
               <div
                 key={stage.id}
-                className="flex-shrink-0 w-[290px] bg-amp-900 dark:bg-amp-100 rounded-small divide-y divide-amp-200 dark:divide-subtle-dark/20 shadow-sm px-4 py-3"
+                className="flex-shrink-0 w-[290px] bg-amp-900 dark:bg-amp-50 rounded-small divide-y divide-amp-200 dark:divide-subtle-dark/20 shadow-sm px-4 py-3"
               >
                 <div className="pb-2">
                   <h2 className="font-semibold text-lg text-text-light dark:text-text-dark">

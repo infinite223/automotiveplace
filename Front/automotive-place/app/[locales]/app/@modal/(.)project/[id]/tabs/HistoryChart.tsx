@@ -46,8 +46,12 @@ export default function HistoryChart({ history }: HistoryChartProps) {
   };
 
   return (
-    <div className="w-full h-[280px] bg-amp-900/50 dark:bg-amp-50/80 rounded-md p-4  mb-8">
-      <ResponsiveContainer width="100%" height="100%">
+    <div className="w-full h-[280px] bg-amp-900/50 dark:bg-amp-50 rounded-md p-4  mb-8">
+      <ResponsiveContainer
+        width="100%"
+        height="100%"
+        style={{ outline: "none" }}
+      >
         {/* Dodajemy marginesy, żeby podpisy osi były widoczne */}
         <AreaChart
           data={chartData}

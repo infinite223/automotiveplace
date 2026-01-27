@@ -7,15 +7,17 @@ import { LuBuilding2, LuCircleDollarSign } from "react-icons/lu";
 import moment from "moment";
 import "moment/locale/pl";
 import HistoryChart from "./HistoryChart";
+import { BiPlus } from "react-icons/bi";
 
 interface HistoryTabProps {
   history: TBasicHistory[];
+  isMyProject: boolean;
 }
 
-export default function HistoryTab({ history }: HistoryTabProps) {
+export default function HistoryTab({ history, isMyProject }: HistoryTabProps) {
   if (!history || history.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 opacity-50 border-2 border-dashed border-amp-700 rounded-xl">
+      <div className="flex flex-col items-center justify-center py-20 opacity-70 border-2 border-dashed border-amp-700/50 rounded-md">
         <BiWrench size={48} className="mb-4" />
         <p className="text-lg">Brak wpisów w historii pojazdu</p>
       </div>
@@ -35,12 +37,17 @@ export default function HistoryTab({ history }: HistoryTabProps) {
 
       <HistoryChart history={history} />
 
-      <div className="relative border-l-[1px] mt-3 border-amp-700/70  ml-4 md:ml-6">
+      <div className="relative border-l-[1px] mt-3 border-amp-700/40  ml-4 md:ml-6">
         {history.map((h, index) => (
           <div key={h.id} className="mb-5 ml-6 md:ml-10 relative">
-            <div className="absolute -left-[31px] md:-left-[48px] mt-1.5 w-4 h-4 rounded-full border-4 border-amp-700 bg-amp-500 shadow-[0_0_12px_rgba(219,31,72,0.4)]" />
+            <div className="absolute -left-[30px] md:-left-[45px] mt-1.5 flex items-center justify-center">
+              <div className="absolute w-7 h-7 rounded-full bg-amp-500/35 blur-md" />
+              <div className="flex items-center justify-center w-4.5 h-4.5 rounded-full border border-amp-500">
+                <div className="w-2 h-2 rounded-full bg-amp-500" />
+              </div>
+            </div>
 
-            <div className="bg-amp-900 dark:bg-amp-100 rounded-md p-5 hover:border-amp-500/50 transition-colors">
+            <div className="bg-amp-900/50 dark:bg-amp-50 rounded-md p-5 transition-colors">
               <div className="flex flex-wrap items-start justify-between gap-4 mb-3">
                 <div className="flex flex-col gap-1">
                   <h3 className="font-bold text-white uppercase tracking-wide">
@@ -99,6 +106,23 @@ export default function HistoryTab({ history }: HistoryTabProps) {
           </div>
         ))}
       </div>
+
+      {isMyProject && (
+        <button
+          className="
+    fixed bottom-6 right-6 z-50
+    w-14 h-14 rounded-full
+    bg-amp-500
+    flex items-center justify-center
+    shadow-[0_0_20px_rgba(219,31,72,0.5)]
+    hover:scale-105 active:scale-95
+    transition
+  "
+          aria-label="Dodaj wpis"
+        >
+          <BiPlus size={28} className="text-white" />
+        </button>
+      )}
     </div>
   );
 }
