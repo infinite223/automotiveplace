@@ -26,7 +26,7 @@ export const HistoryForm: React.FC<HistoryFormProps> = ({
   isSingleMode = false,
 }) => {
   return (
-    <div className="pt-4 border-t border-amp-700/50 flex flex-col gap-2">
+    <div className="pt-4 flex flex-col gap-2">
       <div className="flex gap-4">
         <div className="w-2/3">
           <AMPInput
@@ -86,7 +86,7 @@ export const HistoryForm: React.FC<HistoryFormProps> = ({
             type="secondary"
             name="Dodaj wpis"
             onClick={onAdd}
-            additionalTailwindCss="w-full justify-center text-sm font-bold"
+            additionalTailwindCss="w-full justify-center text-sm font-bold mt-4"
           />
         ) : (
           <>

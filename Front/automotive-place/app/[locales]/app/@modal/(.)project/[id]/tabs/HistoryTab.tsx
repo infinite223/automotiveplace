@@ -10,6 +10,7 @@ import HistoryChart from "./HistoryChart";
 import AMPModal from "@/app/components/shared/AMPModal";
 import { useState } from "react";
 import { HistoryForm } from "@/app/components/createProject/steps/HistoryForm";
+import { AMPButton } from "@/app/components/shared/AMPButton";
 
 interface HistoryTabProps {
   history: TBasicHistory[];
@@ -29,7 +30,17 @@ export default function HistoryTab({ history, isMyProject }: HistoryTabProps) {
   });
 
   const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setNewEntry({
+      title: "",
+      date: new Date().toISOString().split("T")[0],
+      mileage: "",
+      price: "",
+      description: "",
+      isVisible: true,
+    });
+  };
 
   const handleFormChange = (
     field: keyof TStepHistoryCreate,
@@ -50,23 +61,6 @@ export default function HistoryTab({ history, isMyProject }: HistoryTabProps) {
     closeModal();
   };
 
-  if (!history || history.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center py-20 opacity-70 border-2 border-dashed border-amp-700/50 rounded-md">
-        <BiWrench size={48} className="mb-4" />
-        <p className="text-lg">Brak wpisów w historii pojazdu</p>
-        {isMyProject && (
-          <button
-            onClick={openModal}
-            className="mt-4 px-4 py-2 bg-amp-500 text-white rounded-md hover:bg-amp-600 transition"
-          >
-            Dodaj pierwszy wpis
-          </button>
-        )}
-      </div>
-    );
-  }
-
   return (
     <div className="mx-auto py-4 w-full">
       <div className="flex items-center justify-between mb-8">
@@ -78,79 +72,94 @@ export default function HistoryTab({ history, isMyProject }: HistoryTabProps) {
         </div>
       </div>
 
-      <HistoryChart history={history} />
-
-      <div className="relative border-l-[1px] mt-3 border-amp-700/40 ml-4 md:ml-6">
-        {history.map((h) => (
-          <div key={h.id} className="mb-5 ml-6 md:ml-10 relative">
-            <div className="absolute -left-[30px] md:-left-[45px] mt-1.5 flex items-center justify-center">
-              <div className="absolute w-7 h-7 rounded-full bg-amp-500/35 blur-md" />
-              <div className="flex items-center justify-center w-4.5 h-4.5 rounded-full border border-amp-500">
-                <div className="w-2 h-2 rounded-full bg-amp-500" />
-              </div>
-            </div>
-
-            <div className="bg-amp-900/50 dark:bg-amp-50 rounded-md p-5 transition-colors">
-              <div className="flex flex-wrap items-start justify-between gap-4 mb-3">
-                <div className="flex flex-col gap-1">
-                  <h3 className="font-bold text-white uppercase tracking-wide">
-                    {h.title}
-                  </h3>
-                  <div className="flex items-center gap-4 text-xs text-amp-300 dark:text-amp-800/80">
-                    <span className="flex items-center gap-1.5">
-                      <BiCalendar size={14} className="text-amp-500" />
-                      {moment(h.date).format("D MMMM YYYY")}
-                    </span>
-                    <span className="flex items-center gap-1.5 text-white font-medium bg-amp-300 px-2 py-1 rounded">
-                      <FaGauge size={14} className="text-amp-500" />
-                      {h.mileage.toLocaleString()} km
-                    </span>
+      {!history || history.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20 border-2 border-dashed border-amp-700/50 rounded-md">
+          <BiWrench size={48} className="mb-4 opacity-80" />
+          <p className="text-lg opacity-80">Brak wpisów w historii pojazdu</p>
+          {isMyProject && (
+            <AMPButton
+              name="Dodaj pierwszy wpis"
+              additionalTailwindCss="mt-5 text-sm"
+              onClick={openModal}
+            />
+          )}
+        </div>
+      ) : (
+        <>
+          <HistoryChart history={history} />
+          <div className="relative border-l-[1px] mt-3 border-amp-700/40 ml-4 md:ml-6">
+            {history.map((h) => (
+              <div key={h.id} className="mb-5 ml-6 md:ml-10 relative">
+                <div className="absolute -left-[30px] md:-left-[45px] mt-1.5 flex items-center justify-center">
+                  <div className="absolute w-7 h-7 rounded-full bg-amp-500/35 blur-md" />
+                  <div className="flex items-center justify-center w-4.5 h-4.5 rounded-full border border-amp-500">
+                    <div className="w-2 h-2 rounded-full bg-amp-500" />
                   </div>
                 </div>
 
-                {h.price && (
-                  <div className="flex items-center gap-1.5 bg-green-500/10 text-green-500 px-3 py-1 rounded-full border border-green-500/20 text-sm font-semibold">
-                    <LuCircleDollarSign size={16} />
-                    {h.price.toLocaleString()} zł
-                  </div>
-                )}
-              </div>
+                <div className="bg-amp-900/50 dark:bg-amp-50 rounded-md p-5 transition-colors">
+                  <div className="flex flex-wrap items-start justify-between gap-4 mb-3">
+                    <div className="flex flex-col gap-1">
+                      <h3 className="font-bold text-white uppercase tracking-wide">
+                        {h.title}
+                      </h3>
+                      <div className="flex items-center gap-4 text-xs text-amp-300 dark:text-amp-800/80">
+                        <span className="flex items-center gap-1.5">
+                          <BiCalendar size={14} className="text-amp-500" />
+                          {moment(h.date).format("D MMMM YYYY")}
+                        </span>
+                        <span className="flex items-center gap-1.5 text-white font-medium bg-amp-300 px-2 py-1 rounded">
+                          <FaGauge size={14} className="text-amp-500" />
+                          {h.mileage.toLocaleString()} km
+                        </span>
+                      </div>
+                    </div>
 
-              {h.description && (
-                <p className="text-amp-200 text-sm leading-relaxed mb-4 whitespace-pre-wrap">
-                  {h.description}
-                </p>
-              )}
-
-              {h.company && (
-                <div className="flex items-center gap-3 pt-4 border-t border-amp-700/50">
-                  <div className="w-8 h-8 rounded bg-amp-700 flex items-center justify-center overflow-hidden">
-                    {h.company.imagesUrl ? (
-                      <img
-                        src={h.company.imagesUrl}
-                        alt={h.company.name}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <LuBuilding2 size={16} className="text-amp-400" />
+                    {h.price && (
+                      <div className="flex items-center gap-1.5 bg-green-500/10 text-green-500 px-3 py-1 rounded-full border border-green-500/20 text-sm font-semibold">
+                        <LuCircleDollarSign size={16} />
+                        {h.price.toLocaleString()} zł
+                      </div>
                     )}
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] uppercase text-amp-400 font-bold tracking-tighter">
-                      Wykonano w
-                    </span>
-                    <span className="text-xs text-white font-semibold">
-                      {h.company.name}
-                    </span>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
 
-      {isMyProject && (
+                  {h.description && (
+                    <p className="text-amp-200 text-sm leading-relaxed mb-4 whitespace-pre-wrap">
+                      {h.description}
+                    </p>
+                  )}
+
+                  {h.company && (
+                    <div className="flex items-center gap-3 pt-4 border-t border-amp-700/50">
+                      <div className="w-8 h-8 rounded bg-amp-700 flex items-center justify-center overflow-hidden">
+                        {h.company.imagesUrl ? (
+                          <img
+                            src={h.company.imagesUrl}
+                            alt={h.company.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <LuBuilding2 size={16} className="text-amp-400" />
+                        )}
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[10px] uppercase text-amp-400 font-bold tracking-tighter">
+                          Wykonano w
+                        </span>
+                        <span className="text-xs text-white font-semibold">
+                          {h.company.name}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {isMyProject && history?.length > 0 && (
         <button
           className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-amp-500 flex items-center justify-center shadow-[0_0_20px_rgba(219,31,72,0.5)] hover:scale-105 active:scale-95 transition"
           onClick={openModal}
