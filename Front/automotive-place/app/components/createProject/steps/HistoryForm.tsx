@@ -13,6 +13,7 @@ interface HistoryFormProps {
   onRemove: () => void;
   onAdd: () => void;
   isLast: boolean;
+  isSingleMode?: boolean;
 }
 
 export const HistoryForm: React.FC<HistoryFormProps> = ({
@@ -22,6 +23,7 @@ export const HistoryForm: React.FC<HistoryFormProps> = ({
   onRemove,
   onAdd,
   isLast,
+  isSingleMode = false,
 }) => {
   return (
     <div className="pt-4 border-t border-amp-700/50 flex flex-col gap-2">
@@ -79,22 +81,33 @@ export const HistoryForm: React.FC<HistoryFormProps> = ({
         />
       </div>
       <div className="flex gap-2 mt-2">
-        <AMPButton
-          type="none"
-          name="Usuń wpis"
-          onClick={onRemove}
-          additionalTailwindCss="border border-amp-300/70 justify-center w-full text-xs"
-        />
-        {isLast && (
+        {isSingleMode ? (
           <AMPButton
             type="secondary"
-            name="Dodaj kolejny"
+            name="Dodaj wpis"
             onClick={onAdd}
-            additionalTailwindCss="w-full justify-center text-xs"
+            additionalTailwindCss="w-full justify-center text-sm font-bold"
           />
+        ) : (
+          <>
+            <AMPButton
+              type="none"
+              name="Usuń wpis"
+              onClick={onRemove}
+              additionalTailwindCss="border border-amp-300/70 justify-center w-full text-xs"
+            />
+            {isLast && (
+              <AMPButton
+                type="secondary"
+                name="Dodaj kolejny"
+                onClick={onAdd}
+                additionalTailwindCss="w-full justify-center text-xs"
+              />
+            )}
+          </>
         )}
       </div>
-      <AMPSeparator />
+      {!isSingleMode && <AMPSeparator />}
     </div>
   );
 };

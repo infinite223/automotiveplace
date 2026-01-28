@@ -1,13 +1,15 @@
 "use client";
 
-import { TBasicHistory } from "@/app/utils/types/history";
-import { BiCalendar, BiWrench } from "react-icons/bi";
+import { TBasicHistory, TStepHistoryCreate } from "@/app/utils/types/history";
+import { BiCalendar, BiWrench, BiPlus } from "react-icons/bi";
 import { FaGauge } from "react-icons/fa6";
 import { LuBuilding2, LuCircleDollarSign } from "react-icons/lu";
 import moment from "moment";
 import "moment/locale/pl";
 import HistoryChart from "./HistoryChart";
-import { BiPlus } from "react-icons/bi";
+import AMPModal from "@/app/components/shared/AMPModal";
+import { useState } from "react";
+import { HistoryForm } from "@/app/components/createProject/steps/HistoryForm";
 
 interface HistoryTabProps {
   history: TBasicHistory[];
@@ -15,11 +17,52 @@ interface HistoryTabProps {
 }
 
 export default function HistoryTab({ history, isMyProject }: HistoryTabProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [newEntry, setNewEntry] = useState<TStepHistoryCreate>({
+    title: "",
+    date: new Date().toISOString().split("T")[0],
+    mileage: "",
+    price: "",
+    description: "",
+    isVisible: true,
+  });
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleFormChange = (
+    field: keyof TStepHistoryCreate,
+    value: string | boolean,
+  ) => {
+    setNewEntry((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleAdd = () => {
+    console.log("Zapisywanie wpisu:", newEntry);
+    closeModal();
+  };
+
+  const handleRemove = () => {
+    closeModal();
+  };
+
   if (!history || history.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 opacity-70 border-2 border-dashed border-amp-700/50 rounded-md">
         <BiWrench size={48} className="mb-4" />
         <p className="text-lg">Brak wpisów w historii pojazdu</p>
+        {isMyProject && (
+          <button
+            onClick={openModal}
+            className="mt-4 px-4 py-2 bg-amp-500 text-white rounded-md hover:bg-amp-600 transition"
+          >
+            Dodaj pierwszy wpis
+          </button>
+        )}
       </div>
     );
   }
@@ -37,8 +80,8 @@ export default function HistoryTab({ history, isMyProject }: HistoryTabProps) {
 
       <HistoryChart history={history} />
 
-      <div className="relative border-l-[1px] mt-3 border-amp-700/40  ml-4 md:ml-6">
-        {history.map((h, index) => (
+      <div className="relative border-l-[1px] mt-3 border-amp-700/40 ml-4 md:ml-6">
+        {history.map((h) => (
           <div key={h.id} className="mb-5 ml-6 md:ml-10 relative">
             <div className="absolute -left-[30px] md:-left-[45px] mt-1.5 flex items-center justify-center">
               <div className="absolute w-7 h-7 rounded-full bg-amp-500/35 blur-md" />
@@ -56,7 +99,7 @@ export default function HistoryTab({ history, isMyProject }: HistoryTabProps) {
                   <div className="flex items-center gap-4 text-xs text-amp-300 dark:text-amp-800/80">
                     <span className="flex items-center gap-1.5">
                       <BiCalendar size={14} className="text-amp-500" />
-                      {moment(h.date).format("D MMMM YYYY")}{" "}
+                      {moment(h.date).format("D MMMM YYYY")}
                     </span>
                     <span className="flex items-center gap-1.5 text-white font-medium bg-amp-300 px-2 py-1 rounded">
                       <FaGauge size={14} className="text-amp-500" />
@@ -109,20 +152,33 @@ export default function HistoryTab({ history, isMyProject }: HistoryTabProps) {
 
       {isMyProject && (
         <button
-          className="
-    fixed bottom-6 right-6 z-50
-    w-14 h-14 rounded-full
-    bg-amp-500
-    flex items-center justify-center
-    shadow-[0_0_20px_rgba(219,31,72,0.5)]
-    hover:scale-105 active:scale-95
-    transition
-  "
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-amp-500 flex items-center justify-center shadow-[0_0_20px_rgba(219,31,72,0.5)] hover:scale-105 active:scale-95 transition"
+          onClick={openModal}
           aria-label="Dodaj wpis"
         >
           <BiPlus size={28} className="text-white" />
         </button>
       )}
+
+      <AMPModal
+        title="Dodaj nowy wpis"
+        withHeader={true}
+        onClose={closeModal}
+        visible={isModalOpen}
+        additionalTailwindCss="bg-amp-50 p-2 pb-4"
+      >
+        <div className="p-4">
+          <HistoryForm
+            item={newEntry}
+            index={0}
+            onChange={handleFormChange}
+            onRemove={handleRemove}
+            onAdd={handleAdd}
+            isLast={true}
+            isSingleMode
+          />
+        </div>
+      </AMPModal>
     </div>
   );
 }
