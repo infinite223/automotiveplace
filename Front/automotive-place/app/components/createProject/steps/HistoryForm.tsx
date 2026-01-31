@@ -48,21 +48,26 @@ export const HistoryForm: React.FC<HistoryFormProps> = ({
       </div>
 
       <div className="flex gap-4">
-        <AMPInput
-          required
-          type="number"
-          name="Przebieg (km)"
-          placeholder="120 000"
-          value={item.mileage}
-          setValue={(v) => onChange("mileage", v.toString())}
-        />
-        <AMPInput
-          type="number"
-          name="Cena (zł)"
-          placeholder="0.00"
-          value={item.price}
-          setValue={(v) => onChange("price", v.toString())}
-        />
+        <div className="flex-1">
+          <AMPInput
+            required
+            type="number"
+            name="Przebieg (km)"
+            placeholder="120 000"
+            value={item.mileage}
+            setValue={(v) => onChange("mileage", v.toString())}
+          />
+        </div>
+
+        <div className="flex-1">
+          <AMPInput
+            type="number"
+            name="Cena (zł)"
+            placeholder="0.00"
+            value={item.price}
+            setValue={(v) => onChange("price", v.toString())}
+          />
+        </div>
       </div>
 
       <AMPTextarea

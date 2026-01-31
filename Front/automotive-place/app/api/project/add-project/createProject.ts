@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 import { mapTagsToPrisma } from "../../mappers/tags";
 import { mapStagesToPrisma } from "../../mappers/stages";
 import { Prisma } from "@prisma/client";
-import { mapHistoryToPrisma } from "../../mappers/history";
+import { mapManyHistoryToPrisma } from "../../mappers/history";
 
 export async function createProject(
   project: TProjectCreate,
@@ -24,7 +24,7 @@ export async function createProject(
         isVerified: true, // TODO: to change
         stages: mapStagesToPrisma(stages ?? [], authorId),
         tagAssignments: mapTagsToPrisma(tags ?? [], authorId),
-        history: mapHistoryToPrisma(history ?? [], authorId),
+        history: mapManyHistoryToPrisma(history ?? [], authorId),
       },
       include: {
         author: { select: { id: true, name: true } },

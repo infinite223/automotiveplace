@@ -1,6 +1,10 @@
 "use client";
 
-import { TBasicHistory, TStepHistoryCreate } from "@/app/utils/types/history";
+import {
+  TBasicHistory,
+  THistoryCreate,
+  TStepHistoryCreate,
+} from "@/app/utils/types/history";
 import { BiCalendar, BiWrench, BiPlus } from "react-icons/bi";
 import { FaGauge } from "react-icons/fa6";
 import { LuBuilding2, LuCircleDollarSign } from "react-icons/lu";
@@ -11,15 +15,25 @@ import AMPModal from "@/app/components/shared/AMPModal";
 import { useState } from "react";
 import { HistoryForm } from "@/app/components/createProject/steps/HistoryForm";
 import { AMPButton } from "@/app/components/shared/AMPButton";
+import { CreateProjectHistory } from "@/app/services/project";
+import { numberFromString } from "@/app/components/createProject/helpers";
+import { useDispatch } from "react-redux";
+import { addNotification } from "@/lib/features/notifications/notificationsSlice";
+import { Status } from "@/app/utils/enums";
 
 interface HistoryTabProps {
   history: TBasicHistory[];
   isMyProject: boolean;
+  projectId: string;
 }
 
-export default function HistoryTab({ history, isMyProject }: HistoryTabProps) {
+export default function HistoryTab({
+  history,
+  isMyProject,
+  projectId,
+}: HistoryTabProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [historyList, setHistoryList] = useState(history);
   const [newEntry, setNewEntry] = useState<TStepHistoryCreate>({
     title: "",
     date: new Date().toISOString().split("T")[0],
@@ -28,7 +42,7 @@ export default function HistoryTab({ history, isMyProject }: HistoryTabProps) {
     description: "",
     isVisible: true,
   });
-
+  const dispatch = useDispatch();
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => {
     setIsModalOpen(false);
@@ -52,9 +66,32 @@ export default function HistoryTab({ history, isMyProject }: HistoryTabProps) {
     }));
   };
 
-  const handleAdd = () => {
-    console.log("Zapisywanie wpisu:", newEntry);
-    closeModal();
+  const handleAdd = async () => {
+    const newHistory: THistoryCreate = {
+      title: newEntry.title,
+      description: newEntry.description,
+      date: newEntry.date,
+      mileage: numberFromString(newEntry.mileage) ?? 0,
+      price: numberFromString(newEntry.price),
+      isVisible: newEntry.isVisible,
+      projectId,
+    };
+
+    const result = await CreateProjectHistory(newHistory);
+    console.log(result);
+
+    dispatch(addNotification(JSON.stringify(result.notification)));
+    if (result.notification.log.status === Status.Success) {
+      if (result.notification.log.status === Status.Success) {
+        setHistoryList((prev) =>
+          [...(prev ?? []), result.history].sort(
+            (a, b) => b.mileage - a.mileage,
+          ),
+        );
+        closeModal();
+      }
+      closeModal();
+    }
   };
 
   const handleRemove = () => {
@@ -72,7 +109,7 @@ export default function HistoryTab({ history, isMyProject }: HistoryTabProps) {
         </div>
       </div>
 
-      {!history || history.length === 0 ? (
+      {!historyList || historyList.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 border-2 border-dashed border-amp-700/50 rounded-md">
           <BiWrench size={48} className="mb-4 opacity-80" />
           <p className="text-lg opacity-80">Brak wpisów w historii pojazdu</p>
@@ -86,9 +123,9 @@ export default function HistoryTab({ history, isMyProject }: HistoryTabProps) {
         </div>
       ) : (
         <>
-          <HistoryChart history={history} />
+          <HistoryChart history={historyList} />
           <div className="relative border-l-[1px] mt-3 border-amp-700/40 ml-4 md:ml-6">
-            {history.map((h) => (
+            {historyList.map((h) => (
               <div key={h.id} className="mb-5 ml-6 md:ml-10 relative">
                 <div className="absolute -left-[30px] md:-left-[45px] mt-1.5 flex items-center justify-center">
                   <div className="absolute w-7 h-7 rounded-full bg-amp-500/35 blur-md" />
@@ -124,7 +161,7 @@ export default function HistoryTab({ history, isMyProject }: HistoryTabProps) {
                   </div>
 
                   {h.description && (
-                    <p className="text-amp-200 text-sm leading-relaxed mb-4 whitespace-pre-wrap">
+                    <p className="text-amp-200 dark:text-amp-800/80 text-sm leading-relaxed mb-4 whitespace-pre-wrap">
                       {h.description}
                     </p>
                   )}
@@ -159,7 +196,7 @@ export default function HistoryTab({ history, isMyProject }: HistoryTabProps) {
         </>
       )}
 
-      {isMyProject && history?.length > 0 && (
+      {isMyProject && historyList?.length > 0 && (
         <button
           className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-amp-500 flex items-center justify-center shadow-[0_0_20px_rgba(219,31,72,0.5)] hover:scale-105 active:scale-95 transition"
           onClick={openModal}

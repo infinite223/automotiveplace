@@ -1,24 +1,33 @@
 import { THistoryCreate } from "@/app/utils/types/history";
 
-export function mapHistoryToPrisma(
+export function mapSingleHistoryToPrisma(
+  history: THistoryCreate,
+  authorId: string,
+) {
+  return {
+    title: history.title,
+    description: history.description || "",
+    date: new Date(history.date),
+    mileage:
+      typeof history.mileage === "string"
+        ? parseInt(history.mileage, 10)
+        : history.mileage,
+    price: history.price ? Number(history.price) : null,
+    authorId,
+    companyId: history.companyId || null,
+    isVisible: history.isVisible,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+}
+
+export function mapManyHistoryToPrisma(
   historyEntries: THistoryCreate[],
   authorId: string,
 ) {
-  if (!historyEntries || historyEntries.length === 0) return undefined;
+  if (!historyEntries?.length) return undefined;
 
   return {
-    create: historyEntries.map((h) => ({
-      title: h.title,
-      description: h.description || "",
-      date: new Date(h.date),
-      mileage:
-        typeof h.mileage === "string" ? parseInt(h.mileage, 10) : h.mileage,
-      price: h.price ? Number(h.price) : null,
-      authorId: authorId,
-      companyId: h.companyId || null,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      isVisible: h.isVisible,
-    })),
+    create: historyEntries.map((h) => mapSingleHistoryToPrisma(h, authorId)),
   };
 }

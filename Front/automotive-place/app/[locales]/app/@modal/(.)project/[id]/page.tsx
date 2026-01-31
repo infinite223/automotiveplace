@@ -288,6 +288,7 @@ export default function Project({ params }: { params: { id: string } }) {
                       <HistoryTab
                         history={data.history || []}
                         isMyProject={isMyProject}
+                        projectId={data.id}
                       />
                     )}
                   </motion.div>

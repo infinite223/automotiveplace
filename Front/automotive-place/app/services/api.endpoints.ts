@@ -9,6 +9,7 @@ export const apiEndpoints = {
   deleteLike: `${base}/like/delete`,
   createProject: `${base}/project/add-project`,
   deleteProject: `${base}/project/delete-project`,
+  createProjectHistory: `${base}/project/add-project-history`,
   deletePost: `${base}/post/delete-post`,
   getProject: `${base}/project/get-project`,
   getProjects: `${base}/project/get-projects`,

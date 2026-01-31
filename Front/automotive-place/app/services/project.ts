@@ -1,5 +1,6 @@
 import { MainContentResponse } from "../hooks/useMainContent";
 import { ContentType } from "../utils/enums";
+import { THistoryCreate } from "../utils/types/history";
 import {
   TBasicPopularProject,
   TBasicProject,
@@ -11,7 +12,7 @@ import { PAGE_SIZE } from "./consts";
 
 export const createProject = async (
   project: TProjectCreate,
-  locale: string = "en"
+  locale: string = "en",
 ) => {
   const response = await fetch(apiEndpoints.createProject, {
     method: "POST",
@@ -34,7 +35,7 @@ export const createProject = async (
 export const uploadImageProject = async (
   projectId: string,
   formData: FormData,
-  stageNumber?: number
+  stageNumber?: number,
 ) => {
   if (stageNumber !== undefined) {
     formData.append("stageNumber", String(stageNumber));
@@ -58,7 +59,7 @@ export const uploadImageProject = async (
 
 export const deleteProject = async (
   projectId: string,
-  locale: string = "en"
+  locale: string = "en",
 ) => {
   const response = await fetch(`${apiEndpoints.deleteProject}/${projectId}`, {
     method: "DELETE",
@@ -105,11 +106,11 @@ export const getPopularProjects = async () => {
 };
 
 export const getProjectsInfinite = async (
-  page: number
+  page: number,
 ): Promise<MainContentResponse> => {
   const response = await fetch(
     `${apiEndpoints.getProjects}?page=${page}&limit=${PAGE_SIZE}`,
-    { next: { revalidate: 60 } }
+    { next: { revalidate: 60 } },
   );
 
   if (!response.ok) {
@@ -131,4 +132,23 @@ export const getProjectsInfinite = async (
     })),
     hasMore: result.hasMore,
   };
+};
+
+export const CreateProjectHistory = async (history: THistoryCreate) => {
+  const response = await fetch(`${apiEndpoints.createProjectHistory}`, {
+    method: "POST",
+    body: JSON.stringify(history),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    const message =
+      errorData?.message || `Failed to add history (${response.status})`;
+
+    throw new Error(message);
+  }
+
+  const result = await response.json();
+  return result;
 };
