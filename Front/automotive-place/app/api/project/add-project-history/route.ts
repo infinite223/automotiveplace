@@ -34,6 +34,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: "History not found" }, { status: 404 });
   }
 
+  if (!history.projectId) {
+    return NextResponse.json(
+      { message: "History projectId not found" },
+      { status: 404 },
+    );
+  }
+
   try {
     const data = await prisma.projectHistory.create({
       data: {

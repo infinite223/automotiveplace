@@ -6,7 +6,7 @@ export function mapSingleHistoryToPrisma(
 ) {
   return {
     title: history.title,
-    description: history.description || "",
+    description: history.description || null,
     date: new Date(history.date),
     mileage:
       typeof history.mileage === "string"
