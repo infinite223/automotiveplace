@@ -16,7 +16,10 @@ import { useState } from "react";
 import { HistoryForm } from "@/app/components/createProject/steps/HistoryForm";
 import { AMPButton } from "@/app/components/shared/AMPButton";
 import { CreateProjectHistory } from "@/app/services/project";
-import { numberFromString } from "@/app/components/createProject/helpers";
+import {
+  mapStepHistoryToHistory,
+  numberFromString,
+} from "@/app/components/createProject/helpers";
 import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { Status } from "@/app/utils/enums";
@@ -38,8 +41,6 @@ export default function HistoryTab({
     title: "",
     date: new Date().toISOString().split("T")[0],
     mileage: "",
-    price: "",
-    description: "",
     isVisible: true,
   });
   const dispatch = useDispatch();
@@ -50,8 +51,6 @@ export default function HistoryTab({
       title: "",
       date: new Date().toISOString().split("T")[0],
       mileage: "",
-      price: "",
-      description: "",
       isVisible: true,
     });
   };
@@ -67,18 +66,9 @@ export default function HistoryTab({
   };
 
   const handleAdd = async () => {
-    const newHistory: THistoryCreate = {
-      title: newEntry.title,
-      description: newEntry.description,
-      date: newEntry.date,
-      mileage: numberFromString(newEntry.mileage) ?? 0,
-      price: numberFromString(newEntry.price),
-      isVisible: newEntry.isVisible,
-      projectId,
-    };
-
-    const result = await CreateProjectHistory(newHistory);
-    console.log(result);
+    const result = await CreateProjectHistory(
+      mapStepHistoryToHistory({ ...newEntry, projectId }),
+    );
 
     dispatch(addNotification(JSON.stringify(result.notification)));
     if (result.notification.log.status === Status.Success) {
@@ -88,7 +78,6 @@ export default function HistoryTab({
             (a, b) => b.mileage - a.mileage,
           ),
         );
-        closeModal();
       }
       closeModal();
     }
@@ -135,7 +124,7 @@ export default function HistoryTab({
                 </div>
 
                 <div className="bg-amp-900/50 dark:bg-amp-50 rounded-md p-5 transition-colors">
-                  <div className="flex flex-wrap items-start justify-between gap-4 mb-3">
+                  <div className="flex flex-wrap items-start justify-between gap-4 mb-1">
                     <div className="flex flex-col gap-1">
                       <h3 className="font-bold text-white uppercase tracking-wide">
                         {h.title}
@@ -161,7 +150,7 @@ export default function HistoryTab({
                   </div>
 
                   {h.description && (
-                    <p className="text-amp-200 dark:text-amp-800/80 text-sm leading-relaxed mb-4 whitespace-pre-wrap">
+                    <p className="text-amp-200 dark:text-amp-800/80 text-sm leading-relaxed whitespace-pre-wrap">
                       {h.description}
                     </p>
                   )}
@@ -210,6 +199,7 @@ export default function HistoryTab({
         title="Dodaj nowy wpis"
         withHeader={true}
         onClose={closeModal}
+        bgOnClickClose={false}
         visible={isModalOpen}
         additionalTailwindCss="bg-amp-50 p-2 pb-4"
       >

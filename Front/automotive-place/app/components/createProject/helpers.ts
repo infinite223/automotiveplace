@@ -1,4 +1,4 @@
-import { TStepHistoryCreate } from "@/app/utils/types/history";
+import { THistoryCreate, TStepHistoryCreate } from "@/app/utils/types/history";
 import { TBasicProject, TProjectCreate } from "@/app/utils/types/project";
 import { TStageCreate, TStepStageCreate } from "@/app/utils/types/stage";
 
@@ -45,16 +45,24 @@ export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
     isVisible: summary.isVisable,
     projectPrice: numberFromString(summary.price) ?? 0,
     forSell: summary.forSell,
-    history: historyData.map((h: TStepHistoryCreate) => ({
-      title: h.title,
-      description: h.description,
-      date: h.date,
-      mileage: numberFromString(h.mileage) ?? 0,
-      price: numberFromString(h.price),
-      isVisible: h.isVisible,
-    })),
+    history: historyData.map((h: TStepHistoryCreate) =>
+      mapStepHistoryToHistory(h),
+    ),
   };
 };
+
+export const mapStepHistoryToHistory = (
+  h: TStepHistoryCreate,
+): THistoryCreate => ({
+  title: h.title,
+  description: h.description,
+  date: h.date,
+  mileage: numberFromString(h.mileage) ?? 0,
+  price: numberFromString(h.price),
+  isVisible: h.isVisible,
+
+  ...(h.projectId && { projectId: h.projectId }),
+});
 
 export const mapStepStagesToStages = (
   stages: TStepStageCreate[],

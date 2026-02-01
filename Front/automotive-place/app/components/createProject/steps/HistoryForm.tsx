@@ -5,6 +5,7 @@ import { AMPButton } from "../../shared/AMPButton";
 import { AMPSeparator } from "../../shared/AMPSeparator";
 import { TStepHistoryCreate } from "@/app/utils/types/history";
 import { AMPSwitch } from "../../shared/AMPSwitch";
+import { createHistoryStepSchema } from "@/app/api/zod.schmas";
 
 interface HistoryFormProps {
   item: TStepHistoryCreate;
@@ -25,6 +26,8 @@ export const HistoryForm: React.FC<HistoryFormProps> = ({
   isLast,
   isSingleMode = false,
 }) => {
+  const isValid = createHistoryStepSchema.safeParse(item).success;
+
   return (
     <div className="pt-4 flex flex-col gap-2">
       <div className="flex gap-4">
@@ -64,7 +67,7 @@ export const HistoryForm: React.FC<HistoryFormProps> = ({
             type="number"
             name="Cena (zł)"
             placeholder="0.00"
-            value={item.price}
+            value={item.price ?? ""}
             setValue={(v) => onChange("price", v.toString())}
           />
         </div>
@@ -73,7 +76,7 @@ export const HistoryForm: React.FC<HistoryFormProps> = ({
       <AMPTextarea
         name="Opis"
         placeholder="Co dokładnie zostało zrobione?"
-        value={item.description}
+        value={item.description ?? ""}
         setValue={(v) => onChange("description", v.toString())}
       />
 
@@ -91,7 +94,10 @@ export const HistoryForm: React.FC<HistoryFormProps> = ({
             type="secondary"
             name="Dodaj wpis"
             onClick={onAdd}
-            additionalTailwindCss="w-full justify-center text-sm font-bold mt-4"
+            disabled={!isValid}
+            additionalTailwindCss={`w-full justify-center text-sm font-bold mt-4 ${
+              !isValid ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           />
         ) : (
           <>
@@ -106,7 +112,10 @@ export const HistoryForm: React.FC<HistoryFormProps> = ({
                 type="secondary"
                 name="Dodaj kolejny"
                 onClick={onAdd}
-                additionalTailwindCss="w-full justify-center text-xs"
+                disabled={!isValid}
+                additionalTailwindCss={`w-full justify-center text-xs ${
+                  !isValid ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               />
             )}
           </>

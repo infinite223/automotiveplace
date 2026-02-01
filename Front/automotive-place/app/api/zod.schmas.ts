@@ -131,3 +131,18 @@ export const createPostSchema = z.object({
   description: z.string().min(3).max(500),
   isVisible: z.boolean().optional(),
 });
+
+export const createHistoryStepSchema = z.object({
+  title: z.string().min(3),
+  description: z.string().min(1).optional(),
+  date: z.string().min(1),
+
+  mileage: numberFromInput.pipe(z.number().min(0)),
+
+  price: numberFromInput.optional(),
+
+  isVisible: z.boolean(),
+
+  projectId: z.string().optional(),
+  companyId: z.string().nullable().optional(),
+});

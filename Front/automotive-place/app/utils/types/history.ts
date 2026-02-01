@@ -36,7 +36,7 @@ export type THistoryCreate = {
   title: string;
   description?: string;
   price?: number | string;
-  projectId: string;
+  projectId?: string;
   companyId?: string | null;
   isVisible: boolean;
   relatedItemsIds?: string[];
@@ -44,10 +44,11 @@ export type THistoryCreate = {
 
 export type TStepHistoryCreate = {
   title: string;
-  description: string;
+  description?: string;
   date: string;
   mileage: string;
-  price: string;
+  price?: string;
   isVisible: boolean;
   companyId?: string | null;
+  projectId?: string;
 };
