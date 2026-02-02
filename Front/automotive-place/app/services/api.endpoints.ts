@@ -11,7 +11,7 @@ export const apiEndpoints = {
   deleteProject: `${base}/project/delete-project`,
   createProjectHistory: `${base}/project/add-project-history`,
   editProjectHistory: `${base}/project/edit-project-history`,
-  removeProjectHistory: `${base}/project/remove-edit-history`,
+  removeProjectHistory: `${base}/project/remove-project-history`,
   deletePost: `${base}/post/delete-post`,
   getProject: `${base}/project/get-project`,
   getProjects: `${base}/project/get-projects`,

@@ -173,14 +173,9 @@ export const EditProjectHistory = async (history: THistoryEdit) => {
 };
 
 export const RemoveProjectHistory = async (id: string) => {
-  const response = await fetch(
-    `${apiEndpoints.removeProjectHistory}?id=${id}`,
-    {
-      method: "GET",
-      body: JSON.stringify(history),
-      headers: { "Content-Type": "application/json" },
-    },
-  );
+  const response = await fetch(`${apiEndpoints.removeProjectHistory}/${id}`, {
+    method: "DELETE",
+  });
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));

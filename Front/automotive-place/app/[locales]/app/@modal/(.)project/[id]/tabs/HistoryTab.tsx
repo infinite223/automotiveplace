@@ -68,17 +68,18 @@ export default function HistoryTab({
 
     setNewEntry({
       title: entry.title,
-      description: entry.description ?? "",
       date: new Date(entry.date).toISOString().split("T")[0],
       mileage: entry.mileage.toString(),
-      price: entry.price?.toString(),
       isVisible: entry.isVisible,
+      ...(entry.description ? { description: entry.description } : {}),
+      ...(entry.price ? { price: entry.price.toString() } : {}),
     });
 
     setIsModalOpen(true);
   };
 
   const handleDelete = async (id: string) => {
+    console.log(id, "id");
     const result = await RemoveProjectHistory(id);
 
     dispatch(addNotification(JSON.stringify(result.notification)));
