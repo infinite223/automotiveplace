@@ -15,6 +15,7 @@ interface HistoryFormProps {
   onAdd: () => void;
   isLast: boolean;
   isSingleMode?: boolean;
+  editMode?: boolean;
 }
 
 export const HistoryForm: React.FC<HistoryFormProps> = ({
@@ -25,6 +26,7 @@ export const HistoryForm: React.FC<HistoryFormProps> = ({
   onAdd,
   isLast,
   isSingleMode = false,
+  editMode = false,
 }) => {
   const isValid = createHistoryStepSchema.safeParse(item).success;
 
@@ -92,7 +94,7 @@ export const HistoryForm: React.FC<HistoryFormProps> = ({
         {isSingleMode ? (
           <AMPButton
             type="secondary"
-            name="Dodaj wpis"
+            name={editMode ? "Edytuj wpis" : "Dodaj wpis"}
             onClick={onAdd}
             disabled={!isValid}
             additionalTailwindCss={`w-full justify-center text-sm font-bold mt-4 ${

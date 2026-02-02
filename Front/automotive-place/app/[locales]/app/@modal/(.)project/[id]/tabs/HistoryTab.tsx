@@ -12,17 +12,24 @@ import moment from "moment";
 import "moment/locale/pl";
 import HistoryChart from "./HistoryChart";
 import AMPModal from "@/app/components/shared/AMPModal";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { HistoryForm } from "@/app/components/createProject/steps/HistoryForm";
 import { AMPButton } from "@/app/components/shared/AMPButton";
-import { CreateProjectHistory } from "@/app/services/project";
 import {
+  CreateProjectHistory,
+  EditProjectHistory,
+  RemoveProjectHistory,
+} from "@/app/services/project";
+import {
+  mapStepHistoryToEditHistory,
   mapStepHistoryToHistory,
-  numberFromString,
 } from "@/app/components/createProject/helpers";
 import { useDispatch } from "react-redux";
 import { addNotification } from "@/lib/features/notifications/notificationsSlice";
 import { Status } from "@/app/utils/enums";
+import { BiEdit, BiTrash } from "react-icons/bi";
+import { AMPMenu } from "@/app/components/shared/AMPMenu";
+import { iconSizes } from "@/app/utils/constants";
 
 interface HistoryTabProps {
   history: TBasicHistory[];
@@ -37,6 +44,7 @@ export default function HistoryTab({
 }: HistoryTabProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [historyList, setHistoryList] = useState(history);
+  const [editingEntryId, setEditingEntryId] = useState<string | null>(null);
   const [newEntry, setNewEntry] = useState<TStepHistoryCreate>({
     title: "",
     date: new Date().toISOString().split("T")[0],
@@ -55,6 +63,33 @@ export default function HistoryTab({
     });
   };
 
+  const handleEdit = (entry: TBasicHistory) => {
+    setEditingEntryId(entry.id);
+
+    setNewEntry({
+      title: entry.title,
+      description: entry.description ?? "",
+      date: new Date(entry.date).toISOString().split("T")[0],
+      mileage: entry.mileage.toString(),
+      price: entry.price?.toString(),
+      isVisible: entry.isVisible,
+    });
+
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (id: string) => {
+    const result = await RemoveProjectHistory(id);
+
+    dispatch(addNotification(JSON.stringify(result.notification)));
+    if (result.notification.log.status === Status.Success) {
+      if (result.notification.log.status === Status.Success) {
+        setHistoryList((prev) => prev.filter((h) => h.id !== id));
+      }
+      closeModal();
+    }
+  };
+
   const handleFormChange = (
     field: keyof TStepHistoryCreate,
     value: string | boolean,
@@ -65,7 +100,7 @@ export default function HistoryTab({
     }));
   };
 
-  const handleAdd = async () => {
+  const handleSubmitAdd = async () => {
     const result = await CreateProjectHistory(
       mapStepHistoryToHistory({ ...newEntry, projectId }),
     );
@@ -80,6 +115,25 @@ export default function HistoryTab({
         );
       }
       closeModal();
+    }
+  };
+
+  const handleSubmitEdit = async () => {
+    if (!editingEntryId) return;
+
+    const result = await EditProjectHistory(
+      mapStepHistoryToEditHistory(newEntry, editingEntryId),
+    );
+
+    dispatch(addNotification(JSON.stringify(result.notification)));
+
+    if (result.notification.log.status === Status.Success) {
+      setHistoryList((prev) =>
+        prev.map((h) => (h.id === editingEntryId ? result.history : h)),
+      );
+
+      closeModal();
+      setEditingEntryId(null);
     }
   };
 
@@ -115,7 +169,32 @@ export default function HistoryTab({
           <HistoryChart history={historyList} />
           <div className="relative border-l-[1px] mt-3 border-amp-700/40 ml-4 md:ml-6">
             {historyList.map((h) => (
-              <div key={h.id} className="mb-5 ml-6 md:ml-10 relative">
+              <div
+                key={h.id}
+                className="mb-5 ml-6 md:ml-10 relative transition-colors"
+              >
+                {isMyProject && (
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                    <div className="pointer-events-auto">
+                      <AMPMenu
+                        isLoading={false}
+                        items={[
+                          {
+                            name: "Edytuj",
+                            handleClick: () => handleEdit(h),
+                            icon: <BiEdit size={iconSizes.small} />,
+                          },
+                          {
+                            name: "Usuń",
+                            handleClick: () => handleDelete(h.id),
+                            icon: <BiTrash size={iconSizes.small} />,
+                          },
+                        ]}
+                      />
+                    </div>
+                  </div>
+                )}
+
                 <div className="absolute -left-[30px] md:-left-[45px] mt-1.5 flex items-center justify-center">
                   <div className="absolute w-7 h-7 rounded-full bg-amp-500/35 blur-md" />
                   <div className="flex items-center justify-center w-4.5 h-4.5 rounded-full border border-amp-500">
@@ -209,9 +288,10 @@ export default function HistoryTab({
             index={0}
             onChange={handleFormChange}
             onRemove={handleRemove}
-            onAdd={handleAdd}
+            onAdd={editingEntryId ? handleSubmitEdit : handleSubmitAdd}
             isLast={true}
             isSingleMode
+            editMode={editingEntryId != null}
           />
         </div>
       </AMPModal>

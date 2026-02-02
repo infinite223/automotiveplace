@@ -1,6 +1,6 @@
 import { MainContentResponse } from "../hooks/useMainContent";
 import { ContentType } from "../utils/enums";
-import { THistoryCreate } from "../utils/types/history";
+import { THistoryCreate, THistoryEdit } from "../utils/types/history";
 import {
   TBasicPopularProject,
   TBasicProject,
@@ -145,6 +145,47 @@ export const CreateProjectHistory = async (history: THistoryCreate) => {
     const errorData = await response.json().catch(() => ({}));
     const message =
       errorData?.message || `Failed to add history (${response.status})`;
+
+    throw new Error(message);
+  }
+
+  const result = await response.json();
+  return result;
+};
+
+export const EditProjectHistory = async (history: THistoryEdit) => {
+  const response = await fetch(`${apiEndpoints.editProjectHistory}`, {
+    method: "POST",
+    body: JSON.stringify(history),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    const message =
+      errorData?.message || `Failed to edit history (${response.status})`;
+
+    throw new Error(message);
+  }
+
+  const result = await response.json();
+  return result;
+};
+
+export const RemoveProjectHistory = async (id: string) => {
+  const response = await fetch(
+    `${apiEndpoints.removeProjectHistory}?id=${id}`,
+    {
+      method: "GET",
+      body: JSON.stringify(history),
+      headers: { "Content-Type": "application/json" },
+    },
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    const message =
+      errorData?.message || `Failed to remove history (${response.status})`;
 
     throw new Error(message);
   }

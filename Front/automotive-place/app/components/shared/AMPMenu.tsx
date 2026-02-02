@@ -16,10 +16,21 @@ interface IAMPMenuProps {
   items: TMenuItem[];
   isLoading: boolean;
   size?: number;
+  onOpenChange?: (open: boolean) => void;
+  open?: boolean;
 }
 
-export const AMPMenu: FC<IAMPMenuProps> = ({ items, isLoading, size }) => {
-  const [showMenu, setShowMenu] = useState(false);
+export const AMPMenu: FC<IAMPMenuProps> = ({
+  items,
+  isLoading,
+  size,
+  onOpenChange,
+  open,
+}) => {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const showMenu = open ?? internalOpen;
+  const setShowMenu = onOpenChange ?? setInternalOpen;
   const [menuPosition, setMenuPosition] = useState<{
     top: number;
     left: number;

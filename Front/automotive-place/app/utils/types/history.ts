@@ -42,6 +42,18 @@ export type THistoryCreate = {
   relatedItemsIds?: string[];
 };
 
+export type THistoryEdit = {
+  id: string;
+  date: string | Date;
+  mileage: number | string;
+  title: string;
+  description?: string;
+  price?: number | string;
+  projectId?: string;
+  companyId?: string | null;
+  isVisible: boolean;
+};
+
 export type TStepHistoryCreate = {
   title: string;
   description?: string;
