@@ -1,27 +1,27 @@
 import { TBasicTag } from "./tag";
 import { TBasicUser } from "./user";
 
-type TPost = {
-  id: string;
+type TPostBase = {
+  id?: string;
   title: string;
-  content: string;
-  imagesUrl: string;
+  content?: string;
+  imagesUrl?: string | null;
+  isVisible: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
+type TPost = TPostBase & {
+  id: string;
   createdAt: Date;
   updatedAt: Date;
-  isVisible: boolean;
 };
 
-type TPostCreate = {
-  title: string;
-  description: string;
-  isVisible: boolean;
-};
-
-type TBasicPost = {
-  id: string;
-  title: string;
+type TPostCreate = Omit<TPostBase, "id" | "createdAt" | "updatedAt"> & {
   content: string;
-  imagesUrl: string | null;
+};
+
+type TBasicPost = Pick<TPost, "id" | "title" | "content" | "imagesUrl"> & {
   isLikedByAuthUser: boolean;
   likesCount: number;
   lastUpdateAt: Date;

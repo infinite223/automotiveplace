@@ -1,66 +1,52 @@
 import { Company } from "@prisma/client";
 
-export type THistory = {
+export type THistory = THistoryBase & {
   id: string;
   createdAt: Date;
   updatedAt: Date;
-  date: Date;
-  mileage: number;
-  title: string;
-  description: string | null;
-  price: number | null;
-  projectId: string;
   authorId: string;
-  companyId: string | null;
-  isVisible: boolean;
-
-  company?: Pick<Company, "id" | "name" | "imagesUrl"> | null;
 };
 
-export type TBasicHistory = {
-  id: string;
-  date: Date;
-  mileage: number;
-  title: string;
-  description: string | null;
-  price: number | null;
-  authorId: string;
-  isVisible: boolean;
-
-  company?: Pick<Company, "id" | "name" | "imagesUrl"> | null;
-};
-
-export type THistoryCreate = {
-  date: string | Date;
+type THistoryBase = {
+  id?: string;
+  date: Date | string;
   mileage: number | string;
   title: string;
-  description?: string;
-  price?: number | string;
+  description?: string | null;
+  price?: number | null | string;
   projectId?: string;
   companyId?: string | null;
+  authorId?: string;
   isVisible: boolean;
+
+  company?: Pick<Company, "id" | "name" | "imagesUrl"> | null;
+};
+
+export type TBasicHistory = Pick<
+  THistory,
+  | "id"
+  | "date"
+  | "mileage"
+  | "title"
+  | "description"
+  | "price"
+  | "authorId"
+  | "isVisible"
+  | "company"
+>;
+
+export type THistoryCreate = Omit<
+  THistoryBase,
+  "id" | "authorId" | "company"
+> & {
   relatedItemsIds?: string[];
 };
 
-export type THistoryEdit = {
+export type THistoryEdit = Omit<THistoryBase, "company"> & {
   id: string;
-  date: string | Date;
-  mileage: number | string;
-  title: string;
-  description?: string;
-  price?: number | string;
-  projectId?: string;
-  companyId?: string | null;
-  isVisible: boolean;
 };
 
-export type TStepHistoryCreate = {
-  title: string;
-  description?: string;
-  date: string;
-  mileage: string;
-  price?: string;
-  isVisible: boolean;
-  companyId?: string | null;
-  projectId?: string;
-};
+export type TStepHistoryCreate = Omit<
+  THistoryBase,
+  "id" | "authorId" | "company"
+>;

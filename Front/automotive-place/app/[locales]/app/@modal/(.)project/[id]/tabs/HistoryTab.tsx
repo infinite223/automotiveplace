@@ -43,7 +43,11 @@ export default function HistoryTab({
   projectId,
 }: HistoryTabProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [historyList, setHistoryList] = useState(history);
+  const [historyList, setHistoryList] = useState(
+    [...history].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    ),
+  );
   const [editingEntryId, setEditingEntryId] = useState<string | null>(null);
   const [newEntry, setNewEntry] = useState<TStepHistoryCreate>({
     title: "",
@@ -111,7 +115,7 @@ export default function HistoryTab({
       if (result.notification.log.status === Status.Success) {
         setHistoryList((prev) =>
           [...(prev ?? []), result.history].sort(
-            (a, b) => b.mileage - a.mileage,
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
           ),
         );
       }
@@ -130,7 +134,11 @@ export default function HistoryTab({
 
     if (result.notification.log.status === Status.Success) {
       setHistoryList((prev) =>
-        prev.map((h) => (h.id === editingEntryId ? result.history : h)),
+        prev
+          .map((h) => (h.id === editingEntryId ? result.history : h))
+          .sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+          ),
       );
 
       closeModal();

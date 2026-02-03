@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
       {
         status: 404,
         statusText: "Unauthorized",
-      }
+      },
     );
   }
 
@@ -28,18 +28,18 @@ export async function POST(request: NextRequest) {
       post,
       notification: CreateNotification(
         Status.Medium,
-        `Tytuł zawiera niedozwolone słowo: "${titleCheck.word}"`
+        `Tytuł zawiera niedozwolone słowo: "${titleCheck.word}"`,
       ),
     });
   }
 
-  const descriptionCheck = checkText(post.description);
+  const descriptionCheck = checkText(post.content);
   if (!descriptionCheck.ok) {
     return NextResponse.json({
       post,
       notification: CreateNotification(
         Status.Medium,
-        `Opis zawiera niedozwolone słowo: "${descriptionCheck.word}"`
+        `Opis zawiera niedozwolone słowo: "${descriptionCheck.word}"`,
       ),
     });
   }
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
       post: post,
       notification: CreateNotification(
         Status.Medium,
-        validProject.error.message
+        validProject.error.message,
       ),
     });
   }
@@ -87,7 +87,7 @@ async function createPost(post: TPostCreate, authorId: string) {
     newPost = await prisma.post.create({
       data: {
         title: post.title,
-        content: post.description,
+        content: post.content,
         isProblem: false,
         published: true,
         authorId,

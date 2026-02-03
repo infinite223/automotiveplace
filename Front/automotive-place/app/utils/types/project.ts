@@ -47,63 +47,99 @@ type TProject = {
   stages?: TStage[];
   tags?: TBasicTag[];
   history?: TBasicHistory[];
-  // likes:
-  // pickedProjectsOnEventOrSpot:
-  // tags:
-  // authorId:
-  // companyId:
+
   location?: TLocation;
   isLikedByAuthUser: boolean;
   likesCount: number;
 };
 
-export type TLocation = {
-  name: string;
-  description: string;
-  lat: number;
-  lng: number;
-};
-
-type TBasicProject = {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  forSell: boolean;
-  isVisible: boolean;
-
-  name?: string | null;
-  carMake: string;
-  carModel: string;
-  description?: string | null;
-  isVerified: boolean;
-
+type TBasicProject = Pick<
+  TProject,
+  | "id"
+  | "createdAt"
+  | "updatedAt"
+  | "forSell"
+  | "isVisible"
+  | "name"
+  | "carMake"
+  | "carModel"
+  | "description"
+  | "isVerified"
+  | "engineStockHp"
+  | "engineStockNm"
+  | "isLikedByAuthUser"
+  | "likesCount"
+> & {
   hp: number;
   nm: number;
-  engineStockHp: number;
-  engineStockNm: number;
   acc_0_100: number | null;
   acc_100_200: number | null;
   stageNumber: number;
 
   engineNameAndCapacity: string;
-  isLikedByAuthUser: boolean;
-  likesCount: number;
   images: string[];
   tags: TBasicTag[];
   author: TBasicUser;
 };
+
+type TProjectCreate = Pick<
+  TProject,
+  | "forSell"
+  | "name"
+  | "carMake"
+  | "carModel"
+  | "description"
+  | "isVisible"
+  | "engineName"
+  | "engineStockHp"
+  | "engineStockNm"
+  | "engineDescription"
+  | "engineCapacity"
+  | "engineWasSwapped"
+  | "transmissionName"
+  | "transmissionGears"
+  | "transmissionDescription"
+  | "transmissionWasSwapped"
+  | "transmissionType"
+> & {
+  projectPrice: number;
+  imagesCount: number;
+  carItemsCount: number;
+
+  stages?: TStageCreate[];
+  carItems?: TCarItemCreate[];
+  tags?: TTagCreate[];
+  history?: THistoryCreate[];
+};
+
+type TEngine = Pick<
+  TProject,
+  | "engineName"
+  | "engineStockHp"
+  | "engineStockNm"
+  | "engineCapacity"
+  | "engineDescription"
+  | "engineWasSwapped"
+>;
+
+type TTransmission = Pick<
+  TProject,
+  | "transmissionName"
+  | "transmissionGears"
+  | "transmissionDescription"
+  | "transmissionWasSwapped"
+  | "transmissionType"
+>;
+
 function isTBasicProject(data: any): data is TBasicProject {
   return (
     (typeof data === "object" &&
       data !== null &&
       typeof data.id === "string" &&
-      // data.createdAt instanceof Date &&
-      // data.updatedAt instanceof Date &&
       typeof data.forSell === "boolean" &&
       typeof data.isVisible === "boolean" &&
       typeof data.carMake === "string" &&
       typeof data.carModel === "string" &&
-      // typeof data.isVerified === "boolean" &&
       typeof data.likesCount === "number" &&
       typeof data.engineNameAndCapacity === "string" &&
       typeof data.isLikedByAuthUser === "boolean" &&
@@ -116,35 +152,11 @@ function isTBasicProject(data: any): data is TBasicProject {
   );
 }
 
-type TProjectCreate = {
-  forSell: boolean;
-  name?: string;
-  carMake: string;
-  carModel: string;
-  description?: string;
-  carItemsCount: number;
-  imagesCount: number;
-
-  isVisible: boolean;
-  projectPrice: number;
-
-  engineName: string;
-  engineStockHp: number;
-  engineStockNm: number;
-  engineDescription?: string;
-  engineCapacity: number;
-  engineWasSwapped: boolean;
-
-  transmissionName: string;
-  transmissionGears: number;
-  transmissionDescription?: string;
-  transmissionWasSwapped?: boolean;
-  transmissionType: number; // type -> 0 - maual | 1 - automat -> TransmissionType enum
-
-  stages?: TStageCreate[];
-  carItems?: TCarItemCreate[];
-  tags?: TTagCreate[];
-  history?: THistoryCreate[];
+export type TLocation = {
+  name: string;
+  description: string;
+  lat: number;
+  lng: number;
 };
 
 export type EngineTransmissionStepType = Pick<

@@ -115,10 +115,10 @@ export const mapProjectToBasicProject = (
     isVisible: project.isVisible,
     isVerified: project.isVerified,
 
-    name: project.name ?? null,
+    name: project.name ?? undefined,
     carMake: project.carMake,
     carModel: project.carModel,
-    description: project.description ?? null,
+    description: project.description ?? undefined,
 
     hp: lastStage?.hp ?? project.engineStockHp,
     nm: lastStage?.nm ?? project.engineStockNm,

@@ -100,7 +100,7 @@ export const EngineTransmissionStep = ({
         type="text"
         placeholder="Nazwa skrzyni (np. ZF8hp)"
         name="Skrzynia"
-        value={data.transmissionName}
+        value={data.transmissionName || ""}
         setValue={(v) => update("transmissionName", v.toString())}
         error={
           errors?.find((e) => e.path.includes("transmissionName"))?.message

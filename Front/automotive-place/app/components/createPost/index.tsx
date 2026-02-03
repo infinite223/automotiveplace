@@ -83,9 +83,9 @@ export const CreatePostView = () => {
       dispatch(
         addNotification(
           JSON.stringify(
-            CreateNotification(Status.Medium, "Coś poszło nie tak")
-          )
-        )
+            CreateNotification(Status.Medium, "Coś poszło nie tak"),
+          ),
+        ),
       );
     } finally {
       setLoading(false);
@@ -126,17 +126,17 @@ export const CreatePostView = () => {
 
           <AMPTextarea
             name="Opis"
-            value={post.description}
+            value={post.content}
             placeholder="Np. Zrobiłem swapa z 1.9TDI..."
             inputStyles={{ fontSize: 12, height: "150px" }}
             required
-            error={errors.description}
+            error={errors.content}
             setValue={(value) => {
               const val = value.toString();
               setPost((prev) => ({ ...prev, description: val }));
 
-              if (errors.description) {
-                validateField("description", val);
+              if (errors.content) {
+                validateField("content", val);
               }
             }}
             validFunction={zodValidFunction(createPostSchema, "description")}

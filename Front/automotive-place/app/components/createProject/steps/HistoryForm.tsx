@@ -46,7 +46,7 @@ export const HistoryForm: React.FC<HistoryFormProps> = ({
           <AMPInput
             type="date"
             name="Data"
-            value={item.date}
+            value={item.date.toString() || ""}
             setValue={(v) => onChange("date", v.toString())}
           />
         </div>

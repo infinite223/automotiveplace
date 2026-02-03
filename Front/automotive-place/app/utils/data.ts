@@ -35,7 +35,7 @@ const problemData: TProblemCreate = {
 };
 
 const postData: TPostCreate = {
-  description: "",
+  content: "",
   isVisible: true,
   title: "",
 };
