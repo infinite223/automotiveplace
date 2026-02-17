@@ -1,0 +1,103 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+/* Color palette - https://www.canva.com/colors/color-palettes/facing-forward/ */
+/* 
+  baseColor - #01949a 60%
+  baseColorSecendary - #004369 25%
+  sandColor - #e5ddc8 10%
+  redColor - #db1f48 5%
+ */
+:root {
+  --baseColor: #01949a;
+  --baseColorSecendary: #004369;
+  --whiteColor: white;
+  --redColor: #db1f48;
+}
+
+.border-custom-primary {
+  @apply border-zinc-200 dark:border-zinc-800;
+}
+
+.border-custom-secendary {
+  @apply border-zinc-100 dark:border-zinc-900;
+}
+
+.loading-text-custom {
+  @apply text-zinc-300 dark:text-zinc-800;
+}
+
+.custom-blur {
+  backdrop-filter: blur(2px);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: #fff !important;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: black;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0);
+  transition:
+    background-color 0.3s,
+    opacity 0.3s;
+  opacity: 0;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  @apply bg-zinc-500;
+  opacity: 1;
+}
+
+.custom-scrollbar:hover {
+  overflow-y: auto;
+}
+
+.custom-number-input::-webkit-outer-spin-button,
+.custom-number-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.custom-number-input {
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Fix for chart in historyTab */
+.recharts-wrapper *:focus,
+.recharts-wrapper *:focus-visible {
+  outline: none !important;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE / Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome / Safari */
+}

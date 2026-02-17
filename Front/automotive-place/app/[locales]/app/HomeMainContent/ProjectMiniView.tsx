@@ -1,0 +1,207 @@
+"use client";
+
+import { TBasicProject } from "@/app/utils/types/project";
+import { useEffect, useState } from "react";
+import { ContentMiniNav } from "./ContentMiniNav";
+import { ContentMiniFooter } from "./ContentMiniFooter";
+import { IoIosArrowForward } from "react-icons/io";
+import { iconSizes } from "@/app/utils/constants";
+import AMPSlider from "@/app/components/shared/AMPSlider";
+import { useLike } from "@/app/hooks/useLike";
+import { ContentType, EngineParameter, Status } from "@/app/utils/enums";
+import { useDispatch } from "react-redux";
+import { addNotification } from "@/lib/features/notifications/notificationsSlice";
+import { CreateNotification } from "@/app/components/logger/NotificationHelper";
+import { deleteProject } from "@/app/services/project";
+import { useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEY_POPULAR_PROJECTS } from "@/app/components/shared/AMPPopularProjects";
+import Link from "next/link";
+import { useLocale } from "next-intl";
+
+export const ProjectMiniView = ({
+  data,
+  isUserContent = false,
+  onDelete,
+}: {
+  data: TBasicProject;
+  isUserContent: boolean;
+  onDelete?: (id: string) => void;
+}) => {
+  const [isClient, setIsClient] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const { currentIsLiked, currentLikesCount, handleClickLike, isLoading } =
+    useLike(
+      data.likesCount,
+      data.isLikedByAuthUser,
+      data.id,
+      ContentType.Project,
+      data.tags
+    );
+  const locale = useLocale();
+
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  if (!data) {
+    return null;
+  }
+
+  const handleClickShare = () => {
+    const newN = CreateNotification(Status.Success, "Shared project");
+    dispatch(addNotification(JSON.stringify(newN)));
+  };
+
+  const handleClickDelete = async () => {
+    try {
+      setIsDeleting(true);
+
+      const res = await deleteProject(data.id);
+
+      const newN = CreateNotification(Status.Success, res.message);
+      dispatch(addNotification(JSON.stringify(newN)));
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POPULAR_PROJECTS] });
+
+      if (onDelete) onDelete(data.id);
+    } catch (error: any) {
+      console.log(error, "error");
+      const newN = CreateNotification(Status.Low, error);
+      dispatch(addNotification(JSON.stringify(newN)));
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const statisticCurrentHp =
+    data.stageNumber > 0
+      ? data.hp
+        ? data.hp + " (+" + (data.hp - data.engineStockHp) + ") "
+        : data.engineStockHp
+      : data.hp + " ";
+
+  const statisticCurrentNm =
+    data.stageNumber > 0
+      ? data.nm
+        ? data.nm + " (+" + (data.nm - data.engineStockNm) + ") "
+        : data.engineStockNm
+      : data.nm + " ";
+
+  const currentStage =
+    data.stageNumber > 0 ? "STAGE " + data.stageNumber : "STOCK";
+
+  const handleClickInterestingContent = () => {
+    console.log("Add/remove content from intresting", data.id);
+  };
+
+  return (
+    <>
+      {isClient ? (
+        <div
+          className={`flex flex-col w-full h-full gap-1 transition-opacity duration-300 ${
+            isDeleting ? "opacity-40 pointer-events-none" : "opacity-100"
+          }`}
+        >
+          <ContentMiniNav
+            isUserContent={isUserContent}
+            createdAt={data.createdAt}
+            handleClickInterestingContent={handleClickInterestingContent}
+            handleClickShare={handleClickShare}
+            handleClickDelete={handleClickDelete}
+            title={
+              data.carMake +
+              " " +
+              data.carModel +
+              " " +
+              data.engineNameAndCapacity
+            }
+            typeName="Projekt"
+            author={data.author}
+          />
+
+          <div className="flex flex-col my-1 gap-2">
+            <h2 className="text-md opacity-80 mx-3">{data.description}</h2>
+            {data.images && <AMPSlider images={data.images} />}
+            <div className="px-3 placeholder:py-1 flex items-center justify-left gap-1">
+              <span>Etap modyfikacji:</span>
+              <span className="font-semibold">{currentStage}</span>
+            </div>
+            <div
+              className={`flex px-3 gap-5 w-full ${data.acc_0_100 && " justify-between"}`}
+            >
+              <StatisticMiniItem
+                title="Moc"
+                value={statisticCurrentHp}
+                type={EngineParameter.PowerPs}
+              />
+              <StatisticMiniItem
+                title="Moment obrotowy"
+                value={statisticCurrentNm}
+                type={EngineParameter.TorqueNm}
+              />
+              <StatisticMiniItem
+                title="0-100km/h"
+                value={data.acc_0_100}
+                type="s"
+              />
+              <StatisticMiniItem
+                title="100-200km/h"
+                value={data.acc_100_200}
+                type="s"
+              />
+            </div>
+          </div>
+
+          <ContentMiniFooter
+            tags={data.tags}
+            currentIsLiked={currentIsLiked}
+            isUserContent={isUserContent}
+            currentLikesCount={currentLikesCount}
+            handleClickLike={handleClickLike}
+            handleClickShare={handleClickShare}
+            type={ContentType.Project}
+            isLoading={isLoading}
+            actions={
+              <Link
+                href={`/${locale}/app/project/${data.id}`}
+                scroll={false}
+                className="flex font-semibold items-center text-sm cursor-pointer transition ease-in-out gap-2 border-amp-200/50 hover:border-amp-200/70 dark:border-amp-800/40 dark:hover:border-amp-800/70 border-0 rounded-sm pl-2  py-1 opacity-80 hover:opacity-50"
+              >
+                Zobacz projekt
+                <IoIosArrowForward size={iconSizes.base} />
+              </Link>
+            }
+          />
+        </div>
+      ) : (
+        <div></div>
+      )}
+    </>
+  );
+};
+
+const StatisticMiniItem = ({
+  title,
+  value,
+  type,
+}: {
+  title: string;
+  value: string | number | null;
+  type?: string;
+}) => {
+  if (value === null) {
+    return;
+  }
+
+  return (
+    <div className="flex flex-col">
+      <div className="text-sm font-semibold whitespace-nowrap overflow-hidden text-ellipsis">
+        {value} {type}
+      </div>
+      <div className="text-[10px] sm:text-xs text-amp-100/90 dark:text-amp-700/90 mt-[-2px] whitespace-nowrap overflow-hidden text-ellipsis">
+        {title}
+      </div>
+    </div>
+  );
+};
