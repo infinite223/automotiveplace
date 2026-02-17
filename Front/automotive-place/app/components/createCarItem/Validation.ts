@@ -7,7 +7,6 @@ export const validCarElement = (newElement: TCarItemCreate) => {
   let notification: ICreateNotification | null = null;
 
   if (newElement.authorId.length < 1) {
-    //maybe valid authorId?
     validResults.push({
       error: "Brak poprawnych danych o autorze. ",
       valid: false,
