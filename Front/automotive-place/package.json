@@ -5,7 +5,8 @@
   "scripts": {
     "prebuild": "npm test",
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "postinstall": "prisma generate",
+    "build": "next build",
     "build:all": "npm test && npm run test:api && next build",
     "start": "next start",
     "lint": "next lint",
