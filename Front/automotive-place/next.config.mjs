@@ -1,7 +1,10 @@
-import { NextConfig } from "next";
+// next.config.mjs
 import createNextIntlPlugin from "next-intl/plugin";
 
-const nextConfig: NextConfig = {
+const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   reactStrictMode: false,
   images: {
     remotePatterns: [
@@ -20,18 +23,10 @@ const nextConfig: NextConfig = {
         hostname: "cloud.appwrite.io",
         pathname: "/v1/storage/**",
       },
-      {
-        protocol: "https",
-        hostname: "cdn1.iconfinder.com",
-      },
-      {
-        protocol: "https",
-        hostname: "fra.cloud.appwrite.io",
-      },
+      { protocol: "https", hostname: "cdn1.iconfinder.com" },
+      { protocol: "https", hostname: "fra.cloud.appwrite.io" },
     ],
   },
 };
-
-const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 export default withNextIntl(nextConfig);

@@ -29,8 +29,9 @@
     ".next/types/**/*.ts",
     "app/utils/prisma/scripts/content.js",
     ".next/dev/types/**/*.ts",
-    "next.config.ts",
-    "tailwind.config.ts"
+    "next.config.njx",
+    "tailwind.config.njx",
+    "next.config.mjs"
   ],
   "exclude": ["node_modules"]
 }
