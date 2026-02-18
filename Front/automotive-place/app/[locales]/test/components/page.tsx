@@ -1,7 +1,7 @@
 "use client";
 
 import { AMPSeparator } from "@/app/components/shared/AMPSeparator";
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { componentsList } from "./componentsList";
 
 export default function Page() {

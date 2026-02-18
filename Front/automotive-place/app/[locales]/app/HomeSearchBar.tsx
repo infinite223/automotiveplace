@@ -1,5 +1,5 @@
 import useDebounce from "@/app/hooks/useDebounce";
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, JSX, useEffect, useRef, useState } from "react";
 import { LuSearch } from "react-icons/lu";
 import { HomeSearchBarFilterView } from "./HomeSearchBarFilterView";
 import { GoChevronDown, GoChevronUp } from "react-icons/go";
@@ -27,7 +27,7 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
   const tryOnSearch = () => {};
   const [searchValue, setSearchValue] = useState("");
   const { isSearchBarOpen } = useSelector(
-    (state: RootState) => state.searchBar
+    (state: RootState) => state.searchBar,
   );
   const inputRef = useRef<any>(null);
 
@@ -35,7 +35,7 @@ export const HomeSearchBar: FC<HomeSearchBarProps> = ({
   const [isFocused, setIsFocused] = useState(false);
   const [showFilterOptions, setShowFilterOptions] = useState(false);
   const [searchTypeOption, setSearchTypeOption] = useState<TSearchTypesOptions>(
-    searchTypesOptions[1]
+    searchTypesOptions[1],
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

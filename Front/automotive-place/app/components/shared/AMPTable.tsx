@@ -1,5 +1,5 @@
 import { TSearchOptions } from "@/app/utils/types";
-import React, { FC, RefObject } from "react";
+import React, { FC, JSX, RefObject } from "react";
 import { AMPSearch } from "./AMPSearch";
 
 interface AMPTableProps {

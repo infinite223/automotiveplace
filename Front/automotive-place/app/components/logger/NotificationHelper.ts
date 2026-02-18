@@ -1,10 +1,11 @@
 import { Status } from "@/app/utils/enums";
 import { ICreateNotification } from "@/app/utils/types";
+import { JSX } from "react";
 
 const CreateNotification = (
   status: Status,
   title: string,
-  message?: string
+  message?: string,
 ) => {
   const newNotifiaction: ICreateNotification = {
     log: {
@@ -23,7 +24,7 @@ const CreateNotificationWithIcon = (
   status: Status,
   title: string,
   leftIcon: JSX.Element,
-  message?: string
+  message?: string,
 ) => {
   let newNotifiaction = CreateNotification(status, title, message);
 

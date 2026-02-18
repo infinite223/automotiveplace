@@ -1,4 +1,4 @@
-import { FC, useState, useRef, useEffect } from "react";
+import { FC, useState, useRef, useEffect, JSX } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import useKeyboardShortcut from "@/app/hooks/useKeydown";
 import { iconSizes, shortcutConfigs } from "@/app/utils/constants";

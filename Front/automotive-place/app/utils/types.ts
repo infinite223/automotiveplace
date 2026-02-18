@@ -1,3 +1,4 @@
+import { JSX } from "react";
 import { Status } from "./enums";
 import { TCarItem } from "./types/carItem";
 import { TBasicPost } from "./types/post";

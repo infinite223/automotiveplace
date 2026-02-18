@@ -8,6 +8,7 @@ import { CiTrash } from "react-icons/ci";
 import { AMPMenu } from "@/app/components/shared/AMPMenu";
 import { iconSizes } from "@/app/utils/constants";
 import { LuMinus, LuPlus } from "react-icons/lu";
+import { JSX } from "react";
 
 moment.locale("pl");
 

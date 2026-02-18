@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useRef, useState } from "react";
+import React, { CSSProperties, JSX, useEffect, useRef, useState } from "react";
 import { TValidResult } from "@/app/utils/types";
 import { FiChevronDown } from "react-icons/fi";
 

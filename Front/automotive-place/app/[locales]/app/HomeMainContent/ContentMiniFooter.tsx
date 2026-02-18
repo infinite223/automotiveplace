@@ -6,7 +6,7 @@ import { TbMessageCircleUp } from "react-icons/tb";
 
 import { FaRegHeart } from "react-icons/fa6";
 import { AMPTag } from "@/app/components/shared/AMPTag";
-import { useEffect } from "react";
+import { JSX, useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
 
 interface IContentMiniFooter {

@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 export interface StepProps {
   onNext: (data: unknown) => void;
   onPrev: () => void;
