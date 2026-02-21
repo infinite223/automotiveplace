@@ -4,7 +4,10 @@ import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { iconSizes } from "@/app/utils/constants";
 import AMPImageZoomModal from "./AMPImageZoomModal";
 import Image from "next/image";
-import { calculateDominantColor } from "@/app/utils/helpers/colorHelper";
+import {
+  calculateDominantColor,
+  getDominantColorFromElement,
+} from "@/app/utils/helpers/colorHelper";
 import { getProjectImageSrcByFileId } from "@/app/utils/helpers/storageHelper";
 
 interface AMPSliderProps {
@@ -40,17 +43,17 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  useEffect(() => {
-    setTimeout(async () => {
-      if (!images && !images[currentIndex]) return;
-      try {
-        const dominant = await calculateDominantColor(images[currentIndex]);
-        setDominantColor(`rgb(${dominant})`);
-      } catch (error) {
-        console.error(error);
-      }
-    }, 10);
-  }, [currentIndex, images]);
+  // useEffect(() => {
+  //   setTimeout(async () => {
+  //     if (!images && !images[currentIndex]) return;
+  //     try {
+  //       const dominant = await calculateDominantColor(images[currentIndex]);
+  //       setDominantColor(`rgb(${dominant})`);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }, 10);
+  // }, [currentIndex, images]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchEndX.current = null;
@@ -101,6 +104,10 @@ const AMPSlider: React.FC<AMPSliderProps> = ({ images }) => {
               <Image
                 key={index}
                 src={imgFullPath}
+                onLoad={(e) => {
+                  const color = getDominantColorFromElement(e.currentTarget);
+                  setDominantColor(`rgb(${color})`);
+                }}
                 alt={`slide-${index}`}
                 width={1200}
                 height={800}

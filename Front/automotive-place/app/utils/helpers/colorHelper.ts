@@ -43,3 +43,37 @@ export const calculateDominantColor = (imageSrc: string): Promise<string> => {
     };
   });
 };
+
+export const getDominantColorFromElement = (
+  imgElement: HTMLImageElement,
+): string => {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return "255,255,255";
+
+  canvas.width = imgElement.naturalWidth;
+  canvas.height = imgElement.naturalHeight;
+  ctx.drawImage(imgElement, 0, 0);
+
+  const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+
+  const colorMap: Record<string, number> = {};
+  let maxCount = 0;
+  let dominant = "255,255,255";
+
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
+    const color = `${r},${g},${b}`;
+
+    colorMap[color] = (colorMap[color] || 0) + 1;
+    if (colorMap[color] > maxCount) {
+      maxCount = colorMap[color];
+      dominant = color;
+    }
+  }
+
+  console.log(dominant, "dominant");
+  return dominant;
+};
