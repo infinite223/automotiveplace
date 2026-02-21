@@ -46,7 +46,7 @@ export function mapStagesToPrisma(stages: TStageCreate[], authorId: string) {
       createdById: authorId,
       createdAt: new Date(),
       updatedAt: new Date(),
-      carItems: mapCarItemsToPrisma(s.carItems, authorId),
+      carItems: mapCarItemsToPrisma(s.carItems, authorId, ),
     })),
   };
 }

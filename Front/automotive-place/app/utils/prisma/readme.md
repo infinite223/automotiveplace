@@ -6,3 +6,4 @@
 - Update db `npx prisma db push`
 
 additional scripts that create the database `/scripts`
+

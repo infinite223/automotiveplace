@@ -41,14 +41,12 @@ export async function GET(request: NextRequest) {
     },
   });
 
-  // Obsługa paginacji
   let hasMore = false;
   if (postsFromDb.length > limit) {
     hasMore = true;
     postsFromDb.pop();
   }
 
-  // Transformacja do TBasicPost
   const data: TBasicPost[] = postsFromDb.map((post) => ({
     id: post.id,
     title: post.title,
