@@ -123,42 +123,47 @@ export default function Page() {
   return (
     <div
       id="content-container"
-      className="flex w-full md:pt-16 items-center lg:pr-[150px] h-full max-h-screen max-md:custom-scrollbar max-md:no-scrollbar overflow-y-auto flex-col scroll-smooth"
+      className="flex w-full md:pt-16 items-center lg:pr-[150px] h-full max-h-screen overflow-y-auto flex-col scroll-smooth max-md:no-scrollbar"
     >
-      <div className="flex flex-col text-[12px] w-full lg:w-[570px] pb-4">
-        <div className="hidden max-lg:flex items-center justify-between p-4 pb-0 max-md:mb-14">
-          <div className="items-center gap-4 flex">
-            <Image src={Logo} alt="logo" width={28} height={28} />
-            <span className={`text-md uppercase` + Yant.className}>
-              Automotiveplace
-            </span>
-          </div>
-          <div className="flex gap-5 items-center">
-            {/* <TbMessage2Up size={iconSizes.base} className="opacity-80" /> */}
-            <IoNotifications size={iconSizes.base} className="opacity-80" />
-          </div>
-        </div>
-        <ContentTypeFilter active={activeFilter} onChange={setActiveFilter} />
-        {activeFilter !== "All" && (
-          <div className="font-semibold text-lg my-2 mx-2">
-            {headerMap[activeFilter]}
-          </div>
-        )}
-        {filteredContent.map((item, i: number) => (
-          <div
-            key={i}
-            className="flex w-full items-center justify-center py-1"
-            id={`content-${item.data.id}`}
-          >
-            <div className="flex w-full border-t-2 border-amp-50 rounded-md">
-              <ContentSelect
-                content={item}
-                userId={userId}
-                onDelete={onDelete}
-              />
+      <div className="flex flex-col text-[12px] w-full lg:w-[570px] pb-4 relative">
+        <div className="sticky top-0 z-[30] bg-black md:-top-16">
+          <div className="max-lg:flex items-center justify-between p-4 pb-0 hidden">
+            <div className="items-center gap-4 flex">
+              <Image src={Logo} alt="logo" width={28} height={28} />
+              <span className={`text-md uppercase ${Yant.className}`}>
+                Automotiveplace
+              </span>
+            </div>
+            <div className="flex gap-5 items-center">
+              <IoNotifications size={iconSizes.base} className="opacity-80" />
             </div>
           </div>
-        ))}
+          <ContentTypeFilter active={activeFilter} onChange={setActiveFilter} />
+        </div>
+
+        <div className="relative z-[10] max-md:mt-12">
+          {activeFilter !== "All" && (
+            <div className="font-semibold text-lg my-2 mx-2">
+              {headerMap[activeFilter]}
+            </div>
+          )}
+
+          {filteredContent.map((item, i: number) => (
+            <div
+              key={i}
+              className="flex w-full items-center justify-center py-1"
+              id={`content-${item.data.id}`}
+            >
+              <div className="flex w-full border-t-2 border-amp-50 rounded-md">
+                <ContentSelect
+                  content={item}
+                  userId={userId}
+                  onDelete={onDelete}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
 
         <div ref={lastElementRef} className="py-2" />
 
