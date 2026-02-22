@@ -38,7 +38,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import UserSidebarContent from "../rightSidebar/UserSidebarContent";
 import { AiOutlinePlus } from "react-icons/ai";
 
-export const SideBar = () => {
+export const SideBar = ({ userId }: { userId: string }) => {
   const dispatch = useDispatch();
   const pathname = usePathname();
   const t = useTranslations();
@@ -58,11 +58,19 @@ export const SideBar = () => {
   return (
     <>
       <div className="hidden lg:block">
-        <SideBarDesktop openModal={openModal} pathname={pathname} />
+        <SideBarDesktop
+          openModal={openModal}
+          pathname={pathname}
+          userId={userId}
+        />
       </div>
 
       <div className="block lg:hidden">
-        <SideBarMobile openModal={openModal} pathname={pathname} />
+        <SideBarMobile
+          openModal={openModal}
+          pathname={pathname}
+          userId={userId}
+        />
       </div>
 
       <AMPModal
@@ -103,10 +111,11 @@ export const SideBar = () => {
   );
 };
 
-const SideBarDesktop: FC<{ openModal: () => void; pathname: string }> = ({
-  openModal,
-  pathname,
-}) => {
+const SideBarDesktop: FC<{
+  openModal: () => void;
+  pathname: string;
+  userId: string;
+}> = ({ openModal, pathname, userId }) => {
   const dispatch = useDispatch();
   const t = useTranslations();
   const smallScreenHiddenItem = "max-2xl:hidden";
@@ -162,7 +171,7 @@ const SideBarDesktop: FC<{ openModal: () => void; pathname: string }> = ({
             name={t("Core.Garage")}
             onClick={() => {}}
             isActive={pathname.includes("/app/garage")}
-            route="./app//garage"
+            route={`./app//garage/${userId}`}
           />
           <AMPSeparator
             additionalTailwindCss={smallScreenHiddenItem + marginY}
@@ -217,7 +226,7 @@ const SideBarDesktop: FC<{ openModal: () => void; pathname: string }> = ({
   );
 };
 
-const SideBarMobile = ({ openModal, pathname }: any) => {
+const SideBarMobile = ({ openModal, pathname, userId }: any) => {
   const t = useTranslations();
   const scrollDirection = useScrollDirection();
   const locale = useLocale();

@@ -162,13 +162,21 @@ export default function HistoryTab({
       </div>
 
       {!historyList || historyList.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 border-2 border-dashed border-amp-700/50 rounded-md">
-          <BiWrench size={48} className="mb-4 opacity-80" />
-          <p className="text-lg opacity-80">Brak wpisów w historii pojazdu</p>
+        <div className="flex flex-col items-center justify-center py-20 rounded-md bg-amp-50 border-amp-700">
+          <BiWrench size={48} className="mb-4 opacity-20" />
+
+          <p className="text-lg font-medium text-center px-4">
+            Historia tego pojazdu jest jeszcze pusta
+          </p>
+
+          <p className="text-sm opacity-60 mb-6 text-center">
+            Zanotuj wymianę oleju, serwis lub drobną naprawę
+          </p>
+
           {isMyProject && (
             <AMPButton
               name="Dodaj pierwszy wpis"
-              additionalTailwindCss="mt-5 text-sm"
+              additionalTailwindCss="text-sm"
               onClick={openModal}
             />
           )}

@@ -89,33 +89,6 @@ export default function Project({
     <main className="fixed inset-0 z-[88] flex w-full min-h-dvh custom-scrollbar overflow-y-auto bg-amp-900 dark:bg-amp-0 flex-col items-center gap-2 text-black dark:text-white">
       <div className="w-full pb-32 flex justify-center">
         <div className="max-w-screen-2xl w-full flex-col">
-          {/* <div
-            className={`flex items-center justify-between sticky top-0 z-50 backdrop-blur-md bg-amp-900/80 dark:bg-amp-0/80 transition-all duration-300 ${
-              scrolled ? "shadow-md py-2" : "py-1.5"
-            }`}
-          >
-            <motion.span
-              className="text-xs font-semibold pl-4"
-              initial={{ opacity: 1 }}
-              animate={{ opacity: scrolled ? 0 : 1 }}
-              transition={{ duration: 0.2 }}
-            >
-              PROJECT
-            </motion.span>
-
-            <motion.span
-              className="text-sm font-semibold absolute left-1/2 -translate-x-1/2"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: scrolled ? 1 : 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              {(data?.carMake || "") + " " + (data?.carModel || "")}
-            </motion.span>
-            <div className="p-1.5 px-3">
-              <RxDotsHorizontal size={iconSizes.base} />
-            </div>
-          </div> */}
-
           <motion.div
             ref={imageRef}
             style={{ opacity }}

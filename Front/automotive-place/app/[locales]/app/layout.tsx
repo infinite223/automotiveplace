@@ -25,7 +25,7 @@ export default async function Layout({
   return (
     <div className="flex h-[100dvh] flex-col bg-amp-900 dark:bg-amp-0 text-black dark:text-white overflow-hidden">
       <div className="flex lg:h-[calc(100%-0px)] h-[100dvh] w-full justify-between flex-col lg:flex-row overflow-hidden">
-        <SideBar />
+        <SideBar userId={user.user.$id} />
         {children}
         {modal}
         <RightSidebar />
