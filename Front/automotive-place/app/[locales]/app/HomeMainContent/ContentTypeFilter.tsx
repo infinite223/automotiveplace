@@ -54,7 +54,6 @@ export const ContentTypeFilter = ({ active, onChange }: Props) => {
     { label: "Trips", type: ContentType.Trip },
     { label: "Problems", type: ContentType.Problem },
     { label: "Events", type: ContentType.Event },
-    { label: "All", type: "All" },
   ];
 
   return (
@@ -62,7 +61,7 @@ export const ContentTypeFilter = ({ active, onChange }: Props) => {
       className={`
         fixed
         z-[10] bg-black/80 backdrop-blur-md
-        md:ml-[-30px]
+        md:ml-[-10px]
         w-fit max-w-[100vw] mx-auto flex gap-2 py-3 px-3
         overflow-x-auto no-scrollbar
         transition-all duration-300

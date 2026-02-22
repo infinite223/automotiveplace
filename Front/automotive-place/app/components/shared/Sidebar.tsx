@@ -278,11 +278,10 @@ const SideBarMobile = ({ openModal, pathname, userId }: any) => {
         <OptionItem
           icon={<BiSolidCarGarage size={iconSizes.base} />}
           name={t("Core.Garage")}
-          route="./app/garage"
+          route={`./app//garage/${userId}`}
           showName={false}
         />
 
-        {/* MENU BUTTON */}
         <OptionItem
           icon={<SlMenu size={iconSizes.base} />}
           name={t("Core.Menu")}
@@ -291,11 +290,9 @@ const SideBarMobile = ({ openModal, pathname, userId }: any) => {
         />
       </div>
 
-      {/* SLIDE MENU */}
       <AnimatePresence>
         {isMenuOpen && (
           <>
-            {/* BACKDROP */}
             <motion.div
               className="fixed inset-0 bg-black/40 z-40"
               initial={{ opacity: 0 }}
@@ -304,7 +301,6 @@ const SideBarMobile = ({ openModal, pathname, userId }: any) => {
               onClick={() => setIsMenuOpen(false)}
             />
 
-            {/* DRAWER */}
             <motion.div
               className="fixed top-0 left-0 h-full w-[280px] bg-amp-50 z-50 p-4 pt-6"
               initial={{ x: "-100%" }}
@@ -312,7 +308,6 @@ const SideBarMobile = ({ openModal, pathname, userId }: any) => {
               exit={{ x: "-100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
             >
-              {/* <MobileMenuContent onClose={() => setIsMenuOpen(false)} /> */}
               <UserSidebarContent tailwindContainer="" />
             </motion.div>
           </>

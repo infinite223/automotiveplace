@@ -26,7 +26,6 @@ import Image from "next/image";
 import { IoNotifications } from "react-icons/io5";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePosts, useProjects } from "@/app/hooks/useInfiniteContent";
-import { TbMessage2Up } from "react-icons/tb";
 
 const headerMap: Record<ContentType, string> = {
   [ContentType.Project]: "Najnowsze projekty",
@@ -40,7 +39,6 @@ const headerMap: Record<ContentType, string> = {
 const QUERY_KEY_BY_FILTER: Partial<Record<ContentType | "All", string[]>> = {
   [ContentType.Project]: ["projects"],
   [ContentType.Post]: ["posts"],
-  All: ["projects", "posts"],
 };
 
 export default function Page() {
