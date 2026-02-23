@@ -28,7 +28,6 @@ export const AMPMenu: FC<IAMPMenuProps> = ({
   open,
 }) => {
   const [internalOpen, setInternalOpen] = useState(false);
-
   const showMenu = open ?? internalOpen;
   const setShowMenu = onOpenChange ?? setInternalOpen;
   const [menuPosition, setMenuPosition] = useState<{
@@ -43,12 +42,11 @@ export const AMPMenu: FC<IAMPMenuProps> = ({
     setShowMenu(false);
   });
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (showMenu && buttonRef.current) {
       const buttonRect = buttonRef.current.getBoundingClientRect();
       const element = menuRef.current;
-      const menuWidth = element?.offsetWidth ?? 180;
+      const menuWidth = element?.offsetWidth ?? 220;
       const menuHeight = element?.offsetHeight ?? 0;
 
       let top = buttonRect.bottom + 5;
@@ -69,7 +67,6 @@ export const AMPMenu: FC<IAMPMenuProps> = ({
     }
   }, [showMenu, menuRef]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const handleHideMenu = () => {
       setShowMenu(false);
@@ -80,7 +77,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({
     return () => {
       window.removeEventListener("wheel", handleHideMenu);
     };
-  }, [showMenu]);
+  }, [showMenu, setShowMenu]);
 
   return (
     <main className="relative" ref={buttonRef}>
@@ -91,7 +88,12 @@ export const AMPMenu: FC<IAMPMenuProps> = ({
           <BsThreeDotsVertical
             onClick={() => setShowMenu(!showMenu)}
             className="cursor-pointer"
-            size={size ?? iconSizes.base}
+            size={
+              size ??
+              (typeof window !== "undefined" && window.innerWidth < 768
+                ? 22
+                : iconSizes.base)
+            }
             data-testid="menu-toggle"
           />
         )}
@@ -112,7 +114,7 @@ export const AMPMenu: FC<IAMPMenuProps> = ({
               left: `${menuPosition.left}px`,
               zIndex: 1000,
             }}
-            className="bg-amp-800 dark:bg-amp-50 text-[11px] min-w-[180px] overflow-auto rounded-md py-1 font-sans font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10"
+            className="bg-amp-800 dark:bg-amp-50 text-sm md:text-[11px] min-w-[200px] md:min-w-[180px] overflow-auto rounded-md py-2 md:py-1 font-sans font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10"
           >
             {items.map(({ name, handleClick, icon, isDisable }, i) => (
               <li
@@ -124,14 +126,14 @@ export const AMPMenu: FC<IAMPMenuProps> = ({
                   }
                 }}
                 role="menuitem"
-                className={`w-full flex items-center gap-2 px-3 py-2 ${
+                className={`w-full flex items-center gap-3 md:gap-2 px-4 md:px-3 py-3 md:py-2 ${
                   isDisable
                     ? "opacity-50 cursor-not-allowed"
                     : "cursor-pointer hover:bg-amp-700 dark:hover:bg-amp-200"
                 }`}
               >
-                {icon}
-                <span>{name}</span>
+                {icon && <span className="text-lg md:text-base">{icon}</span>}
+                <span className="font-medium md:font-normal">{name}</span>
               </li>
             ))}
           </motion.ul>
