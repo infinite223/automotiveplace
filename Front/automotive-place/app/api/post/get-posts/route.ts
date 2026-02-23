@@ -9,14 +9,14 @@ export async function GET(request: NextRequest) {
   if (!userData) {
     return NextResponse.json(
       { message: "YouMustBeLoggedInToUseThisFunctionality" },
-      { status: 401 }
+      { status: 401 },
     );
   }
 
   const { searchParams } = new URL(request.url);
   const limit = Number(searchParams.get("limit")) || 10;
   const page = Number(searchParams.get("page")) || 0;
-
+  const itemsCount = await prisma.post.count();
   const postsFromDb = await prisma.post.findMany({
     take: limit + 1,
     skip: page * limit,
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
     imagesUrl: post.media.length > 0 ? post.media[0].fileLocation : null,
     likesCount: post.userActivity.length,
     isLikedByAuthUser: !!post.userActivity.find(
-      (ua) => ua.userId === userData.user.$id && ua.activityType === "LIKE"
+      (ua) => ua.userId === userData.user.$id && ua.activityType === "LIKE",
     ),
     lastUpdateAt: post.updatedAt,
     author: {
@@ -72,5 +72,6 @@ export async function GET(request: NextRequest) {
     data,
     hasMore,
     page,
+    itemsCount,
   });
 }

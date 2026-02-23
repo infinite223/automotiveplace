@@ -5,6 +5,7 @@ import { TContentData } from "@/app/utils/types";
 export type MainContentResponse = {
   data: TContentData[];
   hasMore: boolean;
+  itemsCount: number;
 };
 
 export const QUERY_KEY_MAIN_CONTENT = "main-content";

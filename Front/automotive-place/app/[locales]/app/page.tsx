@@ -69,8 +69,14 @@ export default function Page() {
   const isLoading = activeQuery?.isLoading ?? false;
   const isFetchingNextPage = activeQuery?.isFetchingNextPage ?? false;
 
-  const content = useMemo<TContentData[]>(() => {
-    return data?.pages.flatMap((page) => page.data) ?? [];
+  const { content, itemsCount } = useMemo<{
+    content: TContentData[];
+    itemsCount: number;
+  }>(() => {
+    return {
+      content: data?.pages.flatMap((page) => page.data) ?? [],
+      itemsCount: data?.pages[0].itemsCount ?? 0,
+    };
   }, [data]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -140,11 +146,15 @@ export default function Page() {
           </div>
           <ContentTypeFilter active={activeFilter} onChange={setActiveFilter} />
         </div>
-
         <div className="relative z-[10] max-md:mt-12">
           {activeFilter !== "All" && (
-            <div className="font-semibold text-lg my-2 mx-2">
-              {headerMap[activeFilter]}
+            <div className="flex items-baseline gap-2 mb-2 mx-2 mt-1">
+              <h2 className="font-semibold text-lg">
+                {headerMap[activeFilter]}
+              </h2>
+              <div className="text-sm bg-amp-200 rounded-full w-6 h-6 flex items-center justify-center opacity-80 font-normal">
+                {itemsCount}
+              </div>
             </div>
           )}
 
@@ -164,15 +174,12 @@ export default function Page() {
             </div>
           ))}
         </div>
-
         <div ref={lastElementRef} className="py-2" />
-
         {!isLoading && !hasNextPage && (
           <div className="text-center text-sm text-gray-500 pb-4">
             {t("Core.NoMoreResults")}
           </div>
         )}
-
         {(isLoading || isFetchingNextPage) && (
           <>
             {content.length > 3 ? (

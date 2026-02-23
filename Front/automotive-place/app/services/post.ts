@@ -39,11 +39,11 @@ export const deletePost = async (postId: string, locale: string = "en") => {
 };
 
 export const getPostsInfinite = async (
-  page: number
+  page: number,
 ): Promise<MainContentResponse> => {
   const response = await fetch(
     `${apiEndpoints.getPosts}?page=${page}&limit=${PAGE_SIZE}`,
-    { next: { revalidate: 60 } }
+    { next: { revalidate: 60 } },
   );
 
   if (!response.ok) {
@@ -54,6 +54,7 @@ export const getPostsInfinite = async (
     data: TBasicPost[];
     hasMore: boolean;
     page: number;
+    itemsCount: number;
   } = await response.json();
 
   console.log(result.data, "get posts");
@@ -64,5 +65,6 @@ export const getPostsInfinite = async (
       type: ContentType.Post,
     })),
     hasMore: result.hasMore,
+    itemsCount: result.itemsCount,
   };
 };

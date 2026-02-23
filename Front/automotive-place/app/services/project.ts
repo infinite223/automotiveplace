@@ -121,6 +121,7 @@ export const getProjectsInfinite = async (
     data: TBasicProject[];
     hasMore: boolean;
     page: number;
+    itemsCount: number;
   } = await response.json();
 
   console.log(result.data, "result getProjectsInfinite");
@@ -130,6 +131,7 @@ export const getProjectsInfinite = async (
       data: project,
       type: ContentType.Project,
     })),
+    itemsCount: result.itemsCount,
     hasMore: result.hasMore,
   };
 };

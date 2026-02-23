@@ -10,14 +10,14 @@ export async function GET(request: NextRequest) {
   if (!userData) {
     return NextResponse.json(
       { message: "YouMustBeLoggedInToUseThisFunctionality" },
-      { status: 401 }
+      { status: 401 },
     );
   }
 
   const { searchParams } = new URL(request.url);
   const limit = Number(searchParams.get("limit")) || 10;
   const page = Number(searchParams.get("page")) || 0;
-
+  const itemsCount = await prisma.project.count();
   const projects = await prisma.project.findMany({
     take: limit + 1,
     skip: page * limit,
@@ -40,12 +40,13 @@ export async function GET(request: NextRequest) {
   }
 
   const data: TBasicProject[] = projects.map((project) =>
-    mapProjectToBasicProject(project, userData.user.$id)
+    mapProjectToBasicProject(project, userData.user.$id),
   );
 
   return NextResponse.json({
     data,
     hasMore,
     page,
+    itemsCount,
   });
 }
