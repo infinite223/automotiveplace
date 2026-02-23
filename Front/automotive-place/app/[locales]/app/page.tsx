@@ -148,8 +148,8 @@ export default function Page() {
         </div>
         <div className="relative z-[10] max-md:mt-12">
           {activeFilter !== "All" && (
-            <div className="flex items-baseline gap-2 mb-2 mx-2 mt-1">
-              <h2 className="font-semibold text-lg">
+            <div className="flex items-baseline gap-2 mb-2 mx-2 mt-2">
+              <h2 className="font-semibold text-[16px]">
                 {headerMap[activeFilter]}
               </h2>
               <div className="text-sm bg-amp-200 rounded-full w-6 h-6 flex items-center justify-center opacity-80 font-normal">

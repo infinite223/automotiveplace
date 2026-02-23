@@ -1,5 +1,5 @@
 import { TCarItem } from "./carItem";
-import { TBasicProject, TProject } from "./project";
+import { TBasicProject } from "./project";
 
 export type TCompany = {
   id: string;

@@ -51,9 +51,9 @@ export default function Garage({
   return (
     <main className="fixed inset-0 z-[88] flex w-full min-h-dvh custom-scrollbar overflow-y-auto bg-amp-900 dark:bg-amp-0 flex-col items-center text-black dark:text-white">
       <div className="max-w-screen-2xl w-full flex flex-col pb-32">
-        <div className="p-4 pb-2">
+        <div className="p-4 pb-0">
           <h1 className="font-bold text-3xl">Garaż</h1>
-          <p className="opacity-60 text-sm mt-2">
+          <p className="opacity-60 text-sm mt-1">
             Zarządzaj swoją kolekcją i częściami
           </p>
         </div>
@@ -80,7 +80,7 @@ export default function Garage({
           ))}
         </nav>
 
-        <div className="overflow-hidden">
+        <div className="overflow-hidden text-[12px]">
           <AnimatePresence mode="wait">
             {activeTab === "projekty" && (
               <motion.div
