@@ -10,8 +10,9 @@ export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
   const basic = steps[0]?.data || {};
   const engine = steps[1]?.data || {};
   const stepStages = steps[3]?.data || [];
-  const historyData = steps[4]?.data || [];
-  const summary = steps[5]?.data || {};
+  const visualMods = steps[4]?.data || [];
+  const historyData = steps[5]?.data || [];
+  const summary = steps[6]?.data || {};
   const stages = mapStepStagesToStages(stepStages);
   const stockData = stages.find(
     (stage: TStageCreate) => stage.stageNumber === 0,
@@ -52,6 +53,7 @@ export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
     history: historyData.map((h: TStepHistoryCreate) =>
       mapStepHistoryToHistory(h),
     ),
+    visualModifications: visualMods,
   };
 };
 
