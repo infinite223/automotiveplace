@@ -75,7 +75,8 @@ model Project {
   stages                      Stage[]
   tagAssignments              TagAssignment[]
   userActivity                UserActivity[]
-  history ProjectHistory[]
+  history                     ProjectHistory[]
+  visualModification          VisualModification[]
 }
 
 model ProjectHistory {
@@ -143,9 +144,11 @@ model Media {
   updatedAt    DateTime  @updatedAt @map("updated_at")
   projectId    String?
   postId       String?
+  visualModificationId String?
   location     Location?
   post         Post?     @relation(fields: [postId], references: [id])
   project      Project?  @relation(fields: [projectId], references: [id])
+  visualModification VisualModification? @relation(fields: [visualModificationId], references: [id])
 }
 
 model User {
@@ -212,6 +215,7 @@ model Company {
   tagAssignments   TagAssignment[]
   users            User[]
   performedServices ProjectHistory[]
+  visualModification VisualModification[]
 }
 
 model Garage {
@@ -302,31 +306,28 @@ model Stage {
   project          Project   @relation(fields: [projectId], references: [id])
 }
 
-// model VisualModification {
-//   id               String    @id @default(cuid())
-//   createdAt        DateTime  @default(now()) @map("created_at")
-//   updatedAt        DateTime  @updatedAt @map("updated_at")
+model VisualModification {
+  id               String    @id @default(cuid())
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
 
-//   name             String
-//   description      String?
-//   modificationType VisualModificationType
+  name             String
+  description      String?
+  modificationType VisualModificationType
 
-//   projectId        String
-//   authorId         String
-//   companyId        String?
+  projectId        String
+  authorId         String
+  companyId        String?
 
-//   isVisible        Boolean   @default(true)
-//   isBlockedByAdmin Boolean?
-//   reportId         String?
+  isVisible        Boolean   @default(true)
+  isBlockedByAdmin Boolean?
+  reportId         String?
 
-//   project          Project  @relation(fields: [projectId], references: [id])
-//   author           User     @relation(fields: [authorId], references: [id])
-//   company          Company? @relation(fields: [companyId], references: [id])
+  project          Project  @relation(fields: [projectId], references: [id])
+  company          Company? @relation(fields: [companyId], references: [id])
 
-//   media            Media[]
-//   tagAssignments   TagAssignment[]
-//   userActivity     UserActivity[]
-// }
+  media            Media[]
+}
 
 model Tag {
   id               String          @id @default(cuid())
@@ -472,17 +473,17 @@ enum LikeableType {
 //   tagAssignments   TagAssignment[]
 // }
 
-// enum VisualModificationType {
-//   FRONT_BUMPER
-//   REAR_BUMPER
-//   SPOILER
-//   SIDE_SKIRT
-//   HOOD
-//   ROOF
-//   WRAP
-//   PAINT
-//   WHEELS
-//   INTERIOR
-//   LIGHTING
-//   OTHER
-// }
+enum VisualModificationType {
+  FRONT_BUMPER
+  REAR_BUMPER
+  SPOILER
+  SIDE_SKIRT
+  HOOD
+  ROOF
+  WRAP
+  PAINT
+  WHEELS
+  INTERIOR
+  LIGHTING
+  OTHER
+}

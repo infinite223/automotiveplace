@@ -9,6 +9,8 @@
 
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import bg from "../../../asets/image_2.png";
+import Image from "next/image";
 
 // export default async function page() {
 //   const user = await getLoggedInUser();
@@ -32,8 +34,8 @@ export default function HomePage() {
     <main className="bg-black text-white">
       <section className="relative h-[95vh] flex items-end">
         <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1493238792000-8113da705763"
+          <Image
+            src={bg}
             alt="Car"
             className="w-full h-full object-cover brightness-[.35]"
           />

@@ -3,6 +3,10 @@ import { TBasicHistory, THistoryCreate } from "./history";
 import { TStageCreate, TStage } from "./stage";
 import { TBasicTag, TTagCreate } from "./tag";
 import { TBasicUser } from "./user";
+import {
+  TVisualModification,
+  TVisualModificationCreate,
+} from "./visualModification";
 
 type TProject = {
   id: string;
@@ -47,6 +51,7 @@ type TProject = {
   stages?: TStage[];
   tags?: TBasicTag[];
   history?: TBasicHistory[];
+  visualModifications?: TVisualModification[];
 
   location?: TLocation;
   isLikedByAuthUser: boolean;
@@ -110,6 +115,7 @@ type TProjectCreate = Pick<
   carItems?: TCarItemCreate[];
   tags?: TTagCreate[];
   history?: THistoryCreate[];
+  visualModifications?: TVisualModificationCreate[];
 };
 
 type TEngine = Pick<
