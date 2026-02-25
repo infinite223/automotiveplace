@@ -26,6 +26,7 @@ export async function GET(
           stages: { orderBy: { stageNumber: "asc" } },
           media: true,
           userActivity: true,
+          visualModification: true,
           tagAssignments: { include: { tag: true } },
         },
       },

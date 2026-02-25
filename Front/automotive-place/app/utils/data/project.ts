@@ -53,7 +53,7 @@ export function generateRandomProjects(count: number) {
       imagesCount: getRandomInt(0, 10),
       authorId: generateRandomString(8),
       engineCapacity: parseFloat(
-        (Math.random() * (4.5 - 1.5) + 1.5).toFixed(1)
+        (Math.random() * (4.5 - 1.5) + 1.5).toFixed(1),
       ),
       engineName: engineNames[getRandomInt(0, engineNames.length - 1)],
       engineStockHp: getRandomInt(100, 400),
@@ -165,6 +165,7 @@ export function generateRandomBaseProjects(count: number) {
       ],
       likesCount: 12,
       isLikedByAuthUser: true,
+      visualModifications: [],
     };
 
     projects.push(project);
@@ -177,7 +178,7 @@ export function generateRandomProjectsToCreate(
   count: number,
   generateStages: boolean = false,
   generateCarItems: boolean = false,
-  generateTags: boolean = false
+  generateTags: boolean = false,
 ) {
   const projects = [];
 

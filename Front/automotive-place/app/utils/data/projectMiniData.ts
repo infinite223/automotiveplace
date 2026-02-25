@@ -35,6 +35,7 @@ const projectMiniData: TBasicProject = {
   ],
   likesCount: 12,
   isLikedByAuthUser: true,
+  visualModifications: [],
 };
 
 export { projectMiniData };

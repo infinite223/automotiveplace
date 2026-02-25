@@ -30,6 +30,7 @@ export async function GET(request: NextRequest) {
       media: true,
       userActivity: true,
       tagAssignments: { include: { tag: true } },
+      visualModification: true,
     },
   });
 
