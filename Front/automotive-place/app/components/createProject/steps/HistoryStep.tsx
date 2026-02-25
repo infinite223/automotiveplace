@@ -47,7 +47,6 @@ export const HistoryStep: React.FC<HistoryStepProps> = ({
   };
 
   useEffect(() => {
-    // Prosta walidacja: tytuł i przebieg muszą być uzupełnione
     const valid = history.every((h) => h.title && h.mileage);
     setIsValid(valid);
     registerGetData?.(() => history);

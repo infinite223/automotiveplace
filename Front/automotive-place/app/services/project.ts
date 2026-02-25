@@ -36,9 +36,14 @@ export const uploadImageProject = async (
   projectId: string,
   formData: FormData,
   stageNumber?: number,
+  visualModificationId?: string,
 ) => {
   if (stageNumber !== undefined) {
     formData.append("stageNumber", String(stageNumber));
+  }
+
+  if (visualModificationId) {
+    formData.append("visualModificationId", visualModificationId);
   }
 
   const response = await fetch(`/api/upload-images/${projectId}`, {
@@ -56,7 +61,6 @@ export const uploadImageProject = async (
   const result = await response.json();
   return result;
 };
-
 export const deleteProject = async (
   projectId: string,
   locale: string = "en",

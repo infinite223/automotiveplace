@@ -86,7 +86,7 @@ export const VisualModificationsStep: React.FC<StepProps> = ({
           isLast={index === modifications.length - 1}
           onChange={(field, value) => updateModification(index, field, value)}
           onRemove={() => removeModification(index)}
-          onAdd={addModification} // Przekazujemy funkcję dodawania
+          onAdd={addModification}
         />
       ))}
     </div>

@@ -31,7 +31,8 @@ export type TVisualModificationCreate = Pick<
   TVisualModification,
   "name" | "description" | "modificationType" | "isVisible" | "companyId"
 > & {
-  media?: File[] | string[];
+  images: string[];
+  imageFile?: File | null;
 };
 
 export type TBasicVisualModification = Pick<

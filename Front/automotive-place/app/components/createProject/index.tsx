@@ -19,6 +19,7 @@ import { InfiniteData, useQueryClient } from "@tanstack/react-query";
 import { addProjectToInfiniteQuery } from "@/app/hooks/useInfiniteContent";
 import { MainContentResponse } from "@/app/hooks/useMainContent";
 import { resetStepData } from "@/lib/features/stepData/stepDataSlice";
+import { TVisualModificationCreate } from "@/app/utils/types/visualModification";
 
 export interface IInputValue {
   value: string | number;
@@ -74,22 +75,19 @@ export const CreateProjectView = () => {
             ),
           ),
         );
-
         return;
       }
 
       dispatch(setLoadingText("Dodawanie projektu..."));
       const res = await createProject(project);
       let createdProject = res.project;
-
       const projectId = res.project.id;
-      const images: File[] = data[2]?.data?.images ?? [];
 
-      if (images.length) {
-        dispatch(setLoadingText("Dodawanie zdjęć..."));
-
+      const projectImages: File[] = data[2]?.data?.images ?? [];
+      if (projectImages.length) {
+        dispatch(setLoadingText("Dodawanie zdjęć projektu..."));
         const formData = new FormData();
-        images.forEach((file) => formData.append("files", file));
+        projectImages.forEach((file) => formData.append("files", file));
 
         const uploadRes = await uploadImageProject(projectId, formData);
 
@@ -116,6 +114,28 @@ export const CreateProjectView = () => {
         formData.append("files", stageFile);
 
         await uploadImageProject(projectId, formData, stages[i].stageNumber);
+      }
+
+      const visualModsFiles = data[4]?.data as TVisualModificationCreate[];
+      const createdVisualMods = res.project.visualModifications;
+
+      if (visualModsFiles && createdVisualMods) {
+        for (let i = 0; i < visualModsFiles.length; i++) {
+          const modFile = visualModsFiles[i]?.imageFile;
+          const modId = createdVisualMods[i]?.id;
+          if (!modFile || !modId) continue;
+
+          dispatch(
+            setLoadingText(
+              `Przesyłanie zdjęcia modyfikacji: ${visualModsFiles[i].name}`,
+            ),
+          );
+
+          const formData = new FormData();
+          formData.append("files", modFile);
+
+          await uploadImageProject(projectId, formData, undefined, modId);
+        }
       }
 
       if (res?.notification) {

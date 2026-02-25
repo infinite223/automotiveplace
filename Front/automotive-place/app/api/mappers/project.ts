@@ -95,6 +95,7 @@ type ProjectWithRelations = Project & {
   media: any[];
   userActivity?: any[];
   tagAssignments?: { tag: { id: string; name: string } }[];
+  visualModification: any[];
 };
 
 export const mapProjectToBasicProject = (
@@ -155,5 +156,24 @@ export const mapProjectToBasicProject = (
       id: project.author.id,
       name: project.author.name,
     },
+
+    visualModifications:
+      project.visualModification?.map((vm) => ({
+        id: vm.id,
+        name: vm.name,
+        description: vm.description,
+        modificationType: vm.modificationType,
+        isVisible: vm.isVisible,
+
+        createdAt: vm.createdAt,
+        updatedAt: vm.updatedAt,
+        projectId: vm.projectId,
+        authorId: vm.authorId,
+
+        images:
+          project.media
+            ?.filter((m) => m.visualModificationId === vm.id)
+            .map((m) => m.fileLocation) ?? [],
+      })) ?? [],
   };
 };

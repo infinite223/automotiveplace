@@ -67,6 +67,11 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({});
   }
 
+  const isAuthor = project.authorId === userData.user.$id;
+  const historyData = isAuthor
+    ? project.history
+    : project.history.filter((h) => h.isVisible);
+
   const projectWithImages: TProject = {
     images: project.media.map((m) => m.fileLocation),
     tags: project.tagAssignments.map((i) => ({
@@ -85,7 +90,7 @@ export async function GET(request: NextRequest) {
     projectPrice: project.projectPrice.toNumber() || undefined,
     weightStock: project.weightStock?.toNumber() || undefined,
     topSpeedStock: project.topSpeedStock?.toNumber() || undefined,
-    history: project.history.map((h) => ({
+    history: historyData.map((h) => ({
       id: h.id,
       date: h.date,
       mileage: h.mileage,

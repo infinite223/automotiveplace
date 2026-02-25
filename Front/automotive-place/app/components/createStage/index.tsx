@@ -13,7 +13,7 @@ export const CreateStageView = () => {
   const onSubmit = () => {
     const validResults = validStages([stage]);
     const findInValidResult = validResults.every(
-      (result) => result.valid == false
+      (result) => result.valid == false,
     );
 
     if (!findInValidResult) {

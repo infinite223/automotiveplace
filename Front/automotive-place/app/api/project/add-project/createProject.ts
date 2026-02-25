@@ -4,13 +4,21 @@ import { mapTagsToPrisma } from "../../mappers/tags";
 import { mapStagesToPrisma } from "../../mappers/stages";
 import { Prisma } from "@prisma/client";
 import { mapManyHistoryToPrisma } from "../../mappers/history";
+import { mapVisualModificationsToPrisma } from "../../mappers/visualModification";
 
 export async function createProject(
   project: TProjectCreate,
   authorId: string,
   garageId: string,
 ) {
-  const { tags, stages, carItems, history, ...restProjectData } = project;
+  const {
+    tags,
+    stages,
+    carItems,
+    history,
+    visualModifications,
+    ...restProjectData
+  } = project;
 
   let newProject;
   try {
@@ -25,6 +33,10 @@ export async function createProject(
         stages: mapStagesToPrisma(stages ?? [], authorId),
         tagAssignments: mapTagsToPrisma(tags ?? [], authorId),
         history: mapManyHistoryToPrisma(history ?? [], authorId),
+        visualModification: mapVisualModificationsToPrisma(
+          visualModifications ?? [],
+          authorId,
+        ),
       },
       include: {
         author: { select: { id: true, name: true } },
@@ -32,6 +44,7 @@ export async function createProject(
         media: true,
         userActivity: true,
         tagAssignments: { include: { tag: true } },
+        visualModification: true,
       },
     });
   } catch (error) {

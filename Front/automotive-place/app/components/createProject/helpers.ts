@@ -53,9 +53,17 @@ export const stepperDataToCreateProject = (steps: any): TProjectCreate => {
     history: historyData.map((h: TStepHistoryCreate) =>
       mapStepHistoryToHistory(h),
     ),
-    visualModifications: visualMods,
+    visualModifications: visualMods.map((vm: any) => mapStepVisualToVisual(vm)),
   };
 };
+
+export const mapStepVisualToVisual = (v: any) => ({
+  name: v.name,
+  description: v.description,
+  modificationType: v.modificationType,
+  isVisible: v.isVisible,
+  images: [],
+});
 
 export const mapStepHistoryToHistory = (
   h: TStepHistoryCreate,

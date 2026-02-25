@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
   if (!user) {
     return NextResponse.json(
       { message: "YouMustBeLoggedInToUseThisFunctionality" },
-      { status: 404 }
+      { status: 404 },
     );
   }
 
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       project: null,
       notification: CreateNotification(
         Status.Medium,
-        validProject.error.message
+        validProject.error.message,
       ),
     });
   }
@@ -48,10 +48,9 @@ export async function POST(request: NextRequest) {
     const newProject = await createProject(
       project,
       author.id,
-      author.garage.id
+      author.garage.id,
     );
 
-    // await createContentForUser(newProject.id, ContentType.Project, author.id);
     const data = mapProjectToBasicProject(newProject, author.id);
 
     return NextResponse.json({
@@ -68,7 +67,7 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     return NextResponse.json(
       { message: error.message ?? "Unknown error" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 }

@@ -19,16 +19,16 @@ export async function POST(
   const stageNumberStr = formData.get("stageNumber") as string | null;
   const stageNumber = stageNumberStr ? parseInt(stageNumberStr) : undefined;
 
+  const visualModificationId = formData.get("visualModificationId") as
+    | string
+    | null;
+
   if (!files.length) {
     return NextResponse.json({ success: false, message: "No files provided" });
   }
 
   const { storage } = await createSessionClient();
-  const mediaRecords: {
-    fileName: string;
-    fileLocation: string;
-    stageNumber?: number;
-  }[] = [];
+  const mediaRecords = [];
 
   for (const file of files) {
     const uploaded = await storage.createFile(
@@ -40,7 +40,6 @@ export async function POST(
     mediaRecords.push({
       fileName: file.name,
       fileLocation: uploaded.$id,
-      stageNumber,
     });
   }
 
@@ -48,12 +47,14 @@ export async function POST(
     data: mediaRecords.map((m) => ({
       fileName: m.fileName,
       fileLocation: m.fileLocation,
-      projectId,
+      projectId: projectId,
       isVerified: true,
+      ...(visualModificationId && { visualModificationId }),
     })),
   });
 
-  if (stageNumber !== undefined) {
+  if (visualModificationId) {
+  } else if (stageNumber !== undefined) {
     await prisma.stage.updateMany({
       where: { projectId, stageNumber },
       data: { chartImageUrl: mediaRecords[0]?.fileLocation ?? "" },
@@ -62,7 +63,7 @@ export async function POST(
     await prisma.project.update({
       where: { id: projectId },
       data: {
-        imagesCount: mediaRecords.length,
+        imagesCount: { increment: mediaRecords.length },
         imagesUrl: mediaRecords[0]?.fileLocation ?? "",
       },
     });
