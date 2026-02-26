@@ -165,7 +165,7 @@ export function generateRandomBaseProjects(count: number) {
       ],
       likesCount: 12,
       isLikedByAuthUser: true,
-      visualModifications: [],
+      visualModificationsIds: [],
     };
 
     projects.push(project);

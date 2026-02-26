@@ -91,6 +91,7 @@ async function createPost(post: TPostCreate, authorId: string) {
         isProblem: false,
         published: true,
         authorId,
+        isBlockedByAdmin: false,
       },
     });
 

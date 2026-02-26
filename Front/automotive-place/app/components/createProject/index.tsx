@@ -117,19 +117,15 @@ export const CreateProjectView = () => {
       }
 
       const visualModsFiles = data[4]?.data as TVisualModificationCreate[];
-      const createdVisualMods = res.project.visualModifications;
+      const visualModificationsIds = res.project.visualModificationsIds;
 
-      if (visualModsFiles && createdVisualMods) {
+      if (visualModsFiles && visualModificationsIds) {
         for (let i = 0; i < visualModsFiles.length; i++) {
           const modFile = visualModsFiles[i]?.imageFile;
-          const modId = createdVisualMods[i]?.id;
+          const modId = visualModificationsIds[i];
           if (!modFile || !modId) continue;
 
-          dispatch(
-            setLoadingText(
-              `Przesyłanie zdjęcia modyfikacji: ${visualModsFiles[i].name}`,
-            ),
-          );
+          dispatch(setLoadingText(`Przesyłanie zdjęcia modyfikacji`));
 
           const formData = new FormData();
           formData.append("files", modFile);

@@ -12,6 +12,7 @@ import { Decimal } from "@prisma/client/runtime/library";
 import { mapTags } from "./tags";
 import { mapStages } from "./stages";
 import { mapLocation } from "./location";
+import { ProjectWithRelations } from "../project/add-project/createProject";
 
 export type ProjectWithIncludes = Project & {
   media: {
@@ -89,15 +90,6 @@ export function mapProject(
   };
 }
 
-type ProjectWithRelations = Project & {
-  author: { id: string; name: string };
-  stages: any[];
-  media: any[];
-  userActivity?: any[];
-  tagAssignments?: { tag: { id: string; name: string } }[];
-  visualModification: any[];
-};
-
 export const mapProjectToBasicProject = (
   project: ProjectWithRelations,
   authUserId?: string,
@@ -157,23 +149,6 @@ export const mapProjectToBasicProject = (
       name: project.author.name,
     },
 
-    visualModifications:
-      project.visualModification?.map((vm) => ({
-        id: vm.id,
-        name: vm.name,
-        description: vm.description,
-        modificationType: vm.modificationType,
-        isVisible: vm.isVisible,
-
-        createdAt: vm.createdAt,
-        updatedAt: vm.updatedAt,
-        projectId: vm.projectId,
-        authorId: vm.authorId,
-
-        images:
-          project.media
-            ?.filter((m) => m.visualModificationId === vm.id)
-            .map((m) => m.fileLocation) ?? [],
-      })) ?? [],
+    visualModificationsIds: project.visualModification.map((vm) => vm.id) ?? [],
   };
 };

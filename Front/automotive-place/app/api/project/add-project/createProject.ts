@@ -6,6 +6,10 @@ import { Prisma } from "@prisma/client";
 import { mapManyHistoryToPrisma } from "../../mappers/history";
 import { mapVisualModificationsToPrisma } from "../../mappers/visualModification";
 
+export type ProjectWithRelations = Prisma.PromiseReturnType<
+  typeof createProject
+>;
+
 export async function createProject(
   project: TProjectCreate,
   authorId: string,
@@ -28,7 +32,7 @@ export async function createProject(
         garageId,
         authorId,
         imagesUrl: "",
-
+        isBlockedByAdmin: false,
         isVerified: true, // TODO: to change
         stages: mapStagesToPrisma(stages ?? [], authorId),
         tagAssignments: mapTagsToPrisma(tags ?? [], authorId),
@@ -44,7 +48,7 @@ export async function createProject(
         media: true,
         userActivity: true,
         tagAssignments: { include: { tag: true } },
-        visualModification: true,
+        visualModification: { select: { id: true } },
       },
     });
   } catch (error) {

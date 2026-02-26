@@ -12,7 +12,7 @@ export async function GET() {
       {
         status: 404,
         statusText: "Unauthorized",
-      }
+      },
     );
   }
 
@@ -40,6 +40,11 @@ export async function GET() {
       },
     },
     take: 10,
+    where: {
+      isVisible: true,
+      isVerified: true,
+      isBlockedByAdmin: false,
+    },
   });
 
   const selectedProjects: TBasicPopularProject[] = projects.map((project) => {

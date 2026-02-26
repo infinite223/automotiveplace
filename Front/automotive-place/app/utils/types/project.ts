@@ -85,7 +85,7 @@ type TBasicProject = Pick<
   images: string[];
   tags: TBasicTag[];
   author: TBasicUser;
-  visualModifications: TVisualModification[];
+  visualModificationsIds: string[];
 };
 
 type TProjectCreate = Pick<

@@ -16,13 +16,16 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const limit = Number(searchParams.get("limit")) || 10;
   const page = Number(searchParams.get("page")) || 0;
-  const itemsCount = await prisma.post.count();
+  const itemsCount = await prisma.post.count({
+    where: { isBlockedByAdmin: false },
+  });
   const postsFromDb = await prisma.post.findMany({
     take: limit + 1,
     skip: page * limit,
     orderBy: {
       createdAt: "desc",
     },
+    where: { isBlockedByAdmin: false },
     include: {
       author: {
         select: {

@@ -3,6 +3,7 @@ import { getLoggedInUser } from "@/lib/actions/user.actions";
 import prisma from "@/lib/prisma";
 import { TBasicProject } from "@/app/utils/types/project";
 import { mapProjectToBasicProject } from "../../mappers/project";
+import { ProjectWithRelations } from "../add-project/createProject";
 
 export async function GET(request: NextRequest) {
   const userData = await getLoggedInUser();
@@ -17,12 +18,20 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const limit = Number(searchParams.get("limit")) || 10;
   const page = Number(searchParams.get("page")) || 0;
-  const itemsCount = await prisma.project.count();
-  const projects = await prisma.project.findMany({
+  const itemsCount = await prisma.project.count({
+    where: { isVisible: true, isVerified: true, isBlockedByAdmin: false },
+  });
+
+  const projects: ProjectWithRelations[] = await prisma.project.findMany({
     take: limit + 1,
     skip: page * limit,
     orderBy: {
       createdAt: "desc",
+    },
+    where: {
+      isVisible: true,
+      isVerified: true,
+      isBlockedByAdmin: false,
     },
     include: {
       author: { select: { id: true, name: true } },
@@ -30,7 +39,7 @@ export async function GET(request: NextRequest) {
       media: true,
       userActivity: true,
       tagAssignments: { include: { tag: true } },
-      visualModification: true,
+      visualModification: { select: { id: true } },
     },
   });
 

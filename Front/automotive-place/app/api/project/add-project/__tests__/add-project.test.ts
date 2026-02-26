@@ -90,6 +90,7 @@ const mockProject: TBasicProject = {
   engineNameAndCapacity: "M54B30 3",
   acc_0_100: null,
   acc_100_200: null,
+  visualModificationsIds: [],
 };
 
 describe("POST /api/project/add-project", () => {
@@ -136,7 +137,7 @@ describe("POST /api/project/add-project", () => {
     expect(createProject).toHaveBeenCalledWith(
       validProject,
       mockUser.user.$id,
-      "garage-1"
+      "garage-1",
     );
   });
 
