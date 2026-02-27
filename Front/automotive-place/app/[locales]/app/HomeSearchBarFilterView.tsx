@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC } from "react";
+import { FC } from "react";
 import { SearchTypes } from "./HomeSearchBar";
 import { AnimatePresence, motion } from "framer-motion";
 

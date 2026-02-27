@@ -1,6 +1,6 @@
 "use client";
 
-import React, { JSX, useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import { ContentType } from "@/app/utils/enums";
 
 import { FaThLarge } from "react-icons/fa";

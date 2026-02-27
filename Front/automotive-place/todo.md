@@ -13,6 +13,8 @@ We need design min two tables for:
   date -> done?
   like
 
-- implement VisualModification
-- implement garage
+- implement VisualModification in project view
+- improve garage view
 - ..
+
+- move validate user to proxy

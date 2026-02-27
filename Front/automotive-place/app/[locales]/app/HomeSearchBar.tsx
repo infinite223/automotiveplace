@@ -1,5 +1,5 @@
 import useDebounce from "@/app/hooks/useDebounce";
-import React, { FC, JSX, useEffect, useRef, useState } from "react";
+import { FC, JSX, useEffect, useRef, useState } from "react";
 import { LuSearch } from "react-icons/lu";
 import { HomeSearchBarFilterView } from "./HomeSearchBarFilterView";
 import { GoChevronDown, GoChevronUp } from "react-icons/go";

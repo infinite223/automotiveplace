@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { IoNotifications, IoPersonCircle } from "react-icons/io5";
 import { TbMessage2Up } from "react-icons/tb";
 import { SlMenu } from "react-icons/sl";

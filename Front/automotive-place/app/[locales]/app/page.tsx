@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { TContentData } from "@/app/utils/types";
 import { isTBasicProject } from "@/app/utils/types/project";
 import { ProjectMiniView } from "./HomeMainContent/ProjectMiniView";
