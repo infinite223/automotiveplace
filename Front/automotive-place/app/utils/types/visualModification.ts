@@ -37,7 +37,7 @@ export type TVisualModificationCreate = Pick<
 
 export type TBasicVisualModification = Pick<
   TVisualModification,
-  "id" | "name" | "modificationType" | "isVisible"
+  "id" | "name" | "modificationType" | "isVisible" | "description" | "images"
 > & {
   thumbnailUrl?: string;
 };

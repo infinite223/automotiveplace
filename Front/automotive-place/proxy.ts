@@ -128,7 +128,7 @@ export default async function middleware(request: NextRequest) {
 
   if (!publicPaths.some((path) => pathname.startsWith(`/${locale}${path}`))) {
     const user = await getLoggedInUser();
-
+    console.log("middleware log out");
     if (!user) {
       request.nextUrl.pathname = `/${locale}/sign-in`;
     }

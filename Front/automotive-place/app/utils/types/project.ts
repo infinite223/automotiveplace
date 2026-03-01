@@ -4,6 +4,7 @@ import { TStageCreate, TStage } from "./stage";
 import { TBasicTag, TTagCreate } from "./tag";
 import { TBasicUser } from "./user";
 import {
+  TBasicVisualModification,
   TVisualModification,
   TVisualModificationCreate,
 } from "./visualModification";
@@ -51,7 +52,7 @@ type TProject = {
   stages?: TStage[];
   tags?: TBasicTag[];
   history?: TBasicHistory[];
-  visualModifications?: TVisualModification[];
+  visualModifications?: TBasicVisualModification[];
 
   location?: TLocation;
   isLikedByAuthUser: boolean;

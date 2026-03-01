@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
-import prisma from "@/lib/prisma";
 import { TProject } from "@/app/utils/types/project";
-import { ProjectWithIncludes } from "../../mappers/project";
 import { TCarItemBaseOnProject } from "@/app/utils/types/carItem";
+import { getProject, TGetProject } from "./getProject";
+import { TVisualModificationType } from "@/app/utils/types/visualModification";
 
 export async function GET(request: NextRequest) {
   const userData = await getLoggedInUser();
@@ -21,47 +21,7 @@ export async function GET(request: NextRequest) {
   const { searchParams }: any = new URL(request.url);
   const projectId = searchParams.get("id");
 
-  const project: ProjectWithIncludes | null = await prisma.project.findFirst({
-    where: { id: projectId.toString() },
-    include: {
-      tagAssignments: { include: { tag: true } },
-      author: true,
-      media: {
-        select: { fileLocation: true },
-      },
-      history: {
-        include: {
-          company: {
-            select: {
-              id: true,
-              name: true,
-              imagesUrl: true,
-            },
-          },
-        },
-        orderBy: {
-          date: "desc",
-        },
-      },
-      stages: {
-        include: { carItems: true },
-        orderBy: {
-          stageNumber: "desc",
-        },
-      },
-      location: {
-        select: {
-          name: true,
-          description: true,
-          lat: true,
-          lng: true,
-        } as const,
-      } as const,
-      userActivity: {
-        select: { activityType: true, userId: true },
-      },
-    },
-  });
+  const project: TGetProject = await getProject(projectId);
 
   if (!project) {
     return NextResponse.json({});
@@ -71,6 +31,10 @@ export async function GET(request: NextRequest) {
   const historyData = isAuthor
     ? project.history
     : project.history.filter((h) => h.isVisible);
+
+  const visualModificationsData = isAuthor
+    ? project.visualModification
+    : project.visualModification.filter((vm) => vm.isVisible);
 
   const projectWithImages: TProject = {
     images: project.media.map((m) => m.fileLocation),
@@ -140,6 +104,17 @@ export async function GET(request: NextRequest) {
       !!project?.userActivity.find((ua) => ua.userId === userData.user.$id) ||
       false,
     userId: project.authorId,
+    visualModifications: visualModificationsData.map((vm) => {
+      return {
+        id: vm.id,
+        images: vm.media.map((m) => m.fileLocation) ?? [],
+        isVisible: vm.isVisible ?? false,
+        modificationType: vm.modificationType as TVisualModificationType,
+        projectId: vm.projectId,
+        description: vm.description ?? undefined,
+        name: vm.name,
+      };
+    }),
   };
 
   return NextResponse.json(projectWithImages);

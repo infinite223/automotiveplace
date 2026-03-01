@@ -29,6 +29,8 @@ import Image from "next/image";
 import { getProjectImageSrcByFileId } from "@/app/utils/helpers/storageHelper";
 import HistoryTab from "./tabs/HistoryTab";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
+import VisualModsTab from "./tabs/VisualModsTab";
+import ModificationsTab from "./tabs/ModificationsTab";
 
 export default function Project({
   params,
@@ -228,17 +230,12 @@ export default function Project({
                     )}
                   </motion.div>
                 )}
-
-                {activeTab === "etapy" && (
-                  <motion.div
-                    key="etapy"
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -50 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {data && <StagesTab stages={data?.stages || []} />}
-                  </motion.div>
+                {activeTab === "modifications" && (
+                  <ModificationsTab
+                    stages={data.stages ?? []}
+                    visualModifications={data.visualModifications ?? []}
+                    isMyProject={isMyProject}
+                  />
                 )}
 
                 {activeTab === "wzmianki" && (
