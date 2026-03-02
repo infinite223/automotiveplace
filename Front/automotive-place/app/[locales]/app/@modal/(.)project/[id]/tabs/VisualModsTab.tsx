@@ -26,7 +26,12 @@ import {
   CreateVisualModification,
   EditVisualModification,
   RemoveVisualModification,
+  uploadImageProject,
 } from "@/app/services/project";
+import {
+  setIsLoading,
+  setLoadingText,
+} from "@/lib/features/loading/globalLoadingSlice";
 
 interface VisualModsTabProps {
   modifications: TBasicVisualModification[];
@@ -92,22 +97,60 @@ export default function VisualModsTab({
   };
 
   const handleSubmit = async () => {
-    const action = editingId
-      ? EditVisualModification({ ...formData, id: editingId })
-      : CreateVisualModification({ ...formData, projectId });
+    dispatch(setIsLoading(true));
+    dispatch(setLoadingText("Zapisywanie zmian..."));
 
-    const result = await action;
-    dispatch(addNotification(JSON.stringify(result.notification)));
+    try {
+      const action = editingId
+        ? EditVisualModification({ ...formData, id: editingId })
+        : CreateVisualModification({ ...formData, projectId });
 
-    if (result.notification.log.status === Status.Success) {
-      if (editingId) {
-        setModsList((prev) =>
-          prev.map((m) => (m.id === editingId ? result.modification : m)),
-        );
-      } else {
-        setModsList((prev) => [...prev, result.modification]);
+      const result = await action;
+
+      if (result.notification.log.status === Status.Success) {
+        let updatedMod = { ...result.modification };
+
+        if (formData.imageFile instanceof File) {
+          dispatch(setLoadingText("Przesyłanie zdjęcia..."));
+
+          const fileData = new FormData();
+          fileData.append("files", formData.imageFile);
+
+          const modId = editingId || result.modification.id;
+
+          const uploadRes = await uploadImageProject(
+            projectId,
+            fileData,
+            undefined,
+            modId,
+          );
+
+          if (uploadRes?.success && uploadRes.files) {
+            const newImages = uploadRes.files.map((f: any) => f.fileLocation);
+
+            updatedMod = {
+              ...updatedMod,
+              images: newImages,
+            };
+          }
+        }
+
+        if (editingId) {
+          setModsList((prev) =>
+            prev.map((m) => (m.id === editingId ? updatedMod : m)),
+          );
+        } else {
+          setModsList((prev) => [...prev, updatedMod]);
+        }
+
+        dispatch(addNotification(JSON.stringify(result.notification)));
+        closeModal();
       }
-      closeModal();
+    } catch (error) {
+      console.error("Błąd podczas zapisu:", error);
+    } finally {
+      dispatch(setIsLoading(false));
+      dispatch(setLoadingText(""));
     }
   };
 
@@ -143,7 +186,7 @@ export default function VisualModsTab({
               className="group relative flex flex-col dark:bg-amp-50 rounded-sm overflow-hidden shadow-sm"
             >
               {isMyProject && (
-                <div className="absolute top-1 right-1 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute top-3 left-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
                   <AMPMenu
                     isLoading={false}
                     items={[
@@ -166,7 +209,7 @@ export default function VisualModsTab({
                 {mod.images && mod.images.length > 0 ? (
                   <AMPSlider
                     images={mod.images
-                      .map((imgId) => getProjectImageSrcByFileId(imgId))
+                      .map((imgId) => imgId)
                       .filter((url): url is string => url !== null)}
                   />
                 ) : (

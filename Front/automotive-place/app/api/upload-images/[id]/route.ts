@@ -22,7 +22,15 @@ export async function POST(
   const visualModificationId = formData.get("visualModificationId") as
     | string
     | null;
-
+  console.log(
+    {
+      projectId,
+      files,
+      stageNumber,
+      visualModificationId,
+    },
+    "test",
+  );
   if (!files.length) {
     return NextResponse.json({ success: false, message: "No files provided" });
   }

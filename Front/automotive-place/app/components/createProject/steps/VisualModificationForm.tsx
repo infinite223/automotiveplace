@@ -52,7 +52,7 @@ export const VisualModificationForm: React.FC<VisualModificationFormProps> = ({
     setIsBlocked(false);
 
     try {
-      const fileName = `visual_${file.name}`;
+      const fileName = `AMP_visual_mods_${file.name}`;
       const compressedFile = await compressImageIfNeeded(file, fileName);
       const url = URL.createObjectURL(compressedFile);
 
@@ -162,7 +162,7 @@ export const VisualModificationForm: React.FC<VisualModificationFormProps> = ({
           )}
           {isChecking && (
             <div className="absolute inset-0 bg-black/50 text-white flex items-center justify-center text-xs">
-              Sprawdzanie AI...
+              Sprawdzanie...
             </div>
           )}
           {isBlocked && (

@@ -151,14 +151,10 @@ export const CreateProjectHistory = async (history: THistoryCreate) => {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    const message =
-      errorData?.message || `Failed to add history (${response.status})`;
-
-    throw new Error(message);
+    throw new Error(errorData?.message || `Failed to add history`);
   }
 
-  const result = await response.json();
-  return result;
+  return await response.json();
 };
 
 export const CreateVisualModification = async (
@@ -177,33 +173,17 @@ export const CreateVisualModification = async (
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(
-      errorData?.message || `Failed to add visual mod (${response.status})`,
-    );
+    throw new Error(errorData?.message || `Failed to add visual mod`);
   }
 
-  const result = await response.json();
-
-  if (mod.imageFile instanceof File && result.modification?.id) {
-    const formData = new FormData();
-    formData.append("file", mod.imageFile);
-    await uploadImageProject(
-      mod.projectId,
-      formData,
-      undefined,
-      result.modification.id,
-    );
-  }
-
-  return result;
+  return await response.json();
 };
 
 export const EditVisualModification = async (
   mod: TVisualModificationCreate & { id: string },
 ) => {
-  // 1. Aktualizacja danych tekstowych
   const response = await fetch(`${apiEndpoints.editVisualModification}`, {
-    method: "POST", // lub PATCH zależnie od Twojego API
+    method: "POST",
     body: JSON.stringify({
       id: mod.id,
       name: mod.name,
@@ -215,24 +195,10 @@ export const EditVisualModification = async (
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(
-      errorData?.message || `Failed to edit visual mod (${response.status})`,
-    );
+    throw new Error(errorData?.message || `Failed to edit visual mod`);
   }
 
-  const result = await response.json();
-
-  if (mod.imageFile instanceof File) {
-    const formData = new FormData();
-    formData.append("file", mod.imageFile);
-
-    const pId = result.modification?.projectId;
-    if (pId) {
-      await uploadImageProject(pId, formData, undefined, mod.id);
-    }
-  }
-
-  return result;
+  return await response.json();
 };
 
 export const RemoveVisualModification = async (id: string) => {

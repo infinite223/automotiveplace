@@ -11,6 +11,12 @@ export const getProject = async (projectId: string) => {
       author: true,
       media: {
         select: { fileLocation: true },
+        where: {
+          AND: [
+            { fileName: { not: { contains: "AMP_dyno" } } },
+            { fileName: { not: { contains: "AMP_visual_mods" } } },
+          ],
+        },
       },
       history: {
         include: {
