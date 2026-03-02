@@ -29,7 +29,15 @@ export async function GET() {
           stageNumber: "asc",
         },
       },
-      media: { select: { fileLocation: true } },
+      media: {
+        select: { fileLocation: true },
+        where: {
+          AND: [
+            { fileName: { not: { contains: "AMP_dyno" } } },
+            { fileName: { not: { contains: "AMP_visual_mods" } } },
+          ],
+        },
+      },
       _count: {
         select: { userActivity: true },
       },

@@ -36,7 +36,14 @@ export async function GET(request: NextRequest) {
     include: {
       author: { select: { id: true, name: true } },
       stages: { orderBy: { stageNumber: "asc" } },
-      media: true,
+      media: {
+        where: {
+          AND: [
+            { fileName: { not: { contains: "AMP_dyno" } } },
+            { fileName: { not: { contains: "AMP_visual_mods" } } },
+          ],
+        },
+      },
       userActivity: true,
       tagAssignments: { include: { tag: true } },
       visualModification: { select: { id: true } },
