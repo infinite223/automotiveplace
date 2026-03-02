@@ -235,6 +235,7 @@ export default function Project({
                     stages={data.stages ?? []}
                     visualModifications={data.visualModifications ?? []}
                     isMyProject={isMyProject}
+                    projectId={data.id}
                   />
                 )}
 

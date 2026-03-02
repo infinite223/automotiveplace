@@ -13,6 +13,21 @@ export enum TVisualModificationType {
   OTHER = "OTHER",
 }
 
+export const visualTypeTranslations: Record<TVisualModificationType, string> = {
+  [TVisualModificationType.FRONT_BUMPER]: "Zderzak przedni",
+  [TVisualModificationType.REAR_BUMPER]: "Zderzak tylny",
+  [TVisualModificationType.SPOILER]: "Spoiler / Skrzydło",
+  [TVisualModificationType.SIDE_SKIRT]: "Progi",
+  [TVisualModificationType.HOOD]: "Maska",
+  [TVisualModificationType.ROOF]: "Dach",
+  [TVisualModificationType.WRAP]: "Okleina (Wrap)",
+  [TVisualModificationType.PAINT]: "Lakier",
+  [TVisualModificationType.WHEELS]: "Felgi / Koła",
+  [TVisualModificationType.INTERIOR]: "Wnętrze",
+  [TVisualModificationType.LIGHTING]: "Oświetlenie",
+  [TVisualModificationType.OTHER]: "Inne",
+};
+
 export type TVisualModification = {
   id: string;
   createdAt: Date;

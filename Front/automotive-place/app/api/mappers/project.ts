@@ -135,7 +135,7 @@ export const mapProjectToBasicProject = (
 
     images:
       project.media
-        ?.filter((m) => !m.fileName.toLowerCase().includes("dyno"))
+        ?.filter((m) => !m.fileName.toLowerCase().includes("AMP_dyno"))
         .map((m) => m.fileLocation) ?? [],
 
     tags:

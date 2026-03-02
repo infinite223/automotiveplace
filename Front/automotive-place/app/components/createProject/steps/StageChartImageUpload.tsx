@@ -25,7 +25,7 @@ export const StageChartImageUpload: React.FC<Props> = ({ onChange }) => {
   const handleFile = async (file: File | null) => {
     if (!file) return;
 
-    const fileName = `dyno_${file.name}`;
+    const fileName = `AMP_dyno_${file.name}`;
     const compressedFile = await compressImageIfNeeded(file, fileName);
 
     const url = URL.createObjectURL(compressedFile);
@@ -48,7 +48,7 @@ export const StageChartImageUpload: React.FC<Props> = ({ onChange }) => {
       (p) =>
         (p.className === "Porn" && p.probability > 0.6) ||
         (p.className === "Hentai" && p.probability > 0.6) ||
-        (p.className === "Sexy" && p.probability > 0.6)
+        (p.className === "Sexy" && p.probability > 0.6),
     );
 
     if (isNSFW) {
@@ -83,7 +83,7 @@ export const StageChartImageUpload: React.FC<Props> = ({ onChange }) => {
       />
 
       <div
-        className="relative min-h-48 w-full border border-dashed border-amp-300 rounded-md flex items-center justify-center cursor-pointer hover:bg-amp-300 transition"
+        className="relative min-h-48 w-full border border-dashed border-amp-300 rounded-sm flex items-center justify-center cursor-pointer hover:bg-amp-300 transition"
         onClick={() => !image && inputRef.current?.click()}
       >
         {!image && (

@@ -7,6 +7,7 @@ import {
   TProject,
   TProjectCreate,
 } from "../utils/types/project";
+import { TVisualModificationCreate } from "../utils/types/visualModification";
 import { apiEndpoints } from "./api.endpoints";
 import { PAGE_SIZE } from "./consts";
 
@@ -61,6 +62,7 @@ export const uploadImageProject = async (
   const result = await response.json();
   return result;
 };
+
 export const deleteProject = async (
   projectId: string,
   locale: string = "en",
@@ -153,6 +155,99 @@ export const CreateProjectHistory = async (history: THistoryCreate) => {
       errorData?.message || `Failed to add history (${response.status})`;
 
     throw new Error(message);
+  }
+
+  const result = await response.json();
+  return result;
+};
+
+export const CreateVisualModification = async (
+  mod: TVisualModificationCreate & { projectId: string },
+) => {
+  const response = await fetch(`${apiEndpoints.createVisualModification}`, {
+    method: "POST",
+    body: JSON.stringify({
+      name: mod.name,
+      description: mod.description,
+      modificationType: mod.modificationType,
+      projectId: mod.projectId,
+    }),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(
+      errorData?.message || `Failed to add visual mod (${response.status})`,
+    );
+  }
+
+  const result = await response.json();
+
+  if (mod.imageFile instanceof File && result.modification?.id) {
+    const formData = new FormData();
+    formData.append("file", mod.imageFile);
+    await uploadImageProject(
+      mod.projectId,
+      formData,
+      undefined,
+      result.modification.id,
+    );
+  }
+
+  return result;
+};
+
+export const EditVisualModification = async (
+  mod: TVisualModificationCreate & { id: string },
+) => {
+  // 1. Aktualizacja danych tekstowych
+  const response = await fetch(`${apiEndpoints.editVisualModification}`, {
+    method: "POST", // lub PATCH zależnie od Twojego API
+    body: JSON.stringify({
+      id: mod.id,
+      name: mod.name,
+      description: mod.description,
+      modificationType: mod.modificationType,
+    }),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(
+      errorData?.message || `Failed to edit visual mod (${response.status})`,
+    );
+  }
+
+  const result = await response.json();
+
+  if (mod.imageFile instanceof File) {
+    const formData = new FormData();
+    formData.append("file", mod.imageFile);
+
+    const pId = result.modification?.projectId;
+    if (pId) {
+      await uploadImageProject(pId, formData, undefined, mod.id);
+    }
+  }
+
+  return result;
+};
+
+export const RemoveVisualModification = async (id: string) => {
+  const response = await fetch(
+    `${apiEndpoints.removeVisualModification}/${id}`,
+    {
+      method: "DELETE",
+    },
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(
+      errorData?.message || `Failed to remove visual mod (${response.status})`,
+    );
   }
 
   const result = await response.json();

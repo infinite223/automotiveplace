@@ -69,7 +69,7 @@ export default function InfoTab({
           <h3 className="text-lg font-bold text-text-light dark:text-text-dark">
             Performance
           </h3>
-          <div className="divide-y divide-amp-200/70 rounded-small bg-amp-900 dark:bg-amp-50 px-4 py-2 dark:divide-subtle-dark/20 dark:bg-surface-dark">
+          <div className="divide-y divide-amp-200/70 rounded-sm bg-amp-900 dark:bg-amp-50 px-4 py-2 dark:divide-subtle-dark/20 dark:bg-surface-dark">
             <Item label="Moc silnika" value={`${lastStage.hp} hp`} />
             <Item label="Moment obrotowy" value={`${lastStage.nm} Nm`} />
             {Number(lastStage.acc_0_100) > 0 && (

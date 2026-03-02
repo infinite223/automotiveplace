@@ -10,12 +10,14 @@ interface ModificationsTabProps {
   stages: TStage[];
   visualModifications: TBasicVisualModification[];
   isMyProject?: boolean;
+  projectId: string;
 }
 
 export default function ModificationsTab({
   stages,
   visualModifications,
   isMyProject,
+  projectId,
 }: ModificationsTabProps) {
   const [activeSubTab, setActiveSubTab] = useState<"stages" | "visual">(
     "stages",
@@ -23,7 +25,7 @@ export default function ModificationsTab({
 
   return (
     <div className="flex flex-col w-full">
-      <div className="flex items-center gap-8 border-b border-amp-700/30 mb-2 px-1">
+      <div className="flex items-center gap-8 border-b border-amp-700/30 mb-2 mt-2 px-1">
         <button
           onClick={() => setActiveSubTab("stages")}
           className={`pb-3 text-sm font-semibold  transition-all relative ${
@@ -32,7 +34,7 @@ export default function ModificationsTab({
               : "text-amp-800 hover:text-amp-400"
           }`}
         >
-          Etapy modyfikacji
+          Osiągi
           {activeSubTab === "stages" && (
             <div className="absolute bottom-0 left-0 w-full h-0.5 bg-amp-500" />
           )}
@@ -45,7 +47,7 @@ export default function ModificationsTab({
               : "text-amp-800 hover:text-amp-400"
           }`}
         >
-          Modyfikacje wizualne
+          Wygląd
           {activeSubTab === "visual" && (
             <div className="absolute bottom-0 left-0 w-full h-0.5 bg-amp-500" />
           )}
@@ -59,6 +61,7 @@ export default function ModificationsTab({
           <VisualModsTab
             modifications={visualModifications}
             isMyProject={isMyProject}
+            projectId={projectId}
           />
         )}
       </div>

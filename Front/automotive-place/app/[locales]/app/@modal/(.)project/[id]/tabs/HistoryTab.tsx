@@ -30,6 +30,7 @@ import { Status } from "@/app/utils/enums";
 import { BiEdit, BiTrash } from "react-icons/bi";
 import { AMPMenu } from "@/app/components/shared/AMPMenu";
 import { iconSizes } from "@/app/utils/constants";
+import { AMPEmptyState } from "@/app/components/shared/AMPEmptyState";
 
 interface HistoryTabProps {
   history: TBasicHistory[];
@@ -162,25 +163,14 @@ export default function HistoryTab({
       </div>
 
       {!historyList || historyList.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 rounded-md bg-amp-50 border-amp-700">
-          <BiWrench size={48} className="mb-4 opacity-20" />
-
-          <p className="text-lg font-medium text-center px-4">
-            Historia tego pojazdu jest jeszcze pusta
-          </p>
-
-          <p className="text-sm opacity-60 mb-6 text-center">
-            Zanotuj wymianę oleju, serwis lub drobną naprawę
-          </p>
-
-          {isMyProject && (
-            <AMPButton
-              name="Dodaj pierwszy wpis"
-              additionalTailwindCss="text-sm"
-              onClick={openModal}
-            />
-          )}
-        </div>
+        <AMPEmptyState
+          icon={BiWrench}
+          title="Historia tego pojazdu jest jeszcze pusta"
+          description="Zanotuj wymianę oleju, serwis lub drobną naprawę"
+          isMyProject={isMyProject}
+          buttonLabel="Dodaj pierwszy wpis"
+          onButtonClick={openModal}
+        />
       ) : (
         <>
           <HistoryChart history={historyList} />

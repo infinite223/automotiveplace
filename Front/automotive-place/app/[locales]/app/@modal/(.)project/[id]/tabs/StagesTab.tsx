@@ -25,9 +25,11 @@ export default function StagesTab({ stages }: StagesTabProps) {
   const baseStage = sortedStages[sortedStages.length - 1];
 
   return (
-    <div className="mt-2 space-y-4 relative">
-      <div className="flex items-center gap-3 px-2">
-        <h3 className="text-lg font-bold">Etapy modyfikacji</h3>
+    <div className="flex flex-col w-full py-2">
+      <div className="flex items-center gap-3 px-2 mb-4">
+        <h3 className="text-md font-semibold">
+          Etapy modyfikacji wpływające na osiągi
+        </h3>
       </div>
 
       <div className="overflow-x-auto custom-scrollbar">

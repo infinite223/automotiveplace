@@ -20,6 +20,9 @@ export const apiEndpoints = {
   getProjects: `${base}/project/get-projects`,
   getPopularProjects: `${base}/project/get-popular-projects`,
   createStage: `${base}/project/add-stage`,
+  createVisualModification: `${base}/project/add-visual-modification`,
+  editVisualModification: `${base}/project/edit-visual-modification`,
+  removeVisualModification: `${base}/project/remove-visual-modification`,
 
   deletePost: `${base}/post/delete-post`,
   getPosts: `${base}/post/get-posts`,
