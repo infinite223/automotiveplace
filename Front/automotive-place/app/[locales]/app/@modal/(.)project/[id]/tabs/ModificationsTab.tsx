@@ -8,17 +8,19 @@ import VisualModsTab from "./VisualModsTab";
 
 interface ModificationsTabProps {
   stages: TStage[];
-  visualModifications: TBasicVisualModification[];
+  initialVisualMods: TBasicVisualModification[];
   isMyProject?: boolean;
   projectId: string;
 }
 
 export default function ModificationsTab({
   stages,
-  visualModifications,
+  initialVisualMods,
   isMyProject,
   projectId,
 }: ModificationsTabProps) {
+  const [visualMods, setVisualMods] =
+    useState<TBasicVisualModification[]>(initialVisualMods);
   const [activeSubTab, setActiveSubTab] = useState<"stages" | "visual">(
     "stages",
   );
@@ -59,8 +61,9 @@ export default function ModificationsTab({
           <StagesTab stages={stages} />
         ) : (
           <VisualModsTab
-            modifications={visualModifications}
+            modifications={visualMods}
             isMyProject={isMyProject}
+            onUpdate={setVisualMods}
             projectId={projectId}
           />
         )}

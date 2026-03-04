@@ -37,6 +37,7 @@ interface VisualModsTabProps {
   modifications: TBasicVisualModification[];
   isMyProject?: boolean;
   projectId: string;
+  onUpdate: (mods: TBasicVisualModification[]) => void;
 }
 
 const INITIAL_STATE: TVisualModificationCreate = {
@@ -50,14 +51,13 @@ const INITIAL_STATE: TVisualModificationCreate = {
 
 export default function VisualModsTab({
   modifications,
+  onUpdate,
   isMyProject,
   projectId,
 }: VisualModsTabProps) {
   const dispatch = useDispatch();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modsList, setModsList] =
-    useState<TBasicVisualModification[]>(modifications);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] =
     useState<TVisualModificationCreate>(INITIAL_STATE);
@@ -108,7 +108,11 @@ export default function VisualModsTab({
       const result = await action;
 
       if (result.notification.log.status === Status.Success) {
-        let updatedMod = { ...result.modification };
+        const existingMod = modifications.find((m) => m.id === editingId);
+        let updatedMod = {
+          ...result.modification,
+          images: result.modification.images || existingMod?.images || [],
+        };
 
         if (formData.imageFile instanceof File) {
           dispatch(setLoadingText("Przesyłanie zdjęcia..."));
@@ -126,7 +130,9 @@ export default function VisualModsTab({
           );
 
           if (uploadRes?.success && uploadRes.files) {
-            const newImages = uploadRes.files.map((f: any) => f.fileLocation);
+            const newImages = uploadRes.files.map(
+              (f: any) => f.fileLocation || f.$id,
+            );
 
             updatedMod = {
               ...updatedMod,
@@ -136,11 +142,13 @@ export default function VisualModsTab({
         }
 
         if (editingId) {
-          setModsList((prev) =>
-            prev.map((m) => (m.id === editingId ? updatedMod : m)),
+          const newList = modifications.map((m) =>
+            m.id === editingId ? updatedMod : m,
           );
+          onUpdate(newList);
         } else {
-          setModsList((prev) => [...prev, updatedMod]);
+          const newList = [...modifications, updatedMod];
+          onUpdate(newList);
         }
 
         dispatch(addNotification(JSON.stringify(result.notification)));
@@ -159,7 +167,8 @@ export default function VisualModsTab({
     dispatch(addNotification(JSON.stringify(result.notification)));
 
     if (result.notification.log.status === Status.Success) {
-      setModsList((prev) => prev.filter((m) => m.id !== id));
+      const newList = modifications.filter((m) => m.id !== id);
+      onUpdate(newList);
     }
   };
 
@@ -169,7 +178,7 @@ export default function VisualModsTab({
         <h3 className="text-md font-semibold">Zmiany wizualne projektu</h3>
       </div>
 
-      {modsList.length === 0 ? (
+      {modifications.length === 0 ? (
         <AMPEmptyState
           icon={PiPaintBrush}
           title="Brak modyfikacji wizualnych"
@@ -180,7 +189,7 @@ export default function VisualModsTab({
         />
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6">
-          {modsList.map((mod) => (
+          {modifications.map((mod) => (
             <div
               key={mod.id}
               className="group relative flex flex-col dark:bg-amp-50 rounded-sm overflow-hidden shadow-sm"
@@ -240,7 +249,7 @@ export default function VisualModsTab({
         </div>
       )}
 
-      {isMyProject && modsList.length > 0 && (
+      {isMyProject && modifications.length > 0 && (
         <button
           className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-amp-500 flex items-center justify-center shadow-[0_0_20px_rgba(219,31,72,0.5)] hover:scale-105 active:scale-95 transition"
           onClick={openAddModal}

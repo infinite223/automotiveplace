@@ -233,7 +233,7 @@ export default function Project({
                 {activeTab === "modifications" && (
                   <ModificationsTab
                     stages={data.stages ?? []}
-                    visualModifications={data.visualModifications ?? []}
+                    initialVisualMods={data.visualModifications ?? []}
                     isMyProject={isMyProject}
                     projectId={data.id}
                   />

@@ -212,16 +212,16 @@ export default function HistoryTab({
                 <div className="bg-amp-900/50 dark:bg-amp-50 rounded-md p-5 transition-colors">
                   <div className="flex flex-wrap items-start justify-between gap-4 mb-1">
                     <div className="flex flex-col gap-1">
-                      <h3 className="font-bold text-white uppercase tracking-wide">
+                      <h3 className="font-semibold text-white uppercase tracking-wide">
                         {h.title}
                       </h3>
                       <div className="flex items-center gap-4 text-xs text-amp-300 dark:text-amp-800/80">
                         <span className="flex items-center gap-1.5">
-                          <BiCalendar size={14} className="text-amp-500" />
+                          <BiCalendar size={14} />
                           {moment(h.date).format("D MMMM YYYY")}
                         </span>
-                        <span className="flex items-center gap-1.5 text-white font-medium bg-amp-300 px-2 py-1 rounded">
-                          <FaGauge size={14} className="text-amp-500" />
+                        <span className="flex items-center gap-1.5 text-white font-medium bg-amp-300 px-2.5 py-1.5 rounded-md">
+                          <FaGauge size={14} />
                           {h.mileage.toLocaleString()} km
                         </span>
                       </div>
