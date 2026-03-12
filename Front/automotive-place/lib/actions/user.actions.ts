@@ -37,6 +37,20 @@ export const getUserInfo = async (id: string) => {
   }
 };
 
+import { OAuthProvider } from "node-appwrite";
+
+export const signInWithGoogle = async () => {
+  const { account } = await createAdminClient();
+
+  const redirectUrl = await account.createOAuth2Token(
+    OAuthProvider.Google,
+    "http://localhost:3000/api/auth/callback",
+    "http://localhost:3000/sign-in",
+  );
+
+  return redirect(redirectUrl);
+};
+
 export const signUp = async (userData: SignUpParams) => {
   try {
     const validation = userRegistrationSchema.safeParse(userData);

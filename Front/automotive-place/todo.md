@@ -18,3 +18,4 @@ We need design min two tables for:
 - ..
 
 - move validate user to proxy
+- fix problem with adding new history, visual mods etc... add global store for this 

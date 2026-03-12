@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { AMPInput } from "../../../components/shared/AMPInput";
 import { AMPButton } from "@/app/components/shared/AMPButton";
 import Link from "next/link";
-import { getLoggedInUser, signIn } from "@/lib/actions/user.actions";
+import {
+  getLoggedInUser,
+  signIn,
+  signInWithGoogle,
+} from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useDispatch } from "react-redux";
@@ -143,8 +147,14 @@ export default function Page() {
               type="button"
               className="flex items-center gap-2 h-12 w-12 justify-center border border-gray-300/50 rounded-full
                    hover:text-amp-500 transition text-sm font-medium"
-              onClick={() => {
-                console.log("Google login");
+              onClick={async () => {
+                dispatch(setIsLoading(true));
+                try {
+                  await signInWithGoogle();
+                } catch (error) {
+                  dispatch(addNotification("Błąd logowania przez Google"));
+                  dispatch(setIsLoading(false));
+                }
               }}
             >
               <FaGoogle size={iconSizes.small} />
