@@ -42,15 +42,17 @@ export const signInWithGoogle = async () => {
   const { account } = await createAdminClient();
 
   const origin = (await headers()).get("origin");
-
-  console.log(origin, "origin");
-  const redirectUrl = await account.createOAuth2Token(
-    OAuthProvider.Google,
-    `${"https://automotiveplace.vercel.app"}/api/auth/callback`,
-    `${"https://automotiveplace.vercel.app"}/sign-in`,
-  );
-
-  return redirect(redirectUrl);
+  try {
+    const redirectUrl = await account.createOAuth2Token(
+      OAuthProvider.Google,
+      `${origin}/api/auth/callback`,
+      `${origin}/sign-in`,
+    );
+    return redirect(redirectUrl);
+  } catch (error) {
+    console.error("DEBUG_ERROR_APPWRITE:", JSON.stringify(error, null, 2));
+    throw error; // ż
+  }
 };
 
 export const signUp = async (userData: SignUpParams) => {
