@@ -2,7 +2,7 @@
 
 import { ID } from "node-appwrite";
 import { createAdminClient, createSessionClient } from "../server/appwrite";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import prisma from "../prisma";
 import { AccountTypes, Status } from "@/app/utils/enums";
 import { CreateNotification } from "@/app/components/logger/NotificationHelper";
@@ -10,6 +10,7 @@ import { redirect } from "next/navigation";
 import { getLocale } from "next-intl/server";
 import { userLoginSchema, userRegistrationSchema } from "@/app/api/zod.schmas";
 import { logger } from "@/app/api/logger.config";
+import { OAuthProvider } from "node-appwrite";
 
 export type SignInParams = {
   email: string;
@@ -37,15 +38,15 @@ export const getUserInfo = async (id: string) => {
   }
 };
 
-import { OAuthProvider } from "node-appwrite";
-
 export const signInWithGoogle = async () => {
   const { account } = await createAdminClient();
 
+  const origin = (await headers()).get("origin");
+  console.log(origin, "origin");
   const redirectUrl = await account.createOAuth2Token(
     OAuthProvider.Google,
-    "http://localhost:3000/api/auth/callback",
-    "http://localhost:3000/sign-in",
+    `${origin}/api/auth/callback`,
+    `${origin}/sign-in`,
   );
 
   return redirect(redirectUrl);
