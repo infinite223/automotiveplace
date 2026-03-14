@@ -42,11 +42,12 @@ export const signInWithGoogle = async () => {
   const { account } = await createAdminClient();
 
   const origin = (await headers()).get("origin");
+
   console.log(origin, "origin");
   const redirectUrl = await account.createOAuth2Token(
     OAuthProvider.Google,
-    `${origin}/api/auth/callback`,
-    `${origin}/sign-in`,
+    `${"https://automotiveplace.vercel.app"}/api/auth/callback`,
+    `${"https://automotiveplace.vercel.app"}/sign-in`,
   );
 
   return redirect(redirectUrl);

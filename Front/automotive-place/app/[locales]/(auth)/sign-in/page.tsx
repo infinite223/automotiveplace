@@ -20,6 +20,8 @@ import Logo from "../../../../asets/logo_3.png";
 import Image from "next/image";
 import { FaGoogle, FaFacebookF } from "react-icons/fa";
 import { iconSizes } from "@/app/utils/constants";
+import { CreateNotification } from "@/app/components/logger/NotificationHelper";
+import { Status } from "@/app/utils/enums";
 
 export default function Page() {
   const router = useRouter();
@@ -152,7 +154,11 @@ export default function Page() {
                 try {
                   await signInWithGoogle();
                 } catch (error) {
-                  dispatch(addNotification("Błąd logowania przez Google"));
+                  const notqification = CreateNotification(
+                    Status.Low,
+                    "Błąd logowania przez Google",
+                  );
+                  dispatch(addNotification(JSON.stringify(notqification)));
                   dispatch(setIsLoading(false));
                 }
               }}
